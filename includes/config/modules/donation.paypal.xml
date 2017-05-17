@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<settings>
+	<active>0</active>
+	<paypal_enable_sandbox>0</paypal_enable_sandbox>
+	<paypal_email>seller@gmail.com</paypal_email>
+	<paypal_title>Donation for WCoinC</paypal_title>
+	<paypal_currency>USD</paypal_currency>
+	<paypal_return_url>http://website.com/</paypal_return_url>
+	<paypal_notify_url>http://website.com/api/paypal.php</paypal_notify_url>
+	<paypal_conversion_rate>100</paypal_conversion_rate>
+	<credit_config>0</credit_config>
+</settings>

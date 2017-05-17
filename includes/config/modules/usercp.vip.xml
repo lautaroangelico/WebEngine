@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<settings>
+	<active>0</active>
+	<vip_day_cost>50</vip_day_cost>
+	<igcn_bronze_cost>500</igcn_bronze_cost>
+	<igcn_silver_cost>1000</igcn_silver_cost>
+	<igcn_gold_cost>1500</igcn_gold_cost>
+	<igcn_platinum_cost>2000</igcn_platinum_cost>
+	<credit_config>0</credit_config>
+	
+	
+	
+</settings>

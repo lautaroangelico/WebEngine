@@ -1,0 +1,9 @@
+Dear {USERNAME},<br /><br />
+
+We have received an email address change request for your account from the following ip address: <b>{IP_ADDRESS}</b>. By completing this request your account's email address will be changed to <b>{NEW_EMAIL}</b> and you will no longer be able to recover access using your current email address. You may proceed by <b><a href="{LINK}" target="_blank">clicking here</a></b>.<br /><br />
+
+<span style="color:red;font-weight:bold;">WARNING:<br />
+If you did not request an email address change, ignore it and contact the administrator.</span><br /><br />
+
+Regards,<br />
+{SERVER_NAME}.

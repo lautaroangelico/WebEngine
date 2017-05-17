@@ -1,0 +1,11 @@
+CREATE TABLE [dbo].[WEBENGINE_CRON](
+	[cron_id] [int] IDENTITY(1,1) NOT NULL,
+	[cron_name] [varchar](100) NOT NULL,
+	[cron_description] [varchar](max) NULL,
+	[cron_file_run] [varchar](max) NOT NULL,
+	[cron_run_time] [varchar](50) NOT NULL,
+	[cron_last_run] [varchar](50) NULL,
+	[cron_status] [int] NOT NULL,
+	[cron_protected] [int] NOT NULL,
+	[cron_file_md5] [varchar](50) NOT NULL
+) ON [PRIMARY]

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<settings>
+	<active>1</active>
+	<news_expanded>5</news_expanded>
+	<news_list_limit>20</news_list_limit>
+	<news_enable_comment_system>0</news_enable_comment_system>
+	<news_enable_like_button>0</news_enable_like_button>
+</settings>

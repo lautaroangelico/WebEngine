@@ -1,0 +1,15 @@
+CREATE TABLE [dbo].[WEBENGINE_CREDITS_LOGS](
+	[log_id] [int] IDENTITY(1,1) NOT NULL,
+	[log_config] [varchar](50) NOT NULL,
+	[log_identifier] [varchar](50) NOT NULL,
+	[log_credits] [int] NOT NULL,
+	[log_transaction] [varchar](50) NOT NULL,
+	[log_date] [varchar](50) NOT NULL,
+	[log_inadmincp] [tinyint] NULL,
+	[log_module] [varchar](50) NULL,
+	[log_ip] [varchar](15) NULL,
+ CONSTRAINT [PK_WEBENGINE_CREDITS_LOGS] PRIMARY KEY CLUSTERED 
+(
+	[log_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]

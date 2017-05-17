@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<settings>
+	<active>1</active>
+	<enable_session_timeout>1</enable_session_timeout>
+	<session_timeout>300</session_timeout>
+	<max_login_attempts>5</max_login_attempts>
+	<failed_login_timeout>15</failed_login_timeout>
+</settings>

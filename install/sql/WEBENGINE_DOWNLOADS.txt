@@ -1,0 +1,8 @@
+CREATE TABLE [dbo].[WEBENGINE_DOWNLOADS](
+	[download_id] [int] IDENTITY(1,1) NOT NULL,
+	[download_title] [varchar](50) NOT NULL,
+	[download_link] [varchar](max) NOT NULL,
+	[download_size] [float] NULL,
+	[download_host] [varchar](50) NULL,
+	[download_type] [int] NOT NULL
+) ON [PRIMARY]

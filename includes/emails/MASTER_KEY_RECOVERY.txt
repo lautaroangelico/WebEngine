@@ -1,0 +1,10 @@
+Dear {USERNAME},<br /><br />
+
+Here's your current master key:<br />
+<span style="color:green;font-weight:bold;font-size: 15px;">{CURRENT_MASTERKEY}</span><br /><br />
+
+<span style="color:red;font-weight:bold;">WARNING:<br />
+If you did not authorize this request change your account's password immediately and contact the administrator.</span><br /><br />
+
+Regards,<br />
+{SERVER_NAME}.

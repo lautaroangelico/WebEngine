@@ -1,0 +1,112 @@
+[
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "usercp_menu_txt_1",
+        "link": "usercp\/myaccount",
+        "icon": "account.png",
+        "visibility": "user",
+        "newtab": false,
+        "order": 10
+    },
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "usercp_menu_txt_2",
+        "link": "usercp\/reset",
+        "icon": "reset.png",
+        "visibility": "user",
+        "newtab": false,
+        "order": 20
+    },
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "usercp_menu_txt_6",
+        "link": "usercp\/unstick",
+        "icon": "unstick.png",
+        "visibility": "user",
+        "newtab": false,
+        "order": 30
+    },
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "usercp_menu_txt_3",
+        "link": "usercp\/clearpk",
+        "icon": "clearpk.png",
+        "visibility": "user",
+        "newtab": false,
+        "order": 40
+    },
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "usercp_menu_txt_8",
+        "link": "usercp\/resetstats",
+        "icon": "fixstats.png",
+        "visibility": "user",
+        "newtab": false,
+        "order": 50
+    },
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "usercp_menu_txt_10",
+        "link": "usercp\/addstats",
+        "icon": "addstats.png",
+        "visibility": "user",
+        "newtab": false,
+        "order": 60
+    },
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "usercp_menu_txt_9",
+        "link": "usercp\/clearskilltree",
+        "icon": "clearst.png",
+        "visibility": "user",
+        "newtab": false,
+        "order": 70
+    },
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "usercp_menu_txt_4",
+        "link": "usercp\/vote",
+        "icon": "vote.png",
+        "visibility": "user",
+        "newtab": false,
+        "order": 80
+    },
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "usercp_menu_txt_5",
+        "link": "donation",
+        "icon": "donate.png",
+        "visibility": "user",
+        "newtab": false,
+        "order": 90
+    },
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "usercp_menu_txt_7",
+        "link": "usercp\/vip",
+        "icon": "vip.png",
+        "visibility": "user",
+        "newtab": false,
+        "order": 100
+    },
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "usercp_menu_txt_11",
+        "link": "usercp\/buyzen",
+        "icon": "zen.png",
+        "visibility": "user",
+        "newtab": false,
+        "order": 110
+    }
+]

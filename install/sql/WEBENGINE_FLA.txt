@@ -1,0 +1,8 @@
+CREATE TABLE [dbo].[WEBENGINE_FLA](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[username] [varchar](50) NOT NULL,
+	[ip_address] [varchar](50) NOT NULL,
+	[unlock_timestamp] [varchar](50) NOT NULL,
+	[failed_attempts] [int] NOT NULL,
+	[timestamp] [varchar](50) NOT NULL
+) ON [PRIMARY]

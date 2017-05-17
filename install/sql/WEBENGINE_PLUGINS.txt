@@ -1,0 +1,12 @@
+CREATE TABLE [dbo].[WEBENGINE_PLUGINS](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [varchar](100) NOT NULL,
+	[author] [varchar](50) NOT NULL,
+	[version] [varchar](50) NOT NULL,
+	[compatibility] [varchar](max) NOT NULL,
+	[folder] [varchar](max) NOT NULL,
+	[files] [varchar](max) NOT NULL,
+	[status] [int] NOT NULL,
+	[install_date] [varchar](50) NOT NULL,
+	[installed_by] [varchar](50) NOT NULL
+) ON [PRIMARY]

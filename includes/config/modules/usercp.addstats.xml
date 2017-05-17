@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<settings>
+	<active>1</active>
+	<addstats_enable_zen_requirement>1</addstats_enable_zen_requirement>
+	<addstats_price_zen>10000000</addstats_price_zen>
+	<addstats_max_stats>32767</addstats_max_stats>
+	<addstats_minimum_add_points>10</addstats_minimum_add_points>
+</settings>

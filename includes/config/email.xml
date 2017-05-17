@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<settings>
+	<active>0</active>
+	<send_from>noreply@website.com</send_from>
+	<send_name>MuOnline</send_name>
+	<smtp_active>0</smtp_active>
+	<smtp_host>host</smtp_host>
+	<smtp_port>587</smtp_port>
+	<smtp_user>user</smtp_user>
+	<smtp_pass>pass</smtp_pass>
+	<email_templates>
+		<template>
+			<subject>{SERVER_NAME} Password Updated!</subject>
+			<filename>CHANGE_PASSWORD</filename>
+		</template>
+		<template>
+			<subject>{SERVER_NAME} Password Change Request</subject>
+			<filename>CHANGE_PASSWORD_EMAIL_VERIFICATION</filename>
+		</template>
+		<template>
+			<subject>{SERVER_NAME} Password Recovery Request</subject>
+			<filename>PASSWORD_RECOVERY_REQUEST</filename>
+		</template>
+		<template>
+			<subject>Your New {SERVER_NAME} Password</subject>
+			<filename>PASSWORD_RECOVERY_COMPLETED</filename>
+		</template>
+		<template>
+			<subject>Your {SERVER_NAME} Master Key</subject>
+			<filename>MASTER_KEY_RECOVERY</filename>
+		</template>
+		<template>
+			<subject>Welcome to {SERVER_NAME}!</subject>
+			<filename>WELCOME_EMAIL</filename>
+		</template>
+		<template>
+			<subject>Verify your {SERVER_NAME} email</subject>
+			<filename>WELCOME_EMAIL_VERIFICATION</filename>
+		</template>
+		<template>
+			<subject>{SERVER_NAME} Email Change Request</subject>
+			<filename>CHANGE_EMAIL_VERIFICATION</filename>
+		</template>
+		<template>
+			<subject>Your New {SERVER_NAME} Email</subject>
+			<filename>ADMIN_CHANGE_EMAIL</filename>
+		</template>
+		<template>
+			<subject>Your New {SERVER_NAME} Password</subject>
+			<filename>ADMIN_CHANGE_PASSWORD</filename>
+		</template>
+	</email_templates>
+</settings>

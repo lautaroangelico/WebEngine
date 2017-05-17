@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<settings>
+	<active>1</active>
+	<rankings_results>25</rankings_results>
+	<rankings_show_date>0</rankings_show_date>
+	<rankings_show_default>level</rankings_show_default>
+	<rankings_show_place_number>1</rankings_show_place_number>
+	<rankings_enable_level>1</rankings_enable_level>
+	<rankings_enable_resets>1</rankings_enable_resets>
+	<rankings_enable_pk>1</rankings_enable_pk>
+	<rankings_enable_gr>1</rankings_enable_gr>
+	<rankings_enable_online>1</rankings_enable_online>
+	<rankings_enable_guilds>1</rankings_enable_guilds>
+	<rankings_enable_master>1</rankings_enable_master>
+	<rankings_enable_pvplaststand>1</rankings_enable_pvplaststand>
+	<rankings_enable_gens>1</rankings_enable_gens>
+	<rankings_enable_votes>1</rankings_enable_votes>
+	<rankings_excluded_characters>none</rankings_excluded_characters>
+</settings>

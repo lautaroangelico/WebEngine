@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<settings>
+	<active>1</active>
+	<resets_enable_zen_requirement>1</resets_enable_zen_requirement>
+	<resets_price_zen>10000000</resets_price_zen>
+	<resets_required_level>400</resets_required_level>
+	<resets_enable_credit_reward>0</resets_enable_credit_reward>
+	<resets_credits_reward>1</resets_credits_reward>
+	<credit_config>0</credit_config>
+</settings>

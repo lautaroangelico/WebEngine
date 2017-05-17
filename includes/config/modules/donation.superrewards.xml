@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<settings>
+	<active>0</active>
+	<sr_h>app_id</sr_h>
+	<sr_secret>secret_key</sr_secret>
+	<sr_conversion_rate>100</sr_conversion_rate>
+	<credit_config>0</credit_config>
+</settings>

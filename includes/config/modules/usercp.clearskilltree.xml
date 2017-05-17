@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<settings>
+	<active>1</active>
+	<clearst_enable_zen_requirement>1</clearst_enable_zen_requirement>
+	<clearst_price_zen>10000000</clearst_price_zen>
+	<clearst_required_level>200</clearst_required_level>
+	<clearst_reset_method>1</clearst_reset_method>
+</settings>

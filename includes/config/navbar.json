@@ -1,0 +1,83 @@
+[
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "menu_txt_1",
+        "link": "",
+        "visibility": "always",
+        "newtab": false,
+        "order": 10
+    },
+    {
+        "active": true,
+        "type": "external",
+        "phrase": "menu_txt_2",
+        "link": "http:\/\/forum.muengine.net\/",
+        "visibility": "always",
+        "newtab": true,
+        "order": 20
+    },
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "menu_txt_7",
+        "link": "downloads",
+        "visibility": "always",
+        "newtab": false,
+        "order": 30
+    },
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "menu_txt_8",
+        "link": "donation",
+        "visibility": "always",
+        "newtab": false,
+        "order": 40
+    },
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "menu_txt_9",
+        "link": "usercp\/vote",
+        "visibility": "always",
+        "newtab": false,
+        "order": 50
+    },
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "menu_txt_10",
+        "link": "rankings",
+        "visibility": "always",
+        "newtab": false,
+        "order": 60
+    },
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "menu_txt_3",
+        "link": "register",
+        "visibility": "guest",
+        "newtab": false,
+        "order": 70
+    },
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "menu_txt_4",
+        "link": "login",
+        "visibility": "guest",
+        "newtab": false,
+        "order": 80
+    },
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "menu_txt_6",
+        "link": "logout",
+        "visibility": "user",
+        "newtab": false,
+        "order": 90
+    }
+]

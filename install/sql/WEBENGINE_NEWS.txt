@@ -1,0 +1,8 @@
+CREATE TABLE [dbo].[WEBENGINE_NEWS](
+	[news_id] [int] IDENTITY(1,1) NOT NULL,
+	[news_title] [varchar](max) NOT NULL,
+	[news_author] [varchar](50) NOT NULL,
+	[news_date] [varchar](50) NOT NULL,
+	[news_content] [text] NOT NULL,
+	[allow_comments] [int] NOT NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]

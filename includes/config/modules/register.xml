@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<settings>
+	<active>1</active>
+	<register_enable_recaptcha>0</register_enable_recaptcha>
+	<register_recaptcha_site_key>none</register_recaptcha_site_key>
+	<register_recaptcha_secret_key>none</register_recaptcha_secret_key>
+	<send_welcome_email>0</send_welcome_email>
+	<verify_email>0</verify_email>
+	<verification_timelimit>24</verification_timelimit>
+	<freevip_enable>0</freevip_enable>
+	<freevip_days>5</freevip_days>
+</settings>

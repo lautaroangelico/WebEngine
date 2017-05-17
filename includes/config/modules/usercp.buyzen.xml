@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<settings>
+	<active>1</active>
+	<max_zen>2000000000</max_zen>
+	<exchange_ratio>1000000</exchange_ratio>
+	<increment_rate>50000000</increment_rate>
+	<credit_config>0</credit_config>
+</settings>

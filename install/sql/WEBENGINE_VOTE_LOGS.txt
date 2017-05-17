@@ -1,0 +1,5 @@
+CREATE TABLE [dbo].[WEBENGINE_VOTE_LOGS](
+	[user_id] [int] NOT NULL,
+	[votesite_id] [int] NOT NULL,
+	[timestamp] [varchar](50) NOT NULL
+) ON [PRIMARY]

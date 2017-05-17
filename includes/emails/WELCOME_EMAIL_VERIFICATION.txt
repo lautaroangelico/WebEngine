@@ -1,0 +1,7 @@
+Dear {USERNAME},<br /><br />
+
+Thank you for registering an account in {SERVER_NAME}. Before you can login to your account you we need you to verify your email address by clicking the following link:<br />
+<a href="{LINK}" target="_blank">{LINK}</a><br /><br />
+
+Regards,<br />
+{SERVER_NAME}.

@@ -1,0 +1,6 @@
+Dear {USERNAME},<br /><br />
+
+The administrator has updated your account's email address to <b>{NEW_EMAIL}</b>.<br /><br />
+
+Regards,<br />
+{SERVER_NAME}.

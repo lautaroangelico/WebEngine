@@ -3,7 +3,7 @@
  * WebEngine
  * http://muengine.net/
  * 
- * @version 1.0.9
+ * @version 1.0.9.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -25,8 +25,10 @@ try {
 			if(!Validator::Length($_POST['contact_message'], 300, 10)) throw new Exception(lang('error_57',true));
 			
 			$email = new Email();
+			$email->setSubject(mconfig('subject'));
+			$email->setFrom($_POST['contact_email'], 'Contact Form'));
 			$email->setMessage($_POST['contact_message']);
-			$email->addAddress($_POST['contact_email']);
+			$email->addAddress(mconfig('sendto'));
 			$email->send();
 
 			message('success', lang('success_22',true));

@@ -3,7 +3,7 @@
  * WebEngine
  * http://muengine.net/
  * 
- * @version 1.0.9
+ * @version 1.0.9.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -68,6 +68,15 @@ class Email {
 		
 	}
 	
+	public function setSubject($subject) {
+		$this->_subject = $subject;
+	}
+	
+	public function setFrom($email, $name="Unknown") {
+		$this->_from = $email;
+		$this->_name = $name;
+	}
+	
 	public function setMessage($message) {
 		$this->_message = $message;
 	}
@@ -122,6 +131,7 @@ class Email {
 			$this->mail->AddAddress($address);
 		}
 		
+		if(!$this->_subject) throw new Exception("You did not add a subject.");
 		$this->mail->Subject = $this->_subject;
 		
 		if(!$this->_message) {

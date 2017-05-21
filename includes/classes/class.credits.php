@@ -453,7 +453,7 @@ class CreditSystem {
 				break;
 			case 'username':
 				// check online status
-				return $this->common->accountOnline($accountInfo[_CLMN_USERNM_]);
+				return $this->common->accountOnline($this->_identifier);
 				break;
 			case 'email':
 				// get the account id using the email

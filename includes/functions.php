@@ -3,7 +3,7 @@
  * WebEngine
  * http://muengine.net/
  * 
- * @version 1.0.9
+ * @version 1.0.9.4
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -248,7 +248,7 @@ function LoadCacheData($file_name) {
 function sec_to_hms($input_seconds=0) {
 	$result = sec_to_dhms($input_seconds);
 	if(!is_array($result)) return array(0,0,0);
-	return array($result[1], $result[2], $result[3]);
+	return array((($result[0]*24)+$result[1]), $result[2], $result[3]);
 }
 
 function sec_to_dhms($input_seconds=0) {

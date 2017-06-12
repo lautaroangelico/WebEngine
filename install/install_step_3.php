@@ -3,7 +3,7 @@
  * WebEngine
  * http://muengine.net/
  * 
- * @version 1.0.9
+ * @version 1.0.9.4
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -28,10 +28,14 @@ try {
 		}
 	}
 	
-	# db connection (db1)
-	$db1 = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db1'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass'], $_SESSION['install_sql_dsn']);
-	if($db1->dead) {
-		throw new Exception("Could not connect to database (1)");
+	if(check_value($_SESSION['install_sql_db2'])) {
+		$mudb = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db2'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass'], $_SESSION['install_sql_dsn']);
+	} else {
+		$mudb = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db1'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass'], $_SESSION['install_sql_dsn']);
+	}
+	
+	if($mudb->dead) {
+		throw new Exception("Could not connect to database");
 	}
 	
 	foreach($install['sql_list'] as $fileName) {
@@ -46,10 +50,10 @@ try {
 	foreach($install['sql_list'] as $fileName) {
 		$query = file_get_contents('sql/'.$fileName.'.txt');
 		
-		$tableExists = $db1->query_fetch_single("SELECT * FROM sysobjects WHERE xtype = 'U' AND name = ?", array($fileName));
+		$tableExists = $mudb->query_fetch_single("SELECT * FROM sysobjects WHERE xtype = 'U' AND name = ?", array($fileName));
 		
 		if(!$tableExists) {
-			$create = $db1->query($query);
+			$create = $mudb->query($query);
 			if($create) {
 				echo '<div class="list-group-item">'.$fileName.'<span class="label label-success pull-right">Created</span></div>';
 			} else {

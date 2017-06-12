@@ -3,7 +3,7 @@
  * WebEngine
  * http://muengine.net/
  * 
- * @version 1.0.9
+ * @version 1.0.9.4
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -85,9 +85,6 @@ if(!check_value($config['encryption_hash'])) {
 		$configError[] = "<span style=\"color:#aaaaaa;\">[Configuration]</span> encryption_hash <span style=\"color:green;\">(must have 16, 24 or 32 characters)</span>";
 	}
 }
-
-// WebEngine Version check
-if(md5(__WEBENGINE_VERSION__) != '20dfa789c2d17f69d7b957a95712b9f0') $configError[] = '<span style="color:red;">PLEASE RESTORE WEBENGINE VERSION TO ITS ORIGINAL VALUE</span>';
 
 // Check cURL
 if(!function_exists('curl_version')) $configError[] = "<span style=\"color:#aaaaaa;\">[PHP]</span> <span style=\"color:green;\">curl not loaded (WebEngine required cURL)</span>";

@@ -3,7 +3,7 @@
  * WebEngine
  * http://muengine.net/
  * 
- * @version 1.0.9.4
+ * @version 1.0.9.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -17,7 +17,7 @@ session_start();
 ob_start();
 
 # ArcticEngine Version
-define('__WEBENGINE_VERSION__', '1.0.9.4');
+define('__WEBENGINE_VERSION__', '1.0.9.5');
 
 # Set Encoding
 @ini_set('default_charset', 'utf-8');

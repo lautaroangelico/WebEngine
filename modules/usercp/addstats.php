@@ -3,7 +3,7 @@
  * WebEngine
  * http://muengine.net/
  * 
- * @version 1.0.9
+ * @version 1.0.9.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -62,19 +62,19 @@ try {
 							echo '<div class="form-group">';
 								echo '<label for="inputStat2" class="col-sm-4 control-label">'.lang('addstats_txt_4',true).'</label>';
 								echo '<div class="col-sm-8">';
-									echo '<input type="text" class="form-control" id="inputStat2" min="1" step="1" max="'.$maxStats.'" name="add_agi" placeholder="0">';
+									echo '<input type="number" class="form-control" id="inputStat2" min="1" step="1" max="'.$maxStats.'" name="add_agi" placeholder="0">';
 								echo '</div>';
 							echo '</div>';
 							echo '<div class="form-group">';
 								echo '<label for="inputStat3" class="col-sm-4 control-label">'.lang('addstats_txt_5',true).'</label>';
 								echo '<div class="col-sm-8">';
-									echo '<input type="text" class="form-control" id="inputStat3" min="1" step="1" max="'.$maxStats.'" name="add_vit" placeholder="0">';
+									echo '<input type="number" class="form-control" id="inputStat3" min="1" step="1" max="'.$maxStats.'" name="add_vit" placeholder="0">';
 								echo '</div>';
 							echo '</div>';
 							echo '<div class="form-group">';
 								echo '<label for="inputStat4" class="col-sm-4 control-label">'.lang('addstats_txt_6',true).'</label>';
 								echo '<div class="col-sm-8">';
-									echo '<input type="text" class="form-control" id="inputStat4" min="1" step="1" max="'.$maxStats.'" name="add_ene" placeholder="0">';
+									echo '<input type="number" class="form-control" id="inputStat4" min="1" step="1" max="'.$maxStats.'" name="add_ene" placeholder="0">';
 								echo '</div>';
 							echo '</div>';
 							
@@ -82,7 +82,7 @@ try {
 								echo '<div class="form-group">';
 									echo '<label for="inputStat5" class="col-sm-4 control-label">'.lang('addstats_txt_7',true).'</label>';
 									echo '<div class="col-sm-8">';
-										echo '<input type="text" class="form-control" id="inputStat5" min="1" step="1" max="'.$maxStats.'" name="add_com" placeholder="0">';
+										echo '<input type="number" class="form-control" id="inputStat5" min="1" step="1" max="'.$maxStats.'" name="add_com" placeholder="0">';
 									echo '</div>';
 								echo '</div>';
 							}

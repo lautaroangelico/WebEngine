@@ -3,7 +3,7 @@
  * WebEngine
  * http://muengine.net/
  * 
- * @version 1.0.9
+ * @version 1.0.9.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -81,7 +81,7 @@ if(!@include_once('loader.php')) die('Could not load installer.');
 		</div>
 
 		<footer class="footer">
-			<a href="http://muengine.net/" target="_blank">&copy; WebEngine 2013-2017</a>
+			<a href="https://webenginecms.org/" target="_blank">&copy; WebEngine 2013-2017</a>
 		</footer>
 
 	</div> <!-- /container -->

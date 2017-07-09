@@ -108,7 +108,7 @@ if($checkConfigs) {
 	if($config['SQL_USE_2_DB']) if(!check_value($config['SQL_DB_2_NAME'])) throw new Exception('The additional database name configuration is required to connect to your database.');
 	if(!check_value($config['SQL_PDO_DRIVER'])) throw new Exception('The PDO driver configuration is required to connect to your database.');
 	if(!check_value($config['server_files'])) throw new Exception('The server files name configuration is required by webengine.');
-	if(!in_array($config['server_files'], array('MUE', 'IGCN'))) throw new Exception('The server files name configuration is not valid.');
+	if(!in_array($config['server_files'], array('MUE', 'IGCN', 'CUSTOM'))) throw new Exception('The server files name configuration is not valid.');
 }
 
 # Load Table Definitions

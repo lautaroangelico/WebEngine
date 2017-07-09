@@ -28,6 +28,7 @@ $install['PDO_DSN'] = array(
 $install['SERVER_FILES'] = array(
 	'MUE',
 	'IGCN',
+	'CUSTOM',
 );
 
 $install['sql_list'] = array(

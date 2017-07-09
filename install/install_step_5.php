@@ -3,7 +3,7 @@
  * WebEngine
  * http://muengine.net/
  * 
- * @version 1.0.9
+ * @version 1.0.9.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -191,14 +191,20 @@ if(check_value($_POST['install_step_5_submit'])) {
 		<div class="col-sm-9">
 			<div class="radio">
 				<label>
-					<input type="radio" name="install_step_5_7" name="optionsRadios" id="input_7" value="MUE" checked="checked">
+					<input type="radio" name="install_step_5_7" name="optionsRadios" id="input_7" value="MUE">
 					MuEngine
 				</label>
 			</div>
 			<div class="radio">
 				<label>
-					<input type="radio" name="install_step_5_7" name="optionsRadios" id="input_8" value="IGCN">
+					<input type="radio" name="install_step_5_7" name="optionsRadios" id="input_8" value="IGCN" checked="checked">
 					IGCN
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" name="install_step_5_7" name="optionsRadios" id="input_10" value="CUSTOM">
+					CUSTOM
 				</label>
 			</div>
 		</div>

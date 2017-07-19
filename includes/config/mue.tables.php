@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -115,24 +115,26 @@ define('_TBL_MUCASTLE_RS_', 'MuCastle_REG_SIEGE');
  * custom: character_class
  */
 $custom['character_class'] = array(
-	0 => array('Dark Wizard', 'DW', 'dw.jpg'),
-	1 => array('Soul Master', 'SM', 'dw.jpg'),
-	3 => array('Grand Master', 'GM', 'dw.jpg'),
-	16 => array('Dark Knight', 'DK', 'dk.jpg'),
-	17 => array('Blade Knight', 'BK', 'dk.jpg'),
-	19 => array('Blade Master', 'BM', 'dk.jpg'),
-	32 => array('Elf', 'ELF', 'elf.jpg'),
-	33 => array('Muse Elf', 'ELF', 'elf.jpg'),
-	35 => array('High Elf', 'ELF', 'elf.jpg'),
-	48 => array('Magic Gladiator', 'MG', 'mg.jpg'),
-	50 => array('Duel Master', 'DM', 'mg.jpg'),
-	64 => array('Dark Lord', 'DL', 'dl.jpg'),
-	66 => array('Lord Emperor', 'LE', 'dl.jpg'),
-	80 => array('Summoner', 'SUM', 'sum.jpg'),
-	81 => array('Bloody Summoner', 'SUM', 'sum.jpg'),
-	83 => array('Dimension Master', 'SUM', 'sum.jpg'),
-	96 => array('Rage Fighter', 'RF', 'rf.jpg'),
-	98 => array('Fist Master', 'FM', 'rf.jpg')
+	0 => array('Dark Wizard', 'DW', 'dw.jpg', 'base_stats' => array('str' => 18, 'agi' => 18, 'vit' => 15, 'ene' => 30, 'cmd' => 0)),
+	1 => array('Soul Master', 'SM', 'dw.jpg', 'base_stats' => array('str' => 18, 'agi' => 18, 'vit' => 15, 'ene' => 30, 'cmd' => 0)),
+	3 => array('Grand Master', 'GM', 'dw.jpg', 'base_stats' => array('str' => 18, 'agi' => 18, 'vit' => 15, 'ene' => 30, 'cmd' => 0)),
+	16 => array('Dark Knight', 'DK', 'dk.jpg', 'base_stats' => array('str' => 28, 'agi' => 20, 'vit' => 25, 'ene' => 10, 'cmd' => 0)),
+	17 => array('Blade Knight', 'BK', 'dk.jpg', 'base_stats' => array('str' => 28, 'agi' => 20, 'vit' => 25, 'ene' => 10, 'cmd' => 0)),
+	19 => array('Blade Master', 'BM', 'dk.jpg', 'base_stats' => array('str' => 28, 'agi' => 20, 'vit' => 25, 'ene' => 10, 'cmd' => 0)),
+	32 => array('Elf', 'ELF', 'elf.jpg', 'base_stats' => array('str' => 22, 'agi' => 25, 'vit' => 15, 'ene' => 20, 'cmd' => 0)),
+	33 => array('Muse Elf', 'ELF', 'elf.jpg', 'base_stats' => array('str' => 22, 'agi' => 25, 'vit' => 15, 'ene' => 20, 'cmd' => 0)),
+	35 => array('High Elf', 'ELF', 'elf.jpg', 'base_stats' => array('str' => 22, 'agi' => 25, 'vit' => 15, 'ene' => 20, 'cmd' => 0)),
+	48 => array('Magic Gladiator', 'MG', 'mg.jpg', 'base_stats' => array('str' => 26, 'agi' => 26, 'vit' => 26, 'ene' => 16, 'cmd' => 0)),
+	50 => array('Duel Master', 'DM', 'mg.jpg', 'base_stats' => array('str' => 26, 'agi' => 26, 'vit' => 26, 'ene' => 16, 'cmd' => 0)),
+	64 => array('Dark Lord', 'DL', 'dl.jpg', 'base_stats' => array('str' => 26, 'agi' => 20, 'vit' => 20, 'ene' => 15, 'cmd' => 25)),
+	66 => array('Lord Emperor', 'LE', 'dl.jpg', 'base_stats' => array('str' => 26, 'agi' => 20, 'vit' => 20, 'ene' => 15, 'cmd' => 25)),
+	80 => array('Summoner', 'SUM', 'sum.jpg', 'base_stats' => array('str' => 21, 'agi' => 21, 'vit' => 18, 'ene' => 23, 'cmd' => 0)),
+	81 => array('Bloody Summoner', 'SUM', 'sum.jpg', 'base_stats' => array('str' => 21, 'agi' => 21, 'vit' => 18, 'ene' => 23, 'cmd' => 0)),
+	83 => array('Dimension Master', 'SUM', 'sum.jpg', 'base_stats' => array('str' => 21, 'agi' => 21, 'vit' => 18, 'ene' => 23, 'cmd' => 0)),
+	96 => array('Rage Fighter', 'RF', 'rf.jpg', 'base_stats' => array('str' => 32, 'agi' => 27, 'vit' => 25, 'ene' => 20, 'cmd' => 0)),
+	98 => array('Fist Master', 'FM', 'rf.jpg', 'base_stats' => array('str' => 32, 'agi' => 27, 'vit' => 25, 'ene' => 20, 'cmd' => 0)),
+	112 => array('Grow Lancer', 'GL', 'gl.jpg', 'base_stats' => array('str' => 30, 'agi' => 30, 'vit' => 25, 'ene' => 24, 'cmd' => 0)),
+	114 => array('Mirage Lancer', 'ML', 'gl.jpg', 'base_stats' => array('str' => 30, 'agi' => 30, 'vit' => 25, 'ene' => 24, 'cmd' => 0)),
 );
 
 /*

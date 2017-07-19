@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9.4
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -319,15 +319,17 @@ function listCronFiles($selected="") {
 }
 
 function cronFileAlreadyExists($cron_file) {
-	global $dB;
-	$check = $dB->query_fetch_single("SELECT * FROM WEBENGINE_CRON WHERE cron_file_run = '$cron_file'");
+	global $dB, $dB2;
+	$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
+	$check = $database->query_fetch_single("SELECT * FROM WEBENGINE_CRON WHERE cron_file_run = ?", array($cron_file));
 	if(!is_array($check)) {
 		return true;
 	}
 }
 
 function addCron($cron_times) {
-	global $dB;
+	global $dB, $dB2;
+	$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
 	if(check_value($_POST['cron_name']) && check_value($_POST['cron_file']) && check_value($_POST['cron_time'])) {
 		
 		$filePath = __PATH_CRON__.$_POST['cron_file'];
@@ -357,7 +359,7 @@ function addCron($cron_times) {
 			md5_file($filePath)
 		);
 		
-		$query = $dB->query("INSERT INTO WEBENGINE_CRON (cron_name, cron_description, cron_file_run, cron_run_time, cron_status, cron_file_md5) VALUES (?, ?, ?, ?, ?, ?)", $sql_data);
+		$query = $database->query("INSERT INTO WEBENGINE_CRON (cron_name, cron_description, cron_file_run, cron_run_time, cron_status, cron_file_md5) VALUES (?, ?, ?, ?, ?, ?)", $sql_data);
 		if($query) {
 		
 			// UPDATE CACHE
@@ -374,8 +376,9 @@ function addCron($cron_times) {
 }
 
 function updateCronLastRun($file) {
-	global $dB;
-	$update = $dB->query("UPDATE WEBENGINE_CRON SET cron_last_run = '".time()."' WHERE cron_file_run = '".$file."'");
+	global $dB, $dB2;
+	$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
+	$update = $database->query("UPDATE WEBENGINE_CRON SET cron_last_run = ? WHERE cron_file_run = ?", array(time(), $file));
 	if($update) {
 		// UPDATE CACHE
 		updateCronCache();
@@ -383,28 +386,31 @@ function updateCronLastRun($file) {
 }
 
 function updateCronCache() {
-	global $dB;
-	$cacheDATA = BuildCacheData($dB->query_fetch("SELECT * FROM WEBENGINE_CRON"));
+	global $dB, $dB2;
+	$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
+	$cacheDATA = BuildCacheData($database->query_fetch("SELECT * FROM WEBENGINE_CRON"));
 	UpdateCache('cron.cache',$cacheDATA);
 }
 
 function getCronJobDATA($id) {
-	global $dB;
-	$result = $dB->query_fetch_single("SELECT * FROM WEBENGINE_CRON WHERE cron_id = '$id'");
+	global $dB, $dB2;
+	$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
+	$result = $database->query_fetch_single("SELECT * FROM WEBENGINE_CRON WHERE cron_id = ?", array($id));
 	if(is_array($result)) {
 		return $result;
 	}
 }
 
 function deleteCronJob($id) {
-	global $dB;
+	global $dB, $dB2;
+	$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
 	$cronDATA = getCronJobDATA($id);
 	if(is_array($cronDATA)) {
 		if($cronDATA['cron_protected']) {
 			message('error','This cron job is protected therefore cannot be deleted.');
 			return;
 		}
-		$delete = $dB->query("DELETE FROM WEBENGINE_CRON WHERE cron_id = '$id'");
+		$delete = $database->query("DELETE FROM WEBENGINE_CRON WHERE cron_id = ?", array($id));
 		if($delete) {
 			message('success','Cron job "<strong>'.$cronDATA['cron_name'].'</strong>" successfully deteled!');
 			updateCronCache();
@@ -417,7 +423,8 @@ function deleteCronJob($id) {
 }
 
 function togglestatusCronJob($id) {
-	global $dB;
+	global $dB, $dB2;
+	$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
 	$cronDATA = getCronJobDATA($id);
 	if(is_array($cronDATA)) {
 		if($cronDATA['cron_status'] == 1) {
@@ -425,7 +432,7 @@ function togglestatusCronJob($id) {
 		} else {
 			$status = 1;
 		}
-		$toggle = $dB->query("UPDATE WEBENGINE_CRON SET cron_status = $status WHERE cron_id = '$id'");
+		$toggle = $database->query("UPDATE WEBENGINE_CRON SET cron_status = ? WHERE cron_id = ?", array($status, $id));
 		if($toggle) {
 			message('success','Cron job "<strong>'.$cronDATA['cron_name'].'</strong>" status successfully changed!');
 			updateCronCache();
@@ -438,7 +445,8 @@ function togglestatusCronJob($id) {
 }
 
 function editCronJob($id,$name,$desc,$file,$time,$cron_times,$current_file) {
-	global $dB;
+	global $dB, $dB2;
+	$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
 	if(check_value($name) && check_value($file) && check_value($time)) {
 		$filePath = __PATH_CRON__.$file;
 
@@ -460,7 +468,7 @@ function editCronJob($id,$name,$desc,$file,$time,$cron_times,$current_file) {
 			return;
 		}
 
-		$query = $dB->query("UPDATE WEBENGINE_CRON SET cron_name = '".$name."', cron_description = '".$desc."', cron_file_run = '".$file."', cron_run_time = '".$cron_times[$time]."' WHERE cron_id = $id");
+		$query = $database->query("UPDATE WEBENGINE_CRON SET cron_name = ?, cron_description = ?, cron_file_run = ?, cron_run_time = ? WHERE cron_id = ?", array($name, $desc, $file, $cron_times[$time], $id));
 		if($query) {
 		
 			// UPDATE CACHE

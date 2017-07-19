@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9.5
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -17,7 +17,7 @@ if(!defined('access') or !access or access != 'install') die();
  * INSTALLER_VERSION
  * installer version (do not change)
  */
-define('INSTALLER_VERSION', '1.0.9.5');
+define('INSTALLER_VERSION', '1.0.9.6');
 
 $install['PDO_DSN'] = array(
 	1 => 'dblib',

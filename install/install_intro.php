@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -22,10 +22,10 @@ if(check_value($_GET['action'])) {
 }
 ?>
 <h3>Welcome!</h3>
-<p>This panel will guide you through the installation process of WebEngine CMS. If you need help installing your website, feel free to join our support forum at: <a href="http://forum.muengine.net/" target="_blank">http://forum.muengine.net/</a></p>
+<p>This panel will guide you through the installation process of WebEngine CMS. If you need help installing your website, feel free to join our support forum at: <a href="https://forum.webenginecms.org/" target="_blank">https://forum.webenginecms.org/</a></p>
 <br />
 
-<p>WebEngine recommends you to install the website in an external web server (unix based). While we guarantee that our CMS is hack-proof, hosting your website in the same server as your game server is always a potential risk.</p>
+<p>We recommend you to install the website in an external web server (unix based). While we guarantee that our CMS is hack-proof, hosting your website in the same server as your game server is always a potential risk.</p>
 <br />
 
 <p>If you like our work please support us by giving us feedback and suggestions at our support forum.</p>

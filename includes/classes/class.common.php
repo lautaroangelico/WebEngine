@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -129,7 +129,7 @@ class common {
 		);
 		
 		$query = "INSERT INTO WEBENGINE_PASSCHANGE_REQUEST (user_id,new_password,auth_code,request_date) VALUES (?, ?, ?, ?)";
-		$result = $this->muonline->query($query, $data);
+		$result = $this->db->query($query, $data);
 		if($result) return true;
 		return;
 	}
@@ -137,7 +137,7 @@ class common {
 	public function hasActivePasswordChangeRequest($userid) {
 		if(!check_value($userid)) return;
 		
-		$result = $this->muonline->query_fetch_single("SELECT * FROM WEBENGINE_PASSCHANGE_REQUEST WHERE user_id = ?", array($userid));
+		$result = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_PASSCHANGE_REQUEST WHERE user_id = ?", array($userid));
 		if(!is_array($result)) return;
 		
 		$configs = loadConfigurations('usercp.mypassword');
@@ -152,7 +152,7 @@ class common {
 	}
 
 	public function removePasswordChangeRequest($userid) {
-		$result = $this->muonline->query("DELETE FROM WEBENGINE_PASSCHANGE_REQUEST WHERE user_id = ?", array($userid));
+		$result = $this->db->query("DELETE FROM WEBENGINE_PASSCHANGE_REQUEST WHERE user_id = ?", array($userid));
 		if($result) return true;
 		return;
 	}
@@ -214,14 +214,14 @@ class common {
 		);
 		
 		$query = "INSERT INTO WEBENGINE_PAYPAL_TRANSACTIONS (transaction_id, user_id, payment_amount, paypal_email, transaction_date, transaction_status, order_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-		$result = $this->muonline->query($query, $data);
+		$result = $this->db->query($query, $data);
 		if($result) return true;
 		return;
 	}
 
 	public function paypal_transaction_reversed_updatestatus($order_id) {
 		if(check_value($order_id)) return;
-		$result = $this->muonline->query("UPDATE WEBENGINE_PAYPAL_TRANSACTIONS SET transaction_status = ? WHERE order_id = ?", array(0, $order_id));
+		$result = $this->db->query("UPDATE WEBENGINE_PAYPAL_TRANSACTIONS SET transaction_status = ? WHERE order_id = ?", array(0, $order_id));
 		if($result) return true;
 		return;
 	}
@@ -255,7 +255,7 @@ class common {
 	
 	public function isIpBlocked($ip) {
 		if(!Validator::Ip($ip)) return true; // automatically block ip if invalid
-		$result = $this->muonline->query_fetch_single("SELECT * FROM WEBENGINE_BLOCKED_IP WHERE block_ip = ?", array($ip));
+		$result = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_BLOCKED_IP WHERE block_ip = ?", array($ip));
 		if(is_array($result)) return true;
 		return;
 	}
@@ -264,17 +264,17 @@ class common {
 		if(!check_value($user)) return;
 		if(!Validator::Ip($ip)) return;
 		if($this->isIpBlocked($ip)) return;
-		$result = $this->muonline->query("INSERT INTO WEBENGINE_BLOCKED_IP (block_ip,block_by,block_date) VALUES (?,?,?)", array($ip,$user,time()));
+		$result = $this->db->query("INSERT INTO WEBENGINE_BLOCKED_IP (block_ip,block_by,block_date) VALUES (?,?,?)", array($ip,$user,time()));
 		if($result) return true;
 	}
 
 	public function retrieveBlockedIPs() {
-		return $this->muonline->query_fetch("SELECT * FROM WEBENGINE_BLOCKED_IP ORDER BY id DESC");
+		return $this->db->query_fetch("SELECT * FROM WEBENGINE_BLOCKED_IP ORDER BY id DESC");
 	}
 
 	public function unblockIpAddress($id) {
 		if(!check_value($id)) return;
-		$result = $this->muonline->query("DELETE FROM WEBENGINE_BLOCKED_IP WHERE id = ?", array($id));
+		$result = $this->db->query("DELETE FROM WEBENGINE_BLOCKED_IP WHERE id = ?", array($id));
 		if($result) return true;
 		return;
 	}

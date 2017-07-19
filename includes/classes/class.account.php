@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -189,7 +189,7 @@ class Account extends common {
 		if(!Validator::UnsignedNumber($userid)) throw new Exception(lang('error_25',true));
 		if(!Validator::UnsignedNumber($authcode)) throw new Exception(lang('error_25',true));
 		
-		$result = $this->muonline->query_fetch_single("SELECT * FROM WEBENGINE_PASSCHANGE_REQUEST WHERE user_id = ?", array($userid));
+		$result = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_PASSCHANGE_REQUEST WHERE user_id = ?", array($userid));
 		if(!is_array($result)) throw new Exception(lang('error_25',true));
 		
 		# load changepw configs
@@ -384,7 +384,7 @@ class Account extends common {
 	}
 	
 	public function verifyRegistrationProcess($username, $key) {
-		$verifyKey = $this->muonline->query_fetch_single("SELECT * FROM WEBENGINE_REGISTER_ACCOUNT WHERE registration_account = ? AND registration_key = ?", array($username,$key));
+		$verifyKey = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_REGISTER_ACCOUNT WHERE registration_account = ? AND registration_key = ?", array($username,$key));
 		if(!is_array($verifyKey)) throw new Exception(lang('error_25',true));
 		
 		# load registration configs
@@ -478,21 +478,21 @@ class Account extends common {
 		
 		$query = "INSERT INTO WEBENGINE_REGISTER_ACCOUNT (registration_account,registration_password,registration_email,registration_date,registration_ip,registration_key) VALUES (?,?,?,?,?,?)";
 		
-		$result = $this->muonline->query($query, $data);
+		$result = $this->db->query($query, $data);
 		if(!$result) return;
 		return $key;
 	}
 	
 	private function deleteRegistrationVerification($username) {
 		if(!check_value($username)) return;
-		$delete = $this->muonline->query("DELETE FROM WEBENGINE_REGISTER_ACCOUNT WHERE registration_account = ?", array($username));
+		$delete = $this->db->query("DELETE FROM WEBENGINE_REGISTER_ACCOUNT WHERE registration_account = ?", array($username));
 		if($delete) return true;
 		return;
 	}
 
 	private function checkUsernameEVS($username) {
 		if(!check_value($username)) return;
-		$result = $this->muonline->query_fetch_single("SELECT * FROM WEBENGINE_REGISTER_ACCOUNT WHERE registration_account = ?", array($username));
+		$result = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_REGISTER_ACCOUNT WHERE registration_account = ?", array($username));
 		
 		$configs = loadConfigurations('register');
 		if(!is_array($configs)) return;
@@ -506,7 +506,7 @@ class Account extends common {
 
 	private function checkEmailEVS($email) {
 		if(!check_value($email)) return;
-		$result = $this->muonline->query_fetch_single("SELECT * FROM WEBENGINE_REGISTER_ACCOUNT WHERE registration_email = ?", array($email));
+		$result = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_REGISTER_ACCOUNT WHERE registration_email = ?", array($email));
 		
 		$configs = loadConfigurations('register');
 		if(!is_array($configs)) return;

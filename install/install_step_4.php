@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -28,10 +28,14 @@ try {
 		}
 	}
 	
-	# db connection (db1)
-	$db1 = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db1'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass'], $_SESSION['install_sql_dsn']);
-	if($db1->dead) {
-		throw new Exception("Could not connect to database (1)");
+	if(check_value($_SESSION['install_sql_db2'])) {
+		$mudb = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db2'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass'], $_SESSION['install_sql_dsn']);
+	} else {
+		$mudb = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db1'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass'], $_SESSION['install_sql_dsn']);
+	}
+	
+	if($mudb->dead) {
+		throw new Exception("Could not connect to database");
 	}
 	
 	# check cron job files
@@ -46,9 +50,9 @@ try {
 	# add crons
 	echo '<div class="list-group">';
 	foreach($install['cron_jobs'] as $cron) {
-		$cronExists = $db1->query_fetch_single("SELECT * FROM WEBENGINE_CRON WHERE cron_file_run = ?", array($cron[2]));
+		$cronExists = $mudb->query_fetch_single("SELECT * FROM WEBENGINE_CRON WHERE cron_file_run = ?", array($cron[2]));
 		if(!$cronExists) {
-			$addCron = $db1->query("INSERT INTO WEBENGINE_CRON (cron_name,cron_description,cron_file_run,cron_run_time,cron_status,cron_protected,cron_file_md5) VALUES (?, ?, ?, ?, ?, ?, ?)", $cron);
+			$addCron = $mudb->query("INSERT INTO WEBENGINE_CRON (cron_name,cron_description,cron_file_run,cron_run_time,cron_status,cron_protected,cron_file_md5) VALUES (?, ?, ?, ?, ?, ?, ?)", $cron);
 			if($addCron) {
 				echo '<div class="list-group-item">'.$cron[0].' ('.$cron[2].')<span class="label label-success pull-right">Added</span></div>';
 			} else {

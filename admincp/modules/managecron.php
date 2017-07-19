@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -13,6 +13,7 @@
 ?>
 <h1 class="page-header">Cron Job Manager</h1>
 <?php
+$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
 
 $cron_times = array(
 	1 => 60*5,
@@ -34,15 +35,15 @@ $cron_times = array(
 );
 
 if(check_value($_REQUEST['cache']) && $_REQUEST['cache'] == 1) {
-	$cacheDATA = BuildCacheData($dB->query_fetch("SELECT * FROM WEBENGINE_CRON"));
+	$cacheDATA = BuildCacheData($database->query_fetch("SELECT * FROM WEBENGINE_CRON"));
 	UpdateCache('cron.cache',$cacheDATA);
 	message('success','Cron jobs cache successfully updated!');
 }
 
 if(check_value($_REQUEST['reset']) && $_REQUEST['reset'] == 1) {
-	$resetCrons = $dB->query("UPDATE WEBENGINE_CRON SET cron_last_run = NULL");
+	$resetCrons = $database->query("UPDATE WEBENGINE_CRON SET cron_last_run = NULL");
 	if($resetCrons) {
-		$cacheDATA = BuildCacheData($dB->query_fetch("SELECT * FROM WEBENGINE_CRON"));
+		$cacheDATA = BuildCacheData($database->query_fetch("SELECT * FROM WEBENGINE_CRON"));
 		UpdateCache('cron.cache',$cacheDATA);
 		message('success','Crons successfully reset and cache updated!');
 	} else {
@@ -58,7 +59,7 @@ if(check_value($_REQUEST['togglestatus'])) {
 	togglestatusCronJob($_REQUEST['togglestatus']);
 }
 
-$cronJobs = $dB->query_fetch("SELECT * FROM WEBENGINE_CRON ORDER BY cron_id ASC");
+$cronJobs = $database->query_fetch("SELECT * FROM WEBENGINE_CRON ORDER BY cron_id ASC");
 if(is_array($cronJobs)) {
 	echo '<table class="table table-striped table-bordered">';
 		echo '<tr>';

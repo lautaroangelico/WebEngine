@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -41,17 +41,17 @@ echo '<div class="row">';
 			
 			echo '<div class="list-group">';
 				
-				$db = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
+				$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
 				
 				// Total Accounts
-				$totalAccounts = $db->query_fetch_single("SELECT COUNT(*) as result FROM MEMB_INFO");
+				$totalAccounts = $database->query_fetch_single("SELECT COUNT(*) as result FROM MEMB_INFO");
 				echo '<div class="list-group-item">';
 					echo 'Registered Accounts';
 					echo '<span class="pull-right text-muted small">'.number_format($totalAccounts['result']).'</span>';
 				echo '</div>';
 				
 				// Banned Accounts
-				$bannedAccounts = $db->query_fetch_single("SELECT COUNT(*) as result FROM MEMB_INFO WHERE bloc_code = 1");
+				$bannedAccounts = $database->query_fetch_single("SELECT COUNT(*) as result FROM MEMB_INFO WHERE bloc_code = 1");
 				echo '<div class="list-group-item">';
 					echo 'Banned Accounts';
 					echo '<span class="pull-right text-muted small">'.number_format($bannedAccounts['result']).'</span>';
@@ -72,7 +72,7 @@ echo '<div class="row">';
 				echo '</div>';
 				
 				// Scheduled Tasks
-				$scheduledTasks = $dB->query_fetch_single("SELECT COUNT(*) as result FROM WEBENGINE_CRON");
+				$scheduledTasks = $database->query_fetch_single("SELECT COUNT(*) as result FROM WEBENGINE_CRON");
 				echo '<div class="list-group-item">';
 					echo 'Scheduled Tasks (cron)';
 					echo '<span class="pull-right text-muted small">'.number_format($scheduledTasks['result']).'</span>';

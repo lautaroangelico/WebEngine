@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -35,6 +35,9 @@
 
 // Load WebEngine
 include('../includes/webengine.php');
+
+// Database
+$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
 
 // Load Super Rewards Settings
 loadModuleConfigs('donation.superrewards');
@@ -81,7 +84,7 @@ if($common->accountOnline($uid) && mconfig('check_online')) {
 }
 
 // check if transaction id exists
-$checkTID = $dB->query_fetch_single("SELECT * FROM WEBENGINE_SR_TRANSACTIONS WHERE transaction_id = ?", array($id));
+$checkTID = $database->query_fetch_single("SELECT * FROM WEBENGINE_SR_TRANSACTIONS WHERE transaction_id = ?", array($id));
 if(is_array($checkTID)) {
 	$error = true;
 	$code = 104;
@@ -132,7 +135,7 @@ if(!$error) {
 			time()
 		);
 		
-		$add_logs = $dB->query("INSERT INTO WEBENGINE_SR_TRANSACTIONS (transaction_id,user_id,credits_amount,transaction_date) VALUES (?, ?, ?, ?)", $add_logs_data);
+		$add_logs = $database->query("INSERT INTO WEBENGINE_SR_TRANSACTIONS (transaction_id,user_id,credits_amount,transaction_date) VALUES (?, ?, ?, ?)", $add_logs_data);
 		
 		// Response
 		die('1');
@@ -147,7 +150,7 @@ if(!$error) {
 			$code
 		);
 		
-		$add_error_logs = $dB->query("INSERT INTO WEBENGINE_SR_ERROR_LOGS (transaction_id,user_id,credits_amount,transaction_date,error_code) VALUES (?, ?, ?, ?, ?)", $add_error_logs_data);
+		$add_error_logs = $database->query("INSERT INTO WEBENGINE_SR_ERROR_LOGS (transaction_id,user_id,credits_amount,transaction_date,error_code) VALUES (?, ?, ?, ?, ?)", $add_error_logs_data);
 		
 		// Response
 		die('0');
@@ -162,11 +165,8 @@ if(!$error) {
 		$code
 	);
 		
-	$add_error_logs = $dB->query("INSERT INTO WEBENGINE_SR_ERROR_LOGS (transaction_id,user_id,credits_amount,transaction_date,error_code) VALUES (?, ?, ?, ?, ?)", $add_error_logs_data);
+	$add_error_logs = $database->query("INSERT INTO WEBENGINE_SR_ERROR_LOGS (transaction_id,user_id,credits_amount,transaction_date,error_code) VALUES (?, ?, ?, ?, ?)", $add_error_logs_data);
 		
 	// Response
 	die('0');
 }
-
-
-?>

@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -12,8 +12,14 @@
  */
 
 class News {
+	
+	function __construct() {
+		global $dB, $dB2;
+		
+		$this->db = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
+	}
+	
 	function addNews($title,$content,$author='Administrator',$comments=1) {
-		global $dB;
 		if(check_value($title) && check_value($content) && check_value($author)) {
 			if($this->checkTitle($title)) {
 				if($this->checkContent($content)) {
@@ -32,7 +38,7 @@ class News {
 					);
 					
 					// add news
-					$add_news = $dB->query("INSERT INTO WEBENGINE_NEWS (news_title,news_author,news_date,news_content,allow_comments) VALUES (?,?,?,?,?)", $news_data);
+					$add_news = $this->db->query("INSERT INTO WEBENGINE_NEWS (news_title,news_author,news_date,news_content,allow_comments) VALUES (?,?,?,?,?)", $news_data);
 					
 					if($add_news) {
 						// success message
@@ -53,10 +59,9 @@ class News {
 	}
 	
 	function removeNews($id) {
-		global $dB;
 		if(Validator::Number($id)) {
 			if($this->newsIdExists($id)) {
-				$remove = $dB->query("DELETE FROM WEBENGINE_NEWS WHERE news_id = ?", array($id));
+				$remove = $this->db->query("DELETE FROM WEBENGINE_NEWS WHERE news_id = ?", array($id));
 				if($remove) {
 					return true;
 				} else {
@@ -71,7 +76,6 @@ class News {
 	}
 	
 	function editNews($id,$title,$content,$author,$comments,$date) {
-		global $dB;
 		if(check_value($id) && check_value($title) && check_value($content) && check_value($author) && check_value($comments) && check_value($date)) {
 			if(!$this->newsIdExists($id)) { return false; }
 			if($this->checkTitle($title) && $this->checkContent($content)) {
@@ -83,7 +87,7 @@ class News {
 					$comments,
 					$id
 				);
-				$query = $dB->query("UPDATE WEBENGINE_NEWS SET news_title = ?, news_content = ?, news_author = ?, news_date = ?, allow_comments = ? WHERE news_id = ?", $editData);
+				$query = $this->db->query("UPDATE WEBENGINE_NEWS SET news_title = ?, news_content = ?, news_author = ?, news_date = ?, allow_comments = ? WHERE news_id = ?", $editData);
 				if($query) {
 					message('success', 'News successfully edited.');
 				} else {
@@ -118,8 +122,7 @@ class News {
 	}
 	
 	function retrieveNews() {
-		global $dB;
-		$news = $dB->query_fetch("SELECT * FROM WEBENGINE_NEWS ORDER BY news_id DESC");
+		$news = $this->db->query_fetch("SELECT * FROM WEBENGINE_NEWS ORDER BY news_id DESC");
 		if(is_array($news)) {
 			return $news;
 		} else {
@@ -128,9 +131,8 @@ class News {
 	}
 	
 	function newsIdExists($id) {
-		global $dB;
 		if(Validator::Number($id)) {
-			$id_exists = $dB->query_fetch_single("SELECT * FROM WEBENGINE_NEWS WHERE news_id = ?", array($id));
+			$id_exists = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_NEWS WHERE news_id = ?", array($id));
 			if(is_array($id_exists)) {
 				return true;
 			} else {
@@ -178,8 +180,7 @@ class News {
 	}
 	
 	function retrieveNewsDataForCache() {
-		global $dB;
-		$news = $dB->query_fetch("SELECT news_id,news_title,news_author,news_date,allow_comments FROM WEBENGINE_NEWS ORDER BY news_id DESC");
+		$news = $this->db->query_fetch("SELECT news_id,news_title,news_author,news_date,allow_comments FROM WEBENGINE_NEWS ORDER BY news_id DESC");
 		if(is_array($news)) {
 			return $news;
 		} else {
@@ -216,9 +217,8 @@ class News {
 	}
 	
 	function loadNewsData($id) {
-		global $dB;
 		if(check_value($id) && $this->newsIdExists($id)) {
-			$query = $dB->query_fetch_single("SELECT * FROM WEBENGINE_NEWS WHERE news_id = ?", array($id));
+			$query = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_NEWS WHERE news_id = ?", array($id));
 			if($query && is_array($query)) {
 				return $query;
 			}

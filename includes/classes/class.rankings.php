@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -21,6 +21,7 @@ class Rankings {
 		
 		$this->mu = $dB;
 		$this->me = $dB2;
+		$this->db = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
 		$this->config = webengineConfigs();
 		$this->serverFiles = $this->config['server_files'];
 		
@@ -201,7 +202,7 @@ class Rankings {
 	private function _votesRanking() {
 		$voteMonth = date("m/01/Y 00:00");
 		$voteMonthTimestamp = strtotime($voteMonth);
-		$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." user_id,COUNT(*) as count FROM WEBENGINE_VOTE_LOGS WHERE timestamp >= ? GROUP BY user_id ORDER BY count DESC", array($voteMonthTimestamp));
+		$result = $this->db->query_fetch("SELECT TOP ".$this->_results." user_id,COUNT(*) as count FROM WEBENGINE_VOTE_LOGS WHERE timestamp >= ? GROUP BY user_id ORDER BY count DESC", array($voteMonthTimestamp));
 		if(!is_array($result)) return;
 		
 		$cache = BuildCacheData($result);

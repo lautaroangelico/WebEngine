@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9.5
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -17,16 +17,17 @@ session_start();
 ob_start();
 
 # ArcticEngine Version
-define('__WEBENGINE_VERSION__', '1.0.9.5');
+define('__WEBENGINE_VERSION__', '1.0.9.6');
 
 # Set Encoding
 @ini_set('default_charset', 'utf-8');
 
 # Server Time
+# http://php.net/manual/en/timezones.php
 //date_default_timezone_set('America/Los_Angeles');
 
 # Global Paths
-define('HTTP_HOST', $_SERVER['HTTP_HOST']);
+define('HTTP_HOST', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'CLI');
 define('SERVER_PROTOCOL', (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on' ) ? 'https://' : 'http://');
 define('__ROOT_DIR__', str_replace('\\','/',dirname(dirname(__FILE__))).'/'); // /home/user/public_html/
 define('__RELATIVE_ROOT__', str_ireplace(rtrim(str_replace('\\','/', realpath(str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['SCRIPT_FILENAME']))), '/'), '', __ROOT_DIR__));// /

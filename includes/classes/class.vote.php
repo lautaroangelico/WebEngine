@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -30,6 +30,7 @@ class Vote {
 		if($me_muonline) {
 			$this->memuonline = $me_muonline;
 		}
+		$this->db = (config('SQL_USE_2_DB',true) ? $this->memuonline : $this->muonline);
 		
 		# Load Configurations
 		$this->xml = simplexml_load_file(__PATH_MODULE_CONFIGS__ . $this->_configXml);
@@ -125,7 +126,7 @@ class Vote {
 		if(!check_value($this->_votesideId)) throw new Exception(lang('error_23', true));
 		
 		$query = "SELECT * FROM WEBENGINE_VOTES WHERE user_id = ? AND vote_site_id = ?";
-		$check = $this->muonline->query_fetch_single($query, array($this->_userid, $this->_votesideId));
+		$check = $this->db->query_fetch_single($query, array($this->_userid, $this->_votesideId));
 		
 		if(!is_array($check)) return true;
 		if($this->_timePassed($check['timestamp'])) {
@@ -138,7 +139,7 @@ class Vote {
 		if(!check_value($this->_votesideId)) throw new Exception(lang('error_23', true));
 		
 		$query = "SELECT * FROM WEBENGINE_VOTES WHERE user_ip = ? AND vote_site_id = ?";
-		$check = $this->muonline->query_fetch_single($query, array($this->_ip, $this->_votesideId));
+		$check = $this->db->query_fetch_single($query, array($this->_ip, $this->_votesideId));
 		
 		if(!is_array($check)) return true;
 		if($this->_timePassed($check['timestamp'])) {
@@ -163,12 +164,12 @@ class Vote {
 			$timestamp
 		);
 		
-		$add = $this->muonline->query("INSERT INTO WEBENGINE_VOTES (user_id, user_ip, vote_site_id, timestamp) VALUES (?, ?, ?, ?)", $data);
+		$add = $this->db->query("INSERT INTO WEBENGINE_VOTES (user_id, user_ip, vote_site_id, timestamp) VALUES (?, ?, ?, ?)", $data);
 		if(!$add) throw new Exception(lang('error_23', true));
 	}
 	
 	private function _removeRecord($id) {
-		$remove = $this->muonline->query("DELETE FROM WEBENGINE_VOTES WHERE id = ?", array($id));
+		$remove = $this->db->query("DELETE FROM WEBENGINE_VOTES WHERE id = ?", array($id));
 		if($remove) return true;
 		return false;
 	}
@@ -180,7 +181,7 @@ class Vote {
 	
 	private function _siteExists($id) {
 		if(!check_value($id)) return;
-		$check = $this->muonline->query_fetch_single("SELECT * FROM WEBENGINE_VOTE_SITES WHERE votesite_id = ?", array($id));
+		$check = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_VOTE_SITES WHERE votesite_id = ?", array($id));
 		if(is_array($check)) return true;
 		return false;
 	}
@@ -195,25 +196,25 @@ class Vote {
 			time()
 		);
 		
-		$add_log = $this->muonline->query("INSERT INTO WEBENGINE_VOTE_LOGS (user_id,votesite_id,timestamp) VALUES (?,?,?)", $add_data);
+		$add_log = $this->db->query("INSERT INTO WEBENGINE_VOTE_LOGS (user_id,votesite_id,timestamp) VALUES (?,?,?)", $add_data);
 		if(!$add_log) return false;
 		return true;
 	}
 	
 	public function addVotesite($title, $link, $reward, $time) {
-		$result = $this->muonline->query("INSERT INTO WEBENGINE_VOTE_SITES (votesite_title,votesite_link,votesite_reward,votesite_time) VALUES (?,?,?,?)", array($title,$link,$reward,$time));
+		$result = $this->db->query("INSERT INTO WEBENGINE_VOTE_SITES (votesite_title,votesite_link,votesite_reward,votesite_time) VALUES (?,?,?,?)", array($title,$link,$reward,$time));
 		if($result) return true;
 	}
 	
 	public function deleteVotesite($id) {
 		if(!$this->_siteExists($id)) return;
-		$result = $this->muonline->query("DELETE FROM WEBENGINE_VOTE_SITES WHERE votesite_id = ?", array($id));
+		$result = $this->db->query("DELETE FROM WEBENGINE_VOTE_SITES WHERE votesite_id = ?", array($id));
 		if($result) return $result;
 	}
 	
 	public function retrieveVotesites($id=null) {
-		if(check_value($id)) return $this->muonline->query_fetch_single("SELECT * FROM WEBENGINE_VOTE_SITES WHERE votesite_id = ?", array($id));
-		return $this->muonline->query_fetch("SELECT * FROM WEBENGINE_VOTE_SITES ORDER BY votesite_id ASC");
+		if(check_value($id)) return $this->db->query_fetch_single("SELECT * FROM WEBENGINE_VOTE_SITES WHERE votesite_id = ?", array($id));
+		return $this->db->query_fetch("SELECT * FROM WEBENGINE_VOTE_SITES ORDER BY votesite_id ASC");
 	}
 
 }

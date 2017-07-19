@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -20,9 +20,11 @@
 </form>
 <br />
 <?php
+	$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
+	
 	if(check_value($_POST['search_request'])) {
 		try {
-			$search = $dB->query_fetch("SELECT TOP 25 * FROM WEBENGINE_BAN_LOG WHERE account_id LIKE '%".$_POST['search_request']."%'");
+			$search = $database->query_fetch("SELECT TOP 25 * FROM WEBENGINE_BAN_LOG WHERE account_id LIKE '%".$_POST['search_request']."%'");
 			if(is_array($search)) {
 				echo '<div class="row">';
 				echo '<div class="col-md-12">';

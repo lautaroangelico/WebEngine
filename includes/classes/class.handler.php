@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -52,8 +52,6 @@ class Handler {
 			if(isLoggedIn() && canAccessAdminCP($_SESSION['username'])) {
 				echo '<a href="'.__PATH_ADMINCP_HOME__.'" class="btn btn-primary admincp-button">AdminCP</a>';
 			}
-			
-			if(!$this->_disableWebEngineFooterCredits) if(!$this->isPowered) redirect(3, 'http://muengine.net/credits.html');
 		}
 	}
 
@@ -142,11 +140,10 @@ class Handler {
 	}
 	
 	public function webenginePowered() {
-		$this->isPowered = true;
 		if($this->_disableWebEngineFooterCredits) return;
 		
-		echo '<div style="padding:10px;text-transform:uppercase;font-size:11px;">';
-			echo '<a href="http://muengine.net/" target="_blank" style="color:#ff0000;">';
+		echo '<div class="webengine-powered" style="text-transform:uppercase;">';
+			echo '<a href="https://webenginecms.org/" target="_blank" style="color:#ff0000;">';
 				echo 'Powered by WebEngine';
 				if(!$this->_disableWebEngineFooterVersion) echo ' ' . __WEBENGINE_VERSION__;
 			echo '</a>';

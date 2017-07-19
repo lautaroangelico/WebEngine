@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -39,6 +39,8 @@ class CreditSystem {
 		if($me_muonline) {
 			$this->memuonline = $me_muonline;
 		}
+		
+		$this->db = (config('SQL_USE_2_DB',true) ? $this->memuonline : $this->muonline);
 	}
 	
 	public function setIdentifier($input) {
@@ -291,7 +293,7 @@ class CreditSystem {
 	 * @return boolean
 	 */
 	private function _configurationExists($input) {
-		$check = $this->muonline->query_fetch_single("SELECT * FROM WEBENGINE_CREDITS_CONFIG WHERE config_id = ?", array($input));
+		$check = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_CREDITS_CONFIG WHERE config_id = ?", array($input));
 		if($check) return true;
 		return false;
 	}
@@ -325,7 +327,7 @@ class CreditSystem {
 			. "VALUES "
 			. "(:title, :database, :table, :creditscol, :usercol, :usercolid, :checkonline, :display)";
 		
-		$saveConfig = $this->muonline->query($query, $data);
+		$saveConfig = $this->db->query($query, $data);
 		if(!$saveConfig) throw new Exception("There has been an error adding the configuration to the database, check for database errors.");
 	}
 	
@@ -366,7 +368,7 @@ class CreditSystem {
 			. "config_display = :display "
 			. "WHERE config_id = :id";
 		
-		$editConfig = $this->muonline->query($query, $data);
+		$editConfig = $this->db->query($query, $data);
 		if(!$editConfig) throw new Exception("There has been an error editing the configuration, check for database errors.");
 	}
 	
@@ -377,7 +379,7 @@ class CreditSystem {
 	 */
 	public function deleteConfig() {
 		if(!$this->_configId) throw new Exception("You have not set a configuration id.");
-		if(!$this->muonline->query("DELETE FROM WEBENGINE_CREDITS_CONFIG WHERE config_id = ?", array($this->_configId))) {
+		if(!$this->db->query("DELETE FROM WEBENGINE_CREDITS_CONFIG WHERE config_id = ?", array($this->_configId))) {
 			throw new Exception("There has been an error deleting the configuration, check for database errors.");
 		}
 	}
@@ -392,9 +394,9 @@ class CreditSystem {
 	public function showConfigs($singleConfig = false) {
 		if($singleConfig) {
 			if(!$this->_configId) throw new Exception("You have not set a configuration id.");
-			return $this->muonline->query_fetch_single("SELECT * FROM WEBENGINE_CREDITS_CONFIG WHERE config_id = ?", array($this->_configId));
+			return $this->db->query_fetch_single("SELECT * FROM WEBENGINE_CREDITS_CONFIG WHERE config_id = ?", array($this->_configId));
 		} else {
-			$result = $this->muonline->query_fetch("SELECT * FROM WEBENGINE_CREDITS_CONFIG ORDER BY config_id ASC");
+			$result = $this->db->query_fetch("SELECT * FROM WEBENGINE_CREDITS_CONFIG ORDER BY config_id ASC");
 			if($result) return $result;
 			return false;
 		}
@@ -512,7 +514,7 @@ class CreditSystem {
 			. "VALUES "
 			. "(:config, :identifier, :credits, :transaction, :timestamp, :inadmincp, :module, :ip)";
 		
-		$saveLog = $this->muonline->query($query, $data);
+		$saveLog = $this->db->query($query, $data);
 	}
 	
 	/**
@@ -522,7 +524,7 @@ class CreditSystem {
 	 * @return array
 	 */
 	public function getLogs($limit=50) {
-		$result = $this->muonline->query_fetch("SELECT TOP 50 * FROM WEBENGINE_CREDITS_LOGS ORDER BY log_id DESC");
+		$result = $this->db->query_fetch("SELECT TOP 50 * FROM WEBENGINE_CREDITS_LOGS ORDER BY log_id DESC");
 		if(is_array($result)) return $result;
 	}
 	

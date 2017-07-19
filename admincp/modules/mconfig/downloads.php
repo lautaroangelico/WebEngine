@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -13,6 +13,8 @@
 ?>
 <h2>Downloads Settings</h2>
 <?php
+$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
+
 $downloadTypes = array (
 	1 => 'Client',
 	2 => 'Patch',
@@ -58,14 +60,18 @@ function saveChanges() {
 }
 
 function updateDownloadsCACHE() {
-	global $dB;
-	$dbDATA = $dB->query_fetch("SELECT * FROM WEBENGINE_DOWNLOADS ORDER BY download_type ASC, download_id ASC");
+	global $dB, $dB2;
+	$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
+	
+	$dbDATA = $database->query_fetch("SELECT * FROM WEBENGINE_DOWNLOADS ORDER BY download_type ASC, download_id ASC");
 	$cacheDATA = BuildCacheData($dbDATA);
 	UpdateCache('downloads.cache',$cacheDATA);
 }
 
 function addDownload($DATA) {
-	global $dB;
+	global $dB, $dB2;
+	$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
+	
 	if(check_value($DATA['downloads_add_title']) && check_value($DATA['downloads_add_link']) && check_value($DATA['downloads_add_type'])) {
 		$sqlDATA = array(
 			$DATA['downloads_add_title'],
@@ -75,7 +81,7 @@ function addDownload($DATA) {
 			$DATA['downloads_add_type']
 		);
 		
-		$add = $dB->query("INSERT INTO WEBENGINE_DOWNLOADS (download_title, download_link, download_size, download_host, download_type) VALUES (?, ?, ?, ?, ?)", $sqlDATA);
+		$add = $database->query("INSERT INTO WEBENGINE_DOWNLOADS (download_title, download_link, download_size, download_host, download_type) VALUES (?, ?, ?, ?, ?)", $sqlDATA);
 		if($add) {
 		
 			// UPDATE CACHE
@@ -91,9 +97,11 @@ function addDownload($DATA) {
 }
 
 function editDownload($DATA) {
-	global $dB;
+	global $dB, $dB2;
+	$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
+	
 	if(check_value($DATA['downloads_edit_id']) && check_value($DATA['downloads_edit_title']) && check_value($DATA['downloads_edit_link']) && check_value($DATA['downloads_edit_type'])) {
-		$edit = $dB->query("UPDATE WEBENGINE_DOWNLOADS SET download_title = '".$DATA['downloads_edit_title']."', download_link = '".$DATA['downloads_edit_link']."', download_size = '".$DATA['downloads_edit_size']."', download_host = '".$DATA['downloads_edit_host']."', download_type = '".$DATA['downloads_edit_type']."' WHERE download_id = '".$DATA['downloads_edit_id']."'");
+		$edit = $database->query("UPDATE WEBENGINE_DOWNLOADS SET download_title = '".$DATA['downloads_edit_title']."', download_link = '".$DATA['downloads_edit_link']."', download_size = '".$DATA['downloads_edit_size']."', download_host = '".$DATA['downloads_edit_host']."', download_type = '".$DATA['downloads_edit_type']."' WHERE download_id = '".$DATA['downloads_edit_id']."'");
 		if($edit) {		
 			// UPDATE CACHE
 			updateDownloadsCACHE();
@@ -107,9 +115,11 @@ function editDownload($DATA) {
 }
 
 function deleteDownload($id) {
-	global $dB;
+	global $dB, $dB2;
+	$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
+	
 	if(check_value($id)) {
-		$delete = $dB->query("DELETE FROM WEBENGINE_DOWNLOADS WHERE download_id = '$id'");
+		$delete = $database->query("DELETE FROM WEBENGINE_DOWNLOADS WHERE download_id = '$id'");
 		if($delete) {
 			// UPDATE CACHE
 			updateDownloadsCACHE();
@@ -175,7 +185,7 @@ loadModuleConfigs('downloads');
 <hr>
 <h3>Manage Downloads</h3>
 <?php
-$downloads = $dB->query_fetch("SELECT * FROM WEBENGINE_DOWNLOADS ORDER BY download_type ASC, download_id ASC");
+$downloads = $database->query_fetch("SELECT * FROM WEBENGINE_DOWNLOADS ORDER BY download_type ASC, download_id ASC");
 if(is_array($downloads)) {
 echo '
 <table class="table table-striped table-bordered table-hover">
@@ -205,7 +215,7 @@ echo '
 		</td>
 		<td>
 		<input type="submit" class="btn btn-success" name="downloads_edit_submit" value="Save"/>
-		<a href="index.php?module=modules_manager&config=downloads&deletelink='.$thisDownload['download_id'].'" class="btn btn-block"><i class="icon-remove"></i></a>
+		<a href="index.php?module=modules_manager&config=downloads&deletelink='.$thisDownload['download_id'].'" class="btn btn-danger">Remove</a>
 		</td>
 	</tr>
 	</form>';
@@ -244,13 +254,3 @@ echo '</table>';
 	</tr>
 </table>
 </form>
-
-
-
-
-
-
-
-
-
-

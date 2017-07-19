@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -12,6 +12,13 @@
  */
 
 class Plugins {
+	
+	function __construct() {
+		global $dB, $dB2;
+		
+		$this->db = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
+	}
+	
 	public function importPlugin($_FILE) {
 		if($_FILE["file"]["type"] == "text/xml") {
 			$xml = simplexml_load_file($_FILE["file"]["tmp_name"]);
@@ -124,7 +131,6 @@ class Plugins {
 	}
 	
 	private function installPlugin($pluginDATA) {
-		global $dB,$_SESSION;
 		$compatibility = $pluginDATA['compatibility']['webengine'];
 		$files = $pluginDATA['files']['file'];
 		if(is_array($pluginDATA['compatibility']['webengine'])) {
@@ -144,7 +150,7 @@ class Plugins {
 			time(),
 			$_SESSION['username']
 		);
-		$query = $dB->query("INSERT INTO WEBENGINE_PLUGINS (name, author, version, compatibility, folder, files, status, install_date, installed_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", $data);
+		$query = $this->db->query("INSERT INTO WEBENGINE_PLUGINS (name, author, version, compatibility, folder, files, status, install_date, installed_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", $data);
 		if($query) {
 			return true;
 		} else {
@@ -153,14 +159,12 @@ class Plugins {
 	}
 	
 	public function retrieveInstalledPlugins() {
-		global $dB;
-		$plugins = $dB->query_fetch("SELECT * FROM WEBENGINE_PLUGINS ORDER BY id ASC");
+		$plugins = $this->db->query_fetch("SELECT * FROM WEBENGINE_PLUGINS ORDER BY id ASC");
 		return $plugins;
 	}
 	
 	public function updatePluginStatus($plugin_id,$new_status) {
-		global $dB;
-		$update = $dB->query("UPDATE WEBENGINE_PLUGINS SET status = ? WHERE id = ?", array($new_status, $plugin_id));
+		$update = $this->db->query("UPDATE WEBENGINE_PLUGINS SET status = ? WHERE id = ?", array($new_status, $plugin_id));
 		$update_cache = $this->rebuildPluginsCache();
 		if(!$update_cache) {
 			message('error','Could not update plugins cache data, make sure the file exists and it\'s writable!');
@@ -168,8 +172,7 @@ class Plugins {
 	}
 	
 	public function uninstallPlugin($plugin_id) {
-		global $dB;
-		$uninstall = $dB->query("DELETE FROM WEBENGINE_PLUGINS WHERE id = ?", array($plugin_id));
+		$uninstall = $this->db->query("DELETE FROM WEBENGINE_PLUGINS WHERE id = ?", array($plugin_id));
 		if($uninstall) {
 			return true;
 		} else {
@@ -178,8 +181,7 @@ class Plugins {
 	}
 	
 	public function rebuildPluginsCache() {
-		global $dB;
-		$plugins = $dB->query_fetch("SELECT * FROM WEBENGINE_PLUGINS WHERE status = 1 ORDER BY id ASC");
+		$plugins = $this->db->query_fetch("SELECT * FROM WEBENGINE_PLUGINS WHERE status = 1 ORDER BY id ASC");
 		if(is_array($plugins)) {
 			
 			$cacheDATA = array();
@@ -208,8 +210,7 @@ class Plugins {
 	}
 	
 	public function gotEnabledPlugins() {
-		global $dB;
-		$plugins = $dB->query_fetch("SELECT * FROM WEBENGINE_PLUGINS WHERE status = 1");
+		$plugins = $this->db->query_fetch("SELECT * FROM WEBENGINE_PLUGINS WHERE status = 1");
 		if($plugins) {
 			return true;
 		} else {

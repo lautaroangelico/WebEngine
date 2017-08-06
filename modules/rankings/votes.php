@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.7
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -17,7 +17,6 @@ try {
 	
 	$Rankings = new Rankings();
 	$Rankings->rankingsMenu();
-	$Character = new Character();
 	loadModuleConfigs('rankings');
 	
 	if(!mconfig('rankings_enable_votes')) throw new Exception(lang('error_44',true));
@@ -36,14 +35,12 @@ try {
 	echo '</tr>';
 	$i = 0;
 	foreach($ranking_data as $rdata) {
-		$accountInfo = $common->accountInformation($rdata[0]);
-		$characterName = $Character->AccountCharacterIDC($accountInfo[_CLMN_USERNM_]);
 		if($i>=1) {
 			echo '<tr>';
 			if(mconfig('rankings_show_place_number')) {
 				echo '<td class="rankings-table-place">'.$i.'</td>';
 			}
-			echo '<td>'.$characterName.'</td>';
+			echo '<td>'.$rdata[0].'</td>';
 			echo '<td>'.$rdata[1].'</td>';
 			echo '</tr>';
 		}

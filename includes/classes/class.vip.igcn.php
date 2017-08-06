@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.7
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -28,16 +28,17 @@ class Vip {
 	private $_package;
 	
 	function __construct() {
-		global $dB;
+		global $dB, $dB2;
 		
 		# common class
-		$this->common = new common($dB);
+		$this->common = new common($dB, $dB2);
 		
 		# check files config
 		if(strtolower(config('server_files',true)) != 'igcn') throw new Exception('This library is only compatible with IGCN server files.');
 		
 		# database
 		$this->mu = $dB;
+		$this->me = $dB2;
 		
 		# configs
 		$vipConfigs = loadConfigurations('usercp.vip');
@@ -98,7 +99,7 @@ class Vip {
 		if(!check_value($this->_username)) return;
 		if(!is_array($this->_accountInfo)) return;
 		try {
-			$creditSystem = new CreditSystem($this->common, new Character(), $this->mu);
+			$creditSystem = new CreditSystem($this->common, new Character(), $this->mu, $this->me);
 			$creditSystem->setConfigId($this->config['credit_config']);
 			$configSettings = $creditSystem->showConfigs(true);
 			switch($configSettings['config_user_col_id']) {

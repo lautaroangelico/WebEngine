@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.7
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -86,8 +86,8 @@ echo '<div class="list-group">';
 	$chk_1 = version_compare(PHP_VERSION, '5.4', '>=');
 	$check_1 = ($chk_1 ? '<span class="label label-success">Ok</span>' : '<span class="label label-danger">Fix</span>');
 	echo '<div class="list-group-item">';
-		echo 'PHP Version ('.PHP_VERSION.')';
-		echo '<span class="pull-right">'.$check_1.'</span>';
+		echo 'PHP 5.4 or higher';
+		echo '<span class="pull-right">(PHP '.PHP_VERSION.') '.$check_1.'</span>';
 	echo '</div>';
 
 	$chk_2 = (ini_get('short_open_tag') == 1 ? true : false);

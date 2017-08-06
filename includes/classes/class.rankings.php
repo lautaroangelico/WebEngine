@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.6
+ * @version 1.0.9.7
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -205,7 +205,23 @@ class Rankings {
 		$result = $this->db->query_fetch("SELECT TOP ".$this->_results." user_id,COUNT(*) as count FROM WEBENGINE_VOTE_LOGS WHERE timestamp >= ? GROUP BY user_id ORDER BY count DESC", array($voteMonthTimestamp));
 		if(!is_array($result)) return;
 		
-		$cache = BuildCacheData($result);
+		$finalResult = array();
+		foreach($result as $data) {
+			$common = new common($this->mu, $this->me);
+			
+			$accountInfo = $common->accountInformation($data['user_id']);
+			if(!is_array($accountInfo)) continue;
+			
+			$Character = new Character();
+			$characterName = $Character->AccountCharacterIDC($accountInfo[_CLMN_USERNM_]);
+			if(!check_value($characterName)) continue;
+			
+			if(in_array($characterName, $this->_excludedCharacters)) continue;
+			
+			$finalResult[] = array($characterName, $data['count']);
+		}
+		
+		$cache = BuildCacheData($finalResult);
 		UpdateCache('rankings_votes.cache',$cache);
 	}
 	

@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.7
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -122,7 +122,7 @@ try {
 			# sort by order
 			# http://stackoverflow.com/questions/2699086/sort-multi-dimensional-array-by-value
 			usort($newCfg, function($a, $b) {
-				return $a['order'] <=> $b['order'];
+				return $a['order'] - $b['order'];
 			});
 			
 			# encode

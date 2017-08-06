@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.7
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -12,7 +12,6 @@
  */
 
 // CONFIG
-$cfg['display_border'] = false;
 $cfg['min_size'] = 10;
 $cfg['max_size'] = 500;
 $cfg['def_size'] = 40;
@@ -100,10 +99,6 @@ for($y=0; $y<$size; $y++) {
 }
 
 header("Content-type: image/gif");
-if($cfg['display_border']) {
-	ImageRectangle($img, 0, 0, $size-1, $size-1, ImageColorAllocate($img, 0, 0, 0));
-} else {
-	ImageRectangle($img, 0, 0, $size-1, $size-1);
-}
+ImageRectangle($img, 0, 0, $size-1, $size-1, ImageColorAllocate($img, 0, 0, 0));
 imagecolortransparent($img, imagecolorexact($img, 17, 17, 17));
 ImageGif($img);

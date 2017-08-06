@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.6
+ * @version 1.0.9.7
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -17,7 +17,7 @@ session_start();
 ob_start();
 
 # ArcticEngine Version
-define('__WEBENGINE_VERSION__', '1.0.9.6');
+define('__WEBENGINE_VERSION__', '1.0.9.7');
 
 # Set Encoding
 @ini_set('default_charset', 'utf-8');

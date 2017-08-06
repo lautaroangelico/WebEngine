@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.7
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -24,7 +24,7 @@ if(check_value($_GET['name'])) {
 				if(!Validator::UnsignedNumber($_POST['characteredit_class'])) throw new Exception("All the entered values must be numeric.");
 				if(!Validator::UnsignedNumber($_POST['characteredit_level'])) throw new Exception("All the entered values must be numeric.");
 				if(!Validator::UnsignedNumber($_POST['characteredit_resets'])) throw new Exception("All the entered values must be numeric.");
-				if(!Validator::UnsignedNumber($_POST['characteredit_gresets'])) throw new Exception("All the entered values must be numeric.");
+				if(check_value($_POST['characteredit_gresets'])) if(!Validator::UnsignedNumber($_POST['characteredit_gresets'])) throw new Exception("All the entered values must be numeric.");
 				if(!Validator::UnsignedNumber($_POST['characteredit_zen'])) throw new Exception("All the entered values must be numeric.");
 				if(!Validator::UnsignedNumber($_POST['characteredit_lvlpoints'])) throw new Exception("All the entered values must be numeric.");
 				if(!Validator::UnsignedNumber($_POST['characteredit_pklevel'])) throw new Exception("All the entered values must be numeric.");
@@ -47,7 +47,6 @@ if(check_value($_GET['name'])) {
 					'class' => $_POST['characteredit_class'],
 					'level' => $_POST['characteredit_level'],
 					'resets' => $_POST['characteredit_resets'],
-					'gresets' => $_POST['characteredit_gresets'],
 					'zen' => $_POST['characteredit_zen'],
 					'lvlpoints' => $_POST['characteredit_lvlpoints'],
 					'pklevel' => $_POST['characteredit_pklevel'],
@@ -58,11 +57,15 @@ if(check_value($_GET['name'])) {
 					'cmd' => $_POST['characteredit_cmd']
 				);
 				
+				if(check_value($_POST['characteredit_gresets'])) {
+					$updateData['gresets'] = $_POST['characteredit_gresets'];
+				}
+				
 				$query = "UPDATE "._TBL_CHR_." SET ";
 					$query .= _CLMN_CHR_CLASS_ . " = :class,";
 					$query .= _CLMN_CHR_LVL_ . " = :level,";
 					$query .= _CLMN_CHR_RSTS_ . " = :resets,";
-					$query .= _CLMN_CHR_GRSTS_ . " = :gresets,";
+					if(check_value($_POST['characteredit_gresets'])) $query .= _CLMN_CHR_GRSTS_ . " = :gresets,";
 					$query .= _CLMN_CHR_ZEN_ . " = :zen,";
 					$query .= _CLMN_CHR_LVLUP_POINT_ . " = :lvlpoints,";
 					$query .= _CLMN_CHR_PK_LEVEL_ . " = :pklevel,";

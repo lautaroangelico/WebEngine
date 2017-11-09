@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.8
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -11,16 +11,8 @@
  * http://opensource.org/licenses/MIT
  */
 
-/* CASTLE SIEGE CACHE UPDATE CRON JOB */
-
 // File Name
 $file_name = basename(__FILE__);
-
-// Build Directory Path
-$dir_path = str_replace('\\','/',dirname(dirname(__FILE__))).'/';
-
-// Load WebEngine
-include($dir_path . 'webengine.php');
 
 // Gather database data
 

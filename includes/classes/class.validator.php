@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.8
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -42,7 +42,8 @@ class Validator{
 	}
 
 	public static function Ip($string){
-		return (bool)preg_match("/^(1?\d{1,2}|2([0-4]\d|5[0-5]))(\.(1?\d{1,2}|2([0-4]\d|5[0-5]))){3}$/", $string);
+		if(!filter_var($string, FILTER_VALIDATE_IP)) return false;
+		return true;
 	}
 
 	public static function Number($integer, $max=null, $min=0){

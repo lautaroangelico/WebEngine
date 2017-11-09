@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.7
+ * @version 1.0.9.8
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -13,11 +13,13 @@
 
 //session_name('WebEngine109'); # session name (change to your server name and uncomment)
 //session_set_cookie_params(0, '/', 'muonline.com'); # same session with and without www protocol (edit with your domain and uncomment)
-session_start();
-ob_start();
+if(access != 'cron') {
+	@ob_start();
+	session_start();
+}
 
 # ArcticEngine Version
-define('__WEBENGINE_VERSION__', '1.0.9.7');
+define('__WEBENGINE_VERSION__', '1.0.9.8');
 
 # Set Encoding
 @ini_set('default_charset', 'utf-8');
@@ -30,7 +32,7 @@ define('__WEBENGINE_VERSION__', '1.0.9.7');
 define('HTTP_HOST', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'CLI');
 define('SERVER_PROTOCOL', (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on' ) ? 'https://' : 'http://');
 define('__ROOT_DIR__', str_replace('\\','/',dirname(dirname(__FILE__))).'/'); // /home/user/public_html/
-define('__RELATIVE_ROOT__', str_ireplace(rtrim(str_replace('\\','/', realpath(str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['SCRIPT_FILENAME']))), '/'), '', __ROOT_DIR__));// /
+define('__RELATIVE_ROOT__', (!empty($_SERVER['SCRIPT_NAME'])) ? str_ireplace(rtrim(str_replace('\\','/', realpath(str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['SCRIPT_FILENAME']))), '/'), '', __ROOT_DIR__) : '/');// /
 define('__BASE_URL__', SERVER_PROTOCOL.HTTP_HOST.__RELATIVE_ROOT__); // http(s)://www.mysite.com/
 
 # Private Paths
@@ -116,7 +118,7 @@ if($checkConfigs) {
 if(!@include_once(__PATH_CONFIGS__ . strtolower($config['server_files']) . '.tables.php')) throw new Exception('Could not load the table definitions.');
 
 # CMS Status
-if(!$config['system_active']) {
+if(!$config['system_active'] && access != 'cron') {
 	if(!array_key_exists($_SESSION['username'], $config['admins'])) {
 		header('Location: ' . $config['maintenance_page']);
 		die();
@@ -163,12 +165,12 @@ if($config['SQL_USE_2_DB']) {
 $common = new common($dB, $dB2);
 
 # IP Blocking System
-if($config['ip_block_system_enable']) {
+if($config['ip_block_system_enable'] && access != 'cron') {
 	if($common->isIpBlocked($_SERVER['REMOTE_ADDR'])) throw new Exception('Your IP address has been blocked.');
 }
 
 # Anti-flood System
-if($config['flood_check_enable']) {
+if($config['flood_check_enable'] && access != 'cron') {
 	if(!check_value($_SESSION['track_timestamp'])) {
 		$_SESSION['track_timestamp'] = time();
 		$_SESSION['track_actions'] = 0;

@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.8
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -87,7 +87,7 @@ if(check_value($_POST['settings_submit'])) {
 		
 		# server files
 		if(!check_value($_POST['server_files'])) throw new Exception('Invalid Server Files setting.');
-		if(!in_array($_POST['server_files'], array('MUE', 'IGCN'))) throw new Exception('Invalid Server Files setting.');
+		if(!in_array($_POST['server_files'], array('MUE', 'IGCN', 'CUSTOM'))) throw new Exception('Invalid Server Files setting.');
 		$setting['server_files'] = $_POST['server_files'];
 		
 		# language switch
@@ -296,6 +296,12 @@ echo '<div class="col-md-12">';
 						echo '<label>';
 							echo '<input type="radio" name="server_files" value="MUE" '.(config('server_files',true) == 'MUE' ? 'checked' : null).'>';
 							echo 'MUE';
+						echo '</label>';
+					echo '</div>';
+					echo '<div class="radio">';
+						echo '<label>';
+							echo '<input type="radio" name="server_files" value="CUSTOM" '.(config('server_files',true) == 'CUSTOM' ? 'checked' : null).'>';
+							echo 'CUSTOM';
 						echo '</label>';
 					echo '</div>';
 				echo '</td>';

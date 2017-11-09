@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.6
+ * @version 1.0.9.8
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -12,6 +12,8 @@
  */
 
 class Account extends common {
+	
+	private $_defaultAccountSerial = '1111111111111';
 	
 	public function registerAccount($username, $password, $cpassword, $email) {
 		
@@ -54,8 +56,8 @@ class Account extends common {
 		$data = array(
 			'username' => $username,
 			'password' => $password,
-			'name' => 'webengine',
-			'serial' => '111111111111',
+			'name' => $username,
+			'serial' => $this->_defaultAccountSerial,
 			'email' => $email
 		);
 		
@@ -394,8 +396,8 @@ class Account extends common {
 		$data = array(
 			'username' => $verifyKey['registration_account'],
 			'password' => Decode($verifyKey['registration_password']),
-			'name' => 'webengine',
-			'serial' => '111111111111',
+			'name' => $verifyKey['registration_account'],
+			'serial' => $this->_defaultAccountSerial,
 			'email' => $verifyKey['registration_email']
 		);
 		

@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9.2
+ * @version 1.0.9.8
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -26,7 +26,7 @@ try {
 			
 			$email = new Email();
 			$email->setSubject(mconfig('subject'));
-			$email->setFrom($_POST['contact_email'], 'Contact Form'));
+			$email->setFrom($_POST['contact_email'], 'Contact Form');
 			$email->setMessage($_POST['contact_message']);
 			$email->addAddress(mconfig('sendto'));
 			$email->send();

@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.7
+ * @version 1.0.9.8
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -146,6 +146,14 @@ echo '<div class="list-group">';
 	echo '<div class="list-group-item">';
 		echo 'JSON';
 		echo '<span class="pull-right">'.$check_9.'</span>';
+	echo '</div>';
+	
+	$chk_10 = file_get_contents(__BASE_URL__ . 'includes/config/webengine.json');
+	$chk_10_code = explode(' ', $http_response_header[0]);
+	$chk_10 = ($chk_10_code[1] == '403' ? '<span class="label label-success">Ok</span>' : '(private directories can be accessed by everyone) <span class="label label-danger">Fix</span>');
+	echo '<div class="list-group-item">';
+		echo 'Apache .htaccess';
+		echo '<span class="pull-right">'.$chk_10.'</span>';
 	echo '</div>';
 	
 echo '</div>';

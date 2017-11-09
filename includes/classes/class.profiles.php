@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.8
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -178,7 +178,7 @@ class weProfiles {
 			$playerData[_CLMN_CHR_STAT_ENE_],
 			$playerData[_CLMN_CHR_STAT_CMD_],
 			$playerData[_CLMN_CHR_PK_KILLS_],
-			$playerData[_CLMN_CHR_GRSTS_],
+			(check_value($playerData[_CLMN_CHR_GRSTS_]) ? $playerData[_CLMN_CHR_GRSTS_] : 0),
 			$guild,
 			$status
 		);

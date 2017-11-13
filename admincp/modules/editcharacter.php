@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.7
+ * @version 1.0.9.8
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -146,10 +146,14 @@ if(check_value($_GET['name'])) {
 							echo '<th>Resets:</th>';
 							echo '<td><input type="number" name="characteredit_resets" value="'.$charData[_CLMN_CHR_RSTS_].'"/></td>';
 						echo '</tr>';
-						echo '<tr>';
-							echo '<th>Grand Resets:</th>';
-							echo '<td><input type="number" name="characteredit_gresets" value="'.$charData[_CLMN_CHR_GRSTS_].'"/></td>';
-						echo '</tr>';
+						
+						if(defined('_CLMN_CHR_GRSTS_')) {
+							echo '<tr>';
+								echo '<th>Grand Resets:</th>';
+								echo '<td><input type="number" name="characteredit_gresets" value="'.$charData[_CLMN_CHR_GRSTS_].'"/></td>';
+							echo '</tr>';
+						}
+						
 						echo '<tr>';
 							echo '<th>Money:</th>';
 							echo '<td><input type="number" name="characteredit_zen" value="'.$charData[_CLMN_CHR_ZEN_].'"/></td>';

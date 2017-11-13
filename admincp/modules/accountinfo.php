@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.8
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -94,55 +94,30 @@ if(check_value($_GET['id'])) {
 								echo '<th>Email:</th>';
 								echo '<td>'.$accountInfo[_CLMN_EMAIL_].'</td>';
 							echo '</tr>';
-							echo '<tr>';
-								echo '<th>Credits:</th>';
-								echo '<td>'.$accountInfo[_CLMN_CREDITS_].'</td>';
-							echo '</tr>';
-							echo '<tr>';
-								echo '<th>TempCredits:</th>';
-								echo '<td>'.$accountInfo[_CLMN_CREDITS_TEMP_].'</td>';
-							echo '</tr>';
+							
+							if(config('server_files', true) == 'MUE') {
+								echo '<tr>';
+									echo '<th>Credits:</th>';
+									echo '<td>'.$accountInfo[_CLMN_CREDITS_].'</td>';
+								echo '</tr>';
+								echo '<tr>';
+									echo '<th>TempCredits:</th>';
+									echo '<td>'.$accountInfo[_CLMN_CREDITS_TEMP_].'</td>';
+								echo '</tr>';
+								echo '<tr>';
+									echo '<th>Master Key:</th>';
+									echo '<td>'.$accountInfo[_CLMN_MASTER_KEY_].'</td>';
+								echo '</tr>';
+							}
+							
 							echo '<tr>';
 								echo '<th>Banned:</th>';
 								echo '<td>'.$isBanned.'</td>';
-							echo '</tr>';
-							echo '<tr>';
-								echo '<th>Master Key:</th>';
-								echo '<td>'.$accountInfo[_CLMN_MASTER_KEY_].'</td>';
 							echo '</tr>';
 						echo '</table>';
 					echo '</div>';
 					echo '</div>';
 				}
-				
-				if($accountInfoConfig['showIpInfo']) {
-					// ACCOUNTS IP ADDRESS (MuEngine - MuLogEx tbl)
-					$checkMuLogEx = $dB->query_fetch_single("SELECT * FROM sysobjects WHERE xtype = 'U' AND name = ?", array(_TBL_LOGEX_));
-					echo '<div class="panel panel-default">';
-					echo '<div class="panel-heading">Account\'s IP Address (MUE)</div>';
-					echo '<div class="panel-body">';
-						if($checkMuLogEx) {
-							$accountIpAddress = $common->retrieveAccountIPs($accountInfo[_CLMN_USERNM_]);
-							if(is_array($accountIpAddress)) {
-								echo '<table class="table table-no-border table-hover">';
-									foreach($accountIpAddress as $accountIp) {
-										echo '<tr>';
-											echo '<td><a href="http://whatismyipaddress.com/ip/'.urlencode($accountIp[_CLMN_LOGEX_IP_]).'" target="_blank">'.$accountIp[_CLMN_LOGEX_IP_].'</a></td>';
-										echo '</tr>';
-									}
-								echo '</table>';
-							} else {
-								message('warning', 'No IP address found.', ' ');
-							}
-						} else {
-							message('warning', 'Could not find table <strong>'._TBL_LOGEX_.'</strong> in the database.', ' ');
-						}
-					echo '</div>';
-					echo '</div>';
-				}
-				
-			echo '</div>';
-			echo '<div class="col-md-6">';
 				
 				if($accountInfoConfig['showStatusInfo']) {
 					// ACCOUNT STATUS
@@ -192,13 +167,7 @@ if(check_value($_GET['id'])) {
 					echo '</div>';
 				}
 				
-			echo '</div>';
-		echo '</div>';
-		
-		echo '<h2>Edit Account</h2>';
-		echo '<div class="row">';
-			// CHANGE PASSWORD
-			echo '<div class="col-md-6">';
+				// CHANGE PASSWORD
 				echo '<div class="panel panel-default">';
 				echo '<div class="panel-heading">Change Account\'s Password</div>';
 				echo '<div class="panel-body">';
@@ -215,10 +184,8 @@ if(check_value($_GET['id'])) {
 					echo '</form>';
 				echo '</div>';
 				echo '</div>';
-			echo '</div>';
-			
-			// CHANGE EMAIL ADDRESS
-			echo '<div class="col-md-6">';
+				
+				// CHANGE EMAIL
 				echo '<div class="panel panel-default">';
 				echo '<div class="panel-heading">Change Account\'s Email</div>';
 				echo '<div class="panel-body">';
@@ -235,6 +202,95 @@ if(check_value($_GET['id'])) {
 					echo '</form>';
 				echo '</div>';
 				echo '</div>';
+				
+			echo '</div>';
+			echo '<div class="col-md-6">';
+				
+				if($accountInfoConfig['showIpInfo']) {
+					
+					if(config('server_files', true) == 'MUE') {
+						// ACCOUNTS IP ADDRESS (MuEngine - MuLogEx tbl)
+						$checkMuLogEx = $dB->query_fetch_single("SELECT * FROM sysobjects WHERE xtype = 'U' AND name = ?", array(_TBL_LOGEX_));
+						echo '<div class="panel panel-default">';
+						echo '<div class="panel-heading">Account\'s IP Address (MUE)</div>';
+						echo '<div class="panel-body">';
+							if($checkMuLogEx) {
+								$accountIpAddress = $common->retrieveAccountIPs($accountInfo[_CLMN_USERNM_]);
+								if(is_array($accountIpAddress)) {
+									echo '<table class="table table-no-border table-hover">';
+										foreach($accountIpAddress as $accountIp) {
+											echo '<tr>';
+												echo '<td><a href="http://whatismyipaddress.com/ip/'.urlencode($accountIp[_CLMN_LOGEX_IP_]).'" target="_blank">'.$accountIp[_CLMN_LOGEX_IP_].'</a></td>';
+											echo '</tr>';
+										}
+									echo '</table>';
+								} else {
+									message('warning', 'No IP address found.', ' ');
+								}
+							} else {
+								message('warning', 'Could not find table <strong>'._TBL_LOGEX_.'</strong> in the database.', ' ');
+							}
+						echo '</div>';
+						echo '</div>';
+					}
+					
+					if(config('server_files', true) == 'IGCN') {
+						$accountDB = config('SQL_USE_2_DB', true) == true ? $dB2 : $dB;
+						
+						// ACCOUNT IP LIST
+						echo '<div class="panel panel-default">';
+						echo '<div class="panel-heading">Account\'s IP Address</div>';
+						echo '<div class="panel-body">';
+							
+							$accountIpHistory = $accountDB->query_fetch("SELECT DISTINCT("._CLMN_CH_IP_.") FROM "._TBL_CH_." WHERE "._CLMN_CH_ACCID_." = ?", array($accountInfo[_CLMN_USERNM_]));
+							if(is_array($accountIpHistory)) {
+								echo '<table class="table table-no-border table-hover">';
+									foreach($accountIpHistory as $accountIp) {
+										echo '<tr>';
+											echo '<td><a href="http://whatismyipaddress.com/ip/'.urlencode($accountIp[_CLMN_CH_IP_]).'" target="_blank">'.$accountIp[_CLMN_CH_IP_].'</a></td>';
+										echo '</tr>';
+									}
+								echo '</table>';
+							} else {
+								message('warning', 'No IP addresses found in the database.');
+							}
+							
+						echo '</div>';
+						echo '</div>';
+						
+						// ACCOUNT CONNECTION HISTORY
+						echo '<div class="panel panel-default">';
+						echo '<div class="panel-heading">Account Connection History (last 25)</div>';
+						echo '<div class="panel-body">';
+							
+							$accountConHistory = $accountDB->query_fetch("SELECT TOP 25 * FROM "._TBL_CH_." WHERE "._CLMN_CH_ACCID_." = ? AND "._CLMN_CH_STATE_." = ? ORDER BY "._CLMN_CH_ID_." ASC", array($accountInfo[_CLMN_USERNM_], 'Connect'));
+							if(is_array($accountConHistory)) {
+								echo '<table class="table table-no-border table-hover">';
+									echo '<tr>';
+										echo '<th>Date</th>';
+										echo '<th class="hidden-xs">Server</th>';
+										echo '<th>IP</th>';
+										echo '<th>HWID</th>';
+									echo '</tr>';
+									foreach($accountConHistory as $connection) {
+										echo '<tr>';
+											echo '<td>'.$connection[_CLMN_CH_DATE_].'</td>';
+											echo '<td class="hidden-xs">'.$connection[_CLMN_CH_SRVNM_].'</td>';
+											echo '<td>'.$connection[_CLMN_CH_IP_].'</td>';
+											echo '<td>'.$connection[_CLMN_CH_HWID_].'</td>';
+										echo '</tr>';
+									}
+								echo '</table>';
+							} else {
+								message('warning', 'No connection history found for account.');
+							}
+							
+						echo '</div>';
+						echo '</div>';
+					}
+					
+				}
+				
 			echo '</div>';
 		echo '</div>';
 		

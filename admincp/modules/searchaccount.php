@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.8
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -26,7 +26,8 @@
 			if(!Validator::Length($_POST['search_request'], 11, 2)) throw new Exception("The username can be 3 to 10 characters long.");
 			$searchdb = (config('SQL_USE_2_DB', true) == true ? $dB2 : $dB);
 			
-			$searchResults = $searchdb->query_fetch("SELECT memb_guid, memb___id FROM MEMB_INFO WHERE memb___id LIKE '%".$_POST['search_request']."%'");
+			$searchRequest = '%'.$_POST['search_request'].'%';
+			$searchResults = $searchdb->query_fetch("SELECT "._CLMN_MEMBID_.", "._CLMN_USERNM_." FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." LIKE ?", array($searchRequest));
 			if(!$searchResults) throw new Exception("No results found.");
 			
 			if(is_array($searchResults)) {
@@ -41,9 +42,9 @@
 					echo '<tbody>';
 				foreach($searchResults as $account) {
 					echo '<tr>';
-						echo '<td>'.$account['memb___id'].'</td>';
+						echo '<td>'.$account[_CLMN_USERNM_].'</td>';
 						echo '<td style="text-align:right;">';
-							echo '<a href="'.admincp_base("accountinfo&id=".$account['memb_guid']).'" class="btn btn-xs btn-default">Account Information</a>';
+							echo '<a href="'.admincp_base("accountinfo&id=".$account[_CLMN_MEMBID_]).'" class="btn btn-xs btn-default">Account Information</a>';
 						echo '</td>';
 					echo '</tr>';
 				}

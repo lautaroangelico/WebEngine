@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.8
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -65,9 +65,8 @@ if($News->isNewsDirWritable()) {
 			<button type="submit" class="btn btn-large btn-block btn-success" name="news_submit" value="ok">Update News</button>
 		</form>
 		
-		<script src="//cdn.ckeditor.com/4.4.5/standard/ckeditor.js"></script>
+		<script src="//cdn.ckeditor.com/4.7.3/full/ckeditor.js"></script>
 		<script type="text/javascript">//<![CDATA[
-			//CKEDITOR.replace('editor1');
 			CKEDITOR.replace('news_content', {
 				language: 'en',
 				uiColor: '#f1f1f1'

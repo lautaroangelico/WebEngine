@@ -11,6 +11,7 @@
  * http://opensource.org/licenses/MIT
  */
 
+if(!defined('access')) define('access', '');
 //session_name('WebEngine109'); # session name (change to your server name and uncomment)
 //session_set_cookie_params(0, '/', 'muonline.com'); # same session with and without www protocol (edit with your domain and uncomment)
 if(access != 'cron') {

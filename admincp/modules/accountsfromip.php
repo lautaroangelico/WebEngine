@@ -1,9 +1,9 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.0.9.8
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -20,8 +20,6 @@
 </form>
 <br />
 <?php
-//debug($dB->query_fetch("SELECT TOP 10 * FROM MEMB_STAT"));
-
 if(check_value($_POST['ip_address'])) {
 	try {
 		if(!Validator::Ip($_POST['ip_address'])) throw new Exception("You have entered an invalid IP address.");
@@ -30,34 +28,11 @@ if(check_value($_POST['ip_address'])) {
 		echo '<div class="row">';
 			echo '<div class="col-md-6">';
 				echo '<div class="panel panel-primary">';
-				echo '<div class="panel-heading">MuLogEx</div>';
-				echo '<div class="panel-body">';
-					if(tableExists(_TBL_LOGEX_, $dB)) {
-						$MuLogExData = $dB->query_fetch("SELECT "._CLMN_LOGEX_ACCID_." FROM "._TBL_LOGEX_." WHERE "._CLMN_LOGEX_IP_." = ? GROUP BY "._CLMN_LOGEX_ACCID_."", array($_POST['ip_address']));
-						if(is_array($MuLogExData)) {
-							echo '<table class="table table-no-border table-hover">';
-							foreach($MuLogExData as $logExUser) {
-								echo '<tr>';
-									echo '<td>'.$logExUser[_CLMN_LOGEX_ACCID_].'</td>';
-									echo '<td style="text-align:right;"><a href="'.admincp_base("accountinfo&id=".$common->retrieveUserID($logExUser[_CLMN_LOGEX_ACCID_])).'" class="btn btn-xs btn-default">Account Information</a></td>';
-								echo '</tr>';
-							}
-							echo '</table>';
-						} else {
-							message('warning', 'No accounts found linked to this Ip.', ' ');
-						}
-					} else {
-						message('warning', 'Could not find table <strong>'._TBL_LOGEX_.'</strong> in the database.', ' ');
-					}
-				echo '</div>';
-				echo '</div>';
-			echo '</div>';
-			
-			echo '<div class="col-md-6">';
-				echo '<div class="panel panel-primary">';
 				echo '<div class="panel-heading">MEMB_STAT</div>';
 				echo '<div class="panel-body">';
-					$membStatData = $dB->query_fetch("SELECT "._CLMN_MS_MEMBID_." FROM "._TBL_MS_." WHERE "._CLMN_MS_IP_." = ? GROUP BY "._CLMN_MS_MEMBID_."", array($_POST['ip_address']));
+					
+					$searchdb = (config('SQL_USE_2_DB', true) == true ? $dB2 : $dB);
+					$membStatData = $searchdb->query_fetch("SELECT "._CLMN_MS_MEMBID_." FROM "._TBL_MS_." WHERE "._CLMN_MS_IP_." = ? GROUP BY "._CLMN_MS_MEMBID_."", array($_POST['ip_address']));
 					if(is_array($membStatData)) {
 						echo '<table class="table table-no-border table-hover">';
 							foreach($membStatData as $membStatUser) {

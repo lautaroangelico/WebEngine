@@ -3,13 +3,18 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.6
+ * @version 1.0.9.8
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
  */
+
+// check install directory
+if(file_exists(__ROOT_DIR__ . 'install/')) {
+	message('warning', 'Your WebEngine <strong>install</strong> directory still exists, it is recommended that you delete it.');
+}
 
 echo '<div class="row">';
 	echo '<div class="col-md-6">';

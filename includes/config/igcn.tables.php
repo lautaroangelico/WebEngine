@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.6
+ * @version 1.0.9.8
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
  * 
@@ -107,6 +107,14 @@ define('_TBL_VIP_', 'T_VIPList');
 	define('_CLMN_VIP_DATE_', 'Date');
 	define('_CLMN_VIP_TYPE_', 'Type');
 
+define('_TBL_CH_', 'ConnectionHistory');
+	define('_CLMN_CH_ID_', 'ID');
+	define('_CLMN_CH_ACCID_', 'AccountID');
+	define('_CLMN_CH_SRVNM_', 'ServerName');
+	define('_CLMN_CH_IP_', 'IP');
+	define('_CLMN_CH_DATE_', 'Date');
+	define('_CLMN_CH_STATE_', 'State');
+	define('_CLMN_CH_HWID_', 'HWID');
 	
 /*
  * custom: character_class

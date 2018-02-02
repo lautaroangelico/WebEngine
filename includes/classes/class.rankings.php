@@ -3,12 +3,12 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.7
- * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @version 1.0.9.9
+ * @author Lautaro Angelico <https://lautaroangelico.com/>
+ * @copyright (c) 2013-2018 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
- * http://opensource.org/licenses/MIT
+ * https://opensource.org/licenses/MIT
  */
 
 class Rankings {
@@ -77,6 +77,9 @@ class Rankings {
 			case "IGCN":
 				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_LVL_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_LVL_." DESC");
 				break;
+			case "CUSTOM":
+				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_LVL_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_LVL_." DESC");
+				break;
 			default:
 				return;
 		}
@@ -92,6 +95,9 @@ class Rankings {
 				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_RSTS_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_RSTS_." DESC");
 				break;
 			case "IGCN":
+				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_RSTS_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_RSTS_." DESC");
+				break;
+			case "CUSTOM":
 				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_RSTS_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_RSTS_." DESC");
 				break;
 			default:
@@ -111,6 +117,9 @@ class Rankings {
 			case "IGCN":
 				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_PK_KILLS_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_PK_KILLS_." DESC");
 				break;
+			case "CUSTOM":
+				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_PK_KILLS_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_PK_KILLS_." DESC");
+				break;
 			default:
 				return;
 		}
@@ -124,6 +133,12 @@ class Rankings {
 		switch($this->serverFiles) {
 			case "MUE":
 				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.", "._CLMN_CHR_GRSTS_.", "._CLMN_CHR_RSTS_.", "._CLMN_CHR_CLASS_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_GRSTS_." >= 1 AND "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_GRSTS_." DESC, "._CLMN_CHR_RSTS_." DESC");
+				break;
+			case "IGCN":
+				
+				break;
+			case "CUSTOM":
+				
 				break;
 			default:
 				return;
@@ -140,6 +155,9 @@ class Rankings {
 				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_GUILD_NAME_.","._CLMN_GUILD_MASTER_.","._CLMN_GUILD_SCORE_.","._CLMN_GUILD_LOGO_." FROM "._TBL_GUILD_." ORDER BY "._CLMN_GUILD_SCORE_." DESC");
 				break;
 			case "IGCN":
+				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_GUILD_NAME_.","._CLMN_GUILD_MASTER_.","._CLMN_GUILD_SCORE_.","._CLMN_GUILD_LOGO_." FROM "._TBL_GUILD_." ORDER BY "._CLMN_GUILD_SCORE_." DESC");
+				break;
+			case "CUSTOM":
 				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_GUILD_NAME_.","._CLMN_GUILD_MASTER_.","._CLMN_GUILD_SCORE_.","._CLMN_GUILD_LOGO_." FROM "._TBL_GUILD_." ORDER BY "._CLMN_GUILD_SCORE_." DESC");
 				break;
 			default:
@@ -159,6 +177,9 @@ class Rankings {
 			case "IGCN":
 				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.", "._CLMN_CHR_MLVL_.", "._CLMN_CHR_CLASS_.", "._CLMN_CHR_RSTS_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_MLVL_." DESC");
 				break;
+			case "CUSTOM":
+				
+				break;
 			default:
 				return;
 		}
@@ -176,6 +197,9 @@ class Rankings {
 			case "IGCN":
 				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." gens."._CLMN_GENS_NAME_.", gens."._CLMN_GENS_POINT_.", gens."._CLMN_GENS_TYPE_.", gens."._CLMN_GENS_RANK_.", char."._CLMN_CHR_CLASS_." as cClass FROM "._TBL_GENS_." as gens INNER JOIN "._TBL_CHR_." as char ON gens."._CLMN_GENS_NAME_." = char."._CLMN_CHR_NAME_." ORDER BY gens."._CLMN_GENS_POINT_." DESC");
 				break;
+			case "CUSTOM":
+				
+				break;
 			default:
 				return;
 		}
@@ -189,6 +213,12 @@ class Rankings {
 		switch($this->serverFiles) {
 			case "MUE":
 				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.", "._CLMN_CHR_CLASS_.", "._CLMN_CHR_PVPLS_WIN_." FROM "._TBL_CHR_." ORDER BY "._CLMN_CHR_PVPLS_WIN_." DESC");
+				break;
+			case "IGCN":
+				
+				break;
+			case "CUSTOM":
+				
 				break;
 			default:
 				return;
@@ -242,6 +272,12 @@ class Rankings {
 				} else {
 					$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." tb2."._CLMN_GAMEIDC_.", sum(tb1."._CLMN_LOGEX_OD_.") AS TotalOnlineDuration, tb3."._CLMN_CHR_CLASS_." FROM "._TBL_LOGEX_." AS tb1 INNER JOIN "._TBL_AC_." AS tb2 ON tb1."._CLMN_LOGEX_ACCID_." = tb2."._CLMN_AC_ID_." INNER JOIN "._TBL_CHR_." AS tb3 ON tb2."._CLMN_GAMEIDC_." = tb3."._CLMN_CHR_NAME_." WHERE tb3."._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") GROUP BY tb1."._CLMN_LOGEX_ACCID_.", tb2."._CLMN_GAMEIDC_.", tb3."._CLMN_CHR_CLASS_." ORDER BY TotalOnlineDuration DESC");
 				}
+				break;
+			case "IGCN":
+				
+				break;
+			case "CUSTOM":
+				
 				break;
 			default:
 				return;

@@ -3,12 +3,12 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.6
- * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @version 1.0.9.9
+ * @author Lautaro Angelico <https://lautaroangelico.com/>
+ * @copyright (c) 2013-2018 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
- * http://opensource.org/licenses/MIT
+ * https://opensource.org/licenses/MIT
  */
 
 class Handler {
@@ -39,19 +39,31 @@ class Handler {
 		include(__PATH_LANGUAGES__ . $loadLanguage . '/language.php');
 		
 		# access
-		if(!defined('access') or !access) {
-			// blank for APIs
-		} else {
-			# check if template exists
-			if(!$this->templateExists($config['website_template'])) throw new Exception('The chosen template cannot be loaded ('.$config['website_template'].').');
-			
-			# load template
-			include(__PATH_TEMPLATES__ . $config['website_template'] . '/index.php');
-			
-			# show admincp button
-			if(isLoggedIn() && canAccessAdminCP($_SESSION['username'])) {
-				echo '<a href="'.__PATH_ADMINCP_HOME__.'" class="btn btn-primary admincp-button">AdminCP</a>';
-			}
+		if(!defined('access')) throw new Exception('Access forbidden.');
+		switch(access) {
+			case 'index':
+				# check if template exists
+				if(!$this->templateExists($config['website_template'])) throw new Exception('The chosen template cannot be loaded ('.$config['website_template'].').');
+				
+				# load template
+				include(__PATH_TEMPLATES__ . $config['website_template'] . '/index.php');
+				
+				# show admincp button
+				if(isLoggedIn() && canAccessAdminCP($_SESSION['username'])) {
+					echo '<a href="'.__PATH_ADMINCP_HOME__.'" class="btn btn-primary admincp-button">AdminCP</a>';
+				}
+				break;
+			case 'api':
+				
+				break;
+			case 'cron':
+				
+				break;
+			case 'admincp':
+				
+				break;
+			default:
+				throw new Exception('Access forbidden.');
 		}
 	}
 

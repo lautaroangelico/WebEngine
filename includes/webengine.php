@@ -3,15 +3,14 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.8
- * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @version 1.0.9.9
+ * @author Lautaro Angelico <https://lautaroangelico.com/>
+ * @copyright (c) 2013-2018 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
- * http://opensource.org/licenses/MIT
+ * https://opensource.org/licenses/MIT
  */
 
-if(!defined('access')) define('access', '');
 //session_name('WebEngine109'); # session name (change to your server name and uncomment)
 //session_set_cookie_params(0, '/', 'muonline.com'); # same session with and without www protocol (edit with your domain and uncomment)
 if(access != 'cron') {
@@ -19,8 +18,8 @@ if(access != 'cron') {
 	session_start();
 }
 
-# ArcticEngine Version
-define('__WEBENGINE_VERSION__', '1.0.9.8');
+# Version
+define('__WEBENGINE_VERSION__', '1.0.9.9');
 
 # Set Encoding
 @ini_set('default_charset', 'utf-8');

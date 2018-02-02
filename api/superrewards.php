@@ -3,12 +3,12 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.6
- * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @version 1.0.9.9
+ * @author Lautaro Angelico <https://lautaroangelico.com/>
+ * @copyright (c) 2013-2018 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
- * http://opensource.org/licenses/MIT
+ * https://opensource.org/licenses/MIT
  */
 
 /* -----------------------------------------------------------
@@ -32,6 +32,8 @@
 					104 = transaction already processed
 		
 ----------------------------------------------------------- */
+
+define('access', 'api');
 
 // Load WebEngine
 include('../includes/webengine.php');

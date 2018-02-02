@@ -1,14 +1,14 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9.5
- * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @version 1.0.9.9
+ * @author Lautaro Angelico <https://lautaroangelico.com/>
+ * @copyright (c) 2013-2018 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
- * http://opensource.org/licenses/MIT
+ * https://opensource.org/licenses/MIT
  */
 
 define('access', 'install');
@@ -81,7 +81,7 @@ if(!@include_once('loader.php')) die('Could not load installer.');
 		</div>
 
 		<footer class="footer">
-			<a href="https://webenginecms.org/" target="_blank">&copy; WebEngine 2013-2017</a>
+			<a href="https://webenginecms.org/" target="_blank">&copy; WebEngine CMS 2013-2018</a>
 		</footer>
 
 	</div> <!-- /container -->

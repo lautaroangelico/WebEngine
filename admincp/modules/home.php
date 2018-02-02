@@ -3,12 +3,12 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.8
- * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @version 1.0.9.9
+ * @author Lautaro Angelico <https://lautaroangelico.com/>
+ * @copyright (c) 2013-2018 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
- * http://opensource.org/licenses/MIT
+ * https://opensource.org/licenses/MIT
  */
 
 // check install directory
@@ -35,7 +35,7 @@ echo '<div class="row">';
 						echo '<em>'.phpversion().'</em>';
 					echo '</span>';
 				echo '</div>';
-				echo '<a href="http://muengine.net/" class="list-group-item" target="_blank">';
+				echo '<a href="https://webenginecms.org/" class="list-group-item" target="_blank">';
 					echo 'WebEngine';
 					echo '<span class="pull-right text-muted small">';
 						if(checkVersion()) echo '<span class="label label-danger">Update Available</span>  ';

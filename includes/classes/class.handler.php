@@ -62,6 +62,9 @@ class Handler {
 			case 'admincp':
 				
 				break;
+			case 'install':
+				
+				break;
 			default:
 				throw new Exception('Access forbidden.');
 		}

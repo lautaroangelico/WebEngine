@@ -1,14 +1,14 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
- * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @version 1.0.9.9
+ * @author Lautaro Angelico <https://lautaroangelico.com/>
+ * @copyright (c) 2013-2018 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
- * http://opensource.org/licenses/MIT
+ * https://opensource.org/licenses/MIT
  */
 
 class login {
@@ -63,17 +63,24 @@ class login {
 		if(!$this->canLogin($_SERVER['REMOTE_ADDR'])) throw new Exception(lang('error_3',true));
 		if(!$this->common->userExists($username)) throw new Exception(lang('error_2',true));
 		if($this->common->validateUser($username,$password)) {
+			
+			$userId = $this->common->retrieveUserID($username);
+			if(!check_value($userId)) throw new Exception(lang('error_12',true));
+			
+			$accountData = $this->common->accountInformation($userId);
+			if(!is_array($accountData)) throw new Exception(lang('error_12',true));
+			
 			# login success
 			$this->removeFailedLogins($_SERVER['REMOTE_ADDR']);
 			session_regenerate_id();
 			$_SESSION['valid'] = true;
 			$_SESSION['timeout'] = time();
-			$_SESSION['userid'] = $this->common->retrieveUserID($username);
-			$_SESSION['username'] = $username;
+			$_SESSION['userid'] = $userId;
+			$_SESSION['username'] = $accountData[_CLMN_USERNM_];
 			
 			// ACTIVE SESSIONS
-			$this->deleteActiveSession($_SESSION['userid']);
-			$this->addActiveSession($_SESSION['userid'], $_SERVER['REMOTE_ADDR']);
+			$this->deleteActiveSession($userId);
+			$this->addActiveSession($userId, $_SERVER['REMOTE_ADDR']);
 			
 			# redirect to usercp
 			redirect(1,'usercp/');

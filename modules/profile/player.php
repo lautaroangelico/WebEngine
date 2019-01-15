@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.1.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -41,14 +41,18 @@
 										echo '<td>'.lang('profiles_txt_7',true).'</td>';
 										echo '<td>'.$cData[3].'</td>';
 									echo '</tr>';
-									echo '<tr>';
-										echo '<td>'.lang('profiles_txt_8',true).'</td>';
-										echo '<td>'.$cData[4].'</td>';
-									echo '</tr>';
-									echo '<tr>';
-										echo '<td>'.lang('profiles_txt_9',true).'</td>';
-										echo '<td>'.$cData[11].'</td>';
-									echo '</tr>';
+									if(check_value($cData[4])) {
+										echo '<tr>';
+											echo '<td>'.lang('profiles_txt_8',true).'</td>';
+											echo '<td>'.$cData[4].'</td>';
+										echo '</tr>';
+									}
+									if(check_value($cData[11])) {
+										echo '<tr>';
+											echo '<td>'.lang('profiles_txt_9',true).'</td>';
+											echo '<td>'.$cData[11].'</td>';
+										echo '</tr>';
+									}
 									echo '<tr>';
 										echo '<td>'.lang('profiles_txt_10',true).'</td>';
 										echo '<td>'.$cData[5].'</td>';
@@ -73,10 +77,12 @@
 										echo '<td>'.lang('profiles_txt_15',true).'</td>';
 										echo '<td>'.$cData[10].'</td>';
 									echo '</tr>';
-									echo '<tr>';
-										echo '<td>'.lang('profiles_txt_16',true).'</td>';
-										echo '<td><a href="'.__BASE_URL__.'profile/guild/req/'.$cData[12].'/" target="_blank">'.$cData[12].'</a></td>';
-									echo '</tr>';
+									if(check_value($cData[12])) {
+										echo '<tr>';
+											echo '<td>'.lang('profiles_txt_16',true).'</td>';
+											echo '<td><a href="'.__BASE_URL__.'profile/guild/req/'.$cData[12].'/" target="_blank">'.$cData[12].'</a></td>';
+										echo '</tr>';
+									}
 									echo '<tr>';
 										echo '<td>'.lang('profiles_txt_17',true).'</td>';
 										if($cData[13]) {

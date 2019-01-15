@@ -1,8 +1,0 @@
-CREATE TABLE [dbo].[WEBENGINE_SR_ERROR_LOGS](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[transaction_id] [varchar](max) NOT NULL,
-	[user_id] [int] NOT NULL,
-	[credits_amount] [varchar](50) NOT NULL,
-	[transaction_date] [varchar](50) NOT NULL,
-	[error_code] [varchar](50) NOT NULL
-) ON [PRIMARY]

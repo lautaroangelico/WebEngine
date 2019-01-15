@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.9
+ * @version 1.1.0
  * @author Lautaro Angelico <https://lautaroangelico.com/>
- * @copyright (c) 2013-2018 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * https://opensource.org/licenses/MIT
@@ -17,7 +17,7 @@ if(!defined('access') or !access or access != 'install') die();
  * INSTALLER_VERSION
  * installer version (do not change)
  */
-define('INSTALLER_VERSION', '1.0.9.9');
+define('INSTALLER_VERSION', '1.1.0');
 
 $install['PDO_DSN'] = array(
 	1 => 'dblib',
@@ -46,8 +46,6 @@ $install['sql_list'] = array(
 	'WEBENGINE_PAYPAL_TRANSACTIONS',
 	'WEBENGINE_PLUGINS',
 	'WEBENGINE_REGISTER_ACCOUNT',
-	'WEBENGINE_SR_ERROR_LOGS',
-	'WEBENGINE_SR_TRANSACTIONS',
 	'WEBENGINE_VOTES',
 	'WEBENGINE_VOTE_LOGS',
 	'WEBENGINE_VOTE_SITES',

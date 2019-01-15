@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.8
+ * @version 1.1.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -54,10 +54,7 @@ $writablePaths = array(
 	'config/webengine.json',
 	'config/modules/castlesiege.xml',
 	'config/modules/contact.xml',
-	'config/modules/donation.paymentwall.xml',
 	'config/modules/donation.paypal.xml',
-	'config/modules/donation.superrewards.xml',
-	'config/modules/donation.westernunion.xml',
 	'config/modules/donation.xml',
 	'config/modules/downloads.xml',
 	'config/modules/forgotpassword.xml',

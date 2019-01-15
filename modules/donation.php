@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.1.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -19,16 +19,7 @@ try {
 
 	echo '<div class="row">';
 		echo '<div class="col-xs-4">';
-			echo '<a href="'.__BASE_URL__.'donation/superrewards/" class="thumbnail"><img src="'.__PATH_TEMPLATE_IMG__.'donation/superrewards.jpg"></a>';
-		echo '</div>';
-		echo '<div class="col-xs-4">';
 			echo '<a href="'.__BASE_URL__.'donation/paypal/" class="thumbnail"><img src="'.__PATH_TEMPLATE_IMG__.'donation/paypal.jpg"></a>';
-		echo '</div>';
-		echo '<div class="col-xs-4">';
-			echo '<a href="'.__BASE_URL__.'donation/westernunion/" class="thumbnail"><img src="'.__PATH_TEMPLATE_IMG__.'donation/westernunion.jpg"></a>';
-		echo '</div>';
-		echo '<div class="col-xs-4">';
-			echo '<a href="'.__BASE_URL__.'donation/paymentwall/" class="thumbnail"><img src="'.__PATH_TEMPLATE_IMG__.'donation/paymentwall.jpg"></a>';
 		echo '</div>';
 	echo '</div>';
 	

@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.1.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -20,9 +20,6 @@ $webengineModules = array(
 		
 		array('Donation','donation'),
 		array('PayPal','paypal'),
-		array('SuperRewards','superrewards'),
-		array('Western Union','westernunion'),
-		array('Paymentwall','paymentwall'),
 		
 		array('Rankings','rankings'),
 		array('Castle Siege','castlesiege'),

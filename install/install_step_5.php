@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9.5
+ * @version 1.1.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -43,7 +43,7 @@ if(check_value($_POST['install_step_5_submit'])) {
 		
 		# generate encryption hash
 		$encryptionHash = substr(md5('WebEngine' . time()), 0, 16);
-		$forumUrl = (check_value($_POST['install_step_5_2']) ? $_POST['install_step_5_2'] : 'http://forum.muengine.net/');
+		$forumUrl = (check_value($_POST['install_step_5_2']) ? $_POST['install_step_5_2'] : 'https://forum.webenginecms.org/');
 		$serverName = (check_value($_POST['install_step_5_8']) ? $_POST['install_step_5_8'] : 'MuOnline');
 		$websiteTitle = (check_value($_POST['install_step_5_3']) ? $_POST['install_step_5_3'] : 'Mu Online');
 		$websiteDescription = (check_value($_POST['install_step_5_4']) ? $_POST['install_step_5_4'] : '');
@@ -54,7 +54,7 @@ if(check_value($_POST['install_step_5_submit'])) {
 		$websiteConfig = array(
 			'system_active' => true,
 			'error_reporting' => false,
-			'website_template' => 'legendary',
+			'website_template' => 'redzone',
 			'encryption_hash' => $encryptionHash,
 			'maintenance_page' => $forumUrl,
 			'admins' => $websiteAdmin,

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.6
+ * @version 1.1.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -356,10 +356,11 @@ function addCron($cron_times) {
 			$_POST['cron_file'],
 			$cron_times[$_POST['cron_time']],
 			1,
+			0,
 			md5_file($filePath)
 		);
 		
-		$query = $database->query("INSERT INTO WEBENGINE_CRON (cron_name, cron_description, cron_file_run, cron_run_time, cron_status, cron_file_md5) VALUES (?, ?, ?, ?, ?, ?)", $sql_data);
+		$query = $database->query("INSERT INTO WEBENGINE_CRON (cron_name, cron_description, cron_file_run, cron_run_time, cron_status, cron_protected, cron_file_md5) VALUES (?, ?, ?, ?, ?, ?, ?)", $sql_data);
 		if($query) {
 		
 			// UPDATE CACHE

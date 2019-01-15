@@ -3,12 +3,12 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.9
- * @author Lautaro Angelico <https://lautaroangelico.com/>
- * @copyright (c) 2013-2018 Lautaro Angelico, All Rights Reserved
+ * @version 1.1.0
+ * @author Lautaro Angelico <http://lautaroangelico.com/>
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
- * https://opensource.org/licenses/MIT
+ * http://opensource.org/licenses/MIT
  */
 
 //session_name('WebEngine109'); # session name (change to your server name and uncomment)
@@ -19,14 +19,14 @@ if(access != 'cron') {
 }
 
 # Version
-define('__WEBENGINE_VERSION__', '1.0.9.9');
+define('__WEBENGINE_VERSION__', '1.1.0');
 
 # Set Encoding
 @ini_set('default_charset', 'utf-8');
 
 # Server Time
 # http://php.net/manual/en/timezones.php
-//date_default_timezone_set('America/Los_Angeles');
+date_default_timezone_set('UTC');
 
 # Global Paths
 define('HTTP_HOST', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'CLI');

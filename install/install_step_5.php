@@ -168,7 +168,7 @@ if(check_value($_POST['install_step_5_submit'])) {
 	<div class="form-group">
 		<label for="input_3" class="col-sm-3 control-label">Website Title</label>
 		<div class="col-sm-9">
-			<input type="text" name="install_step_5_3" class="form-control" id="input_3" value="Welcome to MuOnline Season X" required>
+			<input type="text" name="install_step_5_3" class="form-control" id="input_3" value="Welcome to MuOnline Season XIII" required>
 			<p class="help-block">Type the desired website title.</p>
 		</div>
 	</div>
@@ -182,7 +182,7 @@ if(check_value($_POST['install_step_5_submit'])) {
 	<div class="form-group">
 		<label for="input_5" class="col-sm-3 control-label">Website Keywords</label>
 		<div class="col-sm-9">
-			<input type="text" name="install_step_5_5" class="form-control" id="input_5" value="MU, MU online, Season10, private server, Battle Core, private MU online, free to play, mmorpg, auto play, free rpg, Free2Play, PVP, multi client and jewels, season X" required>
+			<input type="text" name="install_step_5_5" class="form-control" id="input_5" value="MU, MU online, Season13, private server, Battle Core, private MU online, free to play, mmorpg, auto play, free rpg, Free2Play, PVP, multi client and jewels, season XIII" required>
 			<p class="help-block">Keywords that identify your website/server. This is for search engines such as Google, Bing, etc...</p>
 		</div>
 	</div>

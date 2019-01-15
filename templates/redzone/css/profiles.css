@@ -4,8 +4,7 @@
 .profiles_guild_table {
 	width: 100%;
 	table-layout: fixed;
-	margin: 10px auto;
-	background: #0a0908;
+	margin: 0px 0px 50px 0px;
 	padding: 10px;
 }
 
@@ -17,14 +16,16 @@
 	font-family: 'Cinzel', serif;
 	text-align: center;
 	font-size: 32px;
-	color: #f18a37;
+	color: #ff0000;
+	font-weight: bold;
 }
 
 .profiles_guild_table .gmembs {
 	font-family: 'Cinzel', serif;
 	text-align: center;
 	font-size: 18px;
-	color: #f1b337;
+	color: #ff0000;
+	font-weight: bold;
 }
 
 .profiles_guild_table .memblist {
@@ -35,6 +36,7 @@
 	float: left;
 	width: 20%;
 	display: inline;
+	padding: 10px;
 }
 
 /* PLAYER PROFILES */

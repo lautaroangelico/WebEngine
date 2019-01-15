@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.1.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -501,32 +501,20 @@ class Character {
 	
 	function AccountCharacter($username) {
 		global $dB;
-		if(check_value($username)) {
-			if(!Validator::UsernameLength($username)) { $error = true; }
-			if(!Validator::AlphaNumeric($username)) { $error = true; }
-			if(!$error) {
-				$result = $dB->query_fetch_single("SELECT * FROM "._TBL_AC_." WHERE "._CLMN_AC_ID_." = ?", array($username));
-				if(is_array($result)) {
-					$characters = array();
-					if(check_value($result[_CLMN_GAMEID_1_])) { $characters[] = $result[_CLMN_GAMEID_1_]; }
-					if(check_value($result[_CLMN_GAMEID_2_])) { $characters[] = $result[_CLMN_GAMEID_2_]; }
-					if(check_value($result[_CLMN_GAMEID_3_])) { $characters[] = $result[_CLMN_GAMEID_3_]; }
-					if(check_value($result[_CLMN_GAMEID_4_])) { $characters[] = $result[_CLMN_GAMEID_4_]; }
-					if(check_value($result[_CLMN_GAMEID_5_])) { $characters[] = $result[_CLMN_GAMEID_5_]; }
-					if(count($characters) >= 1) {
-						return $characters;
-					} else {
-						return null;
-					}
-				} else {
-					return null;
-				}
-			} else {
-				return null;
-			}
-		} else {
-			return null;
+		if(!check_value($username)) return;
+		if(!Validator::UsernameLength($username)) return;
+		if(!Validator::AlphaNumeric($username)) return;
+		
+		$result = $dB->query_fetch("SELECT "._CLMN_CHR_NAME_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_ACCID_." = ?", array($username));
+		if(!is_array($result)) return;
+		
+		foreach($result as $row) {
+			if(!check_value($row[_CLMN_CHR_NAME_])) continue;
+			$return[] = $row[_CLMN_CHR_NAME_];
 		}
+		
+		if(!is_array($return)) return;
+		return $return;
 	}
 	
 	function CharacterData($character_name) {

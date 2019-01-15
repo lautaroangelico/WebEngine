@@ -1,0 +1,57 @@
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    border-top: none !important;
+}
+
+a:focus, a:hover {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+.form-control {
+	background: #fafafa;
+	border: 1px solid #e3e3e3;
+	color: #666;
+}
+.form-control:focus {
+	border: 1px solid #ccc;
+}
+
+/* http://stackoverflow.com/questions/19562903/remove-padding-from-columns-in-bootstrap-3 */
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+/* http://stackoverflow.com/questions/20547819/vertical-align-with-bootstrap-3 */
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.thumbnail {
+    background-color: #f1f1f1;
+    border: 1px solid #e3e3e3;
+}
+a.thumbnail:hover,
+a.thumbnail:focus,
+a.thumbnail.active {
+  border-color: #ff0000;
+}
+
+.btn-primary {
+    color: #ff0000;
+    background-color: transparent;
+	border-color: #ff0000;
+	-moz-transition: all .1s ease-in;
+    -o-transition: all .1s ease-in;
+    -webkit-transition: all .1s ease-in;
+    transition: all .1s ease-in;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+}
+.btn-primary:active, .btn-primary:focus, .btn-primary:hover {
+    color: #fff !important;
+    background-color: #ff0000 !important;
+	border-color: #ff0000 !important;
+}

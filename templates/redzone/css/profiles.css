@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css?family=Cinzel');
+
+/* GUILD PROFILES */
+.profiles_guild_table {
+	width: 100%;
+	table-layout: fixed;
+	margin: 10px auto;
+	background: #0a0908;
+	padding: 10px;
+}
+
+.profiles_guild_table tr td {
+	text-align: left;
+}
+
+.profiles_guild_table .gname {
+	font-family: 'Cinzel', serif;
+	text-align: center;
+	font-size: 32px;
+	color: #f18a37;
+}
+
+.profiles_guild_table .gmembs {
+	font-family: 'Cinzel', serif;
+	text-align: center;
+	font-size: 18px;
+	color: #f1b337;
+}
+
+.profiles_guild_table .memblist {
+	text-align: center;
+}
+
+.profiles_guild_table .memblist div {
+	float: left;
+	width: 20%;
+	display: inline;
+}
+
+/* PLAYER PROFILES */
+.profiles_player_card {
+	width: 636px;
+	height: 400px;
+}
+
+	.DK.profiles_player_card, .BK.profiles_player_card, .BM.profiles_player_card { background: url('../img/profiles/knight.jpg') no-repeat; }
+	.DW.profiles_player_card, .SM.profiles_player_card, .GM.profiles_player_card { background: url('../img/profiles/wiz.jpg') no-repeat; }
+	.ELF.profiles_player_card { background: url('../img/profiles/elf.jpg') no-repeat; }
+	.SUM.profiles_player_card { background: url('../img/profiles/sum.jpg') no-repeat; }
+	.DL.profiles_player_card, .LE.profiles_player_card { background: url('../img/profiles/dl.jpg') no-repeat; }
+	.MG.profiles_player_card, .DM.profiles_player_card { background: url('../img/profiles/mg.jpg') no-repeat; }
+	.RF.profiles_player_card, .FM.profiles_player_card { background: url('../img/profiles/rf.jpg') no-repeat; }
+
+.profiles_player_content {
+	float: right;
+	width: 400px;
+	height: 400px;
+	padding-top: 30px;
+	color: #fff;
+}
+
+.profiles_player_table {
+	width: 100%;
+}
+
+.profiles_player_table .cname {
+	font-family: 'Cinzel', serif;
+	text-align: center;
+	font-size: 24px;
+	color: #fff;
+}
+
+.profiles_player_table .cclass {
+	text-align: center;
+	font-size: 11px;
+	color: #eee;
+}
+
+.profiles_player_table .isoffline {
+	color: #ff0000;
+}
+
+.profiles_player_table .isonline {
+	color: #00ff00;
+}
+
+.profiles_player_table_info {
+	table-layout: fixed;
+	margin-top: 10px;
+}
+.profiles_player_table_info tr td {
+	padding: 3px 10px;
+}
+.profiles_player_table_info tr td:first-child {
+	text-align: right;
+}

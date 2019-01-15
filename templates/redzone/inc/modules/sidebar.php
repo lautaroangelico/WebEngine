@@ -63,6 +63,9 @@ echo '</div>';
 echo '<div class="sidebar-banner"><a href="'.__BASE_URL__.'downloads"><img src="'.__PATH_TEMPLATE_IMG__.'download_sidebar_banner.jpg"/></a></div>';
 
 
+# discord banner
+echo '<div class="sidebar-banner"><a href="https://webenginecms.org/discord/" target="_blank"><img src="'.__PATH_TEMPLATE_IMG__.'discord_banner.jpg"/></a></div>';
+
 
 # Server info block
 $srvInfoCache = LoadCacheData('server_info.cache');

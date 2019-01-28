@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.1.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -29,7 +29,7 @@ class dB {
 				} else {
 					$pdo_connect = 'dblib:host='.$SQLHOST.':'.$SQLPORT.';dbname='.$SQLDB;
 				}
-				$this->db = new PDO($pdo_connect, $SQLUSER, $SQLPWD);
+				$this->db = new PDO($pdo_connect, $SQLUSER, $SQLPWD, array(PDO::ATTR_TIMEOUT => 15));
 			}
 
 			

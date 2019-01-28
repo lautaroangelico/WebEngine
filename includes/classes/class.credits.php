@@ -530,7 +530,8 @@ class CreditSystem {
 	 * @return array
 	 */
 	public function getLogs($limit=50) {
-		$result = $this->db->query_fetch("SELECT TOP 50 * FROM WEBENGINE_CREDITS_LOGS ORDER BY log_id DESC");
+		$query = str_replace(array('{LIMIT}'), array($limit), "SELECT TOP {LIMIT} * FROM WEBENGINE_CREDITS_LOGS ORDER BY log_id DESC");
+		$result = $this->db->query_fetch($query);
 		if(is_array($result)) return $result;
 	}
 	

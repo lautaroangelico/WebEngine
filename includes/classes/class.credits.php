@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.6
+ * @version 1.1.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -490,7 +490,7 @@ class CreditSystem {
 	 * @param string $transaction
 	 */
 	private function _addLog($configTitle="unknown", $credits=0, $transaction="unknown") {
-		$inadmincp = (defined('admincp') ? 1 : 0);
+		$inadmincp = access == 'admincp' ? 1 : 0;
 		if($inadmincp == 1) {
 			$module = $_GET['module'];
 		} else {

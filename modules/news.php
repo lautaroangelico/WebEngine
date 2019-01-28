@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.1.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -47,19 +47,20 @@ try {
 			echo '<div class="panel-heading">';
 				echo '<h3 class="panel-title"><a href="'.$news_url.'">'.$news_title.'</a></h3>';
 			echo '</div>';
-			echo '<div class="panel-body">';
+			if(mconfig('news_expanded') > $i) {
+				echo '<div class="panel-body">';
 					echo $loadNewsCache;
-			echo '</div>';
-			echo '<div class="panel-footer">';
-				echo '<div class="col-xs-6 nopadding">';
-					if(mconfig('news_enable_like_button')) echo '<div class="fb-like" data-href="'.$news_url.'" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>';
 				echo '</div>';
-				echo '<div class="col-xs-6 nopadding text-right">';
-					echo 'Published by ' . $news_author . ', ';
-					echo date("F j, Y",$news_date);
+				echo '<div class="panel-footer">';
+					echo '<div class="col-xs-6 nopadding">';
+						if(mconfig('news_enable_like_button')) echo '<div class="fb-like" data-href="'.$news_url.'" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>';
+					echo '</div>';
+					echo '<div class="col-xs-6 nopadding text-right">';
+						echo 'Published by ' . $news_author . ', ';
+						echo date("F j, Y",$news_date);
+					echo '</div>';
 				echo '</div>';
-					
-			echo '</div>';
+			}
 		echo '</div>';
 		
 		# facebook comments

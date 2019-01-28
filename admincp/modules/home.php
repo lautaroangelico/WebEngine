@@ -3,12 +3,12 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.9
- * @author Lautaro Angelico <https://lautaroangelico.com/>
- * @copyright (c) 2013-2018 Lautaro Angelico, All Rights Reserved
+ * @version 1.1.0
+ * @author Lautaro Angelico <http://lautaroangelico.com/>
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
- * https://opensource.org/licenses/MIT
+ * http://opensource.org/licenses/MIT
  */
 
 // check install directory
@@ -104,6 +104,7 @@ echo '<div class="row">';
 	echo '<div class="col-md-6">';
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
+			echo '<div style="margin-bottom:7px;"><a href="https://forum.webenginecms.org/" class="btn btn-default" target="_blank">Support Forum</a> <a href="https://webenginecms.org/discord/" class="btn btn-default" target="_blank">Discord</a></div>';
 			echo '<iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2FMUE.WebEngine&amp;width=600&amp;height=447&amp;colorscheme=light&amp;show_faces=false&amp;header=false&amp;stream=true&amp;show_border=false&amp;appId=1439010682981422" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100%; height:447px;" allowTransparency="true"></iframe>';
 		echo '</div>';
 		echo '</div>';

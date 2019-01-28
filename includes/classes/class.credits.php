@@ -129,17 +129,23 @@ class CreditSystem {
 			if($this->_isOnline($config['config_user_col_id'])) throw new Exception("Your account is online, please disconnect.");
 		}
 		
+		// check current credits
+		$currentCredits = $this->getCredits();
+		
+		// new credits
+		$newCredits = $input + $currentCredits;
+		
 		// choose database
 		$database = ($config['config_database'] == "MuOnline" ? $this->muonline : $this->memuonline);
 		
 		// build query
 		$data = array(
-			'credits' => $input,
+			'credits' => $newCredits,
 			'identifier' => $this->_identifier
 		);
 		$variables = array('{TABLE}','{COLUMN}','{USER_COLUMN}');
 		$values = array($config['config_table'], $config['config_credits_col'], $config['config_user_col']);
-		$query = str_replace($variables, $values, "UPDATE {TABLE} SET {COLUMN} = {COLUMN} + :credits WHERE {USER_COLUMN} = :identifier");
+		$query = str_replace($variables, $values, "UPDATE {TABLE} SET {COLUMN} = :credits WHERE {USER_COLUMN} = :identifier");
 		
 		// add credits
 		$addCredits = $database->query($query, $data);

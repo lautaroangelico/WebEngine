@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.1.0
+ * @version 1.1.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
@@ -106,7 +106,6 @@ define('_TBL_VIP_', 'T_VIPList');
 	define('_CLMN_VIP_ID_', 'AccountID');
 	define('_CLMN_VIP_DATE_', 'Date');
 	define('_CLMN_VIP_TYPE_', 'Type');
-
 	
 /*
  * custom: character_class
@@ -140,6 +139,10 @@ $custom['character_class'] = array(
 	112 => array('Grow Lancer', 'GL', 'gl.jpg', 'base_stats' => array('str' => 30, 'agi' => 30, 'vit' => 25, 'ene' => 24, 'cmd' => 0)),
 	114 => array('Mirage Lancer', 'ML', 'gl.jpg', 'base_stats' => array('str' => 30, 'agi' => 30, 'vit' => 25, 'ene' => 24, 'cmd' => 0)),
 	118 => array('Shining Lancer', 'SL', 'gl.jpg', 'base_stats' => array('str' => 30, 'agi' => 30, 'vit' => 25, 'ene' => 24, 'cmd' => 0)),
+	128 => array('Rune Wizard', 'RW', 'rw.jpg', 'base_stats' => array('str' => 13, 'agi' => 18, 'vit' => 14, 'ene' => 40, 'cmd' => 0)),
+	129 => array('Rune Spell Master', 'RW', 'rw.jpg', 'base_stats' => array('str' => 13, 'agi' => 18, 'vit' => 14, 'ene' => 40, 'cmd' => 0)),
+	131 => array('Grand Rune Master', 'RW', 'rw.jpg', 'base_stats' => array('str' => 13, 'agi' => 18, 'vit' => 14, 'ene' => 40, 'cmd' => 0)),
+	135 => array('Grand Rune Master', 'RW', 'rw.jpg', 'base_stats' => array('str' => 13, 'agi' => 18, 'vit' => 14, 'ene' => 40, 'cmd' => 0)),
 );
 
 /*

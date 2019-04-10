@@ -52,6 +52,7 @@
 	.DL.profiles_player_card, .LE.profiles_player_card { background: url('../img/profiles/dl.jpg') no-repeat; }
 	.MG.profiles_player_card, .DM.profiles_player_card { background: url('../img/profiles/mg.jpg') no-repeat; }
 	.RF.profiles_player_card, .FM.profiles_player_card { background: url('../img/profiles/rf.jpg') no-repeat; }
+	.RW.profiles_player_card { background: url('../img/profiles/rw.jpg') no-repeat; }
 
 .profiles_player_content {
 	float: right;

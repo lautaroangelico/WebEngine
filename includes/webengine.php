@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.1.0
+ * @version 1.1.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
@@ -19,7 +19,7 @@ if(access != 'cron') {
 }
 
 # Version
-define('__WEBENGINE_VERSION__', '1.1.0');
+define('__WEBENGINE_VERSION__', '1.1.1');
 
 # Set Encoding
 @ini_set('default_charset', 'utf-8');

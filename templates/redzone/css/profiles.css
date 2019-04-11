@@ -45,14 +45,15 @@
 	height: 400px;
 }
 
-	.DK.profiles_player_card, .BK.profiles_player_card, .BM.profiles_player_card { background: url('../img/profiles/knight.jpg') no-repeat; }
-	.DW.profiles_player_card, .SM.profiles_player_card, .GM.profiles_player_card { background: url('../img/profiles/wiz.jpg') no-repeat; }
-	.ELF.profiles_player_card { background: url('../img/profiles/elf.jpg') no-repeat; }
-	.SUM.profiles_player_card { background: url('../img/profiles/sum.jpg') no-repeat; }
-	.DL.profiles_player_card, .LE.profiles_player_card { background: url('../img/profiles/dl.jpg') no-repeat; }
-	.MG.profiles_player_card, .DM.profiles_player_card { background: url('../img/profiles/mg.jpg') no-repeat; }
-	.RF.profiles_player_card, .FM.profiles_player_card { background: url('../img/profiles/rf.jpg') no-repeat; }
-	.RW.profiles_player_card { background: url('../img/profiles/rw.jpg') no-repeat; }
+	.DK.profiles_player_card, .BK.profiles_player_card, .BM.profiles_player_card, .DGK.profiles_player_card { background: url('../img/profiles/knight.jpg') no-repeat; }
+	.DW.profiles_player_card, .SM.profiles_player_card, .GM.profiles_player_card, .SW.profiles_player_card { background: url('../img/profiles/wiz.jpg') no-repeat; }
+	.ELF.profiles_player_card, .ME.profiles_player_card, .HE.profiles_player_card, .NE.profiles_player_card { background: url('../img/profiles/elf.jpg') no-repeat; }
+	.SUM.profiles_player_card, .BS.profiles_player_card, .DSM.profiles_player_card, .DS.profiles_player_card { background: url('../img/profiles/sum.jpg') no-repeat; }
+	.DL.profiles_player_card, .LE.profiles_player_card, .EL.profiles_player_card { background: url('../img/profiles/dl.jpg') no-repeat; }
+	.MG.profiles_player_card, .DM.profiles_player_card, .MK.profiles_player_card { background: url('../img/profiles/mg.jpg') no-repeat; }
+	.RF.profiles_player_card, .FM.profiles_player_card, .FB.profiles_player_card { background: url('../img/profiles/rf.jpg') no-repeat; }
+	.GL.profiles_player_card, .ML.profiles_player_card, .SL.profiles_player_card { background: url('../img/profiles/gl.jpg') no-repeat; }
+	.RW.profiles_player_card, .RSM.profiles_player_card, .GRM.profiles_player_card { background: url('../img/profiles/rw.jpg') no-repeat; }
 
 .profiles_player_content {
 	float: right;

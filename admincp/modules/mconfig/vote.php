@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.1.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -113,7 +113,7 @@ if(is_array($votesiteList)) {
 		echo '<td>'.$thisVoteSite['votesite_link'].'</td>';
 		echo '<td>'.$thisVoteSite['votesite_reward'].' credit(s)</td>';
 		echo '<td>'.$thisVoteSite['votesite_time'].' hour(s)</td>';
-		echo '<td><a href="index.php?module=modules_manager&config=vote&deletesite='.$thisVoteSite['votesite_id'].'" class="btn btn-block"><i class="icon-remove"></i></a></td>';
+		echo '<td><a href="index.php?module=modules_manager&config=vote&deletesite='.$thisVoteSite['votesite_id'].'" class="btn btn-block"><i class="fa fa-remove"></i></a></td>';
 		echo '</tr>';
 	}
 	

@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.1.0
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
@@ -39,8 +39,6 @@ $webengineModules = array(
 		array('Character Reset','reset'),
 		array('Fix Stats','resetstats'),
 		array('Unstick Character','unstick'),
-		array('VIP (MuEngine)','vip'),
-		array('VIP (IGCN)','vipigcn'),
 		array('Vote and Reward','vote'),
 		array('Buy Zen','buyzen'),
 	),

@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.1.1
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
@@ -29,12 +29,9 @@ define('_TBL_MS_', 'MEMB_STAT');
 	
 define('_TBL_AC_', 'AccountCharacter');
 	define('_CLMN_AC_ID_', 'Id');
-	define('_CLMN_GAMEID_1_', 'GameID1');
-	define('_CLMN_GAMEID_2_', 'GameID2');
-	define('_CLMN_GAMEID_3_', 'GameID3');
-	define('_CLMN_GAMEID_4_', 'GameID4');
-	define('_CLMN_GAMEID_5_', 'GameID5');
 	define('_CLMN_GAMEIDC_', 'GameIDC');
+	define('_CLMN_WHEXPANSION_', 'WarehouseExpansion');
+	define('_CLMN_SECCODE_', 'SecCode');
 	
 define('_TBL_CHR_', 'Character');
 	define('_CLMN_CHR_NAME_', 'Name');
@@ -43,6 +40,7 @@ define('_TBL_CHR_', 'Character');
 	define('_CLMN_CHR_ZEN_', 'Money');
 	define('_CLMN_CHR_LVL_', 'cLevel');
 	define('_CLMN_CHR_RSTS_', 'RESETS');
+	define('_CLMN_CHR_GRSTS_', '');
 	define('_CLMN_CHR_LVLUP_POINT_', 'LevelUpPoint');
 	define('_CLMN_CHR_STAT_STR_', 'Strength');
 	define('_CLMN_CHR_STAT_AGI_', 'Dexterity');
@@ -56,9 +54,6 @@ define('_TBL_CHR_', 'Character');
 	define('_CLMN_CHR_MAP_X_', 'MapPosX');
 	define('_CLMN_CHR_MAP_Y_', 'MapPosY');
 	define('_CLMN_CHR_MAGIC_L_', 'MagicList');
-	define('_CLMN_CHR_MLVL_', 'mLevel');
-	define('_CLMN_CHR_MLPOINT_', 'mlPoint');
-	define('_CLMN_CHR_MLEXP_', 'mlExperience');
 
 define('_TBL_MASTERLVL_', 'Character');
 	define('_CLMN_ML_NAME_', 'Name');
@@ -106,6 +101,15 @@ define('_TBL_VIP_', 'T_VIPList');
 	define('_CLMN_VIP_ID_', 'AccountID');
 	define('_CLMN_VIP_DATE_', 'Date');
 	define('_CLMN_VIP_TYPE_', 'Type');
+
+define('_TBL_CH_', 'ConnectionHistory');
+	define('_CLMN_CH_ID_', 'ID');
+	define('_CLMN_CH_ACCID_', 'AccountID');
+	define('_CLMN_CH_SRVNM_', 'ServerName');
+	define('_CLMN_CH_IP_', 'IP');
+	define('_CLMN_CH_DATE_', 'Date');
+	define('_CLMN_CH_STATE_', 'State');
+	define('_CLMN_CH_HWID_', 'HWID');
 	
 /*
  * custom: character_class
@@ -149,25 +153,149 @@ $custom['character_class'] = array(
  * custom: character_cmd
  * classes who use cmd stat
  */
-$custom['character_cmd'] = array(64, 66);
+$custom['character_cmd'] = array(64, 66, 70);
 
 /*
  * custom: gens_ranks
  */
 $custom['gens_ranks'] = array(
-	0 => 'None',
-	1 => 'Grand Duke',
-	2 => 'Duke',
-	3 => 'Marquis',
-	4 => 'Count',
-	5 => 'Viscount',
-	6 => 'Summoner',
-	7 => 'Baron',
-	8 => 'Knight Commander',
-	9 => 'Superior Knight',
-	10 => 'Knight',
-	11 => 'Officer',
-	12 => 'Lieutenant',
-	13 => 'Sergeant',
-	14 => 'Private',
+	10000 => 'Knight',
+	6000 => 'Guard',
+	3000 => 'Officer',
+	1500 => 'Lieutenant',
+	500 => 'Sergeant',
+	499 => 'Private'
+);
+
+/*
+ * custom: gens_ranks_leadership
+ */
+$custom['gens_ranks_leadership'] = array(
+	'Grand Duke' => array(0,0),
+	'Duke' => array(1,4),
+	'Marquis' => array(5,9),
+	'Count' => array(10,29),
+	'Viscount' => array(30,49),
+	'Baron' => array(50,99),
+	'Knight Commander' => array(100,199),
+	'Superior Knight' => array(200,299)
+);
+
+/*
+ * custom: map_list
+ */
+$custom['map_list'] = array(
+	0 => 'Lorencia',
+	1 => 'Dungeon',
+	2 => 'Devias',
+	3 => 'Noria',
+	4 => 'LostTower',
+	5 => 'Exile',
+	6 => 'Arena',
+	7 => 'Atlans',
+	8 => 'Tarkan',
+	9 => 'Devil Square',
+	10 => 'Icarus',
+	11 => 'Blood Castle 1',
+	12 => 'Blood Castle 2',
+	13 => 'Blood Castle 3',
+	14 => 'Blood Castle 4',
+	15 => 'Blood Castle 5',
+	16 => 'Blood Castle 6',
+	17 => 'Blood Castle 7',
+	18 => 'Chaos Castle 1',
+	19 => 'Chaos Castle 2',
+	20 => 'Chaos Castle 3',
+	21 => 'Chaos Castle 4',
+	22 => 'Chaos Castle 5',
+	23 => 'Chaos Castle 6',
+	24 => 'Kalima 1',
+	25 => 'Kalima 2',
+	26 => 'Kalima 3',
+	27 => 'Kalima 4',
+	28 => 'Kalima 5',
+	29 => 'Kalima 6',
+	30 => 'Valley of Loren',
+	31 => 'Land of Trials',
+	32 => 'Devil Square',
+	33 => 'Aida',
+	34 => 'Crywolf Fortress',
+	36 => 'Kalima 7',
+	37 => 'Kanturu',
+	38 => 'Kanturu 2',
+	39 => 'Kanturu 3',
+	40 => 'Silent Map',
+	41 => 'Barracks of Balgass',
+	42 => 'Balgass Refuge',
+	45 => 'Illusion Temple 1',
+	46 => 'Illusion Temple 2',
+	47 => 'Illusion Temple 3',
+	48 => 'Illusion Temple 4',
+	49 => 'Illusion Temple 5',
+	50 => 'Illusion Temple 6',
+	51 => 'Elbeland',
+	52 => 'Blood Castle 8',
+	53 => 'Chaos Castle 7',
+	56 => 'Swamp of Calmness',
+	57 => 'Raklion',
+	58 => 'Raklion Boss',
+	62 => 'Village\'s Santa',
+	63 => 'Vulcanus',
+	64 => 'Duel Arena',
+	65 => 'Doppelganger',
+	66 => 'Doppelganger',
+	67 => 'Doppelganger',
+	68 => 'Doppelganger',
+	69 => 'Imperial Guardian',
+	70 => 'Imperial Guardian',
+	71 => 'Imperial Guardian',
+	72 => 'Imperial Guardian',
+	79 => 'Loren Market',
+	80 => 'Karutan 1',
+	81 => 'Karutan 2',
+	82 => 'Doppelganger',
+	91 => 'Acheron',
+	92 => 'Acheron',
+	95 => 'Debenter',
+	96 => 'Debenter',
+	97 => 'Chaos Castle Final',
+	98 => 'Ilusion Temple',
+	99 => 'Ilusion Temple',
+	100 => 'Urk Mountain',
+	101 => 'Urk Mountain',
+	102 => 'Tormented Square',
+	103 => 'Tormented Square',
+	104 => 'Tormented Square',
+	105 => 'Tormented Square',
+	106 => 'Tormented Square',
+	110 => 'Nars',
+	112 => 'Ferea',
+	113 => 'Nixie Lake',
+	114 => 'Quest Zone',
+	115 => 'Labyrinth',
+	116 => 'Deep Dungeon',
+	117 => 'Deep Dungeon',
+	118 => 'Deep Dungeon',
+	119 => 'Deep Dungeon',
+	120 => 'Deep Dungeon',
+	121 => '4th Quest',
+	122 => 'Swamp of Darkness',
+	123 => 'Kubera Mine',
+	124 => 'Kubera Mine',
+	125 => 'Kubera Mine',
+	126 => 'Kubera Mine',
+	127 => 'Kubera Mine',
+);
+
+/*
+ * custom: pk_level
+ */
+$custom['pk_level'] = array(
+	0 => 'Normal',
+	1 => 'Hero',
+	2 => 'Hero',
+	3 => 'Commoner',
+	4 => 'Warning',
+	5 => 'Murder',
+	6 => 'Outlaw',
 );

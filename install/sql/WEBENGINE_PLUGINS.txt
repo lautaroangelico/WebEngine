@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[WEBENGINE_PLUGINS](
+CREATE TABLE [dbo].[{TABLE_NAME}](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[name] [varchar](100) NOT NULL,
 	[author] [varchar](50) NOT NULL,

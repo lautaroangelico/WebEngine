@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -14,10 +14,11 @@
 # general
 $lang['server_time'] = 'Server Time';
 $lang['user_time'] = 'Your Time';
+$lang['switch_lang'] = 'Switch Language';
 
 # menu and navbar
 $lang['menu_txt_1'] = 'Home';
-$lang['menu_txt_2'] = 'Forums';
+$lang['menu_txt_2'] = 'Forum';
 $lang['menu_txt_3'] = 'Register';
 $lang['menu_txt_4'] = 'Login';
 $lang['menu_txt_5'] = 'User CP';
@@ -26,6 +27,7 @@ $lang['menu_txt_7'] = 'Downloads';
 $lang['menu_txt_8'] = 'Donate';
 $lang['menu_txt_9'] = 'Vote & Reward';
 $lang['menu_txt_10'] = 'Rankings';
+$lang['menu_txt_11'] = 'Info';
 
 # module titles
 $lang['module_titles_txt_1'] = 'Register a New Account';
@@ -44,7 +46,7 @@ $lang['module_titles_txt_13'] = 'Clear PK';
 $lang['module_titles_txt_14'] = 'Frequently Asked Questions';
 $lang['module_titles_txt_15'] = 'Forgot Password';
 $lang['module_titles_txt_16'] = 'Unstick Character';
-$lang['module_titles_txt_17'] = 'V.I.P. Subscription';
+$lang['module_titles_txt_17'] = 'Server Information';
 $lang['module_titles_txt_18'] = 'Fix Stats';
 $lang['module_titles_txt_19'] = 'Clear Skill-Tree';
 $lang['module_titles_txt_20'] = 'Email Verification';
@@ -85,8 +87,8 @@ $lang['success_9'] = 'Your character\'s stats have been successfully reset.';
 $lang['success_10'] = 'Your character\'s PK level has been successfully reset.';
 $lang['success_11'] = 'Your character been successfully unstuck.';
 $lang['success_12'] = 'Your character\'s master level been successfully cleared.';
-$lang['success_13'] = 'Your VIP subscription has been extended!';
-$lang['success_14'] = 'Your VIP subscription has been added!';
+$lang['success_13'] = '';
+$lang['success_14'] = '';
 $lang['success_15'] = 'News successfully added!';
 $lang['success_16'] = 'Your master key has been successfully sent to your email address.';
 $lang['success_17'] = 'Stats successfully added!';
@@ -156,10 +158,54 @@ $lang['error_56'] = 'The name entered is not valid.';
 $lang['error_57'] = 'The message entered is not valid.';
 $lang['error_58'] = 'There are no ranking results to display.';
 $lang['error_59'] = 'Could not determine which classes require CMD stat. Please condifure character_cmd in your custom file.';
-$lang['error_60'] = 'The VIP package you selected is not available.';
-$lang['error_61'] = 'You currently have an active VIP subscription, please extend.';
-$lang['error_62'] = 'You don\'t have an active VIP subscription to extend.';
-$lang['error_63'] = 'You can\'t extend your VIP to another package.';
+$lang['error_60'] = 'Could not load recaptcha library, please contact support.';
+$lang['error_61'] = 'No news articles have been published.';
+$lang['error_62'] = 'The language switching system is disabled.';
+$lang['error_63'] = 'The selected language is not valid.';
+$lang['error_64'] = 'You do not have permission to add stats to this character.';
+$lang['error_65'] = 'Could not switch language.';
+
+# credit system errors
+$lang['error_66'] = 'You have not set a configuration id.';
+$lang['error_67'] = 'The userid entered is not valid.';
+$lang['error_68'] = 'The username entered contains non-allowed characters.';
+$lang['error_69'] = 'The username entered is not valid.';
+$lang['error_70'] = 'The email entered is not valid.';
+$lang['error_71'] = 'The character name entered is not valid.';
+$lang['error_72'] = 'The amount of credits to add must be an unsigned number.';
+$lang['error_73'] = 'The user identifier has not been set.';
+$lang['error_74'] = 'There was an error adding the credits';
+$lang['error_75'] = 'The amount of credits to subtract must be an unsigned number.';
+$lang['error_76'] = 'There was an error subtracting the credits';
+$lang['error_77'] = 'The provided configuration id is not valid.';
+$lang['error_78'] = 'The title can only contain alphanumeric characters and spaces.';
+$lang['error_79'] = 'The database entered contains non-allowed characters.';
+$lang['error_80'] = 'The table entered contains non-allowed characters.';
+$lang['error_81'] = 'The credits column entered contains non-allowed characters.';
+$lang['error_82'] = 'The user column entered contains non-allowed characters.';
+$lang['error_83'] = 'The user column identifier is not valid.';
+$lang['error_84'] = 'Please fill all the required fields.';
+$lang['error_85'] = 'There has been an error adding the configuration to the database, check for database errors.';
+$lang['error_86'] = 'There has been an error editing the configuration, check for database errors.';
+$lang['error_87'] = 'There has been an error deleting the configuration, check for database errors.';
+$lang['error_88'] = 'Identifier not set, cannot check online status.';
+$lang['error_89'] = 'There was an error getting the credits value.';
+
+# email system errors
+$lang['error_90'] = 'Could not load email configurations.';
+$lang['error_91'] = 'Could not load email template.';
+$lang['error_92'] = 'Email address invalid, cannot send email.';
+$lang['error_93'] = 'You did not set a template.';
+$lang['error_94'] = 'Could not load custom email template (you must provide a full path to the template).';
+$lang['error_95'] = 'Email template has not been set.';
+$lang['error_96'] = 'No recipient email address has been set.';
+$lang['error_97'] = 'Email subject has not been set.';
+
+$lang['error_98'] = 'Login configurations missing.';
+$lang['error_99'] = 'There was an error while editing the news.';
+$lang['error_100'] = 'Could not load vote system configurations.';
+$lang['error_101'] = 'IP Address is not valid.';
+$lang['error_102'] = 'Credit configuration has not been set (voting system).';
 
 # registration
 $lang['register_txt_1'] = 'Username:';
@@ -217,8 +263,9 @@ $lang['downloads_txt_7'] = 'Patch Downloads';
 $lang['downloads_txt_8'] = 'Tool Downloads';
 
 # news
-$lang['news_txt_1'] = 'Published by';
+$lang['news_txt_1'] = 'Published by %s, %s';
 $lang['news_txt_2'] = 'show comments';
+$lang['news_txt_3'] = 'Read More &rsaquo;';
 
 # rankings
 $lang['rankings_txt_1'] = 'Top Level';
@@ -253,6 +300,9 @@ $lang['rankings_txt_29'] = 'Type';
 $lang['rankings_txt_30'] = 'Rank';
 $lang['rankings_txt_31'] = 'Contribution';
 $lang['rankings_txt_32'] = 'Votes';
+$lang['rankings_txt_33'] = 'Country';
+$lang['rankings_txt_34'] = 'Location';
+$lang['rankings_txt_35'] = 'Pk Level';
 
 # clear pk
 $lang['clearpk_txt_1'] = 'Character';
@@ -306,17 +356,6 @@ $lang['unstickcharacter_txt_2'] = 'Zen';
 $lang['unstickcharacter_txt_3'] = 'Unstick';
 $lang['unstickcharacter_txt_4'] = 'Your character must have at least %s zen to unstick';
 
-# vip
-$lang['vip_txt_1'] = 'You have <b>%s</b> remaining VIP days.';
-$lang['vip_txt_2'] = 'Get VIP';
-$lang['vip_txt_3'] = 'Extend VIP';
-$lang['vip_txt_4'] = 'Package';
-$lang['vip_txt_5'] = 'Details';
-$lang['vip_txt_6'] = 'Cost';
-$lang['vip_txt_7'] = '%s day(s)';
-$lang['vip_txt_8'] = 'credits';
-$lang['vip_txt_9'] = ' (%s&#37; off)';
-
 # recover master key
 $lang['masterkey_txt_1'] = 'Send master key to my email now!';
 
@@ -333,57 +372,59 @@ $lang['addstats_txt_9'] = 'Your character must have at least %s zen to add stats
 
 # castle siege banner
 $lang['csbanner_txt_1'] = 'Castle Owner';
-$lang['csbanner_txt_2'] = 'CASTLE SIEGE BATTLE STARTS IN';
+$lang['csbanner_txt_2'] = 'Battle Begins In';
+$lang['csbanner_txt_3'] = 'Guild Master';
 
 # profiles
-$lang['profiles_txt_1'] = "Guild Profile";
-$lang['profiles_txt_2'] = "Player Profile";
-$lang['profiles_txt_3'] = "Guild Master:";
-$lang['profiles_txt_4'] = "Score:";
-$lang['profiles_txt_5'] = "Members:";
-$lang['profiles_txt_6'] = "Members";
-$lang['profiles_txt_7'] = "Level";
-$lang['profiles_txt_8'] = "Resets";
-$lang['profiles_txt_9'] = "Grand Resets";
-$lang['profiles_txt_10'] = "Strength";
-$lang['profiles_txt_11'] = "Agility";
-$lang['profiles_txt_12'] = "Vitality";
-$lang['profiles_txt_13'] = "Energy";
-$lang['profiles_txt_14'] = "Command";
-$lang['profiles_txt_15'] = "Kills";
-$lang['profiles_txt_16'] = "Guild";
-$lang['profiles_txt_17'] = "Status";
-$lang['profiles_txt_18'] = "Online";
-$lang['profiles_txt_19'] = "Offline";
+$lang['profiles_txt_1'] = 'Guild Profile';
+$lang['profiles_txt_2'] = 'Player Profile';
+$lang['profiles_txt_3'] = 'Guild Master:';
+$lang['profiles_txt_4'] = 'Score:';
+$lang['profiles_txt_5'] = 'Members:';
+$lang['profiles_txt_6'] = 'Members';
+$lang['profiles_txt_7'] = 'Level';
+$lang['profiles_txt_8'] = 'Resets';
+$lang['profiles_txt_9'] = 'Grand Resets';
+$lang['profiles_txt_10'] = 'Strength';
+$lang['profiles_txt_11'] = 'Agility';
+$lang['profiles_txt_12'] = 'Vitality';
+$lang['profiles_txt_13'] = 'Energy';
+$lang['profiles_txt_14'] = 'Command';
+$lang['profiles_txt_15'] = 'Kills';
+$lang['profiles_txt_16'] = 'Guild';
+$lang['profiles_txt_17'] = 'Status';
+$lang['profiles_txt_18'] = 'Online';
+$lang['profiles_txt_19'] = 'Offline';
+$lang['profiles_txt_20'] = 'Master Level';
 
 # change email address
-$lang['changemail_txt_1'] = "New Email";
-$lang['changemail_txt_2'] = "Change";
+$lang['changemail_txt_1'] = 'New Email';
+$lang['changemail_txt_2'] = 'Change';
 
 # sidebar server info
-$lang['sidebar_srvinfo_txt_1'] = "Server Info";
-$lang['sidebar_srvinfo_txt_2'] = "Total Accounts";
-$lang['sidebar_srvinfo_txt_3'] = "Total Characters";
-$lang['sidebar_srvinfo_txt_4'] = "Total Guilds";
-$lang['sidebar_srvinfo_txt_5'] = "Online Users";
+$lang['sidebar_srvinfo_txt_1'] = 'Server Info';
+$lang['sidebar_srvinfo_txt_2'] = 'Total Accounts';
+$lang['sidebar_srvinfo_txt_3'] = 'Total Characters';
+$lang['sidebar_srvinfo_txt_4'] = 'Total Guilds';
+$lang['sidebar_srvinfo_txt_5'] = 'Online Users';
 
 # castle siege
-$lang['castlesiege_txt_2'] = "Castle Owner:";
-$lang['castlesiege_txt_3'] = "Zen:";
-$lang['castlesiege_txt_4'] = "Tax Chaos:";
-$lang['castlesiege_txt_5'] = "Tax Store:";
-$lang['castlesiege_txt_6'] = "Tax Hunt Zone:";
-$lang['castlesiege_txt_7'] = "Registered Guilds";
+$lang['castlesiege_txt_2'] = 'Castle Owner:';
+$lang['castlesiege_txt_3'] = 'Zen:';
+$lang['castlesiege_txt_4'] = 'Tax Chaos:';
+$lang['castlesiege_txt_5'] = 'Tax Store:';
+$lang['castlesiege_txt_6'] = 'Tax Hunt Zone:';
+$lang['castlesiege_txt_7'] = 'Registered Guilds';
 
 # buy zen
-$lang['buyzen_txt_1'] = "Buy Zen";
-$lang['buyzen_txt_2'] = " zen sent to ";
-$lang['buyzen_txt_3'] = "Character";
-$lang['buyzen_txt_4'] = "Zen";
-$lang['buyzen_txt_5'] = "Buy";
-$lang['buyzen_txt_6'] = "credit(s)";
+$lang['buyzen_txt_1'] = 'Buy Zen';
+$lang['buyzen_txt_2'] = ' zen sent to ';
+$lang['buyzen_txt_3'] = 'Character';
+$lang['buyzen_txt_4'] = 'Zen';
+$lang['buyzen_txt_5'] = 'Buy';
+$lang['buyzen_txt_6'] = 'credit(s)';
 
 # contact us
-$lang['contactus_txt_1'] = "Email Address";
-$lang['contactus_txt_2'] = "Message";
-$lang['contactus_txt_3'] = "Send";
+$lang['contactus_txt_1'] = 'Email Address';
+$lang['contactus_txt_2'] = 'Message';
+$lang['contactus_txt_3'] = 'Send';

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.6
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -15,37 +15,10 @@
 <?php
 $database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
 
-$cron_times = array(
-	1 => 60*5,
-	2 => 60*10,
-	3 => 60*15,
-	4 => 60*30,
-	5 => 60*60,
-	6 => 3600*2,
-	7 => 3600*4,
-	8 => 3600*8,
-	9 => 3600*10,
-	10 => 3600*12,
-	11 => 86400,
-	12 => 86400*3,
-	13 => 86400*7,
-	14 => 604800*2,
-	15 => 604800*3,
-	16 => 604800*4
-);
-
-if(check_value($_REQUEST['cache']) && $_REQUEST['cache'] == 1) {
-	$cacheDATA = BuildCacheData($database->query_fetch("SELECT * FROM WEBENGINE_CRON"));
-	UpdateCache('cron.cache',$cacheDATA);
-	message('success','Cron jobs cache successfully updated!');
-}
-
 if(check_value($_REQUEST['reset']) && $_REQUEST['reset'] == 1) {
-	$resetCrons = $database->query("UPDATE WEBENGINE_CRON SET cron_last_run = NULL");
+	$resetCrons = $database->query("UPDATE ".WEBENGINE_CRON." SET cron_last_run = NULL");
 	if($resetCrons) {
-		$cacheDATA = BuildCacheData($database->query_fetch("SELECT * FROM WEBENGINE_CRON"));
-		UpdateCache('cron.cache',$cacheDATA);
-		message('success','Crons successfully reset and cache updated!');
+		message('success','Crons successfully reset!');
 	} else {
 		message('error', 'Could not reset crons.');
 	}
@@ -59,7 +32,7 @@ if(check_value($_REQUEST['togglestatus'])) {
 	togglestatusCronJob($_REQUEST['togglestatus']);
 }
 
-$cronJobs = $database->query_fetch("SELECT * FROM WEBENGINE_CRON ORDER BY cron_id ASC");
+$cronJobs = $database->query_fetch("SELECT * FROM ".WEBENGINE_CRON." ORDER BY cron_id ASC");
 if(is_array($cronJobs)) {
 	echo '<table class="table table-striped table-bordered">';
 		echo '<tr>';
@@ -102,5 +75,4 @@ if(is_array($cronJobs)) {
 }
 
 echo '<hr>';
-echo '<a class="btn btn-info" href="index.php?module='.$_REQUEST['module'].'&cache=1">UPDATE CRON JOBS CACHE</a> &nbsp;';
-echo '<a class="btn btn-info" href="index.php?module='.$_REQUEST['module'].'&reset=1">RESET ALL CRON JOBS</a>';
+echo '<a class="btn btn-info" href="index.php?module='.$_REQUEST['module'].'&reset=1">RESET LAST RUN</a>';

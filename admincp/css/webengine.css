@@ -1,10 +1,21 @@
 /* WEBENGINE CUSTOM CSS */
 .navbar-inverse {
-	background-color: #176093;
+	background-color: #f5f5f5;
+	border: 0px;
 }
-
-.navbar-inverse .navbar-nav>li>a, .top-nav>li>a {
-	color: #e4f4ff;
+.navbar-inverse>.navbar-header {
+	background: #232323;
+}
+.navbar-inverse>.navbar-header>.navbar-brand>img {
+	width: 180px;
+	height: auto;
+}
+.navbar-inverse>.nav>li>a {
+	color: #aaa;
+}
+.navbar-inverse>.nav>li>a:hover, .navbar-inverse>.nav>li>a:focus {
+	background: #f5f5f5;
+	color: #333;
 }
 
 .navbar-brand {
@@ -65,4 +76,43 @@
 .setting-description {
 	font-style: italic;
     font-size: 11px;
+}
+
+/* 1.2.0 */
+body {
+    background-color: #303030;
+}
+h1.page-header {
+	color: #666;
+	font-weight: bold;
+	margin-top: 10px;
+}
+.navbar-default {
+    background-color: #303030;
+    border: 0px;
+}
+.nav > li > a {
+    color: #777;
+    text-decoration: none;
+}
+.nav > li.active > a {
+    color: #ffffff;
+    text-decoration: none;
+}
+.nav>li>a:hover, .nav>li>a:focus {
+    text-decoration: none;
+    background-color: #282828;
+	color: #ffffff;
+}
+.sidebar ul li {
+    border-bottom: 1px solid #383838;
+}
+.nav-second-level {
+	background: #3f3f3f;
+}
+.nav-second-level>li>a:hover, .nav-second-level>li>a:focus {
+	background: #3f3f3f;
+}
+.nav-second-level > li > a {
+	color: #aaa;
 }

@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.1.1
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-//session_name('WebEngine109'); # session name (change to your server name and uncomment)
+//session_name('WebEngine120'); # session name (change to your server name and uncomment)
 //session_set_cookie_params(0, '/', 'muonline.com'); # same session with and without www protocol (edit with your domain and uncomment)
 if(access != 'cron') {
 	@ob_start();
@@ -19,14 +19,20 @@ if(access != 'cron') {
 }
 
 # Version
-define('__WEBENGINE_VERSION__', '1.1.1');
+define('__WEBENGINE_VERSION__', '1.2.0');
 
 # Set Encoding
 @ini_set('default_charset', 'utf-8');
 
-# Server Time
-# http://php.net/manual/en/timezones.php
-date_default_timezone_set('UTC');
+# CloudFlare IP Workaround
+if(isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
+  $_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+}
+
+# CloudFlare HTTPS Workaround
+if(!empty($_SERVER['HTTP_X_FORWARDED_PROTO'])){
+	$_SERVER['HTTPS'] = $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' ? 'on' : 'off';
+}
 
 # Global Paths
 define('HTTP_HOST', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'CLI');
@@ -49,14 +55,31 @@ define('__PATH_ADMINCP__', __ROOT_DIR__.'admincp/');
 define('__PATH_ADMINCP_INC__', __ROOT_DIR__.'admincp/inc/');
 define('__PATH_ADMINCP_MODULES__', __ROOT_DIR__.'admincp/modules/');
 define('__PATH_NEWS_CACHE__', __PATH_CACHE__.'news/');
+define('__PATH_NEWS_TRANSLATIONS_CACHE__', __PATH_NEWS_CACHE__.'translations/');
 define('__PATH_PLUGINS__', __PATH_INCLUDES__.'plugins/');
 define('__PATH_CONFIGS__', __PATH_INCLUDES__.'config/');
 define('__PATH_MODULE_CONFIGS__', __PATH_CONFIGS__.'modules/');
 define('__PATH_CRON__', __PATH_INCLUDES__.'cron/');
+define('__PATH_LOGS__', __PATH_INCLUDES__.'logs/');
 
 # Public Paths
 define('__PATH_MODULES_RANKINGS__', __BASE_URL__.'rankings/');
 define('__PATH_ADMINCP_HOME__', __BASE_URL__.'admincp/');
+define('__PATH_IMG__', __BASE_URL__.'img/');
+define('__PATH_COUNTRY_FLAGS__', __PATH_IMG__.'flags/');
+define('__PATH_API__', __BASE_URL__.'api/');
+define('__PATH_ONLINE_STATUS__', __PATH_IMG__.'online.png');
+define('__PATH_OFFLINE_STATUS__', __PATH_IMG__.'offline.png');
+
+# Other Paths
+define('WEBENGINE_DATABASE_ERRORLOG', __PATH_LOGS__.'database_errors.log');
+define('WEBENGINE_WRITABLE_PATHS', __PATH_CONFIGS__.'writable.paths.json');
+
+# WebEngine CMS Tables
+if(!@include_once(__PATH_CONFIGS__ . 'webengine.tables.php')) throw new Exception('Could not load WebEngine CMS table definitions.');
+
+# Timezone
+if(!@include_once(__PATH_CONFIGS__ . 'timezone.php')) throw new Exception('Could not load timezone.');
 
 # Load Libraries
 if(!@include_once(__PATH_CLASSES__ . 'class.database.php')) throw new Exception('Could not load class (database).');
@@ -66,14 +89,15 @@ if(!@include_once(__PATH_CLASSES__ . 'class.validator.php')) throw new Exception
 if(!@include_once(__PATH_CLASSES__ . 'class.login.php')) throw new Exception('Could not load class (login).');
 if(!@include_once(__PATH_CLASSES__ . 'class.vote.php')) throw new Exception('Could not load class (vote).');
 if(!@include_once(__PATH_CLASSES__ . 'class.character.php')) throw new Exception('Could not load class (character).');
-if(!@include_once(__PATH_CLASSES__ . 'phpmailer/PHPMailerAutoload.php')) throw new Exception('Could not load class (phpmailer).');
+if(!@include_once(__PATH_CLASSES__ . 'phpmailer/autoload.php')) throw new Exception('Could not load class (phpmailer).');
 if(!@include_once(__PATH_CLASSES__ . 'class.rankings.php')) throw new Exception('Could not load class (rankings).');
 if(!@include_once(__PATH_CLASSES__ . 'class.news.php')) throw new Exception('Could not load class (news).');
 if(!@include_once(__PATH_CLASSES__ . 'class.plugins.php')) throw new Exception('Could not load class (plugins).');
 if(!@include_once(__PATH_CLASSES__ . 'class.profiles.php')) throw new Exception('Could not load class (profiles).');
 if(!@include_once(__PATH_CLASSES__ . 'class.credits.php')) throw new Exception('Could not load class (credits).');
 if(!@include_once(__PATH_CLASSES__ . 'class.email.php')) throw new Exception('Could not load class (email).');
-if(!@include_once(__PATH_CLASSES__ . 'class.account.php')) throw new Exception('Could not load class (email).');
+if(!@include_once(__PATH_CLASSES__ . 'class.account.php')) throw new Exception('Could not load class (account).');
+if(!@include_once(__PATH_CLASSES__ . 'class.connection.php')) throw new Exception('Could not load class (connection).');
 
 # Load Functions
 if(!@include_once(__PATH_INCLUDES__ . 'functions.php')) throw new Exception('Could not load functions.');
@@ -81,23 +105,19 @@ if(!@include_once(__PATH_INCLUDES__ . 'functions.php')) throw new Exception('Cou
 # WebEngine Configurations
 $config = webengineConfigs();
 
-# File-Dependant Libraries
-	
-	# MUE
-	if(strtolower($config['server_files']) == 'mue') {
-		if(!@include_once(__PATH_CLASSES__ . 'class.vip.mue.php')) throw new Exception('Could not load class (vip.mue).');
-	}
-	# IGCN
-	if(strtolower($config['server_files']) == 'igcn') {
-		if(!@include_once(__PATH_CLASSES__ . 'class.vip.igcn.php')) throw new Exception('Could not load class (vip.igcn).');
-	}
+# Installation Status
+if($config['webengine_cms_installed'] == false) {
+	header('Location: '.__BASE_URL__.'install/');
+	die();
+}
+
+# Compatibility
+if(!@include_once(__PATH_CONFIGS__ . 'compatibility.php')) throw new Exception('Could not load file compatibility.');
+if(!array_key_exists(strtolower($config['server_files']), $webengine['file_compatibility'])) throw new Exception('The server files configuration is not valid.');
 
 # Configurations Check
 $checkConfigs = true;
 if($checkConfigs) {
-	
-	# encryption hash
-	if(!in_array(strlen($config['encryption_hash']), array(16,24,32))) throw new Exception('The encryption hash configuration must be an alphanumeric string of 16, 24 or 32 characters in length.');
 	
 	# default template
 	if(!file_exists(__PATH_TEMPLATES__ . $config['website_template'])) throw new Exception('The default template doesn\'t exist.');
@@ -110,12 +130,10 @@ if($checkConfigs) {
 	if(!check_value($config['SQL_DB_PORT'])) throw new Exception('The database port configuration is required to connect to your database.');
 	if($config['SQL_USE_2_DB']) if(!check_value($config['SQL_DB_2_NAME'])) throw new Exception('The additional database name configuration is required to connect to your database.');
 	if(!check_value($config['SQL_PDO_DRIVER'])) throw new Exception('The PDO driver configuration is required to connect to your database.');
-	if(!check_value($config['server_files'])) throw new Exception('The server files name configuration is required by webengine.');
-	if(!in_array($config['server_files'], array('MUE', 'IGCN', 'CUSTOM'))) throw new Exception('The server files name configuration is not valid.');
 }
 
 # Load Table Definitions
-if(!@include_once(__PATH_CONFIGS__ . strtolower($config['server_files']) . '.tables.php')) throw new Exception('Could not load the table definitions.');
+if(!@include_once(__PATH_CONFIGS__ . $webengine['file_compatibility'][strtolower($config['server_files'])]['file'])) throw new Exception('Could not load the table definitions.');
 
 # CMS Status
 if(!$config['system_active'] && access != 'cron') {
@@ -139,68 +157,20 @@ if($config['error_reporting']) {
 	error_reporting(0);
 }
 
-# MuOnline Database Connection
-$dB = new dB($config['SQL_DB_HOST'], $config['SQL_DB_PORT'], $config['SQL_DB_NAME'], $config['SQL_DB_USER'], $config['SQL_DB_PASS'], $config['SQL_PDO_DRIVER']);
-if($dB->dead) {
-	if(config('error_reporting',true)) {
-		throw new Exception($dB->error);
-	} else {
-		throw new Exception('Website Offline');
-	}
-}
-
-# Me_MuOnline Database Connection
-if($config['SQL_USE_2_DB']) {
-	$dB2 = new dB($config['SQL_DB_HOST'], $config['SQL_DB_PORT'], $config['SQL_DB_2_NAME'], $config['SQL_DB_USER'], $config['SQL_DB_PASS'], $config['SQL_PDO_DRIVER']);
-	if($dB2->dead) {
-		if(config('error_reporting',true)) {
-			throw new Exception($dB2->error);
-		} else {
-			throw new Exception('Website Offline');
-		}
-	}
-}
-
-# Common Library Instance
-$common = new common($dB, $dB2);
-
 # IP Blocking System
-if($config['ip_block_system_enable'] && access != 'cron') {
-	if($common->isIpBlocked($_SERVER['REMOTE_ADDR'])) throw new Exception('Your IP address has been blocked.');
-}
-
-# Anti-flood System
-if($config['flood_check_enable'] && access != 'cron') {
-	if(!check_value($_SESSION['track_timestamp'])) {
-		$_SESSION['track_timestamp'] = time();
-		$_SESSION['track_actions'] = 0;
-	}
-	
-	if(time() > $_SESSION['track_timestamp']+60) {
-		$_SESSION['track_timestamp'] = time();
-		$_SESSION['track_actions'] = 0;
-	}
-	
-	if($_SESSION['track_actions'] >= $config['flood_actions_per_minute']) throw new Exception('Flood limit reached, please try again in a moment.');
-	
-	$_SESSION['track_actions'] += 1;
+if($config['ip_block_system_enable']) {
+	if(checkBlockedIp()) throw new Exception('Your IP address has been blocked.');
 }
 
 # Load Plugins
 if($config['plugins_system_enable']) {
-	$PluginsSys = new Plugins();
-	if($PluginsSys->gotEnabledPlugins()) {
-		$pluginsCACHE = LoadCacheData('plugins.cache');
-		$pli = 0;
-		foreach($pluginsCACHE as $thisPlugin) {
-			if($pli >= 1) {
-				$pPath = $PluginsSys->pluginPath($thisPlugin[0]);
-				$pFiles = explode("|",$thisPlugin[1]);
-				foreach($pFiles as $pFile) {
-					if(!@include_once($pPath.$pFile)) throw new Exception('Could not load plugin file ('.$pPath.$pFile.').');
-				}
+	$pluginsCache = loadCache('plugins.cache');
+	if(is_array($pluginsCache)) {
+		foreach($pluginsCache as $pluginData) {
+			if(!is_array($pluginData['files'])) continue;
+			foreach($pluginData['files'] as $pluginFile) {
+				if(!@include_once(__PATH_PLUGINS__.$pluginData['folder'].'/'.$pluginFile)) throw new Exception('Could not load plugin file ('.$pluginData['folder'].'/'.$pluginFile.').');
 			}
-			$pli++;
 		}
 	}
 }
@@ -214,5 +184,5 @@ define('__PATH_TEMPLATE_JS__', __PATH_TEMPLATE__ . 'js/');
 define('__PATH_TEMPLATE_FONTS__', __PATH_TEMPLATE__ . 'fonts/');
 
 # Handler Instance
-$handler = new Handler($dB, $dB2);
+$handler = new Handler();
 $handler->loadPage();

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.8
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -14,6 +14,18 @@
 class Account extends common {
 	
 	private $_defaultAccountSerial = '1111111111111';
+	private $_countryChangeCooldown = 1296000;
+	
+	protected $_account;
+	protected $_country;
+	
+	public function setAccount($account) {
+		$this->_account = $account;
+	}
+	
+	public function setCountry($country) {
+		$this->_country = $country;
+	}
 	
 	public function registerAccount($username, $password, $cpassword, $email) {
 		
@@ -69,24 +81,12 @@ class Account extends common {
 		}
 		
 		# register account
-		$result = $this->db->query($query, $data);
+		$result = $this->memuonline->query($query, $data);
 		if(!$result) throw new Exception(lang('error_22',true));
 		
 		# send welcome email
 		if($regCfg['send_welcome_email']) {
 			$this->sendWelcomeEmail($username, $email);
-		}
-		
-		# free vip days
-		if($regCfg['freevip_enable']) {
-			switch($this->_serverFiles) {
-				case 'MUE':
-					$vip = new Vip();
-					$this->updateVipTimeStamp($this->db->lastInsertId(), $vip->CalculateTimestamp($regCfg['freevip_days']));
-					break;
-				default:
-					break;
-			}
 		}
 		
 		# success message
@@ -176,7 +176,11 @@ class Account extends common {
 			
 			message('success', lang('success_3',true));
 		} catch (Exception $ex) {
-			message('error', lang('error_20',true));
+			if($this->_debug) {
+				throw new Exception($ex->getMessage());
+			} else {
+				throw new Exception(lang('error_20',true));
+			}
 		}
 		
 	}
@@ -191,7 +195,7 @@ class Account extends common {
 		if(!Validator::UnsignedNumber($userid)) throw new Exception(lang('error_25',true));
 		if(!Validator::UnsignedNumber($authcode)) throw new Exception(lang('error_25',true));
 		
-		$result = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_PASSCHANGE_REQUEST WHERE user_id = ?", array($userid));
+		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_PASSCHANGE_REQUEST." WHERE user_id = ?", array($userid));
 		if(!is_array($result)) throw new Exception(lang('error_25',true));
 		
 		# load changepw configs
@@ -222,7 +226,11 @@ class Account extends common {
 			$email->addVariable('{NEW_PASSWORD}', $new_password);
 			$email->addAddress($accountData[_CLMN_EMAIL_]);
 			$email->send();
-		} catch (Exception $ex) {}
+		} catch (Exception $ex) {
+			if($this->_debug) {
+				throw new Exception($ex->getMessage());
+			}
+		}
 		
 		# clear password change request
 		$this->removePasswordChangeRequest($userid);
@@ -265,7 +273,11 @@ class Account extends common {
 			
 			message('success', lang('success_6',true));
 		} catch (Exception $ex) {
-			throw new Exception(lang('error_23',true));
+			if($this->_debug) {
+				throw new Exception($ex->getMessage());
+			} else {
+				throw new Exception(lang('error_23',true));
+			}
 		}
 	}
 	
@@ -304,7 +316,11 @@ class Account extends common {
 			
 			message('success', lang('success_7',true));
 		} catch (Exception $ex) {
-			throw new Exception(lang('error_23',true));
+			if($this->_debug) {
+				throw new Exception($ex->getMessage());
+			} else {
+				throw new Exception(lang('error_23',true));
+			}
 		}
 	}
 	
@@ -328,7 +344,11 @@ class Account extends common {
 			message('success', lang('success_16',true));
 			setcookie("webengine_masterkey", $accountData[_CLMN_USERNM_], time()+3600);  /* expire in 1 hour */
 		} catch (Exception $ex) {
-			throw new Exception(lang('error_23',true));
+			if($this->_debug) {
+				throw new Exception($ex->getMessage());
+			} else {
+				throw new Exception(lang('error_23',true));
+			}
 		}
 	}
 	
@@ -386,7 +406,7 @@ class Account extends common {
 	}
 	
 	public function verifyRegistrationProcess($username, $key) {
-		$verifyKey = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_REGISTER_ACCOUNT WHERE registration_account = ? AND registration_key = ?", array($username,$key));
+		$verifyKey = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_account = ? AND registration_key = ?", array($username,$key));
 		if(!is_array($verifyKey)) throw new Exception(lang('error_25',true));
 		
 		# load registration configs
@@ -409,7 +429,7 @@ class Account extends common {
 		}
 		
 		# create account
-		$result = $this->db->query($query, $data);
+		$result = $this->memuonline->query($query, $data);
 		if(!$result) throw new Exception(lang('error_22',true));
 		
 		# delete verification request
@@ -420,23 +440,39 @@ class Account extends common {
 			$this->sendWelcomeEmail($verifyKey['registration_account'],$verifyKey['registration_email']);
 		}
 		
-		# free vip days
-		if($regCfg['freevip_enable']) {
-			switch($this->_serverFiles) {
-				case 'MUE':
-					$vip = new Vip();
-					$this->updateVipTimeStamp($this->db->db->lastInsertId(), $vip->CalculateTimestamp($regCfg['freevip_days']));
-					break;
-				default:
-					break;
-			}
-		}
-		
 		# success message
 		message('success', lang('success_1',true));
 		
 		# redirect to login (5 seconds)
 		redirect(2,'login/',5);
+	}
+	
+	public function getAccountCountry() {
+		if(!check_value($this->_account)) return;
+		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_ACCOUNT_COUNTRY." WHERE account = ?", array($this->_account));
+		if(!is_array($result)) return;
+		return $result;
+	}
+	
+	public function updateAccountCountry() {
+		if(!check_value($this->_account)) return;
+		if(!check_value($this->_country)) return;
+		
+		$data = $this->getAccountCountry();
+		if(!is_array($data)) return;
+		if(time() < strtotime($data['lastchange'])+$this->_countryChangeCooldown) return;
+		
+		$result = $this->memuonline->query("UPDATE ".WEBENGINE_ACCOUNT_COUNTRY." SET country = ? WHERE account = ?", array($this->_country, $this->_account));
+		if(!$result) return;
+		return true;
+	}
+	
+	public function insertAccountCountry() {
+		if(!check_value($this->_account)) return;
+		if(!check_value($this->_country)) return;
+		$result = $this->memuonline->query("INSERT INTO ".WEBENGINE_ACCOUNT_COUNTRY." (account, country) VALUES (?, ?)", array($this->_account, $this->_country));
+		if(!$result) return;
+		return true;
 	}
 	
 	private function sendRegistrationVerificationEmail($username, $account_email, $key) {
@@ -448,7 +484,11 @@ class Account extends common {
 			$email->addVariable('{LINK}', $verificationLink);
 			$email->addAddress($account_email);
 			$email->send();
-		} catch (Exception $ex) {}
+		} catch (Exception $ex) {
+			if($this->_debug) {
+				throw new Exception($ex->getMessage());
+			}
+		}
 	}
 	
 	private function sendWelcomeEmail($username,$address) {
@@ -459,7 +499,9 @@ class Account extends common {
 			$email->addAddress($address);
 			$email->send();
 		} catch (Exception $ex) {
-			// do nuthin u.u
+			if($this->_debug) {
+				throw new Exception($ex->getMessage());
+			}
 		}
 	}
 	
@@ -478,23 +520,23 @@ class Account extends common {
 			$key
 		);
 		
-		$query = "INSERT INTO WEBENGINE_REGISTER_ACCOUNT (registration_account,registration_password,registration_email,registration_date,registration_ip,registration_key) VALUES (?,?,?,?,?,?)";
+		$query = "INSERT INTO ".WEBENGINE_REGISTER_ACCOUNT." (registration_account,registration_password,registration_email,registration_date,registration_ip,registration_key) VALUES (?,?,?,?,?,?)";
 		
-		$result = $this->db->query($query, $data);
+		$result = $this->memuonline->query($query, $data);
 		if(!$result) return;
 		return $key;
 	}
 	
 	private function deleteRegistrationVerification($username) {
 		if(!check_value($username)) return;
-		$delete = $this->db->query("DELETE FROM WEBENGINE_REGISTER_ACCOUNT WHERE registration_account = ?", array($username));
+		$delete = $this->memuonline->query("DELETE FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_account = ?", array($username));
 		if($delete) return true;
 		return;
 	}
 
 	private function checkUsernameEVS($username) {
 		if(!check_value($username)) return;
-		$result = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_REGISTER_ACCOUNT WHERE registration_account = ?", array($username));
+		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_account = ?", array($username));
 		
 		$configs = loadConfigurations('register');
 		if(!is_array($configs)) return;
@@ -508,7 +550,7 @@ class Account extends common {
 
 	private function checkEmailEVS($email) {
 		if(!check_value($email)) return;
-		$result = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_REGISTER_ACCOUNT WHERE registration_email = ?", array($email));
+		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_email = ?", array($email));
 		
 		$configs = loadConfigurations('register');
 		if(!is_array($configs)) return;
@@ -533,6 +575,9 @@ class Account extends common {
 			
 			return true;
 		} catch (Exception $ex) {
+			if($this->_debug) {
+				throw new Exception($ex->getMessage());
+			}
 			return;
 		}
 	}

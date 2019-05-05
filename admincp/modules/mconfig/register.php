@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -31,8 +31,6 @@ function saveChanges() {
 	$xml->send_welcome_email = $_POST['setting_6'];
 	$xml->verify_email = $_POST['setting_5'];
 	$xml->verification_timelimit = $_POST['setting_7'];
-	$xml->freevip_enable = $_POST['setting_8'];
-	$xml->freevip_days = $_POST['setting_9'];
 	
 	$save = $xml->asXML($xmlPath);
 	if($save) {
@@ -90,18 +88,6 @@ loadModuleConfigs('register');
 			<th>Verification Time Limit<br/><span>If <strong>Email Verification</strong> is Enabled. Set the amount of time the user has to verify the account. After the verification time limit passed, the user will have to repeat the registration process.</span></th>
 			<td>
 				<input class="input-mini" type="text" name="setting_7" value="<?=mconfig('verification_timelimit')?>"/> Hour(s)
-			</td>
-		</tr>
-		<tr>
-			<th>Enable free VIP (MUE Only)<br/><span>Gives new accounts free VIP days</span></th>
-			<td>
-				<? enabledisableCheckboxes('setting_8',mconfig('freevip_enable'),'Enabled','Disabled'); ?>
-			</td>
-		</tr>
-		<tr>
-			<th>VIP Days<br/><span>If <strong>free vip</strong> is Enabled. Set the amount of days new users will get.</span></th>
-			<td>
-				<input class="input-mini" type="text" name="setting_9" value="<?=mconfig('freevip_days')?>"/> Day(s)
 			</td>
 		</tr>
 		<tr>

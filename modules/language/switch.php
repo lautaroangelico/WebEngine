@@ -1,22 +1,22 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
  */
 
 try {
-	if(!config('language_switch_active',true)) throw new Exception("The language system is disabled.");
-	if(!check_value($_GET['to'])) throw new Exception("Invalid request, no language requested.");
-	if(strlen($_GET['to']) != 2) throw new Exception("Invalid language requested (please use ISO 639-1).");
-	if(!Validator::Alpha($_GET['to'])) throw new Exception("Invalid language requested (please use ISO 639-1).");
-	if(!$handler->switchLanguage($_GET['to'])) throw new Exception("Could not change language (handler).");
+	if(!config('language_switch_active',true)) throw new Exception(lang('error_62'));
+	if(!check_value($_GET['to'])) throw new Exception(lang('error_63'));
+	if(strlen($_GET['to']) != 2) throw new Exception(lang('error_63'));
+	if(!Validator::Alpha($_GET['to'])) throw new Exception(lang('error_63'));
+	if(!$handler->switchLanguage($_GET['to'])) throw new Exception(lang('error_65'));
 	redirect();
 } catch (Exception $ex) {
 	if(!config('error_reporting',true)) redirect();

@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9.2
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -33,10 +33,12 @@ class Email {
 	private $_variables = array();
 	private $_values = array();
 	
+	private $_isCustomTemplate=false;
+	
 	function __construct() {
 		# load configs
 		$configs = gconfig('email',true);
-		if(!is_array($configs)) throw new Exception("Could not load email configurations.");
+		if(!is_array($configs)) throw new Exception(lang('error_90'));
 		
 		# set configurations
 		$this->_active = $configs['active'];
@@ -64,7 +66,7 @@ class Email {
 		$this->_templates = $templates;
 		
 		# phpmailer instance
-		$this->mail = new PHPMailer();
+		$this->mail = new PHPMailer\PHPMailer\PHPMailer(true);
 		
 	}
 	
@@ -82,7 +84,7 @@ class Email {
 	}
 	
 	public function setTemplate($template) {
-		if(!array_key_exists($template, $this->_templates)) throw new Exception("Could not load email template.");
+		if(!array_key_exists($template, $this->_templates)) throw new Exception(lang('error_91'));
 		$this->_template = $template;
 		$this->_subject = $this->_templates[$template];
 	}
@@ -93,13 +95,20 @@ class Email {
 	}
 	
 	public function addAddress($email) {
-		if(!Validator::Email($email)) throw new Exception("Email address invalid, cannot send email.");
+		if(!Validator::Email($email)) throw new Exception(lang('error_92'));
 		$this->_to[] = $email;
 	}
 	
 	private function _loadTemplate() {
-		if(!$this->_template) throw new Exception("You did not set a template.");
-		if(!file_exists($this->_templatesPath . $this->_template . '.txt')) throw new Exception("Could not load email template.");
+		if(!$this->_template) throw new Exception(lang('error_93'));
+		
+		// custom template
+		if($this->_isCustomTemplate) {
+			if(!file_exists($this->_template)) throw new Exception(lang('error_94'));
+			return file_get_contents($this->_template);
+		}
+		
+		if(!file_exists($this->_templatesPath . $this->_template . '.txt')) throw new Exception(lang('error_91'));
 		return file_get_contents($this->_templatesPath . $this->_template . '.txt');
 	}
 	
@@ -111,10 +120,10 @@ class Email {
 		if(!$this->_active) throw new Exception(lang('error_48',true));
 		
 		if(!$this->_message) {
-			if(!$this->_template) throw new Exception("You did not set a template.");
+			if(!$this->_template) throw new Exception(lang('error_95'));
 		}
 		
-		if(!is_array($this->_to)) throw new Exception("You did not add any address.");
+		if(!is_array($this->_to)) throw new Exception(lang('error_96'));
 		
 		if($this->_smtp) {
 			$this->mail->IsSMTP();
@@ -131,7 +140,7 @@ class Email {
 			$this->mail->AddAddress($address);
 		}
 		
-		if(!$this->_subject) throw new Exception("You did not add a subject.");
+		if(!$this->_subject) throw new Exception(lang('error_97'));
 		$this->mail->Subject = $this->_subject;
 		
 		if(!$this->_message) {
@@ -142,6 +151,11 @@ class Email {
 		
 		if($this->mail->Send()) return true;
 		return false;
+	}
+	
+	public function setCustomTemplate($template) {
+		$this->_template = $template;
+		$this->_isCustomTemplate = true;
 	}
 	
 }

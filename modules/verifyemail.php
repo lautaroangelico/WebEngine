@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -33,7 +33,7 @@ echo '
 				if(!check_value($_GET['uid'])) redirect();
 				if(!check_value($_GET['ac'])) redirect();
 				try {
-					$Account = new Account($dB, $dB2);
+					$Account = new Account();
 					$Account->changePasswordVerificationProcess($_GET['uid'],$_GET['ac']);
 				} catch (Exception $ex) {
 					message('error', $ex->getMessage());
@@ -44,7 +44,7 @@ echo '
 				if(!check_value($_GET['user'])) redirect();
 				if(!check_value($_GET['key'])) redirect();
 				try {
-					$Account = new Account($dB, $dB2);
+					$Account = new Account();
 					$Account->verifyRegistrationProcess(Decode($_GET['user']),$_GET['key']);
 				} catch (Exception $ex) {
 					message('error', $ex->getMessage());
@@ -55,7 +55,7 @@ echo '
 				if(!check_value($_GET['email'])) redirect();
 				if(!check_value($_GET['key'])) redirect();
 				try {
-					$Account = new Account($dB, $dB2);
+					$Account = new Account();
 					$Account->changeEmailVerificationProcess($_GET['uid'],$_GET['email'],$_GET['key']);
 					message('success', lang('success_20',true));
 				} catch (Exception $ex) {

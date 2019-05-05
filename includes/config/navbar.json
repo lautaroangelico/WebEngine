@@ -10,12 +10,21 @@
     },
     {
         "active": true,
+        "type": "internal",
+        "phrase": "menu_txt_11",
+        "link": "info",
+        "visibility": "always",
+        "newtab": false,
+        "order": 20
+    },
+    {
+        "active": true,
         "type": "external",
         "phrase": "menu_txt_2",
-        "link": "http:\/\/forum.muengine.net\/",
+        "link": "https:\/\/forum.webenginecms.org\/",
         "visibility": "always",
         "newtab": true,
-        "order": 20
+        "order": 30
     },
     {
         "active": true,
@@ -24,22 +33,13 @@
         "link": "downloads",
         "visibility": "always",
         "newtab": false,
-        "order": 30
+        "order": 40
     },
     {
         "active": true,
         "type": "internal",
         "phrase": "menu_txt_8",
         "link": "donation",
-        "visibility": "always",
-        "newtab": false,
-        "order": 40
-    },
-    {
-        "active": true,
-        "type": "internal",
-        "phrase": "menu_txt_9",
-        "link": "usercp\/vote",
         "visibility": "always",
         "newtab": false,
         "order": 50

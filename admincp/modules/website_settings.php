@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.8
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -18,7 +18,6 @@ $allowedSettings = array(
 	'system_active',
 	'error_reporting',
 	'website_template',
-	'encryption_hash',
 	'maintenance_page',
 	'server_name',
 	'website_title',
@@ -29,11 +28,16 @@ $allowedSettings = array(
 	'language_switch_active',
 	'language_default',
 	'language_debug',
-	'gmark_bin2hex_enable',
 	'plugins_system_enable',
 	'ip_block_system_enable',
-	'flood_check_enable',
-	'flood_actions_per_minute',
+	'player_profiles',
+	'guild_profiles',
+	'username_min_len',
+	'username_max_len',
+	'password_min_len',
+	'password_max_len',
+	'cron_api',
+	'cron_api_key',
 );
 
 if(check_value($_POST['settings_submit'])) {
@@ -53,11 +57,6 @@ if(check_value($_POST['settings_submit'])) {
 		if(!check_value($_POST['website_template'])) throw new Exception('Invalid Default Template setting.');
 		if(!file_exists(__PATH_TEMPLATES__.$_POST['website_template'].'/index.php')) throw new Exception('The selected template doesn\'t exist.');
 		$setting['website_template'] = $_POST['website_template'];
-		
-		# encryption hash
-		if(!check_value($_POST['encryption_hash'])) throw new Exception('Invalid Encryption Hash setting.');
-		if(!in_array(strlen($_POST['encryption_hash']), array(16,24,32))) throw new Exception('Invalid Encryption Hash length (needs to be 16, 24 or 32 characters long).');
-		$setting['encryption_hash'] = $_POST['encryption_hash'];
 		
 		# maintenance page
 		if(!check_value($_POST['maintenance_page'])) throw new Exception('Invalid Maintenance Page setting.');
@@ -87,7 +86,7 @@ if(check_value($_POST['settings_submit'])) {
 		
 		# server files
 		if(!check_value($_POST['server_files'])) throw new Exception('Invalid Server Files setting.');
-		if(!in_array($_POST['server_files'], array('MUE', 'IGCN', 'CUSTOM'))) throw new Exception('Invalid Server Files setting.');
+		if(!array_key_exists($_POST['server_files'], $webengine['file_compatibility'])) throw new Exception('Invalid Server Files setting.');
 		$setting['server_files'] = $_POST['server_files'];
 		
 		# language switch
@@ -105,11 +104,6 @@ if(check_value($_POST['settings_submit'])) {
 		if(!in_array($_POST['language_debug'], array(0, 1))) throw new Exception('Invalid Language Debug setting.');
 		$setting['language_debug'] = ($_POST['language_debug'] == 1 ? true : false);
 		
-		# guild mark bin2hex
-		if(!check_value($_POST['gmark_bin2hex_enable'])) throw new Exception('Invalid Guild Logo setting.');
-		if(!in_array($_POST['gmark_bin2hex_enable'], array(0, 1))) throw new Exception('Invalid Guild Logo setting.');
-		$setting['gmark_bin2hex_enable'] = ($_POST['gmark_bin2hex_enable'] == 1 ? true : false);
-		
 		# plugin system
 		if(!check_value($_POST['plugins_system_enable'])) throw new Exception('Invalid Plugin System setting.');
 		if(!in_array($_POST['plugins_system_enable'], array(0, 1))) throw new Exception('Invalid Plugin System setting.');
@@ -120,15 +114,44 @@ if(check_value($_POST['settings_submit'])) {
 		if(!in_array($_POST['ip_block_system_enable'], array(0, 1))) throw new Exception('Invalid IP Block System setting.');
 		$setting['ip_block_system_enable'] = ($_POST['ip_block_system_enable'] == 1 ? true : false);
 		
-		# anti-flood system
-		if(!check_value($_POST['flood_check_enable'])) throw new Exception('Invalid Anti-Flood System setting.');
-		if(!in_array($_POST['flood_check_enable'], array(0, 1))) throw new Exception('Invalid Anti-Flood System setting.');
-		$setting['flood_check_enable'] = ($_POST['flood_check_enable'] == 1 ? true : false);
+		# player_profiles
+		if(!check_value($_POST['player_profiles'])) throw new Exception('Invalid setting (player_profiles)');
+		if(!in_array($_POST['player_profiles'], array(0, 1))) throw new Exception('Invalid setting (player_profiles)');
+		$setting['player_profiles'] = ($_POST['player_profiles'] == 1 ? true : false);
 		
-		# anti-flood system
-		if(!check_value($_POST['flood_actions_per_minute'])) throw new Exception('Invalid Anti-Flood Actions Per Minute setting.');
-		if(!Validator::UnsignedNumber($_POST['flood_actions_per_minute'])) throw new Exception('Invalid Anti-Flood Actions Per Minute setting.');
-		$setting['flood_actions_per_minute'] = $_POST['flood_actions_per_minute'];
+		# guild_profiles
+		if(!check_value($_POST['guild_profiles'])) throw new Exception('Invalid setting (guild_profiles)');
+		if(!in_array($_POST['guild_profiles'], array(0, 1))) throw new Exception('Invalid setting (guild_profiles)');
+		$setting['guild_profiles'] = ($_POST['guild_profiles'] == 1 ? true : false);
+		
+		# username_min_len
+		if(!check_value($_POST['username_min_len'])) throw new Exception('Invalid setting (username_min_len)');
+		if(!Validator::UnsignedNumber($_POST['username_min_len'])) throw new Exception('Invalid setting (username_min_len)');
+		$setting['username_min_len'] = $_POST['username_min_len'];
+		
+		# username_max_len
+		if(!check_value($_POST['username_max_len'])) throw new Exception('Invalid setting (username_max_len)');
+		if(!Validator::UnsignedNumber($_POST['username_max_len'])) throw new Exception('Invalid setting (username_max_len)');
+		$setting['username_max_len'] = $_POST['username_max_len'];
+		
+		# password_min_len
+		if(!check_value($_POST['password_min_len'])) throw new Exception('Invalid setting (password_min_len)');
+		if(!Validator::UnsignedNumber($_POST['password_min_len'])) throw new Exception('Invalid setting (password_min_len)');
+		$setting['password_min_len'] = $_POST['password_min_len'];
+		
+		# password_max_len
+		if(!check_value($_POST['password_max_len'])) throw new Exception('Invalid setting (password_max_len)');
+		if(!Validator::UnsignedNumber($_POST['password_max_len'])) throw new Exception('Invalid setting (password_max_len)');
+		$setting['password_max_len'] = $_POST['password_max_len'];
+		
+		# cron_api
+		if(!check_value($_POST['cron_api'])) throw new Exception('Invalid setting (cron_api)');
+		if(!in_array($_POST['cron_api'], array(0, 1))) throw new Exception('Invalid setting (cron_api)');
+		$setting['cron_api'] = ($_POST['cron_api'] == 1 ? true : false);
+		
+		# cron_api_key
+		if(!check_value($_POST['cron_api_key'])) throw new Exception('Invalid setting (cron_api_key)');
+		$setting['cron_api_key'] = $_POST['cron_api_key'];
 		
 		# webengine configs
 		$webengineConfigurations = webengineConfigs();
@@ -181,7 +204,7 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Error Reporting</strong>';
+					echo '<strong>Debug Mode</strong>';
 					echo '<p class="setting-description">Debugging mode, enable this setting only if you want the website to display any errors.</p>';
 				echo '</td>';
 				echo '<td>';
@@ -207,16 +230,6 @@ echo '<div class="col-md-12">';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="website_template" value="'.config('website_template',true).'" required>';
-				echo '</td>';
-			echo '</tr>';
-			
-			echo '<tr>';
-				echo '<td>';
-					echo '<strong>Encryption Hash</strong>';
-					echo '<p class="setting-description">This is a private key used for encrypting sensitive data. The key needs to be an alpha-numeric string of 16, 24 or 32 characters long.</p>';
-				echo '</td>';
-				echo '<td>';
-					echo '<input type="text" class="form-control" name="encryption_hash" value="'.config('encryption_hash',true).'" required>';
 				echo '</td>';
 			echo '</tr>';
 			
@@ -286,30 +299,22 @@ echo '<div class="col-md-12">';
 					echo '<p class="setting-description">Define your server files for maximum WebEngine compatibility.</p>';
 				echo '</td>';
 				echo '<td>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="server_files" value="IGCN" '.(config('server_files',true) == 'IGCN' ? 'checked' : null).'>';
-							echo 'IGCN';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="server_files" value="MUE" '.(config('server_files',true) == 'MUE' ? 'checked' : null).'>';
-							echo 'MUE';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="server_files" value="CUSTOM" '.(config('server_files',true) == 'CUSTOM' ? 'checked' : null).'>';
-							echo 'CUSTOM';
-						echo '</label>';
-					echo '</div>';
+					
+					echo '<select class="form-control" name="server_files">';
+						$fileCompatibilityList = $webengine['file_compatibility'];
+						if(is_array($fileCompatibilityList)) {
+							foreach($fileCompatibilityList as $value => $fileCompatibilityInfo) {
+								echo '<option value="'.$value.'" '.(strtolower(config('server_files',true)) == $value ? 'selected' : '').'>'.$fileCompatibilityInfo['name'].'</option>';
+							}
+						}
+					echo '</select>';
+					
 				echo '</td>';
 			echo '</tr>';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Language System Status</strong>';
+					echo '<strong>Language Switching</strong>';
 					echo '<p class="setting-description">Enables/disables the language switching system.</p>';
 				echo '</td>';
 				echo '<td>';
@@ -361,27 +366,6 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Guild Logo bin2hex</strong>';
-					echo '<p class="setting-description">Try enabling/disabling this setting if your guild logos are not being displayed correctly.</p>';
-				echo '</td>';
-				echo '<td>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="gmark_bin2hex_enable" value="1" '.(config('gmark_bin2hex_enable',true) ? 'checked' : null).'>';
-							echo 'Enabled';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="gmark_bin2hex_enable" value="0" '.(!config('gmark_bin2hex_enable',true) ? 'checked' : null).'>';
-							echo 'Disabled';
-						echo '</label>';
-					echo '</div>';
-				echo '</td>';
-			echo '</tr>';
-			
-			echo '<tr>';
-				echo '<td>';
 					echo '<strong>Plugin System Status</strong>';
 					echo '<p class="setting-description">Enables/disables the plugin system.</p>';
 				echo '</td>';
@@ -424,19 +408,19 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Anti-Flood Check Status</strong>';
-					echo '<p class="setting-description">Enables/disables the anti-flood system.</p>';
+					echo '<strong>Player Profile Links</strong>';
+					echo '<p class="setting-description">If enabled, player names will have a link to their public profile.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<div class="radio">';
 						echo '<label>';
-							echo '<input type="radio" name="flood_check_enable" value="1" '.(config('flood_check_enable',true) ? 'checked' : null).'>';
+							echo '<input type="radio" name="player_profiles" value="1" '.(config('player_profiles',true) ? 'checked' : null).'>';
 							echo 'Enabled';
 						echo '</label>';
 					echo '</div>';
 					echo '<div class="radio">';
 						echo '<label>';
-							echo '<input type="radio" name="flood_check_enable" value="0" '.(!config('flood_check_enable',true) ? 'checked' : null).'>';
+							echo '<input type="radio" name="player_profiles" value="0" '.(!config('player_profiles',true) ? 'checked' : null).'>';
 							echo 'Disabled';
 						echo '</label>';
 					echo '</div>';
@@ -445,11 +429,93 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Anti-Flood Actions Per Minute</strong>';
-					echo '<p class="setting-description">Maximum actions a user can perform during a minute before being blocked.</p>';
+					echo '<strong>Guild Profile Links</strong>';
+					echo '<p class="setting-description">If enabled, guild names will have a link to their public profile.</p>';
 				echo '</td>';
 				echo '<td>';
-					echo '<input type="number" class="form-control" name="flood_actions_per_minute" value="'.config('flood_actions_per_minute',true).'" required>';
+					echo '<div class="radio">';
+						echo '<label>';
+							echo '<input type="radio" name="guild_profiles" value="1" '.(config('guild_profiles',true) ? 'checked' : null).'>';
+							echo 'Enabled';
+						echo '</label>';
+					echo '</div>';
+					echo '<div class="radio">';
+						echo '<label>';
+							echo '<input type="radio" name="guild_profiles" value="0" '.(!config('guild_profiles',true) ? 'checked' : null).'>';
+							echo 'Disabled';
+						echo '</label>';
+					echo '</div>';
+				echo '</td>';
+			echo '</tr>';
+			
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>Username Minimum Length</strong>';
+					echo '<p class="setting-description"></p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<input type="text" class="form-control" name="username_min_len" value="'.config('username_min_len',true).'" required>';
+				echo '</td>';
+			echo '</tr>';
+			
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>Username Maximum Length</strong>';
+					echo '<p class="setting-description"></p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<input type="text" class="form-control" name="username_max_len" value="'.config('username_max_len',true).'" required>';
+				echo '</td>';
+			echo '</tr>';
+			
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>Password Minimum Length</strong>';
+					echo '<p class="setting-description"></p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<input type="text" class="form-control" name="password_min_len" value="'.config('password_min_len',true).'" required>';
+				echo '</td>';
+			echo '</tr>';
+			
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>Password Maximum Length</strong>';
+					echo '<p class="setting-description"></p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<input type="text" class="form-control" name="password_max_len" value="'.config('password_max_len',true).'" required>';
+				echo '</td>';
+			echo '</tr>';
+			
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>Cron API</strong>';
+					echo '<p class="setting-description">Enable/disable the cron api.</p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<div class="radio">';
+						echo '<label>';
+							echo '<input type="radio" name="cron_api" value="1" '.(config('cron_api',true) ? 'checked' : null).'>';
+							echo 'Enabled';
+						echo '</label>';
+					echo '</div>';
+					echo '<div class="radio">';
+						echo '<label>';
+							echo '<input type="radio" name="cron_api" value="0" '.(!config('cron_api',true) ? 'checked' : null).'>';
+							echo 'Disabled';
+						echo '</label>';
+					echo '</div>';
+				echo '</td>';
+			echo '</tr>';
+			
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>Cron API Key</strong>';
+					echo '<p class="setting-description"><br />Usage:<br />'.__BASE_URL__.'api/cron.php?key=<span style="color:red;">123456</span></p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<input type="text" class="form-control" name="cron_api_key" value="'.config('cron_api_key',true).'" required>';
 				echo '</td>';
 			echo '</tr>';
 			

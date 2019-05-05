@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -21,7 +21,7 @@ try {
 	
 	if(check_value($_POST['webengineEmail_submit'])) {
 		try {
-			$Account = new Account($dB, $dB2);
+			$Account = new Account();
 			$Account->changeEmailAddress($_SESSION['userid'], $_POST['webengineEmail_newemail'], $_SERVER['REMOTE_ADDR']);
 			if(mconfig('require_verification')) {
 				message('success', lang('success_19',true));

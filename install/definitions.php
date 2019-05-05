@@ -3,21 +3,35 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.1.0
- * @author Lautaro Angelico <https://lautaroangelico.com/>
+ * @version 1.2.0
+ * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
- * https://opensource.org/licenses/MIT
+ * http://opensource.org/licenses/MIT
  */
 
 if(!defined('access') or !access or access != 'install') die();
 
 /**
  * INSTALLER_VERSION
- * installer version (do not change)
  */
-define('INSTALLER_VERSION', '1.1.0');
+define('INSTALLER_VERSION', '1.2.0');
+
+/**
+ * WEBENGINE_CONFIGURATION_FILE
+ */
+define('WEBENGINE_CONFIGURATION_FILE', 'webengine.json');
+
+/**
+ * WEBENGINE_WRITABLE_PATHS_FILE
+ */
+define('WEBENGINE_WRITABLE_PATHS_FILE', 'writable.paths.json');
+
+/**
+ * WEBENGINE_DEFAULT_CONFIGURATION_FILE
+ */
+define('WEBENGINE_DEFAULT_CONFIGURATION_FILE', 'webengine.json.default');
 
 $install['PDO_DSN'] = array(
 	1 => 'dblib',
@@ -25,30 +39,25 @@ $install['PDO_DSN'] = array(
 	3 => 'odbc',
 );
 
-$install['SERVER_FILES'] = array(
-	'MUE',
-	'IGCN',
-	'CUSTOM',
-);
-
 $install['sql_list'] = array(
-	'WEBENGINE_ACTIVE_SESSIONS',
-	'WEBENGINE_BANS',
-	'WEBENGINE_BAN_LOG',
-	'WEBENGINE_BLOCKED_IP',
-	'WEBENGINE_CREDITS_CONFIG',
-	'WEBENGINE_CREDITS_LOGS',
-	'WEBENGINE_CRON',
-	'WEBENGINE_DOWNLOADS',
-	'WEBENGINE_FLA',
-	'WEBENGINE_NEWS',
-	'WEBENGINE_PASSCHANGE_REQUEST',
-	'WEBENGINE_PAYPAL_TRANSACTIONS',
-	'WEBENGINE_PLUGINS',
-	'WEBENGINE_REGISTER_ACCOUNT',
-	'WEBENGINE_VOTES',
-	'WEBENGINE_VOTE_LOGS',
-	'WEBENGINE_VOTE_SITES',
+	'WEBENGINE_BANS' => WEBENGINE_BANS,
+	'WEBENGINE_BAN_LOG' => WEBENGINE_BAN_LOG,
+	'WEBENGINE_BLOCKED_IP' => WEBENGINE_BLOCKED_IP,
+	'WEBENGINE_CREDITS_CONFIG' => WEBENGINE_CREDITS_CONFIG,
+	'WEBENGINE_CREDITS_LOGS' => WEBENGINE_CREDITS_LOGS,
+	'WEBENGINE_CRON' => WEBENGINE_CRON,
+	'WEBENGINE_DOWNLOADS' => WEBENGINE_DOWNLOADS,
+	'WEBENGINE_FLA' => WEBENGINE_FLA,
+	'WEBENGINE_NEWS' => WEBENGINE_NEWS,
+	'WEBENGINE_PASSCHANGE_REQUEST' => WEBENGINE_PASSCHANGE_REQUEST,
+	'WEBENGINE_PAYPAL_TRANSACTIONS' => WEBENGINE_PAYPAL_TRANSACTIONS,
+	'WEBENGINE_PLUGINS' => WEBENGINE_PLUGINS,
+	'WEBENGINE_REGISTER_ACCOUNT' => WEBENGINE_REGISTER_ACCOUNT,
+	'WEBENGINE_VOTES' => WEBENGINE_VOTES,
+	'WEBENGINE_VOTE_LOGS' => WEBENGINE_VOTE_LOGS,
+	'WEBENGINE_VOTE_SITES' => WEBENGINE_VOTE_SITES,
+	'WEBENGINE_ACCOUNT_COUNTRY' => WEBENGINE_ACCOUNT_COUNTRY,
+	'WEBENGINE_NEWS_TRANSLATIONS' => WEBENGINE_NEWS_TRANSLATIONS,
 );
 
 $install['step_list'] = array(
@@ -75,4 +84,7 @@ $install['cron_jobs'] = array(
 	array('Castle Siege Owner','Saves castle siege guild owner name and logo in cache','castle_siege.php','300','1','0'),
 	array('Ban System','Scheduled task to lift temporal bans','temporal_bans.php','300','1','0'),
 	array('Server Info','Scheduled task to update the sidebar statistics information','server_info.php','300','1','0'),
+	array('Account Country','Scheduled task to detect the accounts country by their ip address','account_country.php','60','1','0'),
+	array('Character Country','Scheduled task to cache characters country','character_country.php','300','1','0'),
+	array('Online Characters','Scheduled task to cache online characters','online_characters.php','300','1','0'),
 );

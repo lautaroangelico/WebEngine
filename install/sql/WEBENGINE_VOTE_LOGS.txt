@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[WEBENGINE_VOTE_LOGS](
+CREATE TABLE [dbo].[{TABLE_NAME}](
 	[user_id] [int] NOT NULL,
 	[votesite_id] [int] NOT NULL,
 	[timestamp] [varchar](50) NOT NULL

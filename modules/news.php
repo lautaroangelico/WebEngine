@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.1.0
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
@@ -13,35 +13,61 @@
 
 try {
 	
-	# news module active?
+	// Module status
 	if(!mconfig('active')) throw new Exception(lang('error_47',true));
 	
-	$webengineNews = new News();
-	$cachedNews = LoadCacheData('news.cache');
-	if(!is_array($cachedNews)) throw new Exception('There are no news to display.');
+	// News object
+	$News = new News();
+	$cachedNews = loadCache('news.cache');
+	if(!is_array($cachedNews)) throw new Exception(lang('error_61'));
 	
-	# single news
-	$requestedNewsId = $_GET['subpage'];
-	if(check_value($requestedNewsId) && $webengineNews->newsIdExists(Decode_id($requestedNewsId))) {
-		$showSingleNews = true;
-		$newsID = Decode_id($requestedNewsId);
+	// Set news language
+	if(config('language_switch_active',true)) {
+		if(check_value($_SESSION['language_display'])) {
+			$News->setLanguage($_SESSION['language_display']);
+		}
 	}
 	
-	# news list
+	// Single news
+	$requestedNewsId = $_GET['subpage'];
+	if(check_value($requestedNewsId) && $News->newsIdExists($requestedNewsId)) {
+		$showSingleNews = true;
+		$newsID = $requestedNewsId;
+	}
+	
+	// News list
 	$i = 0;
-	foreach(array_slice($cachedNews, 1) as $newsArticle) {
-		
-		if($showSingleNews) if($newsArticle[0] != $newsID) continue;
+	foreach($cachedNews as $newsArticle) {
+		if($showSingleNews) if($newsArticle['news_id'] != $newsID) continue;
+		$News->setId($newsArticle['news_id']);
 		
 		if($i > mconfig('news_list_limit')) continue;
 		
-		$news_id = $newsArticle[0];
-		$news_title = $newsArticle[1];
-		$news_author = $newsArticle[2];
-		$news_date = $newsArticle[3];
-		$news_comments = $newsArticle[4];
-		$news_url = __BASE_URL__.'news/'.Encode_id($news_id).'/';
-		$loadNewsCache = $webengineNews->LoadCachedNews($news_id);
+		$news_id = $newsArticle['news_id'];
+		$news_title = $newsArticle['news_title'];
+		$news_author = $newsArticle['news_author'];
+		$news_date = $newsArticle['news_date'];
+		$news_url = __BASE_URL__.'news/'.$news_id.'/';
+		
+		// translated news title
+		if(config('language_switch_active',true)) {
+			if(check_value($_SESSION['language_display']) && is_array($newsArticle['translations'])) {
+				if(array_key_exists($_SESSION['language_display'], $newsArticle['translations'])) {
+					$news_title = $newsArticle['translations'][$_SESSION['language_display']];
+				}
+			}
+		}
+		
+		if(mconfig('news_short')) {
+			if($showSingleNews) {
+				$loadNewsCache = $News->LoadCachedNews();
+			} else {
+				$loadNewsCache = $News->LoadCachedNews(true);
+				$loadNewsCache .= '<a href="'.$news_url.'" class="news-readmore">' . lang('news_txt_3') . '</a>';
+			}
+		} else {
+			$loadNewsCache = $News->LoadCachedNews();
+		}
 		
 		echo '<div class="panel panel-news">';
 			echo '<div class="panel-heading">';
@@ -53,20 +79,13 @@ try {
 				echo '</div>';
 				echo '<div class="panel-footer">';
 					echo '<div class="col-xs-6 nopadding">';
-						if(mconfig('news_enable_like_button')) echo '<div class="fb-like" data-href="'.$news_url.'" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>';
 					echo '</div>';
 					echo '<div class="col-xs-6 nopadding text-right">';
-						echo 'Published by ' . $news_author . ', ';
-						echo date("F j, Y",$news_date);
+						echo langf('news_txt_1', array($news_author, date("F j, Y",$news_date)));
 					echo '</div>';
 				echo '</div>';
 			}
 		echo '</div>';
-		
-		# facebook comments
-		if($showSingleNews && $news_comments && mconfig('news_enable_comment_system')) {
-			echo '<div class="fb-comments" data-href="'.$news_url.'" data-width="630" data-numposts="5" data-colorscheme="dark"></div>';
-		}
 		
 		$i++;
 	}

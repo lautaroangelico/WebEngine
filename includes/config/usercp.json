@@ -92,21 +92,11 @@
     {
         "active": true,
         "type": "internal",
-        "phrase": "usercp_menu_txt_7",
-        "link": "usercp\/vip",
-        "icon": "vip.png",
-        "visibility": "user",
-        "newtab": false,
-        "order": 100
-    },
-    {
-        "active": true,
-        "type": "internal",
         "phrase": "usercp_menu_txt_11",
         "link": "usercp\/buyzen",
         "icon": "zen.png",
         "visibility": "user",
         "newtab": false,
-        "order": 110
+        "order": 100
     }
 ]

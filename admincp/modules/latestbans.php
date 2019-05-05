@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.6
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -20,7 +20,7 @@
 			if(!Validator::UnsignedNumber($_GET['liftban'])) throw new Exception("Invalid ban id.");
 			
 			// Retrieve Ban Information
-			$banInfo = $database->query_fetch_single("SELECT * FROM WEBENGINE_BAN_LOG WHERE id = ?", array($_GET['liftban']));
+			$banInfo = $database->query_fetch_single("SELECT * FROM ".WEBENGINE_BAN_LOG." WHERE id = ?", array($_GET['liftban']));
 			if(!is_array($banInfo)) throw new Exception("Ban ID does not exist.");
 			
 			// Check account status
@@ -31,8 +31,8 @@
 			if(!$unban) throw new Exception("Could not update account information (unban).");
 			
 			// Remove Ban log
-			$database->query("DELETE FROM WEBENGINE_BAN_LOG WHERE account_id = ?", array($banInfo['account_id']));
-			$database->query("DELETE FROM WEBENGINE_BANS WHERE account_id = ?", array($banInfo['account_id']));
+			$database->query("DELETE FROM ".WEBENGINE_BAN_LOG." WHERE account_id = ?", array($banInfo['account_id']));
+			$database->query("DELETE FROM ".WEBENGINE_BANS." WHERE account_id = ?", array($banInfo['account_id']));
 			
 			message('success', 'Account ban lifted');
 		} catch(Exception $ex) {
@@ -55,7 +55,7 @@
 			<div class="tab-content">
 				<div class="tab-pane fade active in" id="temp"><br />
 				<?php
-					$tBans = $database->query_fetch("SELECT TOP 25 * FROM WEBENGINE_BAN_LOG WHERE ban_type = ? ORDER BY id DESC", array("temporal"));
+					$tBans = $database->query_fetch("SELECT TOP 25 * FROM ".WEBENGINE_BAN_LOG." WHERE ban_type = ? ORDER BY id DESC", array("temporal"));
 					if(is_array($tBans)) {
 						echo '<table class="table table-condensed">';
 							echo '<thead>';
@@ -88,7 +88,7 @@
 				</div>
 				<div class="tab-pane fade" id="perm"><br />
 				<?php
-					$pBans = $database->query_fetch("SELECT TOP 25 * FROM WEBENGINE_BAN_LOG WHERE ban_type = ? ORDER BY id DESC", array("permanent"));
+					$pBans = $database->query_fetch("SELECT TOP 25 * FROM ".WEBENGINE_BAN_LOG." WHERE ban_type = ? ORDER BY id DESC", array("permanent"));
 					if(is_array($pBans)) {
 						echo '<table class="table table-condensed">';
 							echo '<thead>';

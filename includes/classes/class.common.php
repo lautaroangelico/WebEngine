@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.6
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -13,26 +13,27 @@
 
 class common {
 	
-	protected $_encryptionHash;
 	protected $_md5Enabled;
-	protected $_serverFiles = 'MUE';
+	protected $_serverFiles = 'igcn';
+	protected $_debug = false;
 	
-	function __construct(dB $muonline, dB $me_muonline = null) {
-		$this->muonline = $muonline;
-		if($me_muonline) {
-			$this->memuonline = $me_muonline;
-		}
+	protected $_blockedIpCache = 'blocked_ip.cache';
+	
+	function __construct() {
 		
-		$this->db = (config('SQL_USE_2_DB',true) ? $this->memuonline : $this->muonline);
+		// load databases
+		$this->muonline = Connection::Database('MuOnline');
+		$this->memuonline = Connection::Database('Me_MuOnline');
 		
+		// configs
 		$this->_serverFiles = config('server_files',true);
-		$this->_encryptionHash = config('encryption_hash',true);
-		$this->_md5Enabled = config('SQL_ENABLE_MD5', true);
+		$this->_md5Enabled = config('SQL_ENABLE_MD5',true);
+		$this->_debug = config('error_reporting',true);
 	}
 
 	public function emailExists($email) {
 		if(!Validator::Email($email)) return;
-		$result = $this->db->query_fetch_single("SELECT * FROM "._TBL_MI_." WHERE "._CLMN_EMAIL_." = ?", array($email));
+		$result = $this->memuonline->query_fetch_single("SELECT * FROM "._TBL_MI_." WHERE "._CLMN_EMAIL_." = ?", array($email));
 		if(is_array($result)) return true;
 		return;
 	}
@@ -40,7 +41,7 @@ class common {
 	public function userExists($username) {
 		if(!Validator::UsernameLength($username)) return;
 		if(!Validator::AlphaNumeric($username)) return;
-		$result = $this->db->query_fetch_single("SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = ?", array($username));
+		$result = $this->memuonline->query_fetch_single("SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = ?", array($username));
 		if(is_array($result)) return true;
 		return;
 	}
@@ -61,7 +62,7 @@ class common {
 			$query = "SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = :username AND "._CLMN_PASSWD_." = :password";
 		}
 		
-		$result = $this->db->query_fetch_single($query, $data);
+		$result = $this->memuonline->query_fetch_single($query, $data);
 		if(is_array($result)) return true;
 		return false;
 	}
@@ -69,21 +70,21 @@ class common {
 	public function retrieveUserID($username) {
 		if(!Validator::UsernameLength($username)) return;
 		if(!Validator::AlphaNumeric($username)) return;
-		$result = $this->db->query_fetch_single("SELECT "._CLMN_MEMBID_." FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = ?", array($username));
+		$result = $this->memuonline->query_fetch_single("SELECT "._CLMN_MEMBID_." FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = ?", array($username));
 		if(is_array($result)) return $result[_CLMN_MEMBID_];
 		return;
 	}
 
 	public function retrieveUserIDbyEmail($email) {
 		if(!$this->emailExists($email)) return;
-		$result = $this->db->query_fetch_single("SELECT "._CLMN_MEMBID_." FROM "._TBL_MI_." WHERE "._CLMN_EMAIL_." = ?", array($email));
+		$result = $this->memuonline->query_fetch_single("SELECT "._CLMN_MEMBID_." FROM "._TBL_MI_." WHERE "._CLMN_EMAIL_." = ?", array($email));
 		if(is_array($result)) return $result[_CLMN_MEMBID_];
 		return;
 	}
 
 	public function accountInformation($id) {
 		if(!Validator::Number($id)) return;
-		$result = $this->db->query_fetch_single("SELECT * FROM "._TBL_MI_." WHERE "._CLMN_MEMBID_." = ?", array($id));
+		$result = $this->memuonline->query_fetch_single("SELECT * FROM "._TBL_MI_." WHERE "._CLMN_MEMBID_." = ?", array($id));
 		if(is_array($result)) return $result;
 		return;
 	}
@@ -91,7 +92,7 @@ class common {
 	public function accountOnline($username) {
 		if(!Validator::UsernameLength($username)) return;
 		if(!Validator::AlphaNumeric($username)) return;
-		$result = $this->db->query_fetch_single("SELECT "._CLMN_CONNSTAT_." FROM "._TBL_MS_." WHERE "._CLMN_USERNM_." = ? AND "._CLMN_CONNSTAT_." = ?", array($username, 1));
+		$result = $this->memuonline->query_fetch_single("SELECT "._CLMN_CONNSTAT_." FROM "._TBL_MS_." WHERE "._CLMN_USERNM_." = ? AND "._CLMN_CONNSTAT_." = ?", array($username, 1));
 		if(is_array($result)) return true;
 		return;
 	}
@@ -110,7 +111,7 @@ class common {
 			$query = "UPDATE "._TBL_MI_." SET "._CLMN_PASSWD_." = :password WHERE "._CLMN_MEMBID_." = :userid";
 		}
 
-		$result = $this->db->query($query, $data);
+		$result = $this->memuonline->query($query, $data);
 		if($result) return true;
 		return;
 	}
@@ -128,8 +129,8 @@ class common {
 			time()
 		);
 		
-		$query = "INSERT INTO WEBENGINE_PASSCHANGE_REQUEST (user_id,new_password,auth_code,request_date) VALUES (?, ?, ?, ?)";
-		$result = $this->db->query($query, $data);
+		$query = "INSERT INTO ".WEBENGINE_PASSCHANGE_REQUEST." (user_id,new_password,auth_code,request_date) VALUES (?, ?, ?, ?)";
+		$result = $this->memuonline->query($query, $data);
 		if($result) return true;
 		return;
 	}
@@ -137,7 +138,7 @@ class common {
 	public function hasActivePasswordChangeRequest($userid) {
 		if(!check_value($userid)) return;
 		
-		$result = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_PASSCHANGE_REQUEST WHERE user_id = ?", array($userid));
+		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_PASSCHANGE_REQUEST." WHERE user_id = ?", array($userid));
 		if(!is_array($result)) return;
 		
 		$configs = loadConfigurations('usercp.mypassword');
@@ -152,7 +153,7 @@ class common {
 	}
 
 	public function removePasswordChangeRequest($userid) {
-		$result = $this->db->query("DELETE FROM WEBENGINE_PASSCHANGE_REQUEST WHERE user_id = ?", array($userid));
+		$result = $this->memuonline->query("DELETE FROM ".WEBENGINE_PASSCHANGE_REQUEST." WHERE user_id = ?", array($userid));
 		if($result) return true;
 		return;
 	}
@@ -168,29 +169,11 @@ class common {
 		$build_url .= Encode_id($auth_code);
 		return $build_url;
 	}
-	
-	public function substractCredits($userid,$amount) {
-		# ONLY FOR MUE
-		if(!check_value($userid)) return;
-		if(!check_value($amount)) return;
-		if(!Validator::UnsignedNumber($userid)) return;
-		if(!Validator::UnsignedNumber($amount)) return;
-		
-		$userData = $this->accountInformation($userid);
-		if(!is_array($userData)) return;
-		
-		$accountCredits = $userData[_CLMN_CREDITS_];
-		if($accountCredits < $amount) return;
-		
-		$subtract = $this->db->query("UPDATE "._TBL_MI_." SET "._CLMN_CREDITS_." = "._CLMN_CREDITS_." - ? WHERE "._CLMN_MEMBID_." = ?", array($amount, $userid));
-		if($subtract) return true;
-		return;
-	}
 
 	public function blockAccount($userid) {
 		if(!check_value($userid)) return;
 		if(!Validator::UnsignedNumber($userid)) return;
-		$result = $this->db->query("UPDATE "._TBL_MI_." SET "._CLMN_BLOCCODE_." = ? WHERE "._CLMN_MEMBID_." = ?", array(1, $userid));
+		$result = $this->memuonline->query("UPDATE "._TBL_MI_." SET "._CLMN_BLOCCODE_." = ? WHERE "._CLMN_MEMBID_." = ?", array(1, $userid));
 		if($result) return true;
 		return;
 	}
@@ -213,15 +196,15 @@ class common {
 			$order_id
 		);
 		
-		$query = "INSERT INTO WEBENGINE_PAYPAL_TRANSACTIONS (transaction_id, user_id, payment_amount, paypal_email, transaction_date, transaction_status, order_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-		$result = $this->db->query($query, $data);
+		$query = "INSERT INTO ".WEBENGINE_PAYPAL_TRANSACTIONS." (transaction_id, user_id, payment_amount, paypal_email, transaction_date, transaction_status, order_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		$result = $this->memuonline->query($query, $data);
 		if($result) return true;
 		return;
 	}
 
 	public function paypal_transaction_reversed_updatestatus($order_id) {
 		if(check_value($order_id)) return;
-		$result = $this->db->query("UPDATE WEBENGINE_PAYPAL_TRANSACTIONS SET transaction_status = ? WHERE order_id = ?", array(0, $order_id));
+		$result = $this->memuonline->query("UPDATE ".WEBENGINE_PAYPAL_TRANSACTIONS." SET transaction_status = ? WHERE order_id = ?", array(0, $order_id));
 		if($result) return true;
 		return;
 	}
@@ -242,47 +225,58 @@ class common {
 	public function generateAccountRecoveryCode($userid,$username) {
 		if(!check_value($userid)) return;
 		if(!check_value($username)) return;
-		return md5($userid . $username . $this->_encryptionHash . date("m-d-Y"));
-	}
-	
-	public function updateVipTimeStamp($userid,$timestamp) {
-		if(!check_value($userid)) return;
-		if(!check_value($timestamp)) return;
-		$result = $this->db->query("UPDATE "._TBL_MI_." SET "._CLMN_VIP_STAMP_." = ? WHERE "._CLMN_MEMBID_." = ?", array($timestamp, $userid));
-		if($result) return true;
-		return;
+		return md5($userid . $username . date("m-d-Y"));
 	}
 	
 	public function isIpBlocked($ip) {
-		if(!Validator::Ip($ip)) return true; // automatically block ip if invalid
-		$result = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_BLOCKED_IP WHERE block_ip = ?", array($ip));
-		if(is_array($result)) return true;
-		return;
+		if(!Validator::Ip($ip)) return true;
+		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_BLOCKED_IP." WHERE block_ip = ?", array($ip));
+		if(!is_array($result)) return;
+		return true;
 	}
 
 	public function blockIpAddress($ip,$user) {
 		if(!check_value($user)) return;
 		if(!Validator::Ip($ip)) return;
 		if($this->isIpBlocked($ip)) return;
-		$result = $this->db->query("INSERT INTO WEBENGINE_BLOCKED_IP (block_ip,block_by,block_date) VALUES (?,?,?)", array($ip,$user,time()));
-		if($result) return true;
+		$result = $this->memuonline->query("INSERT INTO ".WEBENGINE_BLOCKED_IP." (block_ip,block_by,block_date) VALUES (?,?,?)", array($ip,$user,time()));
+		if(!$result) return;
+		
+		$this->_updateBlockedIpCache();
+		return true;
 	}
 
 	public function retrieveBlockedIPs() {
-		return $this->db->query_fetch("SELECT * FROM WEBENGINE_BLOCKED_IP ORDER BY id DESC");
+		return $this->memuonline->query_fetch("SELECT * FROM ".WEBENGINE_BLOCKED_IP." ORDER BY id DESC");
 	}
 
 	public function unblockIpAddress($id) {
 		if(!check_value($id)) return;
-		$result = $this->db->query("DELETE FROM WEBENGINE_BLOCKED_IP WHERE id = ?", array($id));
-		if($result) return true;
-		return;
+		$result = $this->memuonline->query("DELETE FROM ".WEBENGINE_BLOCKED_IP." WHERE id = ?", array($id));
+		if(!$result) return;
+		
+		$this->_updateBlockedIpCache();
+		return true;
+	}
+	
+	protected function _updateBlockedIpCache() {
+		$blockedIps = $this->retrieveBlockedIPs();
+		if(!is_array($blockedIps)) {
+			updateCacheFile($this->_blockedIpCache, "");
+			return;
+		}
+		foreach($blockedIps as $row) {
+			$ipList[] = $row['block_ip'];
+		}
+		if(!is_array($ipList)) return;
+		$cacheData = encodeCache($ipList);
+		updateCacheFile($this->_blockedIpCache, $cacheData);
 	}
 	
 	public function updateEmail($userid, $newemail) {
 		if(!Validator::UnsignedNumber($userid)) return;
 		if(!Validator::Email($newemail)) return;
-		$result = $this->db->query("UPDATE "._TBL_MI_." SET "._CLMN_EMAIL_." = ? WHERE "._CLMN_MEMBID_." = ?", array($newemail, $userid));
+		$result = $this->memuonline->query("UPDATE "._TBL_MI_." SET "._CLMN_EMAIL_." = ? WHERE "._CLMN_MEMBID_." = ?", array($newemail, $userid));
 		if($result) return true;
 		return;
 	}

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.6
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -20,7 +20,7 @@ $nextMonth = $currentMonth+1;
 
 $ts1 = strtotime(date("m/01/Y 00:00"));
 $ts2 = strtotime(date("$nextMonth/01/Y 00:00"));
-$voteLogs = $database->query_fetch("SELECT TOP 100 user_id, COUNT(*) as totalvotes FROM WEBENGINE_VOTE_LOGS WHERE timestamp BETWEEN ? AND ? GROUP BY user_id ORDER BY totalvotes DESC", array($ts1,$ts2));
+$voteLogs = $database->query_fetch("SELECT TOP 100 user_id, COUNT(*) as totalvotes FROM ".WEBENGINE_VOTE_LOGS." WHERE timestamp BETWEEN ? AND ? GROUP BY user_id ORDER BY totalvotes DESC", array($ts1,$ts2));
 
 if($voteLogs && is_array($voteLogs)) {
 	

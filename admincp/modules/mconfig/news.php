@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -29,6 +29,8 @@ function saveChanges() {
 	$xml->news_list_limit = $_POST['setting_3'];
 	$xml->news_enable_comment_system = $_POST['setting_4'];
 	$xml->news_enable_like_button = $_POST['setting_5'];
+	$xml->news_short = $_POST['setting_6'];
+	$xml->news_short_char_limit = $_POST['setting_7'];
 	
 	$save = $xml->asXML($xmlPath);
 	if($save) {
@@ -74,6 +76,18 @@ loadModuleConfigs('news');
 			<th>Like and Share<br/><span>Enable/disable Facebook's like and share buttons.</span></th>
 			<td>
 				<? enabledisableCheckboxes('setting_5',mconfig('news_enable_like_button'),'Enabled','Disabled'); ?>
+			</td>
+		</tr>
+		<tr>
+			<th>Short News<br/><span>Enable/disable the short news feature.</span></th>
+			<td>
+				<? enabledisableCheckboxes('setting_6',mconfig('news_short'),'Enabled','Disabled'); ?>
+			</td>
+		</tr>
+		<tr>
+			<th>Short News Character Limit<br/><span>Amount of characters to show in the short version of news.</span></th>
+			<td>
+				<input class="input-mini" type="text" name="setting_7" value="<?=mconfig('news_short_char_limit')?>"/>
 			</td>
 		</tr>
 		<tr>

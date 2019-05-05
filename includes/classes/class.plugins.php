@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.6
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -14,9 +14,10 @@
 class Plugins {
 	
 	function __construct() {
-		global $dB, $dB2;
 		
-		$this->db = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
+		// load database
+		$this->db = Connection::Database('Me_MuOnline');
+		
 	}
 	
 	public function importPlugin($_FILE) {
@@ -30,7 +31,7 @@ class Plugins {
 							// Install Plugin
 							$install = $this->installPlugin($pluginDATA);
 							if($install) {
-								message('success','Plugin successtully imported!');
+								message('success','Plugin successfully imported!');
 							} else {
 								message('error','Could not import plugin.');
 							}
@@ -150,8 +151,9 @@ class Plugins {
 			time(),
 			$_SESSION['username']
 		);
-		$query = $this->db->query("INSERT INTO WEBENGINE_PLUGINS (name, author, version, compatibility, folder, files, status, install_date, installed_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", $data);
+		$query = $this->db->query("INSERT INTO ".WEBENGINE_PLUGINS." (name, author, version, compatibility, folder, files, status, install_date, installed_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", $data);
 		if($query) {
+			@$this->_getPluginLatestVersion($pluginDATA['folder'], $pluginDATA['version']);
 			return true;
 		} else {
 			return false;
@@ -159,12 +161,12 @@ class Plugins {
 	}
 	
 	public function retrieveInstalledPlugins() {
-		$plugins = $this->db->query_fetch("SELECT * FROM WEBENGINE_PLUGINS ORDER BY id ASC");
+		$plugins = $this->db->query_fetch("SELECT * FROM ".WEBENGINE_PLUGINS." ORDER BY id ASC");
 		return $plugins;
 	}
 	
 	public function updatePluginStatus($plugin_id,$new_status) {
-		$update = $this->db->query("UPDATE WEBENGINE_PLUGINS SET status = ? WHERE id = ?", array($new_status, $plugin_id));
+		$update = $this->db->query("UPDATE ".WEBENGINE_PLUGINS." SET status = ? WHERE id = ?", array($new_status, $plugin_id));
 		$update_cache = $this->rebuildPluginsCache();
 		if(!$update_cache) {
 			message('error','Could not update plugins cache data, make sure the file exists and it\'s writable!');
@@ -172,7 +174,7 @@ class Plugins {
 	}
 	
 	public function uninstallPlugin($plugin_id) {
-		$uninstall = $this->db->query("DELETE FROM WEBENGINE_PLUGINS WHERE id = ?", array($plugin_id));
+		$uninstall = $this->db->query("DELETE FROM ".WEBENGINE_PLUGINS." WHERE id = ?", array($plugin_id));
 		if($uninstall) {
 			return true;
 		} else {
@@ -181,55 +183,63 @@ class Plugins {
 	}
 	
 	public function rebuildPluginsCache() {
-		$plugins = $this->db->query_fetch("SELECT * FROM WEBENGINE_PLUGINS WHERE status = 1 ORDER BY id ASC");
-		if(is_array($plugins)) {
-			
-			$cacheDATA = array();
-			$i = 0;
-			foreach($plugins as $thisPlugin) {
-				$cacheDATA[$i][] = $thisPlugin['folder'];
-				$cacheDATA[$i][] = $thisPlugin['files'];
-				$i++;
-			}
-			
-			$buildCacheDATA = BuildCacheData($cacheDATA);
-			$update = UpdateCache('plugins.cache',$buildCacheDATA);
-			if($update) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			$update = UpdateCache('plugins.cache','');
-			if($update) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
-	
-	public function gotEnabledPlugins() {
-		$plugins = $this->db->query_fetch("SELECT * FROM WEBENGINE_PLUGINS WHERE status = 1");
-		if($plugins) {
+		$plugins = $this->db->query_fetch("SELECT * FROM ".WEBENGINE_PLUGINS." WHERE status = 1 ORDER BY id ASC");
+		if(!is_array($plugins)) {
+			$update = updateCacheFile('plugins.cache', "");
+			if(!$update) return;
 			return true;
-		} else {
-			return false;
 		}
+		
+		foreach($plugins as $key => $row) {
+			$compatibility = explode('|', $row['compatibility']);
+			if(!is_array($compatibility)) continue;
+			if(!in_array(__WEBENGINE_VERSION__, $compatibility)) continue;
+			
+			$files = explode('|', $row['files']);
+			if(!is_array($files)) continue;
+			
+			$plugins[$key]['compatibility'] = $compatibility;
+			$plugins[$key]['files'] = $files;
+		}
+		
+		$cacheData = encodeCache($plugins);
+		$update = updateCacheFile('plugins.cache', $cacheData);
+		if(!$update) return;
+		return true;
 	}
 	
-	public function loadPlugins() {
-		$cache = LoadCacheData('plugins.cache');
-		$i = 0;
-		foreach($cache as $thisPlugin) {
-			if($i >= 1) {
-				$pPath = $this->pluginPath($thisPlugin[0]);
-				$pFiles = explode("|",$thisPlugin[1]);
-				foreach($pFiles as $pFile) {
-					if(!@include_once($pPath.$pFile)) die('[WEBENGINE::ERROR][!#] Could not load plugin file ('.$pPath.$pFile.')');
-				}
-			}
-			$i++;
+	public function _getPluginLatestVersion($plugin, $version='1.0.0') {
+		if(!check_value($plugin)) return;
+		if(!check_value($version)) return;
+		
+		$url = 'http://version.webenginecms.org/1.0/plugin.php';
+		
+		$fields = array(
+			'version' => urlencode($version),
+			'baseurl' => urlencode(__BASE_URL__),
+			'plugin' => urlencode($plugin),
+		);
+		
+		foreach($fields as $key => $value) {
+			$fieldsArray[] = $key . '=' . $value;
 		}
+		
+		$ch = curl_init();
+		
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_POST, count($fields));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, implode("&", $fieldsArray));
+		curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_USERAGENT, 'WebEngine');
+		curl_setopt($ch, CURLOPT_HEADER, false);
+
+		$result = curl_exec($ch);
+		curl_close($ch);
+		
+		if(!$result) return;
+		$resultArray = json_decode($result, true);
+		if(!is_array($resultArray)) return;
+		return $resultArray;
 	}
 }

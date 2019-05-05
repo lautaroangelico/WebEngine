@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.1.1
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
@@ -15,7 +15,7 @@
 <?php
 
 // Load Vote Class
-$vote = new Vote($common, $dB, $dB2);
+$vote = new Vote();
 
 function saveChanges() {
 	global $_POST;
@@ -65,7 +65,7 @@ if(check_value($_REQUEST['deletesite'])) {
 
 loadModuleConfigs('usercp.vote');
 
-$creditSystem = new CreditSystem($common, new Character(), $dB, $dB2);
+$creditSystem = new CreditSystem();
 ?>
 <form action="index.php?module=modules_manager&config=vote" method="post">
 	<table class="table table-striped table-bordered table-hover module_config_tables">
@@ -98,7 +98,7 @@ $creditSystem = new CreditSystem($common, new Character(), $dB, $dB2);
 <?php
 $votesiteList = $vote->retrieveVotesites();
 if(is_array($votesiteList)) {
-	echo '<table class="table table-striped table-bordered table-hover module_config_tables">';
+	echo '<table class="table table-striped table-bordered table-hover">';
 	echo '<tr>';
 	echo '<th>Title</th>';
 	echo '<th>Link (full url including http)</th>';
@@ -119,10 +119,10 @@ if(is_array($votesiteList)) {
 	
 	echo '<form action="index.php?module=modules_manager&config=vote" method="post">';
 	echo '<tr>';
-	echo '<td><input name="votesite_add_title" class="input-block-level" type="text"/></td>';
-	echo '<td><input name="votesite_add_link" class="input-block-level" type="text"/></td>';
-	echo '<td><input name="votesite_add_reward" class="input-mini" type="text"/> credit(s)</td>';
-	echo '<td><input name="votesite_add_time" class="input-mini" type="text"/> hour(s)</td>';
+	echo '<td><input name="votesite_add_title" class="form-control" type="text"/></td>';
+	echo '<td><input name="votesite_add_link" class="form-control" type="text"/></td>';
+	echo '<td><input name="votesite_add_reward" class="form-control" type="text"/> credit(s)</td>';
+	echo '<td><input name="votesite_add_time" class="form-control" type="text"/> hour(s)</td>';
 	echo '<td><input type="submit" name="votesite_add_submit" class="btn btn-success" value="Add!"/></td>';
 	echo '</tr>';
 	echo '</form>';
@@ -130,7 +130,7 @@ if(is_array($votesiteList)) {
 	echo '</table>';
 } else {
 	echo '<h4>Add Voting Site</h4>';
-	echo '<table class="table table-striped table-bordered table-hover module_config_tables">';
+	echo '<table class="table table-striped table-bordered table-hover">';
 	echo '<tr>';
 	echo '<th>Title</th>';
 	echo '<th>Link (full url including http)</th>';
@@ -140,10 +140,10 @@ if(is_array($votesiteList)) {
 	echo '</tr>';
 	echo '<form action="index.php?module=modules_manager&config=vote" method="post">';
 	echo '<tr>';
-	echo '<td><input name="votesite_add_title" class="input-block-level" type="text"/></td>';
-	echo '<td><input name="votesite_add_link" class="input-block-level" type="text"/></td>';
-	echo '<td><input name="votesite_add_reward" class="input-mini" type="text"/> credit(s)</td>';
-	echo '<td><input name="votesite_add_time" class="input-mini" type="text"/> hour(s)</td>';
+	echo '<td><input name="votesite_add_title" class="form-control" type="text"/></td>';
+	echo '<td><input name="votesite_add_link" class="form-control" type="text"/></td>';
+	echo '<td><input name="votesite_add_reward" class="form-control" type="text"/> credit(s)</td>';
+	echo '<td><input name="votesite_add_time" class="form-control" type="text"/> hour(s)</td>';
 	echo '<td><input type="submit" name="votesite_add_submit" class="btn btn-success" value="Add!"/></td>';
 	echo '</tr>';
 	echo '</form>';

@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[WEBENGINE_VOTES](
+CREATE TABLE [dbo].[{TABLE_NAME}](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[user_id] [int] NOT NULL,
 	[user_ip] [varchar](50) NOT NULL,

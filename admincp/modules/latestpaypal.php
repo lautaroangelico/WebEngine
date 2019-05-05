@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.6
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -16,7 +16,7 @@
 try {
 	$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
 	
-	$paypalDonations = $database->query_fetch("SELECT * FROM WEBENGINE_PAYPAL_TRANSACTIONS ORDER BY id DESC");
+	$paypalDonations = $database->query_fetch("SELECT * FROM ".WEBENGINE_PAYPAL_TRANSACTIONS." ORDER BY id DESC");
 	if(!is_array($paypalDonations)) throw new Exception("There are no PayPal transactions in the database.");
 	
 	echo '<table id="paypal_donations" class="table table-condensed table-hover">';

@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -22,10 +22,10 @@ try {
 	// Register Process
 	if(check_value($_POST['webengineRegister_submit'])) {
 		try {
-			$Account = new Account($dB, $dB2);
+			$Account = new Account();
 			
 			if(mconfig('register_enable_recaptcha')) {
-				if(!@include_once(__PATH_CLASSES__ . 'recaptcha/autoload.php')) throw new Exception('Could not load recaptcha library, please contact support.');
+				if(!@include_once(__PATH_CLASSES__ . 'recaptcha/autoload.php')) throw new Exception(lang('error_60'));
 				$recaptcha = new \ReCaptcha\ReCaptcha(mconfig('register_recaptcha_secret_key'));
 				
 				$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);

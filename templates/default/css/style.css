@@ -1,0 +1,636 @@
+html {
+	min-width: 1040px;
+	height: 100%;
+}
+
+body {
+	background: #000000 url('../img/background.jpg') no-repeat top center;
+	color: #333;
+	font-family: 'PT Sans', sans-serif;
+	font-size: 14px;
+	margin: 0;
+	height: 100%;
+}
+
+a {
+	color: #777;
+	text-decoration: none;
+	-moz-transition: all .2s ease-in;
+    -o-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+}
+
+a:hover {
+	color: #ffda8a;
+}
+
+img {
+	border: 0px;
+}
+
+input[type=text], input[type=password], input[type=number] {
+	background: #fafafa;
+	border: 1px solid #e3e3e3;
+	color: #666;
+}
+input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
+	border: 1px solid #ccc;
+}
+
+#header {
+	width: 100%;
+	margin: 0px auto;
+	padding: 80px 0px;
+	text-align: center;
+	color: #fff;
+}
+
+#container {
+	background: #ffffff;
+	width: 1040px;
+	height: auto;
+	margin: 0px auto;
+	padding: 20px 0px;
+}
+
+#content {
+	width: 100%;
+	overflow: auto;
+	min-height: 500px;
+	padding: 10px 20px 0px 20px;
+}
+
+.footer {
+	background: #171717 url('../img/footer_background.jpg') no-repeat bottom center;
+	background-size: cover;
+	font-family: 'Segoe UI', 'Lucida Sans Unicode', 'Lucida Grande', 'Tahoma', 'Arial', 'sans-serif';
+	width: 100%;
+	font-size: 14px;
+	color: #777777;
+	padding: 60px 0px;
+	overflow: auto;
+}
+	.footer > .footer-container {
+		width: 1040px;
+		margin: 0px auto;
+	}
+	.footer-time-title {
+		color: #ffffff;
+		font-weight: bold;
+	}
+	.footer-time {
+		font-size: 48px;
+		color: #ff3214;
+		font-weight: bold;
+		position: relative;
+		top: -10px;
+	}
+	.footer-date {
+		position: relative;
+		top: -20px;
+		font-size: 12px;
+	}
+
+#navbar {
+	background: #171717;
+	width: 100%;
+}
+
+#navbar ul{
+	text-align: center;
+	margin: 0px;
+	-webkit-padding-start: 0px;
+}
+
+#navbar ul li {
+	font-family: 'PT Sans', sans-serif;
+	list-style-type: none;
+	display: inline-block;
+	font-size: 16px;
+}
+
+#navbar ul li a {
+	display: inline-block;
+	color: #ffffff !important;
+	text-decoration: none;
+	padding: 15px 30px;
+}
+
+#navbar ul li a:active, #navbar ul li a:focus, #navbar ul li a:hover {
+	color: #ffffff !important;
+	text-decoration: none;
+	background: #ed1c24;
+}
+
+
+/* CASTLE SIEGE BANNER */
+.castle-siege-banner {
+	width: 1040px;
+	background: #000 url('../img/castle_siege_banner_bg.jpg') no-repeat center center;
+	background-size: cover;
+	margin: 0px auto;
+	padding: 20px;
+	-moz-box-shadow: 0 0 10px #000;
+	-webkit-box-shadow: 0 0 10px #000;
+	box-shadow: 0 0 10px #000;
+	overflow: auto;
+	font-family: 'Fredoka One', cursive;
+	color: #74beff;
+	-webkit-border-radius: 5px 5px 0px 0px;
+    -moz-border-radius: 5px 5px 0px 0px;
+    border-radius: 5px 5px 0px 0px;
+    -khtml-border-radius: 5px 5px 0px 0px;
+	text-shadow: 1px 1px 3px #000000;
+}
+	.castle-siege-banner img {
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
+		-khtml-border-radius: 5px;
+		-moz-box-shadow: 0 0 10px #000;
+		-webkit-box-shadow: 0 0 10px #000;
+		box-shadow: 0 0 10px #000;
+	}
+	.castle-siege-banner .guild_owner, .castle-siege-banner .guild_owner a {
+		color: #ffffff;
+		font-size: 45px;
+	}
+	.castle-siege-banner .guild_master, .castle-siege-banner .guild_master a {
+		color: #ffffff;
+		font-size: 45px;
+	}
+	.castle-siege-banner .guild_countdown {
+		color: #ffffff;
+		font-size: 45px;
+	}
+		.castle-siege-banner .guild_countdown span {
+			color: #ffcc00;
+			font-size: 24px;
+		}
+
+.admincp-button {
+	position:absolute;
+	top:10px;
+	right:10px;
+}
+
+.page-title {
+	color: #ff0000;
+	font-family: 'PT Sans', sans-serif;
+	font-size: 32px;
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+
+/* NEWS MODULE */
+.panel-news {
+	margin-bottom: 30px;
+	color: #333;
+	border: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+	-moz-box-shadow: 0 0 10px #e3e3e3;
+	-webkit-box-shadow: 0 0 10px #e3e3e3;
+	box-shadow: 0 0 10px #e3e3e3;
+}
+.panel-news .panel-heading {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background: #ffefef;
+}
+.panel-news .panel-title {
+	color: #c04e4e;
+	font-family: 'PT Sans', sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+}
+.panel-news .panel-footer {
+	border-top: 1px solid #e7e7e7;
+	background: #fff;
+	font-style: italic;
+	font-size: 11px;
+	height: 40px;
+	color: #777;
+}
+
+/* RANKINGS MODULE */
+.rankings-table {
+	width: 100%;
+	border-spacing: 0;
+	border-collapse: collapse;
+	-moz-box-shadow: 0 0 5px #e3e3e3;
+	-webkit-box-shadow: 0 0 5px #e3e3e3;
+	box-shadow: 0 0 5px #e3e3e3;
+}
+
+.rankings-class-image {
+	width: 30px;
+	height: auto;
+	-moz-box-shadow: 0 0 5px #666;
+	-webkit-box-shadow: 0 0 5px #666;
+	box-shadow: 0 0 5px #666;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+}
+.rankings-table tr td {
+	border-bottom: 1px solid #e3e3e3;
+	padding: 10px;
+	font-size: 18px;
+	vertical-align: middle !important;
+	text-align: center;
+}
+.rankings-table-place {
+	color: #666;
+	font-weight: bold;
+	font-size: 24px;
+	text-align: center;
+}
+.rankings-table tr:first-child td {
+	color: #ff0000;
+	border-bottom: 3px solid #ff0000;
+}
+.rankings-update-time {
+	text-align: right;
+	font-size: 11px;
+	color: #ccc;
+	padding: 10px 0px;
+}
+.rankings_menu {
+	width: 100%;
+	overflow: auto;
+	text-align: center;
+	margin-bottom: 10px;
+}
+.rankings_menu span {
+	width: 100%;
+	display: inline-block;
+	padding: 10px 0px;
+	color: #ccc;
+	font-size: 24px;
+}
+.rankings_menu a {
+	display: inline-block;
+	width: 150px;
+	border: 1px solid #e3e3e3;
+	text-align: center;
+	padding: 2px 0px;
+	margin: 2px;
+	background: #f1f1f1;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	color: #ccc;
+}
+.rankings_menu a.active {
+	color: #333;
+	border-color: #333;
+}
+.rankings_guild_logo tr td {
+	border: 0px !important;
+	padding: 0px !important;
+	margin: 0px !important;
+}
+.rankings-gens-img {
+	width: auto !important;
+	height: 30px !important;
+	border: 0 !important;
+	-moz-box-shadow: 0 0 0px #000 !important;
+	-webkit-box-shadow: 0 0 0px #000 !important;
+	box-shadow: 0 0 0px #000 !important;
+	-moz-border-radius: 0px !important;
+	border-radius: 0px !important;
+}
+
+/* MY ACCOUNT MODULE */
+.myaccount-table {
+	width: 100%;
+	background: #f1f1f1;
+	border: 1px solid #e3e3e3;
+}
+.myaccount-table tr td:first-child {
+	color: #666;
+	font-weight: bold;
+}
+.myaccount-table tr td {
+	border-bottom: 1px solid #e3e3e3;
+	padding: 15px !important;
+}
+.myaccount-table tr:last-child td {
+	border: 0px;
+}
+
+/* GENERAL TABLE UI */
+.general-table-ui {
+	width: 100%;
+	table-layout: fixed;
+	background: #f1f1f1;
+	border: 1px solid #e3e3e3;
+	padding: 10px;
+	margin: 10px 0px;
+}
+.general-table-ui tr td {
+	padding: 5px;
+	vertical-align: middle !important;
+}
+.general-table-ui tr:first-child td {
+	color: #ff0000;
+}
+.general-table-ui tr:nth-child(2n+2) td {
+	background: #fafafa;
+}
+.general-table-ui tr td {
+	text-align: center;
+}
+.general-table-ui img {
+	width: 50px;
+	height: auto;
+	-moz-box-shadow: 0 0 5px #666;
+	-webkit-box-shadow: 0 0 5px #666;
+	box-shadow: 0 0 5px #666;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+}
+
+/* TERMS OF SERVICE PAGE */
+.tos_list li {
+	color: #aa0000;
+	font-weight: bold;
+	font-size: 18px;
+	margin-bottom: 40px;
+}
+.tos_list li p {
+	color: #444;
+	text-align: justify;
+	text-justify: inter-word;
+	text-transform: none;
+	padding-right: 35px;
+	font-size: 14px;
+	font-weight: normal;
+}
+
+/* PAYPAL */
+.paypal-gateway-container {
+width: 100%;
+background: #1a2133;
+border: 1px solid #2e374f;
+}
+
+.paypal-gateway-logo {
+width: 100%;
+height: 68px;
+background: #fff9ec url('../img/paypal-logo-200-68.png') no-repeat top center;
+margin-bottom: 10px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+}
+
+.paypal-gateway-content {
+margin: 10px;
+background: #fef2da;
+border: 2px solid #f79433;
+padding: 10px;
+overflow: auto;
+}
+
+.paypal-gateway-conversion-rate {
+margin: 0px auto;
+text-align: center;
+color: #000;
+font-size: 18px;
+padding: 10px 0px;
+}
+
+.paypal-gateway-form {
+width: 100%;
+margin: 0px auto;
+text-align: center;
+}
+
+.paypal-gateway-form div {
+display: inline-block;
+padding: 0px 10px;
+color: #000;
+font-size: 18px;
+}
+
+.paypal-gateway-form input[type=text] {
+width: 40px;
+}
+
+.paypal-gateway-continue {
+margin: 0px auto;
+text-align: center;
+}
+
+.paypal-gateway-continue input[type=submit] {
+background: url('../img/paypal-submit.jpg') no-repeat;
+width: 200px;
+height: 40px;
+border: 0px;
+}
+
+/* CASTLE SIEGE CSS */
+.csinfo_container {
+	background: url('../img/castle_siege.jpg') no-repeat top right;
+	background-size: cover;
+	width: 100%;
+	padding: 20px;
+	margin-bottom: 20px;
+	border: 1px solid #333;
+	-moz-box-shadow: 0 0 10px #555;
+	-webkit-box-shadow: 0 0 10px #555;
+	box-shadow: 0 0 10px #555;
+	-moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -khtml-border-radius: 10px;
+}
+.csinfo_content {
+	width: 100%;
+	height: 180px;
+	margin: 10px 0px 0px 10px;
+	display: inline-block;
+}
+	.csinfo_glogo {
+		float: left;
+		width: 30%;
+		height: 180px;
+		text-align: center;
+	}
+	.csinfo_ginfo {
+		float: left;
+		width: 70%;
+		padding: 0px 10px;
+	}
+	
+		.csinfo_ginfo table {
+			table-layout: fixed;
+			width: 400px;
+		}
+			.csinfo_ginfo table tr td {
+				padding: 3px 0px;
+				font-size: 20px;
+				color: #fff;
+			}
+			.csinfo_ginfo table tr td:first-child {
+				color: #9a7e46;
+			}
+			
+.csinfo_glist {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+	.csinfo_glist li {
+		float: left;
+		width: 30%;
+		padding: 8px 10px;
+	}
+	.csinfo_glist li:hover {
+		background: #0d0c0b;
+	}
+
+.module-requirements {
+	font-size: 12px;
+	margin-top: 20px;
+}
+
+/* SIDEBAR */
+.panel-sidebar {
+	background: #f1f1f1;
+	border: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+	-moz-box-shadow: 0 0 10px #e3e3e3;
+	-webkit-box-shadow: 0 0 10px #e3e3e3;
+	box-shadow: 0 0 10px #e3e3e3;
+}
+
+.panel-sidebar > .panel-heading {
+	background: #fff;
+	color: #ff0000;
+	font-family: 'PT Sans', sans-serif;
+	border: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+	border-bottom: 3px solid #ff0000;
+}
+
+.panel-usercp {
+	background: url('../img/usercp_bg.jpg') no-repeat top center;
+}
+
+.panel-usercp ul {
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+.panel-usercp ul li {
+	display: table;
+	width: 100%;
+	vertical-align: middle;
+	line-height: 30px;
+}
+
+.panel-usercp ul li a {
+	color: #444 !important;
+	font-weight: bold;
+}
+.panel-usercp ul li a:active, .panel-usercp ul li a:hover {
+	color: #ff0000 !important;
+}
+
+.panel-usercp ul li img {
+	position: relative;
+	top: -2px;
+	padding-right: 10px;
+}
+
+.sidebar-banner {
+	margin: 20px 0px;
+	border: 0px;
+}
+
+.sidebar-banner img {
+	-moz-box-shadow: 0 0 10px #e3e3e3;
+	-webkit-box-shadow: 0 0 10px #e3e3e3;
+	box-shadow: 0 0 10px #e3e3e3;
+	border: 0px;
+	-moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -khtml-border-radius: 5px;
+}
+
+/* GENERAL PANEL STYLING */
+.panel-general {
+	margin-bottom: 30px;
+	background: #f1f1f1;
+	border: 1px solid #e3e3e3;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+	color: #333;
+}
+
+.panel-body .panel-title {
+	color: #666;
+	font-family: 'PT Sans', sans-serif;
+	font-size: 14px;
+	border-bottom: 1px solid #e3e3e3;
+	margin-bottom: 20px !important;
+	font-weight: bold;
+}
+
+/* ADD STATS MODULE */
+.panel-addstats {
+	margin-bottom: 30px;
+	background: #f1f1f1;
+	border: 1px solid #e3e3e3;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+	color: #333;
+}
+.panel-addstats .character-avatar img {
+	width: 100px;
+	height: auto;
+	-moz-box-shadow: 0 0 5px #666;
+	-webkit-box-shadow: 0 0 5px #666;
+	box-shadow: 0 0 5px #666;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+}
+.panel-addstats .character-name {
+	color: #666;
+	font-family: 'PT Sans', sans-serif;
+	font-size: 18px;
+	border-bottom: 1px solid #e3e3e3;
+	padding: 20px 0px;
+	margin-bottom: 20px !important;
+	font-weight: bold;
+}
+
+/* DOWNLOADS */
+.panel-downloads {
+	margin-bottom: 30px;
+	background: #f1f1f1;
+	border: 1px solid #e3e3e3;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+	color: #333;
+}
+	.download-description {
+		font-size: 11px;
+		position: relative;
+		top: -7px;
+		color: #777;
+	}
+
+.online-status-indicator {
+	margin-left: 5px;
+}
+
+/* WEBENGINE CMS */
+.webengine-powered { color: #777 !important; }
+.webengine-powered:active, .webengine-powered:hover { color: #ff3214 !important; }

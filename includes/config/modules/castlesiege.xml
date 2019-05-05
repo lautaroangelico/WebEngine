@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <settings>
-	<active>0</active>
-	<enable_banner>0</enable_banner>
-	<cs_battle_day>6</cs_battle_day>
+	<active>1</active>
+	<enable_banner>1</enable_banner>
+	<cs_battle_day>7</cs_battle_day>
 	<cs_battle_time>22:30:00</cs_battle_time>
 	<cs_battle_duration>120</cs_battle_duration>
 </settings>

@@ -3,16 +3,16 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.9
- * @author Lautaro Angelico <https://lautaroangelico.com/>
- * @copyright (c) 2013-2018 Lautaro Angelico, All Rights Reserved
+ * @version 1.2.0
+ * @author Lautaro Angelico <http://lautaroangelico.com/>
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
- * https://opensource.org/licenses/MIT
+ * http://opensource.org/licenses/MIT
  */
 
 define('access', 'install');
-if(!@include_once('loader.php')) die('Could not load installer.');
+if(!@include_once('loader.php')) die('Could not load WebEngine CMS Installer.');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,9 +20,7 @@ if(!@include_once('loader.php')) die('Could not load installer.');
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<title>WebEngine <?php echo INSTALLER_VERSION; ?> Installer</title>
-
+	<title>WebEngine CMS <?php echo INSTALLER_VERSION; ?> Installer</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<style>
 	<!--
@@ -81,12 +79,12 @@ if(!@include_once('loader.php')) die('Could not load installer.');
 		</div>
 
 		<footer class="footer">
-			<a href="https://webenginecms.org/" target="_blank">&copy; WebEngine CMS 2013-2018</a>
+			<a href="https://webenginecms.org/" target="_blank">&copy; WebEngine CMS 2013-<?php echo date("Y"); ?></a>
 		</footer>
 
 	</div> <!-- /container -->
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>

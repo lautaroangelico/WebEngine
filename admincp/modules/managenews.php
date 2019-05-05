@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -23,9 +23,22 @@ if($News->isNewsDirWritable()) {
 		$News->cacheNews();
 		$News->updateNewsCacheIndex();
 		if($deleteNews) {
-			message('success','News successfully deleted');
+			redirect(1, 'admincp/?module=managenews');
 		} else {
 			message('error','Invalid news ID');
+		}
+	}
+	
+	# News translation delete
+	if(check_value($_GET['deletetranslation']) && check_value($_GET['language'])) {
+		try {
+			$News->setId($_GET['deletetranslation']);
+			$News->setLanguage($_GET['language']);
+			$News->deleteNewsTranslation();
+			$News->updateNewsCacheIndex();
+			redirect(1, 'admincp/?module=managenews');
+		} catch(Exception $ex) {
+			message('error', $ex->getMessage());
 		}
 	}
 	
@@ -36,40 +49,60 @@ if($News->isNewsDirWritable()) {
 		if($cacheNews) {
 			message('success','News successfully cached');
 		} else {
-			message('error','Unknown error');
+			message('error','There are no news to cache.');
 		}
 	}
 	
 	$news_list = $News->retrieveNews();
 	if(is_array($news_list)) {
-		echo '<table class="table table-hover table-striped">';
-			echo '<thead>';
-				echo '<tr>';
-					echo '<th>#</th>';
-					echo '<th>TITLE</th>';
-					echo '<th>AUTHOR</th>';
-					echo '<th>DATE</th>';
-					echo '<th>ALLOW COMMENTS</th>';
-					echo '<th></th>';
-				echo '</tr>';
-			echo '</thead>';
-			echo '<tbody>';
-			foreach($news_list as $thisNews) {
-				$thisNews_allowcomments = ($thisNews['allow_comments'] == 1 ? '<span class="btn btn-success btn-circle"><i class="fa fa-check"></i></span>' : '<span class="btn btn-danger btn-circle"><i class="fa fa-times"></i></span>');
-				echo '<tr>';
-					echo '<td>'.$thisNews['news_id'].'</td>';
-					echo '<td><a href="'.__BASE_URL__.'news/'.Encode_id($thisNews['news_id']).'/" target="_blank">'.$thisNews['news_title'].'</a></td>';
-					echo '<td>'.$thisNews['news_author'].'</td>';
-					echo '<td>'.date("Y-m-d H:i",$thisNews['news_date']).'</td>';
-					echo '<td>'.$thisNews_allowcomments.'</td>';
-					echo '<td>';
-						echo '<a class="btn btn-default btn-sm" href="'.admincp_base("editnews&id=".$thisNews['news_id']).'"><i class="fa fa-edit"></i> edit</a> ';
-						echo '<a class="btn btn-danger btn-sm" href="'.admincp_base("managenews&delete=".$thisNews['news_id']).'"><i class="fa fa-trash"></i> delete</a>';
-					echo '</td>';
-				echo '</tr>';
-			}
-			echo '</tbody>';
-		echo '</table>';
+		
+		foreach($news_list as $row) {
+			
+			$News->setId($row['news_id']);
+			
+			echo '<div class="panel panel-default">';
+				echo '<div class="panel-heading">';
+					echo '<a href="'.__BASE_URL__.'news/'.$row['news_id'].'/" target="_blank">'.$row['news_title'].'</a>';
+					echo '<a class="btn btn-danger btn-xs pull-right" href="'.admincp_base("managenews&delete=".$row['news_id']).'"><i class="fa fa-trash"></i> delete</a>';
+					echo '<a class="btn btn-warning btn-xs pull-right" style="margin-right:5px;" href="'.admincp_base("editnews&id=".$row['news_id']).'"><i class="fa fa-edit"></i> edit</a>';
+					echo '<a class="btn btn-xs btn-default pull-right" style="margin-right:5px;" href="'.admincp_base("addnewstranslation&id=".$row['news_id']).'"><i class="fa fa-plus"></i> Add Translation</a>';
+				echo '</div>';
+				echo '<div class="panel-body">';
+					echo '<div class="row">';
+						echo '<div class="col-xs-6">';
+							echo '<table class="table">';
+								echo '<tr>';
+									echo '<th>News Id:</th>';
+									echo '<td>'.$row['news_id'].'</td>';
+								echo '</tr>';
+								echo '<tr>';
+									echo '<th>Author:</th>';
+									echo '<td>'.$row['news_author'].'</td>';
+								echo '</tr>';
+								echo '<tr>';
+									echo '<th>Date:</th>';
+									echo '<td>'.date("Y-m-d H:i",$row['news_date']).'</td>';
+								echo '</tr>';
+							echo '</table>';
+						echo '</div>';
+						echo '<div class="col-xs-6">';
+							echo 'Translations:';
+							
+							$newsTranslations = $News->getNewsTranslationsDataList();
+							if(is_array($newsTranslations)) {
+								echo '<ul>';
+									foreach($newsTranslations as $translation) {
+										echo '<li>[<span style="color:red;">'.$translation['news_language'].'</span>] '.$translation['news_title'].' <a href="'.admincp_base('editnewstranslation&id='.$translation['news_id'].'&language='.$translation['news_language']).'" class="btn btn-xs btn-default">edit</a> <a href="'.admincp_base('managenews&deletetranslation='.$translation['news_id'].'&language='.$translation['news_language']).'" class="btn btn-xs btn-default">delete</a></li>';
+									}
+								echo '</ul>';
+							}
+						echo '</div>';
+					echo '</div>';
+				echo '</div>';
+			echo '</div>';
+			
+		}
+		
 	}
 	
 	echo '<a class="btn btn-success" href="'.admincp_base("managenews&cache=1").'">UPDATE NEWS CACHE</a>';

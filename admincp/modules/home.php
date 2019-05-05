@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.1.0
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
@@ -13,7 +13,12 @@
 
 // check install directory
 if(file_exists(__ROOT_DIR__ . 'install/')) {
-	message('warning', 'Your WebEngine <strong>install</strong> directory still exists, it is recommended that you delete it.');
+	message('warning', 'Your WebEngine CMS <strong>install</strong> directory still exists, it is recommended that you rename or delete it.', 'WARNING');
+}
+
+// check web server host
+if(DIRECTORY_SEPARATOR == '\\') {
+	message('warning', 'Windows-based web servers are not officially supported by WebEngine CMS, it is recommended to use a Linux-based web server. For more information <a href="https://webenginecms.org/xampp" target="_blank">Click Here.</a>', 'WARNING');
 }
 
 echo '<div class="row">';
@@ -77,7 +82,7 @@ echo '<div class="row">';
 				echo '</div>';
 				
 				// Scheduled Tasks
-				$scheduledTasks = $database->query_fetch_single("SELECT COUNT(*) as result FROM WEBENGINE_CRON");
+				$scheduledTasks = $database->query_fetch_single("SELECT COUNT(*) as result FROM ".WEBENGINE_CRON."");
 				echo '<div class="list-group-item">';
 					echo 'Scheduled Tasks (cron)';
 					echo '<span class="pull-right text-muted small">'.number_format($scheduledTasks['result']).'</span>';

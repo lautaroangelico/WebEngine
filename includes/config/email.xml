@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <settings>
-	<active>0</active>
+	<active>1</active>
 	<send_from>noreply@website.com</send_from>
 	<send_name>MuOnline</send_name>
 	<smtp_active>0</smtp_active>

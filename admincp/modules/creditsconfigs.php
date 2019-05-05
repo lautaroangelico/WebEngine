@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -13,7 +13,7 @@
 
 echo '<h1 class="page-header">Credit Configurations</h1>';
 
-$creditSystem = new CreditSystem($common, new Character(), $dB, $dB2);
+$creditSystem = new CreditSystem();
 
 // NEW CONFIG
 if(check_value($_POST['new_submit'])) {
@@ -99,14 +99,17 @@ echo '<div class="row">';
 					echo '<label>Database:</label>';
 					echo '<div class="radio">';
 						echo '<label>';
-							echo '<input type="radio" name="new_database" id="databaseRadios1" value="MuOnline" checked> MuOnline';
+							echo '<input type="radio" name="new_database" id="databaseRadios1" value="MuOnline" checked> ' . config('SQL_DB_NAME', true);
 						echo '</label>';
 					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="new_database" id="databaseRadios1" value="Me_MuOnline"> Me_MuOnline';
-						echo '</label>';
-					echo '</div><br />';	
+					
+					if(config('SQL_USE_2_DB',true)) {
+						echo '<div class="radio">';
+							echo '<label>';
+								echo '<input type="radio" name="new_database" id="databaseRadios1" value="Me_MuOnline"> ' . config('SQL_DB_2_NAME', true);
+							echo '</label>';
+						echo '</div><br />';
+					}					
 
 					echo '<div class="form-group">';
 						echo '<label for="input_2">Table:</label>';
@@ -188,14 +191,17 @@ echo '<div class="row">';
 					echo '<label>Database:</label>';
 					echo '<div class="radio">';
 						echo '<label>';
-							echo '<input type="radio" name="edit_database" id="databaseRadios1" value="MuOnline" '.($cofigsData['config_database'] == "MuOnline" ? 'checked' : null).'> MuOnline';
+							echo '<input type="radio" name="edit_database" id="databaseRadios1" value="MuOnline" '.($cofigsData['config_database'] == "MuOnline" ? 'checked' : null).'> ' . config('SQL_DB_NAME', true);
 						echo '</label>';
 					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="edit_database" id="databaseRadios1" value="Me_MuOnline" '.($cofigsData['config_database'] == "Me_MuOnline" ? 'checked' : null).'> Me_MuOnline';
-						echo '</label>';
-					echo '</div><br />';
+					
+					if(config('SQL_USE_2_DB',true)) {
+						echo '<div class="radio">';
+							echo '<label>';
+								echo '<input type="radio" name="edit_database" id="databaseRadios1" value="Me_MuOnline" '.($cofigsData['config_database'] == "Me_MuOnline" ? 'checked' : null).'> ' . config('SQL_DB_2_NAME', true);
+							echo '</label>';
+						echo '</div><br />';
+					}
 
 					echo '<div class="form-group">';
 						echo '<label for="input_2">Table:</label>';
@@ -264,57 +270,64 @@ echo '<div class="row">';
 	echo '</div>';
 	echo '<div class="col-md-8">';
 		
-		echo '<div class="panel panel-default">';
-		echo '<div class="panel-heading">Configurations</div>';
-		echo '<div class="panel-body">';
-			$cofigsList = $creditSystem->showConfigs();
-			if(is_array($cofigsList)) {
-				echo '<table class="table table-condensed table-hover">';
-				echo '<thead>';
-					echo '<tr>';
-						echo '<th>Title</th>';
-						echo '<th>Database</th>';
-						echo '<th>Table</th>';
-						echo '<th>Credits Column</th>';
-						echo '<th>User Column</th>';
-						echo '<th>User Column Identifier</th>';
-						echo '<th>Online Check</th>';
-						echo '<th>Display</th>';
-						echo '<th></th>';
-					echo '</tr>';
-				echo '</thead>';
-				echo '<tbody>';
-				foreach($cofigsList as $data) {
+		$cofigsList = $creditSystem->showConfigs();
+		if(is_array($cofigsList)) {
+			foreach($cofigsList as $data) {
+				
+				$checkOnline = ($data['config_checkonline'] ? '<span class="label label-success">Yes</span>' : '<span class="label label-default">No</span>');
+				$configdisplay = ($data['config_display'] ? '<span class="label label-success">Yes</span>' : '<span class="label label-default">No</span>');
+				$databaseDisplay = $data['config_database'] == 'MuOnline' ? config('SQL_DB_NAME', true) : config('SQL_DB_2_NAME', true);
+				
+				echo '<div class="panel panel-default">';
+					echo '<div class="panel-heading">';
+						echo $data['config_title'];
+						echo '<a href="'.admincp_base("creditsconfigs&delete=".$data['config_id']).'" class="btn btn-danger btn-xs pull-right">Delete</a>';
+						echo '<a href="'.admincp_base("creditsconfigs&edit=".$data['config_id']).'" class="btn btn-default btn-xs pull-right" style="margin-right:5px;">Edit</a>';
+					echo '</div>';
+					echo '<div class="panel-body">';
 					
-					$checkOnline = ($data['config_checkonline'] ? '<span class="label label-success">Yes</span>' : '<span class="label label-default">No</span>');
-					$configdisplay = ($data['config_display'] ? '<span class="label label-success">Yes</span>' : '<span class="label label-default">No</span>');
-					if(check_value($_GET['edit']) && $_GET['edit'] == $data['config_id']) {
-						echo '<tr class="warning">';
-					} else {
-						echo '<tr>';
-					}
-						echo '<td>'.$data['config_title'].'</td>';
-						echo '<td>'.$data['config_database'].'</td>';
-						echo '<td>'.$data['config_table'].'</td>';
-						echo '<td>'.$data['config_credits_col'].'</td>';
-						echo '<td>'.$data['config_user_col'].'</td>';
-						echo '<td>'.$data['config_user_col_id'].'</td>';
-						echo '<td>'.$checkOnline.'</td>';
-						echo '<td>'.$configdisplay.'</td>';
-						echo '<td>';
-							echo '<a href="'.admincp_base("creditsconfigs&edit=".$data['config_id']).'" class="btn btn-default btn-xs">Edit</a> ';
-							echo '<a href="'.admincp_base("creditsconfigs&delete=".$data['config_id']).'" class="btn btn-danger btn-xs">Delete</a>';
-						echo '</td>';
-					echo '</tr>';
-				}
-				echo '
-				</tbody>
-				</table>';
-			} else {
-				message('warning', 'You have not created any configuration.');
+						echo '<table class="table" style="margin-bottom:0px;">';
+							echo '<tbody>';
+								echo '<tr>';
+									echo '<th>Config Id</th>';
+									echo '<td>'.$data['config_id'].'</td>';
+									echo '<th>User Column Identifier</th>';
+									echo '<td>'.$data['config_user_col_id'].'</td>';
+								echo '</tr>';
+								echo '<tr>';
+									echo '<th>Database</th>';
+									echo '<td>'.$databaseDisplay.'</td>';
+									echo '<th>Online Check</th>';
+									echo '<td>'.$checkOnline.'</td>';
+								echo '</tr>';
+								echo '<tr>';
+									echo '<th>Table</th>';
+									echo '<td>'.$data['config_table'].'</td>';
+									echo '<th>Display in My Account</th>';
+									echo '<td>'.$configdisplay.'</td>';
+								echo '</tr>';
+								echo '<tr>';
+									echo '<th>Credits Column</th>';
+									echo '<td>'.$data['config_credits_col'].'</td>';
+									echo '<th></th>';
+									echo '<td></td>';
+								echo '</tr>';
+								echo '<tr>';
+									echo '<th>User Column</th>';
+									echo '<td>'.$data['config_user_col'].'</td>';
+									echo '<th></th>';
+									echo '<td></td>';
+								echo '</tr>';
+							echo '</tbody>';
+						echo '</table>';
+						
+					echo '</div>';
+				echo '</div>';
+				
 			}
-		echo '</div>';
-		echo '</div>';
+		} else {
+			message('warning', 'You have not created any configuration.');
+		}
 		
 	echo '</div>';
 echo '</div>';

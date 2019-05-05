@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[WEBENGINE_CRON](
+CREATE TABLE [dbo].[{TABLE_NAME}](
 	[cron_id] [int] IDENTITY(1,1) NOT NULL,
 	[cron_name] [varchar](100) NOT NULL,
 	[cron_description] [varchar](max) NULL,

@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[WEBENGINE_BANS](
+CREATE TABLE [dbo].[{TABLE_NAME}](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[account_id] [varchar](50) NOT NULL,
 	[banned_by] [varchar](50) NOT NULL,

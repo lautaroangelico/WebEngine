@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.1.0
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
@@ -13,7 +13,7 @@
 
 if(!defined('access') or !access or access != 'install') die();
 
-session_name('WebEngineInstaller110'); 
+session_name('WebEngineInstaller120'); 
 session_start();
 ob_start();
 
@@ -33,18 +33,37 @@ define('__INSTALL_URL__', __BASE_URL__ . 'install/');
 
 try {
 	
-	if(file_exists(__PATH_CONFIGS__.'webengine.json')) {
-		$checkConfigs = file_get_contents(__PATH_CONFIGS__ . 'webengine.json');
-		if($checkConfigs) {
-			$jsonConfigs = json_decode($checkConfigs, true);
-			if($jsonConfigs['system_active']) throw new Exception('WebEngine installation is completed, delete the install folder.');
-		}
+	if(!@include_once(__PATH_CONFIGS__ . 'webengine.tables.php')) throw new Exception('Could not load WebEngine CMS tables.');
+	if(!@include_once(__INSTALL_ROOT__ . 'definitions.php')) throw new Exception('Could not load WebEngine CMS Installer definitions.');
+	
+	$webengineConfigsPath = __PATH_CONFIGS__.WEBENGINE_CONFIGURATION_FILE;
+	if(!file_exists($webengineConfigsPath)) throw new Exception('WebEngine CMS configuration file missing.');
+	if(!is_readable($webengineConfigsPath)) throw new Exception('WebEngine CMS configuration file is not readable.');
+	if(!is_writable($webengineConfigsPath)) throw new Exception('WebEngine CMS configuration file is not writable.');
+	
+	$webengineConfigsFile = file_get_contents($webengineConfigsPath);
+	if($webengineConfigsFile) {
+		$webengineConfig = json_decode($webengineConfigsFile, true);
+		if(!is_array($webengineConfig)) throw new Exception('WebEngine CMS configuration file could not be decoded.');
+		if($webengineConfig['webengine_cms_installed'] === true) throw new Exception('WebEngine CMS installation is complete, it is recommended to rename or delete this directory.');
 	}
 	
-	if(!@include_once(__PATH_INCLUDES__ . 'functions.php')) throw new Exception('Could not load WebEngine functions.');
-	if(!@include_once(__PATH_CLASSES__ . 'class.validator.php')) throw new Exception('Could not load validator library.');
-	if(!@include_once(__PATH_CLASSES__ . 'class.database.php')) throw new Exception('Could not load database library.');
-	if(!@include_once(__INSTALL_ROOT__ . 'definitions.php')) throw new Exception('');
+	$webengineDefaultConfigsPath = __PATH_CONFIGS__.WEBENGINE_DEFAULT_CONFIGURATION_FILE;
+	if(!file_exists($webengineDefaultConfigsPath)) throw new Exception('WebEngine CMS default configuration file missing.');
+	if(!is_readable($webengineDefaultConfigsPath)) throw new Exception('WebEngine CMS default configuration file is not readable.');
+	$webengineDefaultConfigsFile = file_get_contents($webengineDefaultConfigsPath);
+	if(!$webengineDefaultConfigsFile) throw new Exception('WebEngine CMS default configuration file could not be loaded.');
+	$webengineDefaultConfig = json_decode($webengineDefaultConfigsFile, true);
+	if(!is_array($webengineDefaultConfig)) throw new Exception('WebEngine CMS default configuration file could not be decoded.');
+	
+	if(!@include_once(__PATH_INCLUDES__ . 'functions.php')) throw new Exception('Could not load WebEngine CMS functions.');
+	if(!@include_once(__PATH_CLASSES__ . 'class.validator.php')) throw new Exception('Could not load WebEngine CMS validator library.');
+	if(!@include_once(__PATH_CLASSES__ . 'class.database.php')) throw new Exception('Could not load WebEngine CMS database library.');
+	if(!@include_once(__PATH_CONFIGS__ . 'compatibility.php')) throw new Exception('Could not load WebEngine CMS files compatibility.');
+	if(!@include_once(__PATH_CONFIGS__ . 'timezone.php')) throw new Exception('Could not load WebEngine CMS timezone.');
+	
+	$writablePaths = loadJsonFile(__PATH_CONFIGS__.WEBENGINE_WRITABLE_PATHS_FILE);
+	if(!is_array($writablePaths)) throw new Exception('Could not load WebEngine CMS writable paths list.');
 	
 	if(!check_value($_SESSION['install_cstep'])) {
 		$_SESSION['install_cstep'] = 0;

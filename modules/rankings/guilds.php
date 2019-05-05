@@ -25,6 +25,9 @@ try {
 	$ranking_data = LoadCacheData('rankings_guilds.cache');
 	if(!is_array($ranking_data)) throw new Exception(lang('error_58',true));
 	
+	if(mconfig('show_online_status')) $onlineCharacters = loadCache('online_characters.cache');
+	if(!is_array($onlineCharacters)) $onlineCharacters = array();
+	
 	echo '<table class="rankings-table">';
 	echo '<tr>';
 	if(mconfig('rankings_show_place_number')) {
@@ -37,15 +40,16 @@ try {
 	echo '</tr>';
 	$i = 0;
 	foreach($ranking_data as $rdata) {
+		$onlineStatus = mconfig('show_online_status') ? in_array($rdata[1], $onlineCharacters) ? '<img src="'.__PATH_ONLINE_STATUS__.'" class="online-status-indicator"/>' : '<img src="'.__PATH_OFFLINE_STATUS__.'" class="online-status-indicator"/>' : '';
 		if($i>=1) {
 			echo '<tr>';
 			if(mconfig('rankings_show_place_number')) {
 				echo '<td class="rankings-table-place">'.$i.'</td>';
 			}
-			echo '<td>'.$rdata[0].'</td>';
+			echo '<td>'.guildProfile($rdata[0]).'</td>';
 			echo '<td>'.returnGuildLogo($rdata[3], 40).'</td>';
-			echo '<td>'.$rdata[1].'</td>';
-			echo '<td>'.$rdata[2].'</td>';
+			echo '<td>'.playerProfile($rdata[1]).$onlineStatus.'</td>';
+			echo '<td>'.number_format($rdata[2]).'</td>';
 			echo '</tr>';
 		}
 		$i++;

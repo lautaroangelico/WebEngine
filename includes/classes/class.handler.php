@@ -3,12 +3,12 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.9
- * @author Lautaro Angelico <https://lautaroangelico.com/>
- * @copyright (c) 2013-2018 Lautaro Angelico, All Rights Reserved
+ * @version 1.2.0
+ * @author Lautaro Angelico <http://lautaroangelico.com/>
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
- * https://opensource.org/licenses/MIT
+ * http://opensource.org/licenses/MIT
  */
 
 class Handler {
@@ -16,27 +16,21 @@ class Handler {
 	private $_disableWebEngineFooterVersion = false;
 	private $_disableWebEngineFooterCredits = false;
 	
-	private $_dB;
-	private $_dB2;
-	
-	function __construct(dB $dB, dB $dB2 = null) {
-		$this->_dB = $dB;
-		$this->_dB2 = (check_value($dB2) ? $dB2 : null);
-	}
-	
 	public function loadPage() {
-		global $config,$lang,$custom,$common,$tSettings;
+		global $config,$lang,$custom,$tSettings;
 		
 		# object instances
 		$handler = $this;
-		$dB = $this->_dB;
-		$dB2 = $this->_dB2;
 		
-		# load language
-		$loadLanguage = (check_value($_SESSION['language_display']) ? $_SESSION['language_display'] : $config['language_default']);
-		$loadLanguage = (config('language_switch_active',true) ? $loadLanguage : $config['language_default']);
-		if(!$this->languageExists($loadLanguage)) throw new Exception('The chosen language cannot be loaded ('.$loadLanguage.').');
-		include(__PATH_LANGUAGES__ . $loadLanguage . '/language.php');
+		# load language	
+		$this->_loadLanguagePhrases($config['language_default']);
+		if($config['language_switch_active']) {
+			if(check_value($_SESSION['language_display'])) {
+				if($_SESSION['language_display'] != $config['language_default']) {
+					$this->_loadLanguagePhrases($_SESSION['language_display']);
+				}
+			}
+		}
 		
 		# access
 		if(!defined('access')) throw new Exception('Access forbidden.');
@@ -71,62 +65,61 @@ class Handler {
 	}
 
 	public function loadModule($page = 'news',$subpage = 'home') {
-		global $config,$lang,$custom,$common,$mconfig,$tSettings;
-		
-		$handler = $this;
-		$dB = $this->_dB;
-		$dB2 = $this->_dB2;
-		
-		$page = $this->cleanRequest($page);
-		$subpage = $this->cleanRequest($subpage);
-		
-		$request = explode("/", $_GET['request']);
-		if(is_array($request)) {
-			for($i = 0; $i < count($request); $i++) {
-				if(check_value($request[$i])) {
-					if(check_value($request[$i+1])) {
-						$_GET[$request[$i]] = filter_var($request[$i+1], FILTER_SANITIZE_STRING);
-					} else {
-						$_GET[$request[$i]] = NULL;
+		global $config,$lang,$custom,$mconfig,$tSettings;
+		try {
+			$handler = $this;
+			$page = $this->cleanRequest($page);
+			$subpage = $this->cleanRequest($subpage);
+			
+			$request = explode("/", $_GET['request']);
+			if(is_array($request)) {
+				for($i = 0; $i < count($request); $i++) {
+					if(check_value($request[$i])) {
+						if(check_value($request[$i+1])) {
+							$_GET[$request[$i]] = filter_var($request[$i+1], FILTER_SANITIZE_STRING);
+						} else {
+							$_GET[$request[$i]] = NULL;
+						}
 					}
+					$i++;
 				}
-				$i++;
 			}
-		}
-		
-		if(!check_value($page)) { $page = 'news'; }
-		
-		if(!check_value($subpage)) {
-			if($this->moduleExists($page)) {
-				@loadModuleConfigs($page);
-				include(__PATH_MODULES__ . $page . '.php');
+			
+			if(!check_value($page)) { $page = 'news'; }
+			
+			if(!check_value($subpage)) {
+				if($this->moduleExists($page)) {
+					@loadModuleConfigs($page);
+					include(__PATH_MODULES__ . $page . '.php');
+				} else {
+					$this->module404();
+				}
 			} else {
-				$this->module404();
+				// HANDLE PAGE AS DIRECTORY (PATH)
+				switch($page) {
+					case 'news':
+						if($this->moduleExists($page)) {
+							@loadModuleConfigs($page);
+							include(__PATH_MODULES__ . $page . '.php');
+						} else {
+							$this->module404();
+						}
+					break;
+					default:
+						$path = $page.'/'.$subpage;
+						if($this->moduleExists($path)) {
+							$cnf = $page.'.'.$subpage;
+							@loadModuleConfigs($cnf);
+							include(__PATH_MODULES__ . $path . '.php');
+						} else {
+							$this->module404();
+						}
+					break;
+				}
 			}
-		} else {
-			// HANDLE PAGE AS DIRECTORY (PATH)
-			switch($page) {
-				case 'news':
-					if($this->moduleExists($page)) {
-						@loadModuleConfigs($page);
-						include(__PATH_MODULES__ . $page . '.php');
-					} else {
-						$this->module404();
-					}
-				break;
-				default:
-					$path = $page.'/'.$subpage;
-					if($this->moduleExists($path)) {
-						$cnf = $page.'.'.$subpage;
-						@loadModuleConfigs($cnf);
-						include(__PATH_MODULES__ . $path . '.php');
-					} else {
-						$this->module404();
-					}
-				break;
-			}
+		} catch(Exception $ex) {
+			message('error', $ex->getMessage());
 		}
-	
 	}
 	
 	private function moduleExists($page) {
@@ -157,19 +150,18 @@ class Handler {
 	public function webenginePowered() {
 		if($this->_disableWebEngineFooterCredits) return;
 		
-		echo '<div class="webengine-powered" style="text-transform:uppercase;">';
-			echo '<a href="https://webenginecms.org/" target="_blank" style="color:#ff0000;">';
-				echo 'Powered by WebEngine';
-				if(!$this->_disableWebEngineFooterVersion) echo ' ' . __WEBENGINE_VERSION__;
-			echo '</a>';
-		echo '</div>';
+		echo '<a href="https://webenginecms.org/" target="_blank" class="webengine-powered">';
+			echo 'Powered by WebEngine';
+			if(!$this->_disableWebEngineFooterVersion) echo ' ' . __WEBENGINE_VERSION__;
+		echo '</a>';
 	}
 	
 	public function loadAdminCPModule($module='home') {
-		global $config,$lang,$custom,$common,$handler,$mconfig,$gconfig;
+		global $config,$lang,$custom,$handler,$mconfig,$gconfig,$webengine;
 		
-		$dB = $this->_dB;
-		$dB2 = $this->_dB2;
+		$dB = Connection::Database('MuOnline');
+		$dB2 = Connection::Database('Me_MuOnline');
+		$common = new common();
 		
 		$module = (check_value($module) ? $module : 'home');
 		
@@ -218,5 +210,10 @@ class Handler {
 		$_SESSION['language_display'] = $language;
 		
 		return true;
+	}
+	
+	private function _loadLanguagePhrases($language='en') {
+		global $lang;
+		if(!@include_once(__PATH_LANGUAGES__ . $language . '/language.php')) throw new Exception('Language phrases could not be loaded ('.$language.').');
 	}
 }

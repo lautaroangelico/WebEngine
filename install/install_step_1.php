@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.1.0
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
@@ -27,63 +27,12 @@ if(check_value($_POST['install_step_1_submit'])) {
 	}
 }
 
-$writablePaths = array(
-	'cache/',
-	'cache/news/',
-	'cache/profiles/guilds/',
-	'cache/profiles/players/',
-	'cache/castle_siege.cache',
-	'cache/cron.cache',
-	'cache/downloads.cache',
-	'cache/news.cache',
-	'cache/plugins.cache',
-	'cache/rankings_gens.cache',
-	'cache/rankings_gr.cache',
-	'cache/rankings_guilds.cache',
-	'cache/rankings_level.cache',
-	'cache/rankings_master.cache',
-	'cache/rankings_online.cache',
-	'cache/rankings_pk.cache',
-	'cache/rankings_pvplaststand.cache',
-	'cache/rankings_resets.cache',
-	'cache/rankings_votes.cache',
-	'cache/server_info.cache',
-	'config/email.xml',
-	'config/navbar.json',
-	'config/usercp.json',
-	'config/webengine.json',
-	'config/modules/castlesiege.xml',
-	'config/modules/contact.xml',
-	'config/modules/donation.paypal.xml',
-	'config/modules/donation.xml',
-	'config/modules/downloads.xml',
-	'config/modules/forgotpassword.xml',
-	'config/modules/login.xml',
-	'config/modules/news.xml',
-	'config/modules/profiles.xml',
-	'config/modules/rankings.xml',
-	'config/modules/register.xml',
-	'config/modules/usercp.addstats.xml',
-	'config/modules/usercp.buyzen.xml',
-	'config/modules/usercp.clearpk.xml',
-	'config/modules/usercp.clearskilltree.xml',
-	'config/modules/usercp.myaccount.xml',
-	'config/modules/usercp.myemail.xml',
-	'config/modules/usercp.mymasterkey.xml',
-	'config/modules/usercp.mypassword.xml',
-	'config/modules/usercp.reset.xml',
-	'config/modules/usercp.resetstats.xml',
-	'config/modules/usercp.unstick.xml',
-	'config/modules/usercp.vip.xml',
-	'config/modules/usercp.vote.xml',
-);
-
 echo '<div class="list-group">';
 
-	$chk_1 = version_compare(PHP_VERSION, '5.4', '>=');
+	$chk_1 = version_compare(PHP_VERSION, '5.6', '>=');
 	$check_1 = ($chk_1 ? '<span class="label label-success">Ok</span>' : '<span class="label label-danger">Fix</span>');
 	echo '<div class="list-group-item">';
-		echo 'PHP 5.4 or higher';
+		echo 'PHP 5.6 or higher';
 		echo '<span class="pull-right">(PHP '.PHP_VERSION.') '.$check_1.'</span>';
 	echo '</div>';
 
@@ -100,11 +49,11 @@ echo '<div class="list-group">';
 		echo 'OpenSSL Extension';
 		echo '<span class="pull-right">'.$check_3.'</span>';
 	echo '</div>';
-
-	$chk_4 = (extension_loaded('bcmath') ? true : false);
+	
+	$chk_4 = (extension_loaded('curl') ? true : false);
 	$check_4 = ($chk_4 ? '<span class="label label-success">Ok</span>' : '<span class="label label-danger">Fix</span>');
 	echo '<div class="list-group-item">';
-		echo 'BC Math Extension';
+		echo 'cURL Extension';
 		echo '<span class="pull-right">'.$check_4.'</span>';
 	echo '</div>';
 
@@ -124,14 +73,14 @@ echo '<div class="list-group">';
 		echo '</div>';
 
 		$chk_7 = (extension_loaded('pdo_odbc') ? true : false);
-		$check_7 = ($chk_7 ? '<span class="label label-success">Ok</span>' : '<span class="label label-danger">Fix</span>');
+		$check_7 = ($chk_7 ? '<span class="label label-success">Ok</span>' : '<span class="label label-warning">Optional Fix</span>');
 		echo '<div class="list-group-item">';
 			echo 'PDO odbc (linux/windows)';
 			echo '<span class="pull-right">'.$check_7.'</span>';
 		echo '</div>';
 
 		$chk_8 = (extension_loaded('pdo_sqlsrv') ? true : false);
-		$check_8 = ($chk_8 ? '<span class="label label-success">Ok</span>' : '<span class="label label-danger">Fix</span>');
+		$check_8 = ($chk_8 ? '<span class="label label-success">Ok</span>' : '<span class="label label-warning">Optional Fix</span>');
 		echo '<div class="list-group-item">';
 			echo 'PDO sqlsrv (windows)';
 			echo '<span class="pull-right">'.$check_8.'</span>';
@@ -156,24 +105,26 @@ echo '<div class="list-group">';
 echo '</div>';
 
 echo '<h3>Writable Directories and Files (chmod)</h3>';
-foreach($writablePaths as $filepath) {
-	if(file_exists(__PATH_INCLUDES__ . $filepath)) {
-		if(!is_writable(__PATH_INCLUDES__ . $filepath)) {
-			echo '<div class="list-group-item">';
-				echo $filepath;
-				echo '<span class="pull-right"><span class="label label-warning">Not Writable</span></span>';
-			echo '</div>';
+if(is_array($writablePaths)) {
+	foreach($writablePaths as $filepath) {
+		if(file_exists(__PATH_INCLUDES__ . $filepath)) {
+			if(!is_writable(__PATH_INCLUDES__ . $filepath)) {
+				echo '<div class="list-group-item">';
+					echo $filepath;
+					echo '<span class="pull-right"><span class="label label-warning">Not Writable</span></span>';
+				echo '</div>';
+			} else {
+				echo '<div class="list-group-item">';
+					echo $filepath;
+					echo '<span class="pull-right"><span class="label label-success">Ok</span></span>';
+				echo '</div>';
+			}
 		} else {
 			echo '<div class="list-group-item">';
 				echo $filepath;
-				echo '<span class="pull-right"><span class="label label-success">Ok</span></span>';
+				echo '<span class="pull-right"><span class="label label-danger">File Missing</span></span>';
 			echo '</div>';
 		}
-	} else {
-		echo '<div class="list-group-item">';
-			echo $filepath;
-			echo '<span class="pull-right"><span class="label label-danger">File Missing</span></span>';
-		echo '</div>';
 	}
 }
 

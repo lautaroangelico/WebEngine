@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.8
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -23,16 +23,16 @@ class weProfiles {
 	
 	private $_fileData;
 	
-	function __construct(dB $dB, common $common) {
+	function __construct() {
 		
 		# database
-		$this->common = $common;
-		$this->dB = $dB;
+		$this->common = new common();
+		$this->dB = Connection::Database('MuOnline');
 		
 		# settings
 		$this->_guildsCachePath = __PATH_CACHE__ . 'profiles/guilds/';
 		$this->_playersCachePath = __PATH_CACHE__ . 'profiles/players/';
-		$this->_cacheUpdateTime = 3600;
+		$this->_cacheUpdateTime = 300;
 		
 		# check cache directories
 		$this->checkCacheDir($this->_guildsCachePath);
@@ -117,7 +117,7 @@ class weProfiles {
 	
 	private function cacheGuildData() {
 		// General Data
-		$guildData = $this->dB->query_fetch_single("SELECT * FROM "._TBL_GUILD_." WHERE "._CLMN_GUILD_NAME_." = ?", array($this->_request));
+		$guildData = $this->dB->query_fetch_single("SELECT *, CONVERT(varchar(max), "._CLMN_GUILD_LOGO_.", 2) as "._CLMN_GUILD_LOGO_." FROM "._TBL_GUILD_." WHERE "._CLMN_GUILD_NAME_." = ?", array($this->_request));
 		if(!$guildData) throw new Exception(lang('error_25',true));
 		
 		// Members
@@ -150,9 +150,21 @@ class weProfiles {
 	}
 	
 	private function cachePlayerData() {
+		$Character = new Character();
+		
 		// general player data
-		$playerData = $this->dB->query_fetch_single("SELECT * FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." = ?", array($this->_request));
+		$playerData = $Character->CharacterData($this->_request);
 		if(!$playerData) throw new Exception(lang('error_25',true));
+		
+		// master level data
+		if(_TBL_MASTERLVL_ == _TBL_CHR_) {
+			$playerMasterLevel = $playerData[_CLMN_ML_LVL_];
+		} else {
+			$masterLevelInfo = $Character->getMasterLevelInfo($this->_request);
+			if(is_array($masterLevelInfo)) {
+				$playerMasterLevel = $masterLevelInfo[_CLMN_ML_LVL_];
+			}
+		}
 		
 		// guild data
 		$guild = "";
@@ -180,7 +192,8 @@ class weProfiles {
 			$playerData[_CLMN_CHR_PK_KILLS_],
 			(check_value($playerData[_CLMN_CHR_GRSTS_]) ? $playerData[_CLMN_CHR_GRSTS_] : 0),
 			$guild,
-			$status
+			$status,
+			check_value($playerMasterLevel) ? $playerMasterLevel : 0,
 		);
 		
 		// Cache Ready Data

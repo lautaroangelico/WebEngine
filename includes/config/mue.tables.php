@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.6
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -33,11 +33,6 @@ define('_TBL_MS_', 'MEMB_STAT');
 	
 define('_TBL_AC_', 'AccountCharacter');
 	define('_CLMN_AC_ID_', 'Id');
-	define('_CLMN_GAMEID_1_', 'GameID1');
-	define('_CLMN_GAMEID_2_', 'GameID2');
-	define('_CLMN_GAMEID_3_', 'GameID3');
-	define('_CLMN_GAMEID_4_', 'GameID4');
-	define('_CLMN_GAMEID_5_', 'GameID5');
 	define('_CLMN_GAMEIDC_', 'GameIDC');
 	
 define('_TBL_CHR_', 'Character');
@@ -53,7 +48,7 @@ define('_TBL_CHR_', 'Character');
 	define('_CLMN_CHR_STAT_VIT_', 'Vitality');
 	define('_CLMN_CHR_STAT_ENE_', 'Energy');
 	define('_CLMN_CHR_STAT_CMD_', 'Leadership');
-	define('_CLMN_CHR_PK_KILLS_', 'CirePkCount');
+	define('_CLMN_CHR_PK_KILLS_', 'PkCount');
 	define('_CLMN_CHR_PK_LEVEL_', 'PkLevel');
 	define('_CLMN_CHR_PK_TIME_', 'PkTime');
 	define('_CLMN_CHR_MAP_', 'MapNumber');
@@ -62,10 +57,6 @@ define('_TBL_CHR_', 'Character');
 	define('_CLMN_CHR_MAGIC_L_', 'MagicList');
 	define('_CLMN_CHR_GRSTS_', 'Grand_Resets');
 	define('_CLMN_CHR_PVPLS_WIN_', 'PvPLastStandWin');
-	define('_CLMN_CHR_GENS_CONT_', 'GensContribution');
-	define('_CLMN_CHR_GENS_TYPE_', 'GensType');
-	define('_CLMN_CHR_GENS_RANK_', 'GensRank');
-	define('_CLMN_CHR_GENS_KNIGHT_', 'GensKnight');
 	
 define('_TBL_LOGEX_', 'MuLogEx');
 	define('_CLMN_LOGEX_ACCID_', 'AccountId');
@@ -110,6 +101,12 @@ define('_TBL_GUILDMEMB_', 'GuildMember');
 	
 define('_TBL_MUCASTLE_RS_', 'MuCastle_REG_SIEGE');
 	define('_CLMN_MCRS_GUILD_', 'REG_SIEGE_GUILD');
+
+define('_TBL_GENS_', 'Character');
+	define('_CLMN_GENS_NAME_', 'Name');
+	define('_CLMN_GENS_TYPE_', 'GensType');
+	define('_CLMN_GENS_RANK_', 'GensRank');
+	define('_CLMN_GENS_POINT_', 'GensContribution');
 	
 /*
  * custom: character_class
@@ -118,48 +115,184 @@ $custom['character_class'] = array(
 	0 => array('Dark Wizard', 'DW', 'dw.jpg', 'base_stats' => array('str' => 18, 'agi' => 18, 'vit' => 15, 'ene' => 30, 'cmd' => 0)),
 	1 => array('Soul Master', 'SM', 'dw.jpg', 'base_stats' => array('str' => 18, 'agi' => 18, 'vit' => 15, 'ene' => 30, 'cmd' => 0)),
 	3 => array('Grand Master', 'GM', 'dw.jpg', 'base_stats' => array('str' => 18, 'agi' => 18, 'vit' => 15, 'ene' => 30, 'cmd' => 0)),
+	7 => array('Soul Wizard', 'SW', 'dw.jpg', 'base_stats' => array('str' => 18, 'agi' => 18, 'vit' => 15, 'ene' => 30, 'cmd' => 0)),
 	16 => array('Dark Knight', 'DK', 'dk.jpg', 'base_stats' => array('str' => 28, 'agi' => 20, 'vit' => 25, 'ene' => 10, 'cmd' => 0)),
 	17 => array('Blade Knight', 'BK', 'dk.jpg', 'base_stats' => array('str' => 28, 'agi' => 20, 'vit' => 25, 'ene' => 10, 'cmd' => 0)),
 	19 => array('Blade Master', 'BM', 'dk.jpg', 'base_stats' => array('str' => 28, 'agi' => 20, 'vit' => 25, 'ene' => 10, 'cmd' => 0)),
+	23 => array('Dragon Knight', 'DGK', 'dk.jpg', 'base_stats' => array('str' => 28, 'agi' => 20, 'vit' => 25, 'ene' => 10, 'cmd' => 0)),
 	32 => array('Elf', 'ELF', 'elf.jpg', 'base_stats' => array('str' => 22, 'agi' => 25, 'vit' => 15, 'ene' => 20, 'cmd' => 0)),
-	33 => array('Muse Elf', 'ELF', 'elf.jpg', 'base_stats' => array('str' => 22, 'agi' => 25, 'vit' => 15, 'ene' => 20, 'cmd' => 0)),
-	35 => array('High Elf', 'ELF', 'elf.jpg', 'base_stats' => array('str' => 22, 'agi' => 25, 'vit' => 15, 'ene' => 20, 'cmd' => 0)),
+	33 => array('Muse Elf', 'ME', 'elf.jpg', 'base_stats' => array('str' => 22, 'agi' => 25, 'vit' => 15, 'ene' => 20, 'cmd' => 0)),
+	35 => array('High Elf', 'HE', 'elf.jpg', 'base_stats' => array('str' => 22, 'agi' => 25, 'vit' => 15, 'ene' => 20, 'cmd' => 0)),
+	39 => array('Noble Elf', 'NE', 'elf.jpg', 'base_stats' => array('str' => 22, 'agi' => 25, 'vit' => 15, 'ene' => 20, 'cmd' => 0)),
 	48 => array('Magic Gladiator', 'MG', 'mg.jpg', 'base_stats' => array('str' => 26, 'agi' => 26, 'vit' => 26, 'ene' => 16, 'cmd' => 0)),
 	50 => array('Duel Master', 'DM', 'mg.jpg', 'base_stats' => array('str' => 26, 'agi' => 26, 'vit' => 26, 'ene' => 16, 'cmd' => 0)),
+	54 => array('Magic Knight', 'MK', 'mg.jpg', 'base_stats' => array('str' => 26, 'agi' => 26, 'vit' => 26, 'ene' => 16, 'cmd' => 0)),
 	64 => array('Dark Lord', 'DL', 'dl.jpg', 'base_stats' => array('str' => 26, 'agi' => 20, 'vit' => 20, 'ene' => 15, 'cmd' => 25)),
 	66 => array('Lord Emperor', 'LE', 'dl.jpg', 'base_stats' => array('str' => 26, 'agi' => 20, 'vit' => 20, 'ene' => 15, 'cmd' => 25)),
+	70 => array('Empire Lord', 'EL', 'dl.jpg', 'base_stats' => array('str' => 26, 'agi' => 20, 'vit' => 20, 'ene' => 15, 'cmd' => 25)),
 	80 => array('Summoner', 'SUM', 'sum.jpg', 'base_stats' => array('str' => 21, 'agi' => 21, 'vit' => 18, 'ene' => 23, 'cmd' => 0)),
-	81 => array('Bloody Summoner', 'SUM', 'sum.jpg', 'base_stats' => array('str' => 21, 'agi' => 21, 'vit' => 18, 'ene' => 23, 'cmd' => 0)),
-	83 => array('Dimension Master', 'SUM', 'sum.jpg', 'base_stats' => array('str' => 21, 'agi' => 21, 'vit' => 18, 'ene' => 23, 'cmd' => 0)),
+	81 => array('Bloody Summoner', 'BS', 'sum.jpg', 'base_stats' => array('str' => 21, 'agi' => 21, 'vit' => 18, 'ene' => 23, 'cmd' => 0)),
+	83 => array('Dimension Master', 'DSM', 'sum.jpg', 'base_stats' => array('str' => 21, 'agi' => 21, 'vit' => 18, 'ene' => 23, 'cmd' => 0)),
+	87 => array('Dimension Summoner', 'DS', 'sum.jpg', 'base_stats' => array('str' => 21, 'agi' => 21, 'vit' => 18, 'ene' => 23, 'cmd' => 0)),
 	96 => array('Rage Fighter', 'RF', 'rf.jpg', 'base_stats' => array('str' => 32, 'agi' => 27, 'vit' => 25, 'ene' => 20, 'cmd' => 0)),
 	98 => array('Fist Master', 'FM', 'rf.jpg', 'base_stats' => array('str' => 32, 'agi' => 27, 'vit' => 25, 'ene' => 20, 'cmd' => 0)),
+	102 => array('First Blazer', 'FB', 'rf.jpg', 'base_stats' => array('str' => 32, 'agi' => 27, 'vit' => 25, 'ene' => 20, 'cmd' => 0)),
 	112 => array('Grow Lancer', 'GL', 'gl.jpg', 'base_stats' => array('str' => 30, 'agi' => 30, 'vit' => 25, 'ene' => 24, 'cmd' => 0)),
 	114 => array('Mirage Lancer', 'ML', 'gl.jpg', 'base_stats' => array('str' => 30, 'agi' => 30, 'vit' => 25, 'ene' => 24, 'cmd' => 0)),
+	118 => array('Shining Lancer', 'SL', 'gl.jpg', 'base_stats' => array('str' => 30, 'agi' => 30, 'vit' => 25, 'ene' => 24, 'cmd' => 0)),
+	128 => array('Rune Wizard', 'RW', 'rw.jpg', 'base_stats' => array('str' => 13, 'agi' => 18, 'vit' => 14, 'ene' => 40, 'cmd' => 0)),
+	129 => array('Rune Spell Master', 'RSM', 'rw.jpg', 'base_stats' => array('str' => 13, 'agi' => 18, 'vit' => 14, 'ene' => 40, 'cmd' => 0)),
+	131 => array('Grand Rune Master', 'GRM', 'rw.jpg', 'base_stats' => array('str' => 13, 'agi' => 18, 'vit' => 14, 'ene' => 40, 'cmd' => 0)),
+	135 => array('Grand Rune Master', 'GRM', 'rw.jpg', 'base_stats' => array('str' => 13, 'agi' => 18, 'vit' => 14, 'ene' => 40, 'cmd' => 0)),
 );
 
 /*
  * custom: character_cmd
  * classes who use cmd stat
  */
-$custom['character_cmd'] = array(64, 66);
+$custom['character_cmd'] = array(64, 66, 70);
 
 /*
  * custom: gens_ranks
  */
 $custom['gens_ranks'] = array(
-	0 => 'None',
-	1 => 'Grand Duke',
-	2 => 'Duke',
-	3 => 'Marquis',
-	4 => 'Count',
-	5 => 'Viscount',
-	6 => 'Summoner',
-	7 => 'Baron',
-	8 => 'Knight Commander',
-	9 => 'Superior Knight',
-	10 => 'Knight',
-	11 => 'Officer',
-	12 => 'Lieutenant',
-	13 => 'Sergeant',
-	14 => 'Private',
+	10000 => 'Knight',
+	6000 => 'Guard',
+	3000 => 'Officer',
+	1500 => 'Lieutenant',
+	500 => 'Sergeant',
+	499 => 'Private'
+);
+
+/*
+ * custom: gens_ranks_leadership
+ */
+$custom['gens_ranks_leadership'] = array(
+	'Grand Duke' => array(0,0),
+	'Duke' => array(1,4),
+	'Marquis' => array(5,9),
+	'Count' => array(10,29),
+	'Viscount' => array(30,49),
+	'Baron' => array(50,99),
+	'Knight Commander' => array(100,199),
+	'Superior Knight' => array(200,299)
+);
+
+/*
+ * custom: map_list
+ */
+$custom['map_list'] = array(
+	0 => 'Lorencia',
+	1 => 'Dungeon',
+	2 => 'Devias',
+	3 => 'Noria',
+	4 => 'LostTower',
+	5 => 'Exile',
+	6 => 'Arena',
+	7 => 'Atlans',
+	8 => 'Tarkan',
+	9 => 'Devil Square',
+	10 => 'Icarus',
+	11 => 'Blood Castle 1',
+	12 => 'Blood Castle 2',
+	13 => 'Blood Castle 3',
+	14 => 'Blood Castle 4',
+	15 => 'Blood Castle 5',
+	16 => 'Blood Castle 6',
+	17 => 'Blood Castle 7',
+	18 => 'Chaos Castle 1',
+	19 => 'Chaos Castle 2',
+	20 => 'Chaos Castle 3',
+	21 => 'Chaos Castle 4',
+	22 => 'Chaos Castle 5',
+	23 => 'Chaos Castle 6',
+	24 => 'Kalima 1',
+	25 => 'Kalima 2',
+	26 => 'Kalima 3',
+	27 => 'Kalima 4',
+	28 => 'Kalima 5',
+	29 => 'Kalima 6',
+	30 => 'Valley of Loren',
+	31 => 'Land of Trials',
+	32 => 'Devil Square',
+	33 => 'Aida',
+	34 => 'Crywolf Fortress',
+	36 => 'Kalima 7',
+	37 => 'Kanturu',
+	38 => 'Kanturu 2',
+	39 => 'Kanturu 3',
+	40 => 'Silent Map',
+	41 => 'Barracks of Balgass',
+	42 => 'Balgass Refuge',
+	45 => 'Illusion Temple 1',
+	46 => 'Illusion Temple 2',
+	47 => 'Illusion Temple 3',
+	48 => 'Illusion Temple 4',
+	49 => 'Illusion Temple 5',
+	50 => 'Illusion Temple 6',
+	51 => 'Elbeland',
+	52 => 'Blood Castle 8',
+	53 => 'Chaos Castle 7',
+	56 => 'Swamp of Calmness',
+	57 => 'Raklion',
+	58 => 'Raklion Boss',
+	62 => 'Village\'s Santa',
+	63 => 'Vulcanus',
+	64 => 'Duel Arena',
+	65 => 'Doppelganger',
+	66 => 'Doppelganger',
+	67 => 'Doppelganger',
+	68 => 'Doppelganger',
+	69 => 'Imperial Guardian',
+	70 => 'Imperial Guardian',
+	71 => 'Imperial Guardian',
+	72 => 'Imperial Guardian',
+	79 => 'Loren Market',
+	80 => 'Karutan 1',
+	81 => 'Karutan 2',
+	82 => 'Doppelganger',
+	91 => 'Acheron',
+	92 => 'Acheron',
+	95 => 'Debenter',
+	96 => 'Debenter',
+	97 => 'Chaos Castle Final',
+	98 => 'Ilusion Temple',
+	99 => 'Ilusion Temple',
+	100 => 'Urk Mountain',
+	101 => 'Urk Mountain',
+	102 => 'Tormented Square',
+	103 => 'Tormented Square',
+	104 => 'Tormented Square',
+	105 => 'Tormented Square',
+	106 => 'Tormented Square',
+	110 => 'Nars',
+	112 => 'Ferea',
+	113 => 'Nixie Lake',
+	114 => 'Quest Zone',
+	115 => 'Labyrinth',
+	116 => 'Deep Dungeon',
+	117 => 'Deep Dungeon',
+	118 => 'Deep Dungeon',
+	119 => 'Deep Dungeon',
+	120 => 'Deep Dungeon',
+	121 => '4th Quest',
+	122 => 'Swamp of Darkness',
+	123 => 'Kubera Mine',
+	124 => 'Kubera Mine',
+	125 => 'Kubera Mine',
+	126 => 'Kubera Mine',
+	127 => 'Kubera Mine',
+);
+
+/*
+ * custom: pk_level
+ */
+$custom['pk_level'] = array(
+	0 => 'Normal',
+	1 => 'Hero',
+	2 => 'Hero',
+	3 => 'Commoner',
+	4 => 'Warning',
+	5 => 'Murder',
+	6 => 'Outlaw',
 );

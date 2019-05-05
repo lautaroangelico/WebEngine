@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[WEBENGINE_CREDITS_CONFIG](
+CREATE TABLE [dbo].[{TABLE_NAME}](
 	[config_id] [int] IDENTITY(1,1) NOT NULL,
 	[config_title] [varchar](50) NOT NULL,
 	[config_database] [varchar](50) NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE [dbo].[WEBENGINE_CREDITS_CONFIG](
 	[config_user_col_id] [varchar](50) NOT NULL,
 	[config_checkonline] [tinyint] NOT NULL,
 	[config_display] [tinyint] NOT NULL,
- CONSTRAINT [PK_WEBENGINE_CREDITS_CONFIG] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_{TABLE_NAME}] PRIMARY KEY CLUSTERED 
 (
 	[config_id] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]

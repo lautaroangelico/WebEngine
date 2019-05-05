@@ -1,0 +1,114 @@
+/* GUILD PROFILES */
+.profiles_guild_card {
+	width: 100%;
+	background: #000000 url('../img/profiles/guild.jpg') no-repeat;
+	background-size: cover;
+	overflow: auto;
+	-moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -khtml-border-radius: 10px;
+	border: 1px solid #333;
+	-moz-box-shadow: 0 0 10px #555;
+	-webkit-box-shadow: 0 0 10px #555;
+	box-shadow: 0 0 10px #555;
+	padding: 40px;
+	color: #ffffff;
+	text-shadow: 1px 1px 1px #000;
+}
+	.profiles_guild_card .guild_logo img {
+		-moz-box-shadow: 0 0 10px #000;
+		-webkit-box-shadow: 0 0 10px #000;
+		box-shadow: 0 0 10px #000;
+	}
+	.profiles_guild_card .guild_name {
+		font-family: 'Cinzel', serif;
+		font-size: 24px;
+		color: #ffffff;
+		font-weight: bold;
+	}
+	.profiles_guild_card table {
+		table-layout: fixed;
+	}
+	.profiles_guild_card hr {
+		    border-top: 1px solid #333;
+			margin-top: 30px;
+			margin-bottom: 30px;
+	}
+	.profiles_guild_card .guild_members {
+		font-family: 'Cinzel', serif;
+		font-size: 24px;
+		color: #ffffff;
+		font-weight: bold;
+	}
+	.profiles_guild_card .guild_members_list {
+		margin-top: 30px;
+	}
+
+/* PLAYER PROFILES */
+.profiles_player_card {
+	width: 100%;
+	overflow: auto;
+	-moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -khtml-border-radius: 10px;
+	border: 1px solid #333;
+	-moz-box-shadow: 0 0 10px #555;
+	-webkit-box-shadow: 0 0 10px #555;
+	box-shadow: 0 0 10px #555;
+	padding: 20px;
+}
+
+	.DK.profiles_player_card, .BK.profiles_player_card, .BM.profiles_player_card, .DGK.profiles_player_card { background: url('../img/profiles/knight.jpg') no-repeat; background-size: cover; }
+	.DW.profiles_player_card, .SM.profiles_player_card, .GM.profiles_player_card, .SW.profiles_player_card { background: url('../img/profiles/wiz.jpg') no-repeat; background-size: cover; }
+	.ELF.profiles_player_card, .ME.profiles_player_card, .HE.profiles_player_card, .NE.profiles_player_card { background: url('../img/profiles/elf.jpg') no-repeat; background-size: cover; }
+	.SUM.profiles_player_card, .BS.profiles_player_card, .DSM.profiles_player_card, .DS.profiles_player_card { background: url('../img/profiles/sum.jpg') no-repeat; background-size: cover; }
+	.DL.profiles_player_card, .LE.profiles_player_card, .EL.profiles_player_card { background: url('../img/profiles/dl.jpg') no-repeat; background-size: cover; }
+	.MG.profiles_player_card, .DM.profiles_player_card, .MK.profiles_player_card { background: url('../img/profiles/mg.jpg') no-repeat; background-size: cover; }
+	.RF.profiles_player_card, .FM.profiles_player_card, .FB.profiles_player_card { background: url('../img/profiles/rf.jpg') no-repeat; background-size: cover; }
+	.GL.profiles_player_card, .ML.profiles_player_card, .SL.profiles_player_card { background: url('../img/profiles/gl.jpg') no-repeat; background-size: cover; }
+	.RW.profiles_player_card, .RSM.profiles_player_card, .GRM.profiles_player_card { background: url('../img/profiles/rw.jpg') no-repeat; background-size: cover; }
+
+.profiles_player_content {
+	float: right;
+	width: 50%;
+	color: #fff;
+}
+
+.profiles_player_table {
+	width: 100%;
+}
+
+.profiles_player_table .cname {
+	font-family: 'Cinzel', serif;
+	text-align: center;
+	font-size: 24px;
+	color: #fff;
+	font-weight: bold;
+}
+
+.profiles_player_table .cclass {
+	text-align: center;
+	font-size: 11px;
+	color: #eee;
+}
+
+.profiles_player_table .isoffline {
+	color: #ff0000;
+}
+
+.profiles_player_table .isonline {
+	color: #00ff00;
+}
+
+.profiles_player_table_info {
+	table-layout: fixed;
+	margin-top: 10px;
+}
+.profiles_player_table_info tr td {
+	padding: 3px 10px;
+}
+.profiles_player_table_info tr td:first-child {
+	text-align: right;
+}

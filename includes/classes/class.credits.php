@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.1.0
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
@@ -32,19 +32,19 @@ class CreditSystem {
 		'character'
 	);
 	
-	function __construct(common $common, Character $character, dB $muonline, dB $me_muonline = null) {
-		$this->common = $common;
-		$this->character = $character;
-		$this->muonline = $muonline;
-		if($me_muonline) {
-			$this->memuonline = $me_muonline;
-		}
+	function __construct() {
 		
-		$this->db = (config('SQL_USE_2_DB',true) ? $this->memuonline : $this->muonline);
+		// load databases
+		$this->muonline = Connection::Database('MuOnline');
+		$this->memuonline = Connection::Database('Me_MuOnline');
+		
+		// instances
+		$this->common = new common();
+		$this->character = new Character();
 	}
 	
 	public function setIdentifier($input) {
-		if(!$this->_configId) throw new Exception("You have not set a configuration id.");
+		if(!$this->_configId) throw new Exception(lang('error_66'));
 		$config = $this->showConfigs(true);
 		
 		switch($config['config_user_col_id']) {
@@ -72,7 +72,7 @@ class CreditSystem {
 	 * @throws Exception
 	 */
 	private function _setUserid($input) {
-		if(!Validator::UnsignedNumber($input)) throw new Exception("The userid entered is not valid.");
+		if(!Validator::UnsignedNumber($input)) throw new Exception(lang('error_67'));
 		$this->_identifier = $input;
 	}
 	
@@ -83,8 +83,8 @@ class CreditSystem {
 	 * @throws Exception
 	 */
 	private function _setUsername($input) {
-		if(!Validator::AlphaNumeric($input)) throw new Exception("The username entered contains non-allowed characters.");
-		if(!Validator::UsernameLength($input)) throw new Exception("The username entered is not valid.");
+		if(!Validator::AlphaNumeric($input)) throw new Exception(lang('error_68'));
+		if(!Validator::UsernameLength($input)) throw new Exception(lang('error_69'));
 		$this->_identifier = $input;
 	}
 	
@@ -95,7 +95,7 @@ class CreditSystem {
 	 * @throws Exception
 	 */
 	private function _setEmail($input) {
-		if(!Validator::Email($input)) throw new Exception("The email entered is not valid.");
+		if(!Validator::Email($input)) throw new Exception(lang('error_70'));
 		$this->_identifier = $input;
 	}
 	
@@ -106,7 +106,7 @@ class CreditSystem {
 	 * @throws Exception
 	 */
 	private function _setCharacter($input) {
-		if(!Validator::AlphaNumeric($input)) throw new Exception("The character name entered is not valid.");
+		if(!Validator::AlphaNumeric($input)) throw new Exception(lang('error_71'));
 		$this->_identifier = $input;
 	}
 	
@@ -117,16 +117,16 @@ class CreditSystem {
 	 * @throws Exception
 	 */
 	public function addCredits($input) {
-		if(!Validator::UnsignedNumber($input)) throw new Exception("The amount of credits to add must be an unsigned number.");
-		if(!$this->_configId) throw new Exception("You have not set a configuration id.");
-		if(!$this->_identifier) throw new Exception("You have not set the user identifier.");
+		if(!Validator::UnsignedNumber($input)) throw new Exception(lang('error_72'));
+		if(!$this->_configId) throw new Exception(lang('error_66'));
+		if(!$this->_identifier) throw new Exception(lang('error_73'));
 		
 		// get configs
 		$config = $this->showConfigs(true);
 		
 		// check online
 		if($config['config_checkonline']) {
-			if($this->_isOnline($config['config_user_col_id'])) throw new Exception("Your account is online, please disconnect.");
+			if($this->_isOnline($config['config_user_col_id'])) throw new Exception(lang('error_14'));
 		}
 		
 		// check current credits
@@ -149,7 +149,7 @@ class CreditSystem {
 		
 		// add credits
 		$addCredits = $database->query($query, $data);
-		if(!$addCredits) throw new Exception("There was an error adding the credits");
+		if(!$addCredits) throw new Exception(lang('error_74'));
 		
 		$this->_addLog($config['config_title'], $input, "add");
 	}
@@ -161,16 +161,16 @@ class CreditSystem {
 	 * @throws Exception
 	 */
 	public function subtractCredits($input) {
-		if(!Validator::UnsignedNumber($input)) throw new Exception("The amount of credits to subtract must be an unsigned number.");
-		if(!$this->_configId) throw new Exception("You have not set a configuration id.");
-		if(!$this->_identifier) throw new Exception("You have not set the user identifier.");
+		if(!Validator::UnsignedNumber($input)) throw new Exception(lang('error_75'));
+		if(!$this->_configId) throw new Exception(lang('error_66'));
+		if(!$this->_identifier) throw new Exception(lang('error_73'));
 		
 		// get configs
 		$config = $this->showConfigs(true);
 		
 		// check online
 		if($config['config_checkonline']) {
-			if($this->_isOnline($config['config_user_col_id'])) throw new Exception("Your account is online, please disconnect.");
+			if($this->_isOnline($config['config_user_col_id'])) throw new Exception(lang('error_14'));
 		}
 		
 		// check current credits
@@ -190,7 +190,7 @@ class CreditSystem {
 		
 		// add credits
 		$addCredits = $database->query($query, $data);
-		if(!$addCredits) throw new Exception("There was an error subtracting the credits");
+		if(!$addCredits) throw new Exception(lang('error_76'));
 		
 		$this->_addLog($config['config_title'], $input, "subtract");
 	}
@@ -202,8 +202,8 @@ class CreditSystem {
 	 * @throws Exception
 	 */
 	public function setConfigId($input) {
-		if(!Validator::UnsignedNumber($input)) throw new Exception("Invalid configuration id.");
-		if(!$this->_configurationExists($input)) throw new Exception("Invalid configuration id.");
+		if(!Validator::UnsignedNumber($input)) throw new Exception(lang('error_77'));
+		if(!$this->_configurationExists($input)) throw new Exception(lang('error_77'));
 		$this->_configId = $input;
 	}
 	
@@ -214,7 +214,7 @@ class CreditSystem {
 	 * @throws Exception
 	 */
 	public function setConfigTitle($input) {
-		if(!Validator::Chars($input, array('a-z', 'A-Z', '0-9', ' '))) throw new Exception("The title can only contain alphanumeric characters and spaces.");
+		if(!Validator::Chars($input, array('a-z', 'A-Z', '0-9', ' '))) throw new Exception(lang('error_78'));
 		$this->_configTitle = $input;
 	}
 	
@@ -225,7 +225,7 @@ class CreditSystem {
 	 * @throws Exception
 	 */
 	public function setConfigDatabase($input) {
-		if(!Validator::Chars($input, array('a-z', 'A-Z', '0-9', '_'))) throw new Exception("The database entered contains non-allowed characters.");
+		if(!Validator::Chars($input, array('a-z', 'A-Z', '0-9', '_'))) throw new Exception(lang('error_79'));
 		$this->_configDatabase = $input;
 	}
 	
@@ -236,7 +236,7 @@ class CreditSystem {
 	 * @throws Exception
 	 */
 	public function setConfigTable($input) {
-		if(!Validator::Chars($input, array('a-z', 'A-Z', '0-9', '_'))) throw new Exception("The table entered contains non-allowed characters.");
+		if(!Validator::Chars($input, array('a-z', 'A-Z', '0-9', '_'))) throw new Exception(lang('error_80'));
 		$this->_configTable = $input;
 	}
 	
@@ -247,7 +247,7 @@ class CreditSystem {
 	 * @throws Exception
 	 */
 	public function setConfigCreditsColumn($input) {
-		if(!Validator::Chars($input, array('a-z', 'A-Z', '0-9', '_'))) throw new Exception("The credits column entered contains non-allowed characters.");
+		if(!Validator::Chars($input, array('a-z', 'A-Z', '0-9', '_'))) throw new Exception(lang('error_81'));
 		$this->_configCreditsCol = $input;
 	}
 	
@@ -258,7 +258,7 @@ class CreditSystem {
 	 * @throws Exception
 	 */
 	public function setConfigUserColumn($input) {
-		if(!Validator::Chars($input, array('a-z', 'A-Z', '0-9', '_'))) throw new Exception("The user column entered contains non-allowed characters.");
+		if(!Validator::Chars($input, array('a-z', 'A-Z', '0-9', '_'))) throw new Exception(lang('error_82'));
 		$this->_configUserCol = $input;
 	}
 	
@@ -269,8 +269,8 @@ class CreditSystem {
 	 * @throws Exception
 	 */
 	public function setConfigUserColumnId($input) {
-		if(!Validator::AlphaNumeric($input)) throw new Exception("The user column identifier is not valid, please select one of the following: userid, username, email or character.");
-		if(!in_array($input, $this->_allowedUserColId)) throw new Exception("The user column identifier is not valid, please select one of the following: userid, username, email or character.");
+		if(!Validator::AlphaNumeric($input)) throw new Exception(lang('error_83'));
+		if(!in_array($input, $this->_allowedUserColId)) throw new Exception(lang('error_83'));
 		$this->_configUserColId = $input;
 	}
 	
@@ -299,7 +299,7 @@ class CreditSystem {
 	 * @return boolean
 	 */
 	private function _configurationExists($input) {
-		$check = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_CREDITS_CONFIG WHERE config_id = ?", array($input));
+		$check = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_CREDITS_CONFIG." WHERE config_id = ?", array($input));
 		if($check) return true;
 		return false;
 	}
@@ -310,12 +310,12 @@ class CreditSystem {
 	 * @throws Exception
 	 */
 	public function saveConfig() {
-		if(!$this->_configTitle) throw new Exception("You need to set a title to the configuration.");
-		if(!$this->_configDatabase) throw new Exception("You need to set a database to the configuration.");
-		if(!$this->_configTable) throw new Exception("You need to set a table to the configuration.");
-		if(!$this->_configCreditsCol) throw new Exception("You need to set a credits column to the configuration.");
-		if(!$this->_configUserCol) throw new Exception("You need to set a user column to the configuration.");
-		if(!$this->_configUserColId) throw new Exception("You need to set a user column identifier to the configuration.");
+		if(!$this->_configTitle) throw new Exception(lang('error_84'));
+		if(!$this->_configDatabase) throw new Exception(lang('error_84'));
+		if(!$this->_configTable) throw new Exception(lang('error_84'));
+		if(!$this->_configCreditsCol) throw new Exception(lang('error_84'));
+		if(!$this->_configUserCol) throw new Exception(lang('error_84'));
+		if(!$this->_configUserColId) throw new Exception(lang('error_84'));
 		
 		$data = array(
 			'title' => $this->_configTitle,
@@ -328,13 +328,13 @@ class CreditSystem {
 			'display' => $this->_configDisplay
 		);
 		
-		$query = "INSERT INTO WEBENGINE_CREDITS_CONFIG "
+		$query = "INSERT INTO ".WEBENGINE_CREDITS_CONFIG." "
 			. "(config_title, config_database, config_table, config_credits_col, config_user_col, config_user_col_id, config_checkonline, config_display) "
 			. "VALUES "
 			. "(:title, :database, :table, :creditscol, :usercol, :usercolid, :checkonline, :display)";
 		
-		$saveConfig = $this->db->query($query, $data);
-		if(!$saveConfig) throw new Exception("There has been an error adding the configuration to the database, check for database errors.");
+		$saveConfig = $this->memuonline->query($query, $data);
+		if(!$saveConfig) throw new Exception(lang('error_85'));
 	}
 	
 	/**
@@ -343,13 +343,13 @@ class CreditSystem {
 	 * @throws Exception
 	 */
 	public function editConfig() {
-		if(!$this->_configId) throw new Exception("You have not set a configuration id.");
-		if(!$this->_configTitle) throw new Exception("You need to set a title to the configuration.");
-		if(!$this->_configDatabase) throw new Exception("You need to set a database to the configuration.");
-		if(!$this->_configTable) throw new Exception("You need to set a table to the configuration.");
-		if(!$this->_configCreditsCol) throw new Exception("You need to set a credits column to the configuration.");
-		if(!$this->_configUserCol) throw new Exception("You need to set a user column to the configuration.");
-		if(!$this->_configUserColId) throw new Exception("You need to set a user column identifier to the configuration.");
+		if(!$this->_configId) throw new Exception(lang('error_84'));
+		if(!$this->_configTitle) throw new Exception(lang('error_84'));
+		if(!$this->_configDatabase) throw new Exception(lang('error_84'));
+		if(!$this->_configTable) throw new Exception(lang('error_84'));
+		if(!$this->_configCreditsCol) throw new Exception(lang('error_84'));
+		if(!$this->_configUserCol) throw new Exception(lang('error_84'));
+		if(!$this->_configUserColId) throw new Exception(lang('error_84'));
 		
 		$data = array(
 			'id' => $this->_configId,
@@ -363,7 +363,7 @@ class CreditSystem {
 			'display' => $this->_configDisplay
 		);
 		
-		$query = "UPDATE WEBENGINE_CREDITS_CONFIG SET "
+		$query = "UPDATE ".WEBENGINE_CREDITS_CONFIG." SET "
 			. "config_title = :title, "
 			. "config_database = :database, "
 			. "config_table = :table, "
@@ -374,8 +374,8 @@ class CreditSystem {
 			. "config_display = :display "
 			. "WHERE config_id = :id";
 		
-		$editConfig = $this->db->query($query, $data);
-		if(!$editConfig) throw new Exception("There has been an error editing the configuration, check for database errors.");
+		$editConfig = $this->memuonline->query($query, $data);
+		if(!$editConfig) throw new Exception(lang('error_86'));
 	}
 	
 	/**
@@ -384,9 +384,9 @@ class CreditSystem {
 	 * @throws Exception
 	 */
 	public function deleteConfig() {
-		if(!$this->_configId) throw new Exception("You have not set a configuration id.");
-		if(!$this->db->query("DELETE FROM WEBENGINE_CREDITS_CONFIG WHERE config_id = ?", array($this->_configId))) {
-			throw new Exception("There has been an error deleting the configuration, check for database errors.");
+		if(!$this->_configId) throw new Exception(lang('error_66'));
+		if(!$this->memuonline->query("DELETE FROM ".WEBENGINE_CREDITS_CONFIG." WHERE config_id = ?", array($this->_configId))) {
+			throw new Exception(lang('error_87'));
 		}
 	}
 	
@@ -399,10 +399,10 @@ class CreditSystem {
 	 */
 	public function showConfigs($singleConfig = false) {
 		if($singleConfig) {
-			if(!$this->_configId) throw new Exception("You have not set a configuration id.");
-			return $this->db->query_fetch_single("SELECT * FROM WEBENGINE_CREDITS_CONFIG WHERE config_id = ?", array($this->_configId));
+			if(!$this->_configId) throw new Exception(lang('error_66'));
+			return $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_CREDITS_CONFIG." WHERE config_id = ?", array($this->_configId));
 		} else {
-			$result = $this->db->query_fetch("SELECT * FROM WEBENGINE_CREDITS_CONFIG ORDER BY config_id ASC");
+			$result = $this->memuonline->query_fetch("SELECT * FROM ".WEBENGINE_CREDITS_CONFIG." ORDER BY config_id ASC");
 			if($result) return $result;
 			return false;
 		}
@@ -449,12 +449,12 @@ class CreditSystem {
 	 * @throws Exception
 	 */
 	private function _isOnline($input) {
-		if(!$this->_identifier) throw new Exception("Identifier not set, cannot check online status.");
+		if(!$this->_identifier) throw new Exception(lang('error_88'));
 		switch($input) {
 			case 'userid':
 				// get account information using the id
 				$accountInfo = $this->common->accountInformation($this->_identifier);
-				if(!$accountInfo) throw new Exception("Could not retrieve account information.");
+				if(!$accountInfo) throw new Exception(lang('error_12'));
 				
 				// check online status
 				return $this->common->accountOnline($accountInfo[_CLMN_USERNM_]);
@@ -466,11 +466,11 @@ class CreditSystem {
 			case 'email':
 				// get the account id using the email
 				$userId = $this->common->retrieveUserIDbyEmail($this->_identifier);
-				if(!$userId) throw new Exception("Could not retrieve account information (email).");
+				if(!$userId) throw new Exception(lang('error_12'));
 				
 				// get account information using the id
 				$accountInfo = $this->common->accountInformation($userId);
-				if(!$accountInfo) throw new Exception("Could not retrieve account information.");
+				if(!$accountInfo) throw new Exception(lang('error_12'));
 				
 				// check online status
 				return $this->common->accountOnline($accountInfo[_CLMN_USERNM_]);
@@ -478,13 +478,13 @@ class CreditSystem {
 			case 'character':
 				// get account username from character data
 				$characterData = $this->character->CharacterData($this->_identifier);
-				if(!$characterData) throw new Exception("Could not retrieve account information (character).");
+				if(!$characterData) throw new Exception(lang('error_12'));
 				
 				// check online status
 				return $this->common->accountOnline($characterData[_CLMN_CHR_ACCID_]);
 				break;
 			default:
-				throw new Exception("Invalid identifier set, cannot check online status.");
+				throw new Exception(lang('error_88'));
 		}
 	}
 	
@@ -515,12 +515,12 @@ class CreditSystem {
 			'ip' => $ip
 		);
 		
-		$query = "INSERT INTO WEBENGINE_CREDITS_LOGS "
+		$query = "INSERT INTO ".WEBENGINE_CREDITS_LOGS." "
 			. "(log_config, log_identifier, log_credits, log_transaction, log_date, log_inadmincp, log_module, log_ip) "
 			. "VALUES "
 			. "(:config, :identifier, :credits, :transaction, :timestamp, :inadmincp, :module, :ip)";
 		
-		$saveLog = $this->db->query($query, $data);
+		$saveLog = $this->memuonline->query($query, $data);
 	}
 	
 	/**
@@ -530,8 +530,8 @@ class CreditSystem {
 	 * @return array
 	 */
 	public function getLogs($limit=50) {
-		$query = str_replace(array('{LIMIT}'), array($limit), "SELECT TOP {LIMIT} * FROM WEBENGINE_CREDITS_LOGS ORDER BY log_id DESC");
-		$result = $this->db->query_fetch($query);
+		$query = str_replace(array('{LIMIT}'), array($limit), "SELECT TOP {LIMIT} * FROM ".WEBENGINE_CREDITS_LOGS." ORDER BY log_id DESC");
+		$result = $this->memuonline->query_fetch($query);
 		if(is_array($result)) return $result;
 	}
 	
@@ -541,8 +541,8 @@ class CreditSystem {
 	 * @return int
 	 */
 	public function getCredits() {
-		if(!$this->_configId) throw new Exception("You have not set a configuration id.");
-		if(!$this->_identifier) throw new Exception("You have not set the user identifier.");
+		if(!$this->_configId) throw new Exception(lang('error_66'));
+		if(!$this->_identifier) throw new Exception(lang('error_66'));
 		
 		// get configs
 		$config = $this->showConfigs(true);
@@ -560,7 +560,7 @@ class CreditSystem {
 		
 		// add credits
 		$getCredits = $database->query_fetch_single($query, $data);
-		if(!$getCredits) throw new Exception("There was an error getting the credits value.");
+		if(!$getCredits) throw new Exception(lang('error_89'));
 		
 		return $getCredits[$config['config_credits_col']];
 	}

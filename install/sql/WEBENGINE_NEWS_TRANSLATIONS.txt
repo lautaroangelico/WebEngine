@@ -1,0 +1,6 @@
+CREATE TABLE [dbo].[{TABLE_NAME}](
+	[news_id] [int] NOT NULL,
+	[news_language] [varchar](10) NOT NULL,
+	[news_title] [varchar](max) NOT NULL,
+	[news_content] [text] NOT NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]

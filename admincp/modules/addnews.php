@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.8
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -21,19 +21,10 @@ if($News->isNewsDirWritable()) {
 	
 	// Add news process::
 	if(check_value($_POST['news_submit'])) {
-		$News->addNews($_POST['news_title'],$_POST['news_content'],$_POST['news_author'],$_POST['news_comments']);
+		$News->addNews($_POST['news_title'],$_POST['news_content'],$_POST['news_author'],0);
 		$News->cacheNews();
 		$News->updateNewsCacheIndex();
-	}
-	
-	// Cache news process::
-	if(check_value($_REQUEST['cache']) && $_REQUEST['cache'] == 1) {
-		$cacheNews = $News->cacheNews();
-		if($cacheNews) {
-			message('success','News successfully cached!');
-		} else {
-			message('error','Unknown error');
-		}
+		redirect(1, 'admincp/?module=managenews');
 	}
 	
 ?>
@@ -50,21 +41,6 @@ if($News->isNewsDirWritable()) {
 			<label for="input_2">Author:</label>
 			<input type="text" class="form-control" id="input_2" name="news_author" value="Administrator"/>
 		</div>
-		<?php if(mconfig('news_enable_comment_system')) { ?>
-		<div class="form-group">
-			<label for="input_3">Allow Facebook Comments:</label>
-			<div class="radio">
-				<label><input type="radio" name="news_comments" id="input_3" value="1" checked> Yes</label>
-			</div>
-			<div class="radio">
-				<label><input type="radio" name="news_comments" id="input_3" value="0"> No</label>
-			</div>
-		</div>
-			
-		<?php } else { ?>
-			<input type="hidden" name="news_comments" value="0"/>
-		<?php }?>
-
 		<button type="submit" class="btn btn-large btn-block btn-success" name="news_submit" value="ok">Publish</button>
 	</form>
 

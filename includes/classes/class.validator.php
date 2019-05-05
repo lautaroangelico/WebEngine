@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.8
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -86,7 +86,7 @@ class Validator{
     }
 	
 	public static function UsernameLength($string){
-		if((strlen($string) < 4) || (strlen($string) > 10)) {
+		if((strlen($string) < config('username_min_len',true)) || (strlen($string) > config('username_max_len',true))) {
 			return false;
 		} else {
 			return true;
@@ -94,7 +94,7 @@ class Validator{
 	}
 	
 	public static function PasswordLength($string){
-		if((strlen($string) < 4) || (strlen($string) > 32)) {
+		if((strlen($string) < config('password_min_len',true)) || (strlen($string) > config('password_max_len',true))) {
 			return false;
 		} else {
 			return true;

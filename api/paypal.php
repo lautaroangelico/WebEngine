@@ -3,17 +3,20 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.9
- * @author Lautaro Angelico <https://lautaroangelico.com/>
- * @copyright (c) 2013-2018 Lautaro Angelico, All Rights Reserved
+ * @version 1.2.0
+ * @author Lautaro Angelico <http://lautaroangelico.com/>
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
- * https://opensource.org/licenses/MIT
+ * http://opensource.org/licenses/MIT
  */
 
 define('access', 'api');
 
 include('../includes/webengine.php');
+
+// common class
+$common = new common();
 
 // Load PayPal Settings
 loadModuleConfigs('donation.paypal');
@@ -94,7 +97,7 @@ if (strcmp ($res, "VERIFIED") == 0) {
 				$accountInfo = $common->accountInformation($user_id);
 				if(!is_array($accountInfo)) throw new Exception("invalid account");
 				
-				$creditSystem = new CreditSystem($common, new Character(), $dB, $dB2);
+				$creditSystem = new CreditSystem();
 				$creditSystem->setConfigId(mconfig('credit_config'));
 				$configSettings = $creditSystem->showConfigs(true);
 				switch($configSettings['config_user_col_id']) {

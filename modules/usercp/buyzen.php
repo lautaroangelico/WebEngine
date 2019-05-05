@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -18,6 +18,12 @@ echo '<div class="page-title"><span>'.lang('module_titles_txt_28',true).'</span>
 try {
 	
 	if(!mconfig('active')) throw new Exception(lang('error_47',true));
+	
+	// load database
+	$db = Connection::Database('MuOnline');
+	
+	// common class
+	$common = new common();
 	
 	$Character = new Character();
 	$AccountCharacters = $Character->AccountCharacter($_SESSION['username']);
@@ -62,7 +68,7 @@ try {
 			if($charZen+$zen > $maxZen) throw new Exception(lang('error_55',true));
 			
 			# subtract credits
-			$creditSystem = new CreditSystem($common, new Character(), $dB, $dB2);
+			$creditSystem = new CreditSystem();
 			$creditSystem->setConfigId(mconfig('credit_config'));
 			$configSettings = $creditSystem->showConfigs(true);
 			switch($configSettings['config_user_col_id']) {
@@ -81,7 +87,7 @@ try {
 			$creditSystem->subtractCredits($_POST['credits']);
 
 			# send zen
-			if(!$dB->query("UPDATE "._TBL_CHR_." SET "._CLMN_CHR_ZEN_." = "._CLMN_CHR_ZEN_." + ? WHERE "._CLMN_CHR_NAME_." = ?", array($zen, $characterData[_CLMN_CHR_NAME_])));
+			if(!$db->query("UPDATE "._TBL_CHR_." SET "._CLMN_CHR_ZEN_." = "._CLMN_CHR_ZEN_." + ? WHERE "._CLMN_CHR_NAME_." = ?", array($zen, $characterData[_CLMN_CHR_NAME_])));
 
 			message('success', lang('success_21',true));
 			message('info', number_format($zen) . lang('buyzen_txt_2',true) . $char);

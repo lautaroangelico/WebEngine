@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.8
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -95,7 +95,7 @@ if(check_value($_GET['id'])) {
 								echo '<td>'.$accountInfo[_CLMN_EMAIL_].'</td>';
 							echo '</tr>';
 							
-							if(config('server_files', true) == 'MUE') {
+							if(strtolower(config('server_files',true)) == 'mue') {
 								echo '<tr>';
 									echo '<th>Credits:</th>';
 									echo '<td>'.$accountInfo[_CLMN_CREDITS_].'</td>';
@@ -208,11 +208,11 @@ if(check_value($_GET['id'])) {
 				
 				if($accountInfoConfig['showIpInfo']) {
 					
-					if(config('server_files', true) == 'MUE') {
+					if(strtolower(config('server_files',true)) == 'mue') {
 						// ACCOUNTS IP ADDRESS (MuEngine - MuLogEx tbl)
-						$checkMuLogEx = $dB->query_fetch_single("SELECT * FROM sysobjects WHERE xtype = 'U' AND name = ?", array(_TBL_LOGEX_));
+						$checkMuLogEx = $dB2->query_fetch_single("SELECT * FROM sysobjects WHERE xtype = 'U' AND name = ?", array(_TBL_LOGEX_));
 						echo '<div class="panel panel-default">';
-						echo '<div class="panel-heading">Account\'s IP Address (MUE)</div>';
+						echo '<div class="panel-heading">Account\'s IP Address (MuEngine)</div>';
 						echo '<div class="panel-body">';
 							if($checkMuLogEx) {
 								$accountIpAddress = $common->retrieveAccountIPs($accountInfo[_CLMN_USERNM_]);
@@ -225,16 +225,16 @@ if(check_value($_GET['id'])) {
 										}
 									echo '</table>';
 								} else {
-									message('warning', 'No IP address found.', ' ');
+									message('warning', 'No IP address found.');
 								}
 							} else {
-								message('warning', 'Could not find table <strong>'._TBL_LOGEX_.'</strong> in the database.', ' ');
+								message('warning', 'Could not find table <strong>'._TBL_LOGEX_.'</strong> in the database.');
 							}
 						echo '</div>';
 						echo '</div>';
 					}
 					
-					if(config('server_files', true) == 'IGCN') {
+					if(strtolower(config('server_files',true)) == 'igcn') {
 						$accountDB = config('SQL_USE_2_DB', true) == true ? $dB2 : $dB;
 						
 						// ACCOUNT IP LIST

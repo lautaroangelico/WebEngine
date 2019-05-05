@@ -1,11 +1,11 @@
-CREATE TABLE [dbo].[WEBENGINE_REGISTER_ACCOUNT](
+CREATE TABLE [dbo].[{TABLE_NAME}](
 	[registration_account] [varchar](50) NOT NULL,
 	[registration_password] [varchar](50) NOT NULL,
 	[registration_email] [varchar](50) NOT NULL,
 	[registration_date] [varchar](50) NOT NULL,
 	[registration_ip] [varchar](50) NOT NULL,
 	[registration_key] [varchar](50) NOT NULL,
- CONSTRAINT [PK_WEBENGINE_REGISTER_ACCOUNT] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_{TABLE_NAME}] PRIMARY KEY CLUSTERED 
 (
 	[registration_account] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]

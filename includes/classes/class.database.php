@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.1.0
+ * @version 1.2.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
@@ -17,6 +17,8 @@ class dB {
 	public $ok;
 	public $dead;
 	
+	private $_enableErrorLogs = true;
+	
 	// what are you doing around here?
 	function __construct($SQLHOST, $SQLPORT, $SQLDB, $SQLUSER, $SQLPWD, $SQLDRIVER) {
 		try {
@@ -29,7 +31,7 @@ class dB {
 				} else {
 					$pdo_connect = 'dblib:host='.$SQLHOST.':'.$SQLPORT.';dbname='.$SQLDB;
 				}
-				$this->db = new PDO($pdo_connect, $SQLUSER, $SQLPWD, array(PDO::ATTR_TIMEOUT => 15));
+				$this->db = new PDO($pdo_connect, $SQLUSER, $SQLPWD);
 			}
 
 			
@@ -88,7 +90,10 @@ class dB {
 		} else {
 			$error = $state->errorInfo();
 		}
-		return '[SQL '.$error[0].'] ['.$this->db->getAttribute(PDO::ATTR_DRIVER_NAME).' '.$error[1].'] > '.$error[2];
+		
+		$errorMessage = '[SQL '.$error[0].'] ['.$this->db->getAttribute(PDO::ATTR_DRIVER_NAME).' '.$error[1].'] > '.$error[2];
+		if($this->_enableErrorLogs) @error_log($errorMessage . "\r\n", 3, WEBENGINE_DATABASE_ERRORLOG);
+		return $errorMessage;
 	}
 
 }

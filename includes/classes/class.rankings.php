@@ -494,7 +494,7 @@ class Rankings {
 	private function _generateGensRankingData($influence=1) {
 		$this->mu = Connection::Database('MuOnline');
 		
-		$result = $this->mu->query_fetch("SELECT * FROM "._TBL_GENS_." WHERE "._CLMN_GENS_TYPE_." = ? ORDER BY "._CLMN_GENS_POINT_." DESC", array($influence));
+		$result = $this->mu->query_fetch("SELECT * FROM "._TBL_GENS_." WHERE "._CLMN_GENS_TYPE_." = ? AND "._CLMN_GENS_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_GENS_POINT_." DESC", array($influence));
 		if(!is_array($result)) return;
 		
 		$Character = new Character();

@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
@@ -147,6 +147,10 @@ $custom['character_class'] = array(
 	129 => array('Rune Spell Master', 'RSM', 'rw.jpg', 'base_stats' => array('str' => 13, 'agi' => 18, 'vit' => 14, 'ene' => 40, 'cmd' => 0)),
 	131 => array('Grand Rune Master', 'GRM', 'rw.jpg', 'base_stats' => array('str' => 13, 'agi' => 18, 'vit' => 14, 'ene' => 40, 'cmd' => 0)),
 	135 => array('Grand Rune Master', 'GRM', 'rw.jpg', 'base_stats' => array('str' => 13, 'agi' => 18, 'vit' => 14, 'ene' => 40, 'cmd' => 0)),
+	144 => array('Slayer', 'SLR', 'sl.jpg', 'base_stats' => array('str' => 28, 'agi' => 30, 'vit' => 15, 'ene' => 10, 'cmd' => 0)),
+	145 => array('Slayer Royal', 'SLRR', 'sl.jpg', 'base_stats' => array('str' => 28, 'agi' => 30, 'vit' => 15, 'ene' => 10, 'cmd' => 0)),
+	147 => array('Master Slayer', 'MSLR', 'sl.jpg', 'base_stats' => array('str' => 28, 'agi' => 30, 'vit' => 15, 'ene' => 10, 'cmd' => 0)),
+	151 => array('Slaughterer', 'SLTR', 'sl.jpg', 'base_stats' => array('str' => 28, 'agi' => 30, 'vit' => 15, 'ene' => 10, 'cmd' => 0)),
 );
 
 /*
@@ -285,6 +289,10 @@ $custom['map_list'] = array(
 	125 => 'Kubera Mine',
 	126 => 'Kubera Mine',
 	127 => 'Kubera Mine',
+	128 => 'Atlans Abyss',
+	129 => 'Atlans Abyss 2',
+	130 => 'Atlans Abyss 3',
+	131 => 'Scorched Canyon',
 );
 
 /*

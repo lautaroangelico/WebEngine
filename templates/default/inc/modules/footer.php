@@ -28,6 +28,7 @@
 			<a href="<?php echo __BASE_URL__ . 'language/switch/to/ph'; ?>" data-toggle="tooltip" data-placement="top" title="Filipino"><img src="<?php echo getCountryFlag('PH'); ?>" /></a>
 			<a href="<?php echo __BASE_URL__ . 'language/switch/to/pt'; ?>" data-toggle="tooltip" data-placement="top" title="Português"><img src="<?php echo getCountryFlag('BR'); ?>" /></a>
 			<a href="<?php echo __BASE_URL__ . 'language/switch/to/ro'; ?>" data-toggle="tooltip" data-placement="top" title="Romanian"><img src="<?php echo getCountryFlag('RO'); ?>" /></a>
+			<a href="<?php echo __BASE_URL__ . 'language/switch/to/cn'; ?>" data-toggle="tooltip" data-placement="top" title="Simplified Chinese"><img src="<?php echo getCountryFlag('CN'); ?>" /></a>
 		</div>
 		<?php } ?>
 	</div>

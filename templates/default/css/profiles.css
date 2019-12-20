@@ -69,6 +69,7 @@
 	.RF.profiles_player_card, .FM.profiles_player_card, .FB.profiles_player_card { background: url('../img/profiles/rf.jpg') no-repeat; background-size: cover; }
 	.GL.profiles_player_card, .ML.profiles_player_card, .SL.profiles_player_card { background: url('../img/profiles/gl.jpg') no-repeat; background-size: cover; }
 	.RW.profiles_player_card, .RSM.profiles_player_card, .GRM.profiles_player_card { background: url('../img/profiles/rw.jpg') no-repeat; background-size: cover; }
+	.SLR.profiles_player_card, .SLRR.profiles_player_card, .MSLR.profiles_player_card, .SLTR.profiles_player_card { background: url('../img/profiles/sl.jpg') no-repeat; background-size: cover; }
 
 .profiles_player_content {
 	float: right;

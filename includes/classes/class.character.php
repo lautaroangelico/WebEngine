@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -327,7 +327,7 @@ class Character {
 		if(!Validator::AlphaNumeric($username)) return;
 		$characterData = $this->CharacterData($character_name);
 		if(!is_array($characterData)) return;
-		if($characterData[_CLMN_CHR_ACCID_] != $username) return;
+		if(strtolower($characterData[_CLMN_CHR_ACCID_]) != strtolower($username)) return;
 		return true;
 		
 	}

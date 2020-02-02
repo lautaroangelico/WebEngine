@@ -5,7 +5,7 @@
  * 
  * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -582,13 +582,8 @@ class Rankings {
 		
 		// level + master level (different tables)
 		$Character = new Character();
-		$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_RSTS_.","._CLMN_CHR_LVL_.","._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND "._CLMN_CHR_RSTS_." > 0 ORDER BY "._CLMN_CHR_RSTS_." DESC, "._CLMN_CHR_LVL_." DESC");
+		$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._TBL_CHR_."."._CLMN_CHR_NAME_.", "._TBL_CHR_."."._CLMN_CHR_CLASS_.", "._TBL_CHR_."."._CLMN_CHR_RSTS_.", ("._TBL_CHR_."."._CLMN_CHR_LVL_." + "._TBL_MASTERLVL_."."._CLMN_ML_LVL_.") as "._CLMN_CHR_LVL_.", "._TBL_CHR_."."._CLMN_CHR_MAP_." FROM "._TBL_CHR_." INNER JOIN "._TBL_MASTERLVL_." ON "._TBL_CHR_."."._CLMN_CHR_NAME_." = "._TBL_MASTERLVL_."."._CLMN_ML_NAME_." WHERE "._TBL_CHR_."."._CLMN_CHR_NAME_." NOT IN (".$this->_rankingsExcludeChars().") AND "._TBL_CHR_."."._CLMN_CHR_RSTS_." > 0 ORDER BY "._TBL_CHR_."."._CLMN_CHR_RSTS_." DESC, "._CLMN_CHR_LVL_." DESC");
 		if(!is_array($result)) return;
-		foreach($result as $key => $row) {
-			$masterLevelInfo = $Character->getMasterLevelInfo($row[_CLMN_CHR_NAME_]);
-			if(!is_array($masterLevelInfo)) continue;
-			$result[$key][_CLMN_CHR_LVL_] = $row[_CLMN_CHR_LVL_]+$masterLevelInfo[_CLMN_ML_LVL_];
-		}
 		return $result;
 	}
 	

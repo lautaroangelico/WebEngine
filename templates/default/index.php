@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -25,7 +25,7 @@ $disabledSidebar = array(
 		<title><?php $handler->websiteTitle(); ?></title>
 		<meta name="generator" content="WebEngine <?php echo __WEBENGINE_VERSION__; ?>"/>
 		<meta name="author" content="Lautaro Angelico"/>
-		<meta name="description" content="<?php config('website_meta_keywords'); ?>"/>
+		<meta name="description" content="<?php config('website_meta_description'); ?>"/>
 		<meta name="keywords" content="<?php config('website_meta_keywords'); ?>"/>
 		<link rel="shortcut icon" href="<?php echo __PATH_TEMPLATE__; ?>favicon.ico"/>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">

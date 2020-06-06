@@ -122,6 +122,8 @@ var serverTime = {
 		f.push(c.digit(e.getHours()));
 		f.push(":");
 		f.push(c.digit(e.getMinutes()));
+		f.push(":");
+		f.push(c.digit(e.getSeconds()));
 		return f.join("")
 	},
 	dateFormat: function(e) {

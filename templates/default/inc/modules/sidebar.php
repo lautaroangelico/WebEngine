@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -50,10 +50,7 @@ echo '</div>';
 echo '<div class="sidebar-banner"><a href="'.__BASE_URL__.'downloads"><img src="'.__PATH_TEMPLATE_IMG__.'sidebar_banner_download.jpg"/></a></div>';
 
 # Server info block
-$srvInfoCache = LoadCacheData('server_info.cache');
-if(is_array($srvInfoCache)) {
-	$srvInfo = explode("|", $srvInfoCache[1][0]);
-	
+if(is_array($srvInfo)) {
 	echo '<div class="panel panel-sidebar">';
 		echo '<div class="panel-heading">';
 			echo '<h3 class="panel-title">'.lang('sidebar_srvinfo_txt_1',true).'</h3>';
@@ -61,14 +58,13 @@ if(is_array($srvInfoCache)) {
 		echo '<div class="panel-body">';
 			echo '<table class="table">';
 				
-				//echo '<tr><td>Version:</td><td>S12EP1</td></tr>';
-				//echo '<tr><td>Experience:</td><td>10x</td></tr>';
-				//echo '<tr><td>Drop:</td><td>20%</td></tr>';
-				
+				echo '<tr><td>Version:</td><td>S12EP1</td></tr>';
+				echo '<tr><td>Experience:</td><td>10x</td></tr>';
+				echo '<tr><td>Drop:</td><td>20%</td></tr>';
 				echo '<tr><td>'.lang('sidebar_srvinfo_txt_2',true).'</td><td style="font-weight:bold;">'.number_format($srvInfo[0]).'</td></tr>';
 				echo '<tr><td>'.lang('sidebar_srvinfo_txt_3',true).'</td><td style="font-weight:bold;">'.number_format($srvInfo[1]).'</td></tr>';
 				echo '<tr><td>'.lang('sidebar_srvinfo_txt_4',true).'</td><td style="font-weight:bold;">'.number_format($srvInfo[2]).'</td></tr>';
-				echo '<tr><td>'.lang('sidebar_srvinfo_txt_5',true).'</td><td style="color:#00aa00;font-weight:bold;">'.number_format($srvInfo[3]).'</td></tr>';
+				echo '<tr><td>'.lang('sidebar_srvinfo_txt_5',true).'</td><td style="color:#00aa00;font-weight:bold;">'.number_format($onlinePlayers).'</td></tr>';
 			echo '</table>';
 		echo '</div>';
 	echo '</div>';
@@ -104,7 +100,7 @@ if(is_array($levelRankingData)) {
 }
 
 # Discord Block
-echo '<iframe src="https://discordapp.com/widget?id=388831349848539146&theme=dark" width="303" height="400" allowtransparency="true" frameborder="0"></iframe>';
+//echo '<iframe src="https://discordapp.com/widget?id=388831349848539146&theme=dark" width="303" height="400" allowtransparency="true" frameborder="0"></iframe>';
 
 /*
 # Default block

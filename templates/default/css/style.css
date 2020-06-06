@@ -47,7 +47,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 #header {
 	width: 100%;
 	margin: 0px auto;
-	padding: 80px 0px;
+	padding: 80px 0px 10px 0px;
 	text-align: center;
 	color: #fff;
 }
@@ -58,6 +58,10 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 	height: auto;
 	margin: 0px auto;
 	padding: 20px 0px;
+	-webkit-border-radius: 5px 5px 0px 0px;
+	-moz-border-radius: 5px 5px 0px 0px;
+	border-radius: 5px 5px 0px 0px;
+	-khtml-border-radius: 5px 5px 0px 0px;
 }
 
 #content {
@@ -713,6 +717,75 @@ border: 0px;
 	transition: all .3s ease;
 }
 	.webengine-mu-logo:hover {
+		-webkit-filter: brightness(120%);
+		filter: brightness(120%);
+	}
+
+/* HEADER INFO */
+.header-info-container {
+	width: 1040px;
+	margin: 0px auto;
+	text-align: right;
+}
+	.header-info-container .header-info {
+		display: inline-block;
+		width: 350px;
+		background: rgba(0, 0, 0, 0.3);
+		backdrop-filter: blur(5px);
+		margin: 0px;
+		padding: 20px;
+		overflow: auto;
+		-moz-box-shadow: 0 0 15px rgba(0,0,0,0.7);
+		-webkit-box-shadow: 0 0 15px rgba(0,0,0,0.7);
+		box-shadow: 0 0 15px rgba(0,0,0,0.7);
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
+		-khtml-border-radius: 5px;
+		text-shadow: 1px 1px 3px #000000;
+		color: #ffffff;
+		border: 1px solid rgba(255,255,255,0.1);
+		font-size: 12px;
+	}
+		.header-info-container .header-info .header-info-block {
+			padding: 0px;
+			color: #aaaaaa;
+		}
+		.header-info-container .header-info .header-info-block #tServerTime, .header-info-container .header-info .header-info-block #tLocalTime {
+			color: #ffffff;
+		}
+		.header-info-container .header-info .header-info-block #tServerDate, .header-info-container .header-info .header-info-block #tLocalDate {
+			color: #cccccc;
+		}
+		.header-info-container .header-info .header-info-block .online-count {
+			color: #00ff00;
+		}
+	
+/* ONLINE BAR */
+.webengine-online-bar {
+	width: 100%;
+	background: #000000;
+	border: 1px solid #555555;
+	height: 8px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding: 0px;
+	-webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -khtml-border-radius: 4px;
+	overflow: hidden;
+	transition: all .3s ease;
+}
+	.webengine-online-bar .webengine-online-bar-progress {
+		height: 8px;
+		background: #00ff00 url('../img/online_progress_bar.jpg') no-repeat left center;
+		-webkit-border-radius: 0px 1px 1px 0px;
+		-moz-border-radius: 0px 1px 1px 0px;
+		-khtml-border-radius: 0px 1px 1px 0px;
+		border-radius: 0px 1px 1px 0px;
+	}
+	.webengine-online-bar:hover {
 		-webkit-filter: brightness(120%);
 		filter: brightness(120%);
 	}

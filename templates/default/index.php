@@ -17,6 +17,15 @@ include('inc/template.functions.php');
 $disabledSidebar = array(
 	'rankings',
 );
+
+$serverInfoCache = LoadCacheData('server_info.cache');
+if(is_array($serverInfoCache)) {
+	$srvInfo = explode("|", $serverInfoCache[1][0]);
+}
+
+$maxOnline = 5000;
+$onlinePlayers = check_value($srvInfo[3]) ? $srvInfo[3] : 0;
+$onlinePlayersPercent = $onlinePlayers*100/$maxOnline;
 ?>
 <!DOCTYPE html>
 <html>
@@ -77,7 +86,49 @@ $disabledSidebar = array(
 				<img class="webengine-mu-logo" src="<?php echo __PATH_TEMPLATE_IMG__; ?>logo.png" title="<?php config('server_name'); ?>"/>
 			</a>
 		</div>
-		<?php templateDisplayCSBanner(); ?>
+		<div class="header-info-container">
+		<div class="header-info">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="col-xs-12 header-info-block">
+						
+						<div class="row">
+							<div class="col-xs-6 text-left">
+								<?php echo lang('sidebar_srvinfo_txt_5'); ?>:
+							</div>
+							<div class="col-xs-6 text-right online-count">
+								<?php echo number_format($onlinePlayers); ?>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="webengine-online-bar">
+									<div class="webengine-online-bar-progress" style="width:<?php echo $onlinePlayersPercent; ?>%;"></div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-xs-6 text-left">
+								<?php echo lang('server_time'); ?>:
+							</div>
+							<div class="col-xs-6 text-right">
+								<time id="tServerTime">&nbsp;</time> <span id="tServerDate">&nbsp;</span>
+							</div>
+							
+							<div class="col-xs-6 text-left">
+								<?php echo lang('user_time'); ?>:
+							</div>
+							<div class="col-xs-6 text-right">
+								<time id="tLocalTime">&nbsp;</time> <span id="tLocalDate">&nbsp;</span>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
 		<div id="container">
 			<div id="content">
 				<?php if(in_array($_REQUEST['page'], $disabledSidebar)) { ?>

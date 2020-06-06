@@ -1,35 +1,44 @@
 <div class="footer-container">
-	<div class="col-xs-8">
-		<p>&copy; <?php echo date("Y"); ?> <?php config('server_name'); ?></p>
-		<p>This site is in no way associated with or endorsed by Webzen Inc.</p>
-		
-		<br />
-		<p>MU Online is a free-to-play medieval fantasy MMORPG. The game features fast-paced combat, quests, dungeons, PvP, castle sieges, and more. Players can choose from the nine classes of Dark Knight, Dark Wizard, Fairy Elf, Magic Gladiator, Dark Lord, Summoner, Rage Fighter, Grow Lancer and Rune Wizard, and participate in a variety of official combat-centric events and prize challenges.</p>
-		<br />
-		
-		<?php $handler->webenginePowered(); ?>
+	<div class="row">
+		<div class="col-xs-12">
+			<a href="<?php echo __BASE_URL__; ?>tos/"><?php echo lang('footer_terms'); ?></a>
+			<span style="padding:0px 5px;">|</span>
+			<a href="<?php echo __BASE_URL__; ?>privacy/"><?php echo lang('footer_privacy'); ?></a>
+			<span style="padding:0px 5px;">|</span>
+			<a href="<?php echo __BASE_URL__; ?>refunds/"><?php echo lang('footer_refund'); ?></a>
+			<span style="padding:0px 5px;">|</span>
+			<a href="<?php echo __BASE_URL__; ?>info/"><?php echo lang('footer_info'); ?></a>
+			<span style="padding:0px 5px;">|</span>
+			<a href="<?php echo __BASE_URL__; ?>contact/"><?php echo lang('footer_contact'); ?></a>
+		</div>
 	</div>
-	<div class="col-xs-4">
-		<div class="col-xs-6 text-center">
-			<span class="footer-time-title"><?php echo lang('server_time'); ?></span><br />
-			<span class="footer-time"><time id="tServerTime"></time></span><br />
-			<span class="footer-date" id="tServerDate"></span>
+	<hr>
+	<div class="row">
+		<div class="col-xs-8">
+			<p>
+				<?php echo langf('footer_copyright', array(config('server_name', true), date("Y"))); ?><br />
+				<?php echo lang('footer_webzen_copyright'); ?>
+			</p>
+			<br />
+			
+			<?php $handler->webenginePowered(); ?>
 		</div>
-		<div class="col-xs-6 text-center">
-			<span class="footer-time-title"><?php echo lang('user_time'); ?></span><br />
-			<span class="footer-time"><time id="tLocalTime"></time></span><br />
-			<span class="footer-date" id="tLocalDate"></span>
+		<div class="col-xs-4">
+			<div class="col-xs-4 text-center">
+				<a href="<?php config('social_link_facebook'); ?>" target="_blank" class="footer-social-link">
+					<img src="<?php echo __PATH_TEMPLATE_IMG__; ?>social/facebook.svg" width="50px" height="auto" />
+				</a>
+			</div>
+			<div class="col-xs-4 text-center">
+				<a href="<?php config('social_link_instagram'); ?>" target="_blank" class="footer-social-link">
+					<img src="<?php echo __PATH_TEMPLATE_IMG__; ?>social/instagram.svg" width="50px" height="auto" />
+				</a>
+			</div>
+			<div class="col-xs-4 text-center">
+				<a href="<?php config('social_link_discord'); ?>" target="_blank" class="footer-social-link">
+					<img src="<?php echo __PATH_TEMPLATE_IMG__; ?>social/discord.svg" width="50px" height="auto" />
+				</a>
+			</div>
 		</div>
-		<?php if(config('language_switch_active',true)) { ?>
-		<div class="col-xs-12 text-center">
-			<span style="color:#fff;"><?php echo lang('switch_lang'); ?></span><br />
-			<a href="<?php echo __BASE_URL__ . 'language/switch/to/en'; ?>" data-toggle="tooltip" data-placement="top" title="English"><img src="<?php echo getCountryFlag('US'); ?>" /></a>
-			<a href="<?php echo __BASE_URL__ . 'language/switch/to/es'; ?>" data-toggle="tooltip" data-placement="top" title="Español"><img src="<?php echo getCountryFlag('ES'); ?>" /></a>
-			<a href="<?php echo __BASE_URL__ . 'language/switch/to/ph'; ?>" data-toggle="tooltip" data-placement="top" title="Filipino"><img src="<?php echo getCountryFlag('PH'); ?>" /></a>
-			<a href="<?php echo __BASE_URL__ . 'language/switch/to/pt'; ?>" data-toggle="tooltip" data-placement="top" title="Português"><img src="<?php echo getCountryFlag('BR'); ?>" /></a>
-			<a href="<?php echo __BASE_URL__ . 'language/switch/to/ro'; ?>" data-toggle="tooltip" data-placement="top" title="Romanian"><img src="<?php echo getCountryFlag('RO'); ?>" /></a>
-			<a href="<?php echo __BASE_URL__ . 'language/switch/to/cn'; ?>" data-toggle="tooltip" data-placement="top" title="Simplified Chinese"><img src="<?php echo getCountryFlag('CN'); ?>" /></a>
-		</div>
-		<?php } ?>
 	</div>
 </div>

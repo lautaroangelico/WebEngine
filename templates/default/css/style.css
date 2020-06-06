@@ -12,6 +12,12 @@ body {
 	height: 100%;
 }
 
+@media only screen and (min-width: 2000px) {
+	body {
+		background: #000000 url('../img/background-2600.jpg') no-repeat top center !important;
+	}
+}
+
 a {
 	color: #777;
 	text-decoration: none;
@@ -62,39 +68,37 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 }
 
 .footer {
-	background: #171717 url('../img/footer_background.jpg') no-repeat bottom center;
-	background-size: cover;
+	background: #efefef;
 	font-family: 'Segoe UI', 'Lucida Sans Unicode', 'Lucida Grande', 'Tahoma', 'Arial', 'sans-serif';
-	width: 100%;
-	font-size: 14px;
-	color: #777777;
-	padding: 60px 0px;
+	width: 1040px;
+	font-size: 12px;
+	color: #666666;
+	padding: 40px;
 	overflow: auto;
+	margin: 0px auto;
 }
 	.footer > .footer-container {
-		width: 1040px;
+		width: 100%;
 		margin: 0px auto;
 	}
-	.footer-time-title {
-		color: #ffffff;
-		font-weight: bold;
+		.footer > .footer-container a:hover {
+			text-decoration: underline !important;
+		}
+	.footer hr {
+		border-top: 1px solid #cacaca;
 	}
-	.footer-time {
-		font-size: 48px;
-		color: #ff3214;
-		font-weight: bold;
-		position: relative;
-		top: -10px;
+	.footer .footer-social-link {
+		filter: grayscale(100%);
+		transition: all .3s ease;
 	}
-	.footer-date {
-		position: relative;
-		top: -20px;
-		font-size: 12px;
+	.footer .footer-social-link:hover {
+		filter: grayscale(0%);
 	}
 
 #navbar {
-	background: #171717;
 	width: 100%;
+	backdrop-filter: blur(5px);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 #navbar ul{
@@ -104,7 +108,6 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 }
 
 #navbar ul li {
-	font-family: 'PT Sans', sans-serif;
 	list-style-type: none;
 	display: inline-block;
 	font-size: 16px;
@@ -112,15 +115,16 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 
 #navbar ul li a {
 	display: inline-block;
-	color: #ffffff !important;
+	color: #cccccc !important;
 	text-decoration: none;
-	padding: 15px 30px;
+	padding: 20px 30px;
+	transition: all .3s ease;
+	text-transform: uppercase;
 }
 
 #navbar ul li a:active, #navbar ul li a:focus, #navbar ul li a:hover {
 	color: #ffffff !important;
 	text-decoration: none;
-	background: #ed1c24;
 }
 
 
@@ -634,3 +638,81 @@ border: 0px;
 /* WEBENGINE CMS */
 .webengine-powered { color: #777 !important; }
 .webengine-powered:active, .webengine-powered:hover { color: #ff3214 !important; }
+
+/* GLOBAL TOP BAR */
+.global-top-bar {
+	width: 100%;
+	background: #101010;
+	color: #777777;
+	padding: 7px 0px 2px 0px;
+	text-transform: uppercase;
+	font-size: 12px;
+}
+	.global-top-bar .global-top-bar-content {
+		width: 1040px;
+		margin: 0px auto;
+	}
+		.global-top-bar .global-top-bar-content .row {
+			margin: 0px;
+			padding: 0px;
+		}
+	.global-top-bar a.logout {
+		color: #ff0000 !important;
+	}
+	.global-top-bar a {
+		color: #999999 !important;
+	}
+	.global-top-bar a:hover {
+		color: #ffffff !important;
+	}
+.global-top-bar-nopadding {
+	padding: 0px !important;
+}
+.global-top-bar-separator {
+	padding: 0px 5px;
+}
+
+/* LANGUAGE PICKER */
+.webengine-language-switcher {
+	display: inline-block;
+	list-style: none;
+	padding: 0px !important;
+	margin: 0px !important;
+	width: 46px;
+	height: 19px;
+	overflow: hidden;
+	transition: all .3s ease;
+}
+.webengine-language-switcher:hover {
+	width: 400px;
+}
+	.webengine-language-switcher li {
+		display: inline-block;
+		list-style-type: none;
+		background: #333333;
+		padding: 0px 5px 2px 5px;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
+		-khtml-border-radius: 3px;
+		transition: all .3s ease;
+	}
+	.webengine-language-switcher li:hover {
+		-webkit-filter: brightness(120%);
+		filter: brightness(120%);
+	}
+	.webengine-language-switcher li a {
+		color: #999999;
+	}
+	.webengine-language-switcher li a:hover {
+		color: #ffffff !important;
+	}
+
+/* WEBSITE LOGO */
+.webengine-mu-logo {
+	transition: all .3s ease;
+}
+	.webengine-mu-logo:hover {
+		-webkit-filter: brightness(120%);
+		filter: brightness(120%);
+	}

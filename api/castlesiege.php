@@ -3,23 +3,31 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.9
- * @author Lautaro Angelico <https://lautaroangelico.com/>
- * @copyright (c) 2013-2018 Lautaro Angelico, All Rights Reserved
+ * @version 1.2.1
+ * @author Lautaro Angelico <http://lautaroangelico.com/>
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
- * https://opensource.org/licenses/MIT
+ * http://opensource.org/licenses/MIT
  */
 
 define('access', 'api');
 
-include('../includes/webengine.php');
+try {
+	
+	if(!@include_once(rtrim(str_replace('\\','/', dirname(__DIR__)), '/') . '/includes/webengine.php')) throw new Exception('Could not load WebEngine.');
+	
+	$castleSiege = new CastleSiege();
+	$siegeData = $castleSiege->siegeData();
+	
+	http_response_code(200);
+	echo json_encode(
+		array(
+			'TimeLeft' => $siegeData['warfare_stage_timeleft']
+		)
+	);
 
-$cs = cs_CalculateTimeLeft();
-$timeLeft = (check_value($cs) ? $cs : 0);
-
-echo json_encode(
-	array(
-		'TimeLeft' => $timeLeft
-	)
-);
+} catch(Exception $ex) {
+	http_response_code(500);
+	echo json_encode(array('code' => 500, 'error' => $ex->getMessage()));
+}

@@ -3,9 +3,7 @@ $(function() {
 	serverTime.init("tServerTime", "tLocalTime", "tServerDate", "tLocalDate");
 	
 	// Initiate Castle Siege Countdown
-	if($('#cscountdown').length) {
-		csTime.init();
-	}
+	csTime.init();
 	
 	// Initiate bootstrap tooltips
 	$('[data-toggle="tooltip"]').tooltip();
@@ -17,46 +15,66 @@ var csTime = {
 	csMinutes: null,
 	csSeconds: null,
 	csTimeLeft: null,
-	countdown: null,
+	csNextStageTimeLeft: null,
+	battleMode: false,
+	days_module: null,
+	hours_module: null,
+	minutes_module: null,
 	init: function() {
 		var a = this;
 		$.getJSON(baseUrl + "api/castlesiege.php", function(c) {
 			a.csTimeLeft = c.TimeLeft;
+			a.csNextStageTimeLeft = c.NextStageTimeLeft;
 			setInterval(function() {
-				a.update()
+				a.update();
 			}, 1000)
 		})
 	},
 	update: function() {
 		var b = this;
+		b.csTimeLeft = b.csTimeLeft-1;
+		b.csNextStageTimeLeft = b.csNextStageTimeLeft-1;
 		
 		if(b.csTimeLeft >= 1) {
-			var days_module = b.csTimeLeft % 86400;
-			b.csDays = (b.csTimeLeft-days_module)/86400;
-			var hours_module = days_module % 3600;
-			b.csHours = (days_module-hours_module)/3600;
-			var minutes_module = hours_module % 60;
-			b.csMinutes = (hours_module-minutes_module)/60;
-			b.csSeconds = minutes_module;
-			
-			if(b.csMinutes < 10) b.csMinutes = '0' + b.csMinutes;
-			if(b.csSeconds < 10) b.csSeconds = '0' + b.csSeconds;
+			b.days_module = b.csTimeLeft % 86400;
+			b.csDays = (b.csTimeLeft-b.days_module)/86400;
+			b.hours_module = b.days_module % 3600;
+			b.csHours = (b.days_module-b.hours_module)/3600;
+			b.minutes_module = b.hours_module % 60;
+			b.csMinutes = (b.hours_module-b.minutes_module)/60;
+			b.csSeconds = b.minutes_module;
 		} else {
+			b.battleMode = true;
 			b.csDays = 0;
 			b.csHours = 0;
 			b.csMinutes = 0;
 			b.csSeconds = 0;
 		}
 		
-		var countdown = '';
-		if(b.csTimeLeft > 86400) countdown += b.csDays + "<span>d</span> ";
-		if(b.csTimeLeft > 3600) countdown += b.csHours + "<span>h</span> ";
-		if(b.csTimeLeft > 60) countdown += b.csMinutes + "<span>m</span> ";
-		countdown += b.csSeconds + "<span>s</span>";
+		if(b.battleMode == true) {
+			if($('#cscountdown').length) {
+				document.getElementById("cscountdown").innerHTML = 'Battle';
+			}
+			if($('#siegeTimer').length) {
+				document.getElementById("siegeTimer").innerHTML = 'Battle';
+			}
+		} else {
+			
+			var countdown = '';
+			if(b.csTimeLeft > 86400) countdown += b.csDays + "<span>d</span> ";
+			if(b.csTimeLeft > 3600) countdown += b.csHours + "<span>h</span> ";
+			if(b.csTimeLeft > 60) countdown += b.csMinutes + "<span>m</span> ";
+			countdown += b.csSeconds + "<span>s</span>";
+			
+			if($('#cscountdown').length) {
+				document.getElementById("cscountdown").innerHTML = countdown;
+			}
+			if($('#siegeTimer').length) {
+				document.getElementById("siegeTimer").innerHTML = countdown;
+			}
+		}
 		
-		document.getElementById("cscountdown").innerHTML = countdown;
-		
-		b.csTimeLeft = b.csTimeLeft-1;
+		console.log(b.csNextStageTimeLeft);
 	}
 };
 

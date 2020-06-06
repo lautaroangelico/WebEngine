@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -206,6 +206,8 @@ $lang['error_99'] = 'There was an error while editing the news.';
 $lang['error_100'] = 'Could not load vote system configurations.';
 $lang['error_101'] = 'IP Address is not valid.';
 $lang['error_102'] = 'Credit configuration has not been set (voting system).';
+
+$lang['error_103'] = 'Castle siege data could not be loaded, please contact support.';
 
 # registration
 $lang['register_txt_1'] = 'Username:';
@@ -409,12 +411,40 @@ $lang['sidebar_srvinfo_txt_4'] = 'Total Guilds';
 $lang['sidebar_srvinfo_txt_5'] = 'Online Users';
 
 # castle siege
-$lang['castlesiege_txt_2'] = 'Castle Owner:';
-$lang['castlesiege_txt_3'] = 'Zen:';
-$lang['castlesiege_txt_4'] = 'Tax Chaos:';
-$lang['castlesiege_txt_5'] = 'Tax Store:';
-$lang['castlesiege_txt_6'] = 'Tax Hunt Zone:';
-$lang['castlesiege_txt_7'] = 'Registered Guilds';
+$lang['castlesiege_txt_1'] = 'Castle Siege Battle';
+$lang['castlesiege_txt_2'] = 'Castle Owner';
+$lang['castlesiege_txt_3'] = 'Trial Money:';
+$lang['castlesiege_txt_4'] = 'Tax Rate Goblin:';
+$lang['castlesiege_txt_5'] = 'Tax Rate NPC:';
+$lang['castlesiege_txt_6'] = 'Tax Rate Trial:';
+$lang['castlesiege_txt_7'] = 'Castle Information';
+$lang['castlesiege_txt_8'] = 'Zen';
+$lang['castlesiege_txt_9'] = 'Current Stage:';
+$lang['castlesiege_txt_10'] = 'Next Stage:';
+$lang['castlesiege_txt_11'] = 'Battle Duration:';
+$lang['castlesiege_txt_12'] = 'Guild Master';
+$lang['castlesiege_txt_13'] = 'Castle Owner Alliance';
+$lang['castlesiege_txt_14'] = 'Guild';
+$lang['castlesiege_txt_15'] = 'Master';
+$lang['castlesiege_txt_16'] = 'Logo';
+$lang['castlesiege_txt_17'] = 'Score';
+$lang['castlesiege_txt_18'] = 'Members';
+$lang['castlesiege_txt_19'] = 'Registered Guilds';
+$lang['castlesiege_txt_20'] = 'Event Schedule';
+$lang['castlesiege_txt_21'] = 'Stage';
+$lang['castlesiege_txt_22'] = 'Start Date';
+$lang['castlesiege_txt_23'] = 'End Date';
+$lang['castlesiege_schedule_1'] = 'Guild Registration Period';
+$lang['castlesiege_schedule_2'] = 'Registration period for Mark of Lord';
+$lang['castlesiege_schedule_3'] = 'Announcement';
+$lang['castlesiege_schedule_4'] = 'Castle Preparation';
+$lang['castlesiege_schedule_5'] = 'Siege Warfare';
+$lang['castlesiege_schedule_6'] = 'Idle';
+$lang['castlesiege_time_1'] = '%s days %s hours';
+$lang['castlesiege_time_2'] = '%s hours %s minutes';
+$lang['castlesiege_time_3'] = '%s minutes';
+$lang['castlesiege_time_4'] = 'Less than one minute.';
+$lang['castlesiege_battle_duration'] = '%s hours %s minutes';
 
 # buy zen
 $lang['buyzen_txt_1'] = 'Buy Zen';

@@ -5,7 +5,7 @@
  * 
  * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -73,6 +73,7 @@ define('_TBL_MUCASTLE_DATA_', 'MuCastle_DATA');
 	define('_CLMN_MCD_TRC_', 'TAX_RATE_CHAOS');
 	define('_CLMN_MCD_TRS_', 'TAX_RATE_STORE');
 	define('_CLMN_MCD_THZ_', 'TAX_HUNT_ZONE');
+	define('_CLMN_MCD_OCCUPY_', 'CASTLE_OCCUPY');
 	
 define('_TBL_GUILD_', 'Guild');
 	define('_CLMN_GUILD_NAME_', 'G_Name');
@@ -90,6 +91,14 @@ define('_TBL_GUILDMEMB_', 'GuildMember');
 	
 define('_TBL_MUCASTLE_RS_', 'MuCastle_REG_SIEGE');
 	define('_CLMN_MCRS_GUILD_', 'REG_SIEGE_GUILD');
+	define('_CLMN_MCRS_SEQNUM_', 'SEQ_NUM');
+	
+define('_TBL_MUCASTLE_SGL_', 'MuCastle_SIEGE_GUILDLIST');
+	define('_CLMN_MCSGL_MAPSRVGRP_', 'MAP_SVR_GROUP');
+	define('_CLMN_MCSGL_GNAME_', 'GUILD_NAME');
+	define('_CLMN_MCSGL_GID_', 'GUILD_ID');
+	define('_CLMN_MCSGL_GINV_', 'GUILD_INVOLVED');
+	define('_CLMN_MCSGL_GSCORE_', 'GUILD_SCORE');
 	
 define('_TBL_GENS_', 'IGC_Gens');
 	define('_CLMN_GENS_NAME_', 'Name');

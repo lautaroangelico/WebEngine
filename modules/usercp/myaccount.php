@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -55,14 +55,6 @@ echo '<table class="table myaccount-table">';
 		echo '<td>'.lang('myaccount_txt_4',true).'</td>';
 		echo '<td>&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226; <a href="'.__BASE_URL__.'usercp/mypassword/" class="btn btn-xs btn-primary pull-right">'.lang('myaccount_txt_6',true).'</a></td>';
 	echo '</tr>';
-	
-	if(strtolower(config('server_files',true)) == 'mue') {
-		// MASTER KEY
-		echo '<tr>';
-			echo '<td>'.lang('myaccount_txt_13',true).'</td>';
-			echo '<td>&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226; <a href="'.__BASE_URL__.'usercp/mymasterkey/" class="btn btn-xs btn-primary pull-right">'.lang('myaccount_txt_14',true).'</a></td>';
-		echo '</tr>';
-	}
 	
 	echo '<tr>';
 		echo '<td>'.lang('myaccount_txt_5',true).'</td>';

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -315,34 +315,6 @@ class Account extends common {
 			$email->send();
 			
 			message('success', lang('success_7',true));
-		} catch (Exception $ex) {
-			if($this->_debug) {
-				throw new Exception($ex->getMessage());
-			} else {
-				throw new Exception(lang('error_23',true));
-			}
-		}
-	}
-	
-	public function masterKeyRecoveryProcess($user_id) {
-		if(!check_value($user_id)) throw new Exception(lang('error_23',true));
-		if(check_value($_COOKIE['webengine_masterkey'])) throw new Exception(lang('error_50',true));
-		
-		$accountData = $this->accountInformation($user_id);
-		if(!check_value($accountData[_CLMN_MASTER_KEY_])) throw new Exception(lang('error_49',true));
-		
-		if($this->accountOnline($accountData[_CLMN_USERNM_])) throw new Exception(lang('error_14',true));
-		
-		try {
-			$email = new Email();
-			$email->setTemplate('MASTER_KEY_RECOVERY');
-			$email->addVariable('{USERNAME}', $accountData[_CLMN_USERNM_]);
-			$email->addVariable('{CURRENT_MASTERKEY}', $accountData[_CLMN_MASTER_KEY_]);
-			$email->addAddress($accountData[_CLMN_EMAIL_]);
-			$email->send();
-			
-			message('success', lang('success_16',true));
-			setcookie("webengine_masterkey", $accountData[_CLMN_USERNM_], time()+3600);  /* expire in 1 hour */
 		} catch (Exception $ex) {
 			if($this->_debug) {
 				throw new Exception($ex->getMessage());

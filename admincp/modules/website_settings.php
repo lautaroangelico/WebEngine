@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -38,6 +38,9 @@ $allowedSettings = array(
 	'password_max_len',
 	'cron_api',
 	'cron_api_key',
+	'social_link_facebook',
+	'social_link_instagram',
+	'social_link_discord',
 );
 
 if(check_value($_POST['settings_submit'])) {
@@ -152,6 +155,18 @@ if(check_value($_POST['settings_submit'])) {
 		# cron_api_key
 		if(!check_value($_POST['cron_api_key'])) throw new Exception('Invalid setting (cron_api_key)');
 		$setting['cron_api_key'] = $_POST['cron_api_key'];
+		
+		# social link facebook
+		if(check_value($_POST['social_link_facebook'])) if(!Validator::Url($_POST['social_link_facebook'])) throw new Exception('The facebook link setting is not a valid URL.');
+		$setting['social_link_facebook'] = $_POST['social_link_facebook'];
+		
+		# social link instagram
+		if(check_value($_POST['social_link_instagram'])) if(!Validator::Url($_POST['social_link_instagram'])) throw new Exception('The instagram link setting is not a valid URL.');
+		$setting['social_link_instagram'] = $_POST['social_link_instagram'];
+		
+		# social link discord
+		if(check_value($_POST['social_link_discord'])) if(!Validator::Url($_POST['social_link_discord'])) throw new Exception('The discord link setting is not a valid URL.');
+		$setting['social_link_discord'] = $_POST['social_link_discord'];
 		
 		# webengine configs
 		$webengineConfigurations = webengineConfigs();
@@ -519,6 +534,35 @@ echo '<div class="col-md-12">';
 				echo '</td>';
 			echo '</tr>';
 			
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>Facebook Link</strong>';
+					echo '<p class="setting-description">Link to your facebook page.</p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<input type="text" class="form-control" name="social_link_facebook" value="'.config('social_link_facebook',true).'">';
+				echo '</td>';
+			echo '</tr>';
+			
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>Instagram Link</strong>';
+					echo '<p class="setting-description">Link to your instagram page.</p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<input type="text" class="form-control" name="social_link_instagram" value="'.config('social_link_instagram',true).'">';
+				echo '</td>';
+			echo '</tr>';
+			
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>Discord Link</strong>';
+					echo '<p class="setting-description">Link to your discord invitation.</p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<input type="text" class="form-control" name="social_link_discord" value="'.config('social_link_discord',true).'">';
+				echo '</td>';
+			echo '</tr>';
 			
 		echo '</table>';
 		

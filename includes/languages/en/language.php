@@ -247,10 +247,13 @@ $lang['myaccount_txt_8'] = 'Frozen';
 $lang['myaccount_txt_9'] = 'Online';
 $lang['myaccount_txt_10'] = 'Offline';
 $lang['myaccount_txt_12'] = 'Credits:';
-$lang['myaccount_txt_13'] = '';
+$lang['myaccount_txt_13'] = 'Date';
 $lang['myaccount_txt_14'] = 'recover';
-$lang['myaccount_txt_15'] = 'Character(s):';
-$lang['myaccount_txt_16'] = 'none';
+$lang['myaccount_txt_15'] = 'My Characters:';
+$lang['myaccount_txt_16'] = 'Connection History';
+$lang['myaccount_txt_17'] = 'Server';
+$lang['myaccount_txt_18'] = 'IP';
+$lang['myaccount_txt_19'] = 'Action';
 
 # voting
 $lang['vfc_txt_1'] = 'TopSite';

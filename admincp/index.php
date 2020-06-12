@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.1.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -73,6 +73,7 @@ $admincpSidebar = array(
 		"modules_manager" => "Modules Manager",
 		"navbar" => "Navigation Menu",
 		"usercp" => "UserCP Menu",
+		"cronmanager" => "Cron Job Manager",
 	), "fa-toggle-on"),
 	array("Languages", array(
 		"phrases" => "Phrase List",
@@ -81,10 +82,6 @@ $admincpSidebar = array(
 		"plugins" => "Plugins Manager",
 		"plugin_install" => "Import Plugin",
 	), "fa-plug"),
-	array("Scheduled Tasks", array(
-		"addcron" => "Add New",
-		"managecron" => "Manage Cron Jobs",
-	), "fa-tasks"),
 );
 ?>
 <!DOCTYPE html>

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -275,159 +275,11 @@ function cs_CalculateTimeLeft() {
 	}
 }
 
-function listCronFiles($selected="") {
-	$dir = opendir(__PATH_CRON__);
-	while(($file = readdir($dir)) !== false) {
-		if(filetype(__PATH_CRON__ . $file) == "file" && $file != ".htaccess" && $file != "cron.php") {
-			
-			if(check_value($selected) && $selected == $file) {
-				$return[] = "<option value=\"$file\" selected=\"selected\">$file</option>";
-			} else {
-				$return[] = "<option value=\"$file\">$file</option>";
-			}
-		}
-	}
-	closedir($dir);
-	return join('', $return);
-}
-
-function cronFileAlreadyExists($cron_file) {
-	$database = Connection::Database('Me_MuOnline');
-	$check = $database->query_fetch_single("SELECT * FROM ".WEBENGINE_CRON." WHERE cron_file_run = ?", array($cron_file));
-	if(!is_array($check)) {
-		return true;
-	}
-}
-
-function addCron() {
-	$database = Connection::Database('Me_MuOnline');
-	if(check_value($_POST['cron_name']) && check_value($_POST['cron_file']) && check_value($_POST['cron_time'])) {
-		
-		$filePath = __PATH_CRON__.$_POST['cron_file'];
-
-		// Check Cron File Exists
-		if(!file_exists($filePath)) {
-			message('error','The selected file doesn\'t exist.');
-			return;
-		}
-		// Check Cron File Databse
-		if(!cronFileAlreadyExists($_POST['cron_file'])) {
-			message('error','A cron job with the same file already exists.');
-			return;
-		}
-		// Check Cron Time
-		if(!Validator::UnsignedNumber($_POST['cron_time'])) {
-			$_POST['cron_time'] = 300;
-		}
-		
-		$sql_data = array(
-			$_POST['cron_name'],
-			$_POST['cron_description'],
-			$_POST['cron_file'],
-			$_POST['cron_time'],
-			1,
-			0,
-			md5_file($filePath)
-		);
-		
-		$query = $database->query("INSERT INTO ".WEBENGINE_CRON." (cron_name, cron_description, cron_file_run, cron_run_time, cron_status, cron_protected, cron_file_md5) VALUES (?, ?, ?, ?, ?, ?, ?)", $sql_data);
-		if($query) {
-			message('success','Cron job successfully added!');
-		} else {
-			message('error','Could not add cron job.');
-		}
-		
-	} else {
-		message('error','Please complete all the required fields.');
-	}
-}
-
 function updateCronLastRun($file) {
 	$database = Connection::Database('Me_MuOnline');
 	$update = $database->query("UPDATE ".WEBENGINE_CRON." SET cron_last_run = ? WHERE cron_file_run = ?", array(time(), $file));
 	if(!$update) return;
 	return true;
-}
-
-function getCronJobDATA($id) {
-	$database = Connection::Database('Me_MuOnline');
-	$result = $database->query_fetch_single("SELECT * FROM ".WEBENGINE_CRON." WHERE cron_id = ?", array($id));
-	if(is_array($result)) {
-		return $result;
-	}
-}
-
-function deleteCronJob($id) {
-	$database = Connection::Database('Me_MuOnline');
-	$cronDATA = getCronJobDATA($id);
-	if(is_array($cronDATA)) {
-		if($cronDATA['cron_protected']) {
-			message('error','This cron job is protected therefore cannot be deleted.');
-			return;
-		}
-		$delete = $database->query("DELETE FROM ".WEBENGINE_CRON." WHERE cron_id = ?", array($id));
-		if($delete) {
-			message('success','Cron job "<strong>'.$cronDATA['cron_name'].'</strong>" successfully deteled!');
-		} else {
-			message('error','Could not delete cron job.');
-		}
-	} else {
-		message('error','Could not find cron job.');
-	}
-}
-
-function togglestatusCronJob($id) {
-	$database = Connection::Database('Me_MuOnline');
-	$cronDATA = getCronJobDATA($id);
-	if(is_array($cronDATA)) {
-		if($cronDATA['cron_status'] == 1) {
-			$status = 0;
-		} else {
-			$status = 1;
-		}
-		$toggle = $database->query("UPDATE ".WEBENGINE_CRON." SET cron_status = ? WHERE cron_id = ?", array($status, $id));
-		if($toggle) {
-			message('success','Cron job "<strong>'.$cronDATA['cron_name'].'</strong>" status successfully changed!');
-		} else {
-			message('error','Could not update cron job.');
-		}
-	} else {
-		message('error','Could not find cron job.');
-	}
-}
-
-function editCronJob($id,$name,$desc,$file,$time,$cron_times,$current_file) {
-	$database = Connection::Database('Me_MuOnline');
-	if(check_value($name) && check_value($file) && check_value($time)) {
-		$filePath = __PATH_CRON__.$file;
-
-		// Check Cron File Exists
-		if(!file_exists($filePath)) {
-			message('error','The selected file doesn\'t exist.');
-			return;
-		}
-		// Check Cron File Databse
-		if($file != $current_file) {
-			if(!cronFileAlreadyExists($file)) {
-				message('error','A cron job with the same file already exists.');
-				return;
-			}
-		}
-		// Check Cron Time
-		if(!array_key_exists($time, $cron_times)) {
-			message('error','The selected cron time doesn\'t exist.');
-			return;
-		}
-
-		$query = $database->query("UPDATE ".WEBENGINE_CRON." SET cron_name = ?, cron_description = ?, cron_file_run = ?, cron_run_time = ? WHERE cron_id = ?", array($name, $desc, $file, $cron_times[$time], $id));
-		if($query) {
-			message('success','Cron job successfully updated!');
-		} else {
-			message('error','Could not edit cron job.');
-		}
-	} else {
-		message('error','You must fill all the required fields.');
-	}
 }
 
 function returnGuildLogo($binaryData="", $size=40) {

@@ -53,10 +53,10 @@ $lang['module_titles_txt_20'] = 'Email Verification';
 $lang['module_titles_txt_21'] = 'PayPal';
 $lang['module_titles_txt_22'] = 'Super Rewards';
 $lang['module_titles_txt_23'] = 'Western Union';
-$lang['module_titles_txt_24'] = '';
+$lang['module_titles_txt_24'] = 'Privacy Policy';
 $lang['module_titles_txt_25'] = 'Add Stats';
 $lang['module_titles_txt_26'] = 'Contact Us';
-$lang['module_titles_txt_27'] = 'PagSeguro';
+$lang['module_titles_txt_27'] = 'Refund Policy';
 $lang['module_titles_txt_28'] = 'Buy Zen';
 $lang['module_titles_txt_29'] = 'Castle Siege';
 
@@ -147,8 +147,8 @@ $lang['error_45'] = 'Invalid Operation, redirecting to home.';
 $lang['error_46'] = 'Your account has no characters.';
 $lang['error_47'] = 'This module is not currently enabled, please try again later.';
 $lang['error_48'] = 'Your request could not be processed because the email system is not active, please contact the support team.';
-$lang['error_49'] = '';
-$lang['error_50'] = '';
+$lang['error_49'] = 'The provided cron id is not valid.';
+$lang['error_50'] = 'The provided cron file does not exist.';
 $lang['error_51'] = 'You do not have enough level-up points.';
 $lang['error_52'] = 'Command can only be added to DL class.';
 $lang['error_53'] = 'You have exceeded the max stats, please try again.';
@@ -208,6 +208,13 @@ $lang['error_101'] = 'IP Address is not valid.';
 $lang['error_102'] = 'Credit configuration has not been set (voting system).';
 
 $lang['error_103'] = 'Castle siege data could not be loaded, please contact support.';
+
+$lang['error_104'] = 'There are no cron jobs in the database.';
+$lang['error_105'] = 'The requested action is not valid.';
+$lang['error_106'] = 'The new cron could not be added, please fill all the required information.';
+$lang['error_107'] = 'Another cron with the same file already exists.';
+$lang['error_108'] = '';
+$lang['error_109'] = '';
 
 # registration
 $lang['register_txt_1'] = 'Username:';

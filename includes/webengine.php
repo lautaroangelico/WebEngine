@@ -99,6 +99,7 @@ if(!@include_once(__PATH_CLASSES__ . 'class.email.php')) throw new Exception('Co
 if(!@include_once(__PATH_CLASSES__ . 'class.account.php')) throw new Exception('Could not load class (account).');
 if(!@include_once(__PATH_CLASSES__ . 'class.connection.php')) throw new Exception('Could not load class (connection).');
 if(!@include_once(__PATH_CLASSES__ . 'class.castlesiege.php')) throw new Exception('Could not load class (castlesiege).');
+if(!@include_once(__PATH_CLASSES__ . 'class.cron.php')) throw new Exception('Could not load class (cron).');
 
 # Load Functions
 if(!@include_once(__PATH_INCLUDES__ . 'functions.php')) throw new Exception('Could not load functions.');

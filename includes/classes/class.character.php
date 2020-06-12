@@ -207,6 +207,8 @@ class Character {
 			if($this->common->accountOnline($username)) throw new Exception(lang('error_14',true));
 			
 			$characterData = $this->CharacterData($character_name);
+			$characterMLData = $this->getMasterLevelInfo($character_name);
+			
 			if(mconfig('clearst_enable_zen_requirement')) {
 				if($characterData[_CLMN_CHR_ZEN_] < mconfig('clearst_price_zen')) throw new Exception(lang('error_34',true));
 				$deductZen = $this->DeductZEN($character_name, mconfig('clearst_price_zen'));

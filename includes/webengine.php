@@ -61,6 +61,8 @@ define('__PATH_CONFIGS__', __PATH_INCLUDES__.'config/');
 define('__PATH_MODULE_CONFIGS__', __PATH_CONFIGS__.'modules/');
 define('__PATH_CRON__', __PATH_INCLUDES__.'cron/');
 define('__PATH_LOGS__', __PATH_INCLUDES__.'logs/');
+define('__PATH_GUILD_PROFILES_CACHE__', __PATH_CACHE__.'profiles/guilds/');
+define('__PATH_PLAYER_PROFILES_CACHE__', __PATH_CACHE__.'profiles/players/');
 
 # Public Paths
 define('__PATH_MODULES_RANKINGS__', __BASE_URL__.'rankings/');
@@ -100,6 +102,7 @@ if(!@include_once(__PATH_CLASSES__ . 'class.account.php')) throw new Exception('
 if(!@include_once(__PATH_CLASSES__ . 'class.connection.php')) throw new Exception('Could not load class (connection).');
 if(!@include_once(__PATH_CLASSES__ . 'class.castlesiege.php')) throw new Exception('Could not load class (castlesiege).');
 if(!@include_once(__PATH_CLASSES__ . 'class.cron.php')) throw new Exception('Could not load class (cron).');
+if(!@include_once(__PATH_CLASSES__ . 'class.cache.php')) throw new Exception('Could not load class (cache).');
 
 # Load Functions
 if(!@include_once(__PATH_INCLUDES__ . 'functions.php')) throw new Exception('Could not load functions.');

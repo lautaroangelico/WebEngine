@@ -74,6 +74,9 @@ $admincpSidebar = array(
 		"usercp" => "UserCP Menu",
 		"cronmanager" => "Cron Job Manager",
 	), "fa-toggle-on"),
+	array("Tools", array(
+		"cachemanager" => "Cache Manager",
+	), "fa-wrench"),
 	array("Languages", array(
 		"phrases" => "Phrase List",
 	), "fa-language"),

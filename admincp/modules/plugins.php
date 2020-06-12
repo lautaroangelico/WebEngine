@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -13,6 +13,10 @@
 ?>
 <h1 class="page-header">Plugin Manager</h1>
 <?php
+if(!config('plugins_system_enable',true)) {
+	message('warning', '<strong>WARNING</strong><br />The plugin system is not currently enabled. To enable it please change your <a href="'.admincp_base('website_settings').'">website settings</a>.');
+}
+
 define('PLUGIN_ALLOW_UNINSTALL',true);
 $Plugins = new Plugins();
 

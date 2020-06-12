@@ -266,15 +266,10 @@ class Rankings {
 	private function _generateGensRankingData($influence=1) {
 		$this->mu = Connection::Database('MuOnline');
 		
-		$result = $this->mu->query_fetch("SELECT * FROM "._TBL_GENS_." WHERE "._CLMN_GENS_TYPE_." = ? AND "._CLMN_GENS_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_GENS_POINT_." DESC", array($influence));
+		$result = $this->mu->query_fetch("SELECT t1."._CLMN_GENS_NAME_.", t1."._CLMN_GENS_TYPE_.", t1."._CLMN_GENS_POINT_.", t2."._CLMN_CHR_LVL_.", t2."._CLMN_CHR_CLASS_.", t2."._CLMN_CHR_MAP_." FROM "._TBL_GENS_." as t1 INNER JOIN "._TBL_CHR_." as t2 ON t1."._CLMN_GENS_NAME_." = t2."._CLMN_CHR_NAME_." WHERE t1."._CLMN_GENS_TYPE_." = ? AND t1."._CLMN_GENS_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY t1."._CLMN_GENS_POINT_." DESC", array($influence));
 		if(!is_array($result)) return;
 		
-		$Character = new Character();
-		
 		foreach($result as $rankPos => $row) {
-			$characterData = $Character->CharacterData($row[_CLMN_GENS_NAME_]);
-			if(!is_array($characterData)) continue;
-			
 			$gensRank = getGensRank($row[_CLMN_GENS_POINT_]);
 			if($row[_CLMN_GENS_POINT_] >= 10000) {
 				$gensRank = getGensLeadershipRank($rankPos);
@@ -285,9 +280,9 @@ class Rankings {
 				'influence' => $row[_CLMN_GENS_TYPE_],
 				'contribution' => $row[_CLMN_GENS_POINT_],
 				'rank' => $gensRank,
-				'level' => $characterData[_CLMN_CHR_LVL_],
-				'class' => $characterData[_CLMN_CHR_CLASS_],
-				'map' => $characterData[_CLMN_CHR_MAP_]
+				'level' => $row[_CLMN_CHR_LVL_],
+				'class' => $row[_CLMN_CHR_CLASS_],
+				'map' => $row[_CLMN_CHR_MAP_]
 			);
 		}
 		

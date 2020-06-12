@@ -18,17 +18,18 @@ $file_name = basename(__FILE__);
 $me = Connection::Database('Me_MuOnline');
 $mu = Connection::Database('MuOnline');
 
-$onlineAccounts = $me->query_fetch("SELECT "._CLMN_MS_MEMBID_." FROM "._TBL_MS_." WHERE "._CLMN_CONNSTAT_." = ?", array(1));
-foreach($onlineAccounts as $row) {
-	$onlineAccountList[] = '\''.utf8_encode($row[_CLMN_MS_MEMBID_]).'\'';
-}
-
 $result = array();
-$onlineAccountListString = implode(',', $onlineAccountList);
-$characterIDC = $mu->query_fetch("SELECT "._CLMN_GAMEIDC_." FROM "._TBL_AC_." WHERE "._CLMN_AC_ID_." IN(".$onlineAccountListString.")");
-if(is_array($characterIDC)) {
-	foreach($characterIDC as $idc) {
-		$result[] = $idc[_CLMN_GAMEIDC_];
+$onlineAccounts = $me->query_fetch("SELECT "._CLMN_MS_MEMBID_." FROM "._TBL_MS_." WHERE "._CLMN_CONNSTAT_." = ?", array(1));
+if(is_array($onlineAccounts)) {
+	foreach($onlineAccounts as $row) {
+		$onlineAccountList[] = '\''.utf8_encode($row[_CLMN_MS_MEMBID_]).'\'';
+	}
+	$onlineAccountListString = implode(',', $onlineAccountList);
+	$characterIDC = $mu->query_fetch("SELECT "._CLMN_GAMEIDC_." FROM "._TBL_AC_." WHERE "._CLMN_AC_ID_." IN(".$onlineAccountListString.")");
+	if(is_array($characterIDC)) {
+		foreach($characterIDC as $idc) {
+			$result[] = $idc[_CLMN_GAMEIDC_];
+		}
 	}
 }
 

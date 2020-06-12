@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -14,11 +14,6 @@
 // check install directory
 if(file_exists(__ROOT_DIR__ . 'install/')) {
 	message('warning', 'Your WebEngine CMS <strong>install</strong> directory still exists, it is recommended that you rename or delete it.', 'WARNING');
-}
-
-// check web server host
-if(DIRECTORY_SEPARATOR == '\\') {
-	message('warning', 'Windows-based web servers are not officially supported by WebEngine CMS, it is recommended to use a Linux-based web server. For more information <a href="https://webenginecms.org/xampp" target="_blank">Click Here.</a>', 'WARNING');
 }
 
 echo '<div class="row">';
@@ -109,7 +104,7 @@ echo '<div class="row">';
 	echo '<div class="col-md-6">';
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
-			echo '<div style="margin-bottom:7px;"><a href="https://forum.webenginecms.org/" class="btn btn-default" target="_blank">Support Forum</a> <a href="https://webenginecms.org/discord/" class="btn btn-default" target="_blank">Discord</a></div>';
+			echo '<div style="margin-bottom:7px;"><a href="https://webenginecms.org/discord/" class="btn btn-default" target="_blank">Discord</a></div>';
 			echo '<iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2FMUE.WebEngine&amp;width=600&amp;height=447&amp;colorscheme=light&amp;show_faces=false&amp;header=false&amp;stream=true&amp;show_border=false&amp;appId=1439010682981422" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100%; height:447px;" allowTransparency="true"></iframe>';
 		echo '</div>';
 		echo '</div>';

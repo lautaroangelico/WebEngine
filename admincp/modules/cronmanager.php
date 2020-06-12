@@ -74,7 +74,7 @@ try {
 	}
 	
 	echo '<div class="row">';
-		echo '<div class="col-xs-3">';
+		echo '<div class="col-xs-12 col-md-12 col-lg-3">';
 			
 			// New Cron Form
 			$cron_times = $cronManager->getCommonIntervals();
@@ -143,7 +143,7 @@ try {
 		echo '</div>';
 		
 		// Cron List
-		echo '<div class="col-xs-9">';
+		echo '<div class="col-xs-12 col-md-12 col-lg-9">';
 		if(is_array($cronList)) {
 			echo '<table class="table table-hover">';
 				echo '<thead>';

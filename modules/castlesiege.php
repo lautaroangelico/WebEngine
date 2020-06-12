@@ -78,9 +78,9 @@ echo '<div class="row">';
 				echo '</div>';
 			echo '</div>';
 		echo '</div>';
+		
+		echo '<hr>';
 	}
-
-	echo '<hr>';
 
 	//
 	// CASTLE SIEGE BATTLE COUNTDOWN TIMER
@@ -88,9 +88,9 @@ echo '<div class="row">';
 	if($castleSiege->showBattleCountdown()) {
 		echo '<h2>'.lang('castlesiege_txt_1').'</h2>';
 		echo '<div id="siegeTimer">.</div>';
+		
+		echo '<hr>';
 	}
-
-	echo '<hr>';
 
 	//
 	// CASTLE SIEGE INFORMATION
@@ -135,14 +135,14 @@ echo '<div class="row">';
 				echo '</tr>';
 			echo '</tbody>';
 		echo '</table>';
+		
+		echo '<hr>';
 	}
-
-	echo '<hr>';
 
 	//
 	// CASTLE SIEGE REGISTERED GUILDS
 	//
-	if($castleSiege->showRegisteredGuilds()) {
+	if($castleSiege->showRegisteredGuilds() && is_array($siegeData['registered_guilds'])) {
 		echo '<h2>'.lang('castlesiege_txt_19').'</h2>';
 		echo '<table class="table table-condensed table-striped">';
 			echo '<thead>';
@@ -166,9 +166,9 @@ echo '<div class="row">';
 			}
 			echo '</tbody>';
 		echo '</table>';
+		
+		echo '<hr>';
 	}
-
-	echo '<hr>';
 
 	//
 	// CASTLE SIEGE SCHEDULE

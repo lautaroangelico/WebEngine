@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -164,26 +164,8 @@ class Handler {
 		$common = new common();
 		
 		$module = (check_value($module) ? $module : 'home');
-		
 		if($this->admincpmoduleExists($module)) {
-			
-			// admin access level
-			$adminAccessLevel = config('admins',true);
-			$accessLevel = $adminAccessLevel[$_SESSION['username']];
-			
-			// module access level
-			$modulesAccessLevel = config('admincp_modules_access',true);
-			if(is_array($modulesAccessLevel)) {
-				if(array_key_exists($module, $modulesAccessLevel)) {
-					if($accessLevel >= $modulesAccessLevel[$module]) {
-						include(__PATH_ADMINCP_MODULES__.$module.'.php');
-					} else {
-						message('error','You do not have access to this module.');
-					}
-				} else {
-					include(__PATH_ADMINCP_MODULES__.$module.'.php');
-				}
-			}
+			include(__PATH_ADMINCP_MODULES__.$module.'.php');
 		} else {
 			message('error','INVALID MODULE');
 		}

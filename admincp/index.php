@@ -67,7 +67,6 @@ $admincpSidebar = array(
 	), "fa-money"),
 	array("Website Configuration", array(
 		"admincp_access" => "AdminCP Access",
-		"admincp_permissions" => "AdminCP Permissions",
 		"connection_settings" => "Connection Settings",
 		"website_settings" => "Website Settings",
 		"modules_manager" => "Modules Manager",

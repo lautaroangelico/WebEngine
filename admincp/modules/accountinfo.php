@@ -16,6 +16,18 @@ $accountInfoConfig['showStatusInfo'] = true;
 $accountInfoConfig['showIpInfo'] = true;
 $accountInfoConfig['showCharacters'] = true;
 
+if(check_value($_GET['u'])) {
+	try {
+		$Account = new Account();
+		$userId = $Account->retrieveUserID($_GET['u']);
+		if(check_value($userId)) {
+			redirect(3, admincp_base('accountinfo&id='.$userId));
+		}
+	} catch(Exception $ex) {
+		message('error', $ex->getMessage());
+	}
+}
+
 if(check_value($_GET['id'])) {
 	try {
 		if(check_value($_POST['editaccount_submit'])) {
@@ -208,7 +220,7 @@ if(check_value($_GET['id'])) {
 				
 				if($accountInfoConfig['showIpInfo']) {
 					
-					if(strtolower(config('server_files',true)) == 'mue') {
+					if(defined('_TBL_LOGEX_')) {
 						// ACCOUNTS IP ADDRESS (MuEngine - MuLogEx tbl)
 						$checkMuLogEx = $dB2->query_fetch_single("SELECT * FROM sysobjects WHERE xtype = 'U' AND name = ?", array(_TBL_LOGEX_));
 						echo '<div class="panel panel-default">';
@@ -234,7 +246,7 @@ if(check_value($_GET['id'])) {
 						echo '</div>';
 					}
 					
-					if(strtolower(config('server_files',true)) == 'igcn') {
+					if(defined('_TBL_CH_')) {
 						$accountDB = config('SQL_USE_2_DB', true) == true ? $dB2 : $dB;
 						
 						// ACCOUNT IP LIST
@@ -303,4 +315,3 @@ if(check_value($_GET['id'])) {
 	echo '<h1 class="page-header">Account Information</h1>';
 	message('error', 'Please provide a valid user id.');
 }
-?>

@@ -447,6 +447,37 @@ class Account extends common {
 		return true;
 	}
 	
+	public function getServerList() {
+		$result = $this->memuonline->query_fetch("SELECT DISTINCT("._CLMN_MS_GS_.") FROM "._TBL_MS_."");
+		if(!is_array($result)) return;
+		foreach($result as $row) {
+			$servers[] = $row[_CLMN_MS_GS_];
+		}
+		return $servers;
+	}
+	
+	public function getOnlineAccountCount($server=null) {
+		if(check_value($server)) {
+			$result = $this->memuonline->query_fetch_single("SELECT COUNT(*) as online FROM "._TBL_MS_." WHERE "._CLMN_CONNSTAT_." = 1 AND "._CLMN_MS_GS_." = ?", array($server));
+			if(!is_array($result)) return 0;
+			return $result['online'];
+		}
+		$result = $this->memuonline->query_fetch_single("SELECT COUNT(*) as online FROM "._TBL_MS_." WHERE "._CLMN_CONNSTAT_." = 1");
+		if(!is_array($result)) return 0;
+		return $result['online'];
+	}
+	
+	public function getOnlineAccountList($server=null) {
+		if(check_value($server)) {
+			$result = $this->memuonline->query_fetch("SELECT "._CLMN_MS_MEMBID_.", "._CLMN_MS_GS_.", "._CLMN_MS_IP_." FROM "._TBL_MS_." WHERE "._CLMN_CONNSTAT_." = 1 AND "._CLMN_MS_GS_." = ?", array($server));
+			if(!is_array($result)) return;
+			return $result;
+		}
+		$result = $this->memuonline->query_fetch("SELECT "._CLMN_MS_MEMBID_.", "._CLMN_MS_GS_.", "._CLMN_MS_IP_." FROM "._TBL_MS_." WHERE "._CLMN_CONNSTAT_." = 1");
+		if(!is_array($result)) return;
+		return $result;
+	}
+	
 	private function sendRegistrationVerificationEmail($username, $account_email, $key) {
 		$verificationLink = __BASE_URL__.'verifyemail/?op='.Encode_id(2).'&user='.Encode($username).'&key='.$key;
 		try {

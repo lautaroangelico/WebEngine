@@ -77,9 +77,7 @@ class CastleSiege {
 	}
 	
 	public function siegeData() {
-		if($this->_liveData == true) {
-			$this->_initDatabase();
-		}
+		$this->_initDatabase();
 		
 		$result = array(
 			'current_stage' => $this->getCurrentStage(),
@@ -130,7 +128,6 @@ class CastleSiege {
 		if($this->_liveData == true) {
 			return $this->_returnCastleData();
 		} else {
-			$this->_initDatabase();
 			return $this->_cacheSiegeData['castle_data'];
 		}
 	}
@@ -139,7 +136,6 @@ class CastleSiege {
 		if($this->_liveData == true) {
 			return $this->_returnCastleOwnerAlliance();
 		} else {
-			$this->_initDatabase();
 			return $this->_cacheSiegeData['castle_owner_alliance'];
 		}
 	}
@@ -148,7 +144,6 @@ class CastleSiege {
 		if($this->_liveData == true) {
 			return $this->_returnRegisteredGuildsAndAlliances();
 		} else {
-			$this->_initDatabase();
 			return $this->_cacheSiegeData['registered_guilds'];
 		}
 	}
@@ -206,6 +201,12 @@ class CastleSiege {
 		$warfareDurationSeconds = $warfareStage['end_timestamp']-$warfareStage['start_timestamp'];
 		$warfareDuration = sec_to_hms($warfareDurationSeconds);
 		return langf('castlesiege_battle_duration', array($warfareDuration[0], $warfareDuration[1]));
+	}
+	
+	public function updateSiegeCache() {
+		$this->_initDatabase();
+		$this->_liveData = true;
+		$this->_cacheSiegeData();
 	}
 	
 	protected function _generateSchedule() {

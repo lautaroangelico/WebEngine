@@ -76,6 +76,11 @@ define('__PATH_OFFLINE_STATUS__', __PATH_IMG__.'offline.png');
 # Other Paths
 define('WEBENGINE_DATABASE_ERRORLOG', __PATH_LOGS__.'database_errors.log');
 define('WEBENGINE_WRITABLE_PATHS', __PATH_CONFIGS__.'writable.paths.json');
+define('WEBENGINE_PHP_ERRORLOG', __PATH_LOGS__.'php_errors.log');
+
+# PHP Error Logs
+ini_set('log_errors', 1);
+ini_set('error_log', WEBENGINE_PHP_ERRORLOG);
 
 # WebEngine CMS Tables
 if(!@include_once(__PATH_CONFIGS__ . 'webengine.tables.php')) throw new Exception('Could not load WebEngine CMS table definitions.');

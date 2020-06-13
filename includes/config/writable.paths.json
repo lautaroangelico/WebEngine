@@ -50,5 +50,6 @@
     "config\/modules\/usercp.unstick.xml",
     "config\/modules\/usercp.vote.xml",
     "logs\/",
-    "logs\/database_errors.log"
+    "logs\/database_errors.log",
+    "logs\/php_errors.log"
 ]

@@ -43,7 +43,6 @@
     "config\/modules\/usercp.clearskilltree.xml",
     "config\/modules\/usercp.myaccount.xml",
     "config\/modules\/usercp.myemail.xml",
-    "config\/modules\/usercp.mymasterkey.xml",
     "config\/modules\/usercp.mypassword.xml",
     "config\/modules\/usercp.reset.xml",
     "config\/modules\/usercp.resetstats.xml",

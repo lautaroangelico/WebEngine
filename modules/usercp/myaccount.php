@@ -81,7 +81,7 @@ echo '<table class="table myaccount-table">';
 						$creditSystem->setIdentifier($accountInfo[_CLMN_EMAIL_]);
 						break;
 					default:
-						continue;
+						continue 2;
 				}
 				
 				$configCredits = $creditSystem->getCredits();

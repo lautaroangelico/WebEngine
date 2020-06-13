@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -27,8 +27,6 @@ function saveChanges() {
 	$xml->active = $_POST['setting_1'];
 	$xml->news_expanded = $_POST['setting_2'];
 	$xml->news_list_limit = $_POST['setting_3'];
-	$xml->news_enable_comment_system = $_POST['setting_4'];
-	$xml->news_enable_like_button = $_POST['setting_5'];
 	$xml->news_short = $_POST['setting_6'];
 	$xml->news_short_char_limit = $_POST['setting_7'];
 	
@@ -57,25 +55,13 @@ loadModuleConfigs('news');
 		<tr>
 			<th>Expanded News<br/><span>Amount of news you want to display expanded. If less than the display news limit configuration, then the rest of the news will not display expanded.</span></th>
 			<td>
-				<input class="input-mini" type="text" name="setting_2" value="<?=mconfig('news_expanded')?>"/>
+				<input class="form-control" type="text" name="setting_2" value="<?=mconfig('news_expanded')?>"/>
 			</td>
 		</tr>
 		<tr>
 			<th>Shown News Limit<br/><span>Amount of news to display in the news page.</span></th>
 			<td>
-				<input class="input-mini" type="text" name="setting_3" value="<?=mconfig('news_list_limit')?>"/>
-			</td>
-		</tr>
-		<tr>
-			<th>Comments<br/><span>Enable/disable Facebook's comment system.</span></th>
-			<td>
-				<? enabledisableCheckboxes('setting_4',mconfig('news_enable_comment_system'),'Enabled','Disabled'); ?>
-			</td>
-		</tr>
-		<tr>
-			<th>Like and Share<br/><span>Enable/disable Facebook's like and share buttons.</span></th>
-			<td>
-				<? enabledisableCheckboxes('setting_5',mconfig('news_enable_like_button'),'Enabled','Disabled'); ?>
+				<input class="form-control" type="text" name="setting_3" value="<?=mconfig('news_list_limit')?>"/>
 			</td>
 		</tr>
 		<tr>
@@ -87,7 +73,7 @@ loadModuleConfigs('news');
 		<tr>
 			<th>Short News Character Limit<br/><span>Amount of characters to show in the short version of news.</span></th>
 			<td>
-				<input class="input-mini" type="text" name="setting_7" value="<?=mconfig('news_short_char_limit')?>"/>
+				<input class="form-control" type="text" name="setting_7" value="<?=mconfig('news_short_char_limit')?>"/>
 			</td>
 		</tr>
 		<tr>

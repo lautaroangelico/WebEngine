@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -81,7 +81,7 @@ try {
 					echo '<div class="col-xs-6 nopadding">';
 					echo '</div>';
 					echo '<div class="col-xs-6 nopadding text-right">';
-						echo langf('news_txt_1', array($news_author, date("F j, Y",$news_date)));
+						echo date("l, F jS Y",$news_date);
 					echo '</div>';
 				echo '</div>';
 			}

@@ -198,20 +198,21 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 	border: 0px;
 	-moz-border-radius: 0px;
 	border-radius: 0px;
-	-moz-box-shadow: 0 0 10px #e3e3e3;
-	-webkit-box-shadow: 0 0 10px #e3e3e3;
-	box-shadow: 0 0 10px #e3e3e3;
+	-moz-box-shadow: 0 0 0px #e3e3e3;
+	-webkit-box-shadow: 0 0 0px #e3e3e3;
+	box-shadow: 0 0 0px #e3e3e3;
 }
 .panel-news .panel-heading {
-	padding-top: 20px;
-	padding-bottom: 20px;
-	background: #ffefef;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 .panel-news .panel-title {
-	color: #c04e4e;
-	font-family: 'PT Sans', sans-serif;
-	font-size: 18px;
+	color: #000000;
+	font-size: 24px;
 	font-weight: bold;
+}
+.panel-news .panel-body {
+	padding: 10px;
 }
 .panel-news .panel-footer {
 	border-top: 1px solid #e7e7e7;

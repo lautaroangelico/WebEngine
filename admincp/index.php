@@ -72,10 +72,10 @@ $admincpSidebar = array(
 		"modules_manager" => "Modules Manager",
 		"navbar" => "Navigation Menu",
 		"usercp" => "UserCP Menu",
-		"cronmanager" => "Cron Job Manager",
 	), "fa-toggle-on"),
 	array("Tools", array(
 		"cachemanager" => "Cache Manager",
+		"cronmanager" => "Cron Job Manager",
 	), "fa-wrench"),
 	array("Languages", array(
 		"phrases" => "Phrase List",

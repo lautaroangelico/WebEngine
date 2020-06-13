@@ -40,7 +40,7 @@ define('_TBL_CHR_', 'Character');
 	define('_CLMN_CHR_ZEN_', 'Money');
 	define('_CLMN_CHR_LVL_', 'cLevel');
 	define('_CLMN_CHR_RSTS_', 'RESETS');
-	define('_CLMN_CHR_GRSTS_', '');
+	define('_CLMN_CHR_GRSTS_', 'GrandResets');
 	define('_CLMN_CHR_LVLUP_POINT_', 'LevelUpPoint');
 	define('_CLMN_CHR_STAT_STR_', 'Strength');
 	define('_CLMN_CHR_STAT_AGI_', 'Dexterity');

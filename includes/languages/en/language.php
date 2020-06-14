@@ -416,6 +416,10 @@ $lang['sidebar_srvinfo_txt_2'] = 'Total Accounts';
 $lang['sidebar_srvinfo_txt_3'] = 'Total Characters';
 $lang['sidebar_srvinfo_txt_4'] = 'Total Guilds';
 $lang['sidebar_srvinfo_txt_5'] = 'Online Users';
+$lang['sidebar_srvinfo_txt_6'] = 'Version';
+$lang['sidebar_srvinfo_txt_7'] = 'Experience';
+$lang['sidebar_srvinfo_txt_8'] = 'Master Experience';
+$lang['sidebar_srvinfo_txt_9'] = 'Drop';
 
 # castle siege
 $lang['castlesiege_txt_1'] = 'Castle Siege Battle';

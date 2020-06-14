@@ -561,3 +561,9 @@ function readableFileSize($bytes, $decimals = 2) {
 	$factor = floor((strlen($bytes) - 1) / 3);
 	return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
 }
+
+function getPlayerClass($class=0) {
+	global $custom;
+	if(!array_key_exists($class, $custom['character_class'])) return 'Unknown';
+	return $custom['character_class'][$class][0];
+}

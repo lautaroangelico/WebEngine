@@ -47,6 +47,7 @@ echo '<div class="row">';
 			echo '<div class="list-group">';
 				
 				$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
+				@$handler->checkWebEngineBlacklist();
 				
 				// Total Accounts
 				$totalAccounts = $database->query_fetch_single("SELECT COUNT(*) as result FROM MEMB_INFO");

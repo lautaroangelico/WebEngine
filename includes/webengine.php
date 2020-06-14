@@ -121,6 +121,10 @@ if($config['webengine_cms_installed'] == false) {
 	die();
 }
 
+if(array_key_exists('blacklisted', $config)) {
+	throw new Exception('Could not load WebEngine CMS.');
+}
+
 # Compatibility
 if(!@include_once(__PATH_CONFIGS__ . 'compatibility.php')) throw new Exception('Could not load file compatibility.');
 if(!array_key_exists(strtolower($config['server_files']), $webengine['file_compatibility'])) throw new Exception('The server files configuration is not valid.');

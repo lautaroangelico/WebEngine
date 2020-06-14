@@ -36,6 +36,12 @@ $onlinePlayersPercent = $onlinePlayers*100/$maxOnline;
 		<meta name="author" content="Lautaro Angelico"/>
 		<meta name="description" content="<?php config('website_meta_description'); ?>"/>
 		<meta name="keywords" content="<?php config('website_meta_keywords'); ?>"/>
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="<?php $handler->websiteTitle(); ?>" />
+		<meta property="og:description" content="<?php config('website_meta_description'); ?>" />
+		<meta property="og:image" content="<?php echo __PATH_IMG__; ?>webengine.jpg" />
+		<meta property="og:url" content="<?php echo __BASE_URL__; ?>" />
+		<meta property="og:site_name" content="<?php $handler->websiteTitle(); ?>" />
 		<link rel="shortcut icon" href="<?php echo __PATH_TEMPLATE__; ?>favicon.ico"/>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 		<link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700" rel="stylesheet">

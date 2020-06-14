@@ -228,9 +228,6 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 	width: 100%;
 	border-spacing: 0;
 	border-collapse: collapse;
-	-moz-box-shadow: 0 0 5px #e3e3e3;
-	-webkit-box-shadow: 0 0 5px #e3e3e3;
-	box-shadow: 0 0 5px #e3e3e3;
 }
 
 .rankings-class-image {

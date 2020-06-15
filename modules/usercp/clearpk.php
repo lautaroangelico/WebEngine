@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -24,7 +24,14 @@ try {
 	if(!is_array($AccountCharacters)) throw new Exception(lang('error_46',true));
 	
 	if(check_value($_POST['submit'])) {
-		$Character->CharacterClearPK($_SESSION['username'], $_POST['character']);
+		try {
+			$Character->setUserid($_SESSION['userid']);
+			$Character->setUsername($_SESSION['username']);
+			$Character->setCharacter($_POST['character']);
+			$Character->CharacterClearPK();
+		} catch(Exception $ex) {
+			message('error', $ex->getMessage());
+		}
 	}
 	
 	echo '<table class="table general-table-ui">';
@@ -46,7 +53,7 @@ try {
 					echo '<td>'.$characterIMG.'</td>';
 					echo '<td>'.$characterData[_CLMN_CHR_NAME_].'</td>';
 					echo '<td>'.number_format($characterData[_CLMN_CHR_ZEN_]).'</td>';
-					echo '<td>'.number_format($characterData[_CLMN_CHR_PK_KILLS_]).'</td>';
+					echo '<td>'.returnPkLevel($characterData[_CLMN_CHR_PK_LEVEL_]).'</td>';
 					echo '<td><button name="submit" value="submit" class="btn btn-primary">'.lang('clearpk_txt_4',true).'</button></td>';
 				echo '</tr>';
 			echo '</form>';
@@ -54,7 +61,7 @@ try {
 	echo '</table>';
 	
 	echo '<div class="module-requirements text-center">';
-		if(mconfig('clearpk_enable_zen_requirement')) echo '<p>'.langf('clearpk_txt_5', array(number_format(mconfig('clearpk_price_zen')))).'</p>';
+		if(mconfig('zen_cost') > 0) echo '<p>'.langf('clearpk_txt_5', array(number_format(mconfig('zen_cost')))).'</p>';
 	echo '</div>';
 	
 } catch(Exception $ex) {

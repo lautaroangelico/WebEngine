@@ -222,8 +222,8 @@ $lang['error_112'] = 'The provided username is not valid.';
 $lang['error_113'] = 'You do not have enough %s to reset your character stats.';
 $lang['error_114'] = 'You do not have enough %s to unstick your character.';
 $lang['error_115'] = 'Your character is already at Lorencia Bar.';
-$lang['error_116'] = '';
-$lang['error_117'] = '';
+$lang['error_116'] = 'You do not have enough %s to clear your character pk status.';
+$lang['error_117'] = 'Your character does not have a PK status.';
 $lang['error_118'] = '';
 $lang['error_119'] = '';
 
@@ -330,7 +330,7 @@ $lang['rankings_txt_35'] = 'Pk Level';
 # clear pk
 $lang['clearpk_txt_1'] = 'Character';
 $lang['clearpk_txt_2'] = 'Zen';
-$lang['clearpk_txt_3'] = 'Kills';
+$lang['clearpk_txt_3'] = 'PK Status';
 $lang['clearpk_txt_4'] = 'Clear PK';
 $lang['clearpk_txt_5'] = 'Your character must have at least %s zen to clear pk';
 

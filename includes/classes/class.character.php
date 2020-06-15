@@ -23,6 +23,8 @@ class Character {
 	protected $_unstickCoordX = 125;
 	protected $_unstickCoordY = 125;
 	
+	protected $_clearPkLevel = 3;
+	
 	function __construct() {
 		
 		// load databases
@@ -114,7 +116,10 @@ class Character {
 		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
 		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_35'));
 		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_35'));
-		if($this->common->accountOnline($this->_username)) throw new Exception(lang('error_14'));
+		
+		// check online status
+		$Account = new Account();
+		if($Account->accountOnline($this->_username)) throw new Exception(lang('error_14'));
 		
 		// character data
 		$characterData = $this->CharacterData($this->_character);
@@ -166,21 +171,15 @@ class Character {
 			array(
 				'player' => $characterData[_CLMN_CHR_NAME_],
 				'points' => $levelUpPoints,
+				'zen' => $zenRequirement,
 			),
 			$base_stats
 		);
 		
-		// zen
-		if($zenRequirement > 0) {
-			$data['zen'] = $zenRequirement;
-		}
-		
 		// query
 		$query = "UPDATE "._TBL_CHR_." SET "._CLMN_CHR_STAT_STR_." = :str, "._CLMN_CHR_STAT_AGI_." = :agi, "._CLMN_CHR_STAT_VIT_." = :vit, "._CLMN_CHR_STAT_ENE_." = :ene";
 		if(array_key_exists(_CLMN_CHR_STAT_CMD_, $characterData)) $query .= ", "._CLMN_CHR_STAT_CMD_." = :cmd";
-		if($zenRequirement > 0) {
-			$query .= ", "._CLMN_CHR_ZEN_." = "._CLMN_CHR_ZEN_." - :zen";
-		}
+		$query .= ", "._CLMN_CHR_ZEN_." = "._CLMN_CHR_ZEN_." - :zen";
 		$query .= ", "._CLMN_CHR_LVLUP_POINT_." = "._CLMN_CHR_LVLUP_POINT_." + :points WHERE "._CLMN_CHR_NAME_." = :player";
 		
 		// reset stats
@@ -194,32 +193,72 @@ class Character {
 		message('success', lang('success_9'));
 	}
 	
-	public function CharacterClearPK($username,$character_name) {
-		try {
-			if(!check_value($username)) throw new Exception(lang('error_23',true));
-			if(!check_value($character_name)) throw new Exception(lang('error_23',true));
-			if(!Validator::UsernameLength($username)) throw new Exception(lang('error_23',true));
-			if(!Validator::AlphaNumeric($username)) throw new Exception(lang('error_23',true));
-			if(!$this->CharacterExists($character_name)) throw new Exception(lang('error_36',true));
-			if(!$this->CharacterBelongsToAccount($character_name,$username)) throw new Exception(lang('error_36',true));
-			if($this->common->accountOnline($username)) throw new Exception(lang('error_14',true));
-			
-			$characterData = $this->CharacterData($character_name);
-			if(mconfig('clearpk_enable_zen_requirement')) {
-				if($characterData[_CLMN_CHR_ZEN_] < mconfig('clearpk_price_zen')) throw new Exception(lang('error_34',true));
-				$deductZen = $this->DeductZEN($character_name, mconfig('clearpk_price_zen'));
-				if(!$deductZen) throw new Exception(lang('error_34',true));
+	public function CharacterClearPK() {
+		// filters
+		if(!check_value($this->_username)) throw new Exception(lang('error_21'));
+		if(!check_value($this->_character)) throw new Exception(lang('error_21'));
+		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
+		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_36'));
+		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_36'));
+		
+		// check online status
+		$Account = new Account();
+		if($Account->accountOnline($this->_username)) throw new Exception(lang('error_14'));
+		
+		// character data
+		$characterData = $this->CharacterData($this->_character);
+		
+		// check pk status
+		if($characterData[_CLMN_CHR_PK_LEVEL_] == $this->_clearPkLevel) throw new Exception(lang('error_117'));
+		
+		// zen requirement
+		$zenRequirement = mconfig('zen_cost');
+		
+		// credit requirement
+		$creditConfig = mconfig('credit_config');
+		$creditCost = mconfig('credit_cost');
+		if($creditCost > 0 && $creditConfig != 0) {
+			$creditSystem = new CreditSystem();
+			$creditSystem->setConfigId($creditConfig);
+			$configSettings = $creditSystem->showConfigs(true);
+			switch($configSettings['config_user_col_id']) {
+				case 'userid':
+					$creditSystem->setIdentifier($this->_userid);
+					break;
+				case 'username':
+					$creditSystem->setIdentifier($this->_username);
+					break;
+				case 'character':
+					$creditSystem->setIdentifier($this->_character);
+					break;
+				default:
+					throw new Exception("Invalid identifier (credit system).");
 			}
-			
-			$update = $this->muonline->query("UPDATE "._TBL_CHR_." SET "._CLMN_CHR_PK_LEVEL_." = 3,"._CLMN_CHR_PK_TIME_." = 0 WHERE "._CLMN_CHR_NAME_." = ?", array($character_name));
-			if(!$update) throw new Exception(lang('error_23',true));
-			
-			// SUCCESS
-			message('success', lang('success_10',true));
-			
-		} catch(Exception $ex) {
-			message('error', $ex->getMessage());
+			if($creditSystem->getCredits() < $creditCost) throw new Exception(langf('error_116', array($configSettings['config_title'])));
 		}
+		
+		// check zen
+		if($zenRequirement > 0) if($characterData[_CLMN_CHR_ZEN_] < $zenRequirement) throw new Exception(lang('error_34'));
+		
+		// query data
+		$data = array(
+			'player' => $characterData[_CLMN_CHR_NAME_],
+			'pklevel' => $this->_clearPkLevel,
+			'zen' => $zenRequirement,
+		);
+		
+		// query
+		$query = "UPDATE "._TBL_CHR_." SET "._CLMN_CHR_PK_LEVEL_." = :pklevel, "._CLMN_CHR_PK_TIME_." = 0, "._CLMN_CHR_ZEN_." = "._CLMN_CHR_ZEN_." - :zen WHERE "._CLMN_CHR_NAME_." = :player";
+		
+		// clear pk
+		$result = $this->muonline->query($query, $data);
+		if(!$result) throw new Exception(lang('error_21'));
+		
+		// subtract credits
+		if($creditCost > 0 && $creditConfig != 0) $creditSystem->subtractCredits($creditCost);
+		
+		// success
+		message('success', lang('success_10'));
 	}
 	
 	public function CharacterUnstick() {
@@ -229,7 +268,10 @@ class Character {
 		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
 		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_37'));
 		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_37'));
-		if($this->common->accountOnline($this->_username)) throw new Exception(lang('error_14'));
+		
+		// check online status
+		$Account = new Account();
+		if($Account->accountOnline($this->_username)) throw new Exception(lang('error_14'));
 		
 		// character data
 		$characterData = $this->CharacterData($this->_character);

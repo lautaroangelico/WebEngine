@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <settings>
 	<active>1</active>
-	<clearpk_enable_zen_requirement>1</clearpk_enable_zen_requirement>
-	<clearpk_price_zen>10000000</clearpk_price_zen>
+	<zen_cost>1000000</zen_cost>
+	<credit_config>0</credit_config>
+	<credit_cost>0</credit_cost>
 </settings>

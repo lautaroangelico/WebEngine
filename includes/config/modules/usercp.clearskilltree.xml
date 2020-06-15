@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <settings>
 	<active>1</active>
-	<clearst_enable_zen_requirement>1</clearst_enable_zen_requirement>
-	<clearst_price_zen>10000000</clearst_price_zen>
-	<clearst_required_level>200</clearst_required_level>
-	<clearst_reset_method>1</clearst_reset_method>
+	<zen_cost>1000000</zen_cost>
+	<credit_config>0</credit_config>
+	<credit_cost>0</credit_cost>
+	<required_level>400</required_level>
+	<required_master_level>1</required_master_level>
 </settings>

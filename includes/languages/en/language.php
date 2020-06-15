@@ -86,7 +86,7 @@ $lang['success_8'] = 'Your character has been successfully reset.';
 $lang['success_9'] = 'Your character\'s stats have been successfully reset.';
 $lang['success_10'] = 'Your character\'s PK level has been successfully reset.';
 $lang['success_11'] = 'Your character been successfully moved to Lorencia\'s Bar.';
-$lang['success_12'] = 'Your character\'s master level been successfully cleared.';
+$lang['success_12'] = 'Your character\'s master skill tree been successfully cleared.';
 $lang['success_13'] = '';
 $lang['success_14'] = '';
 $lang['success_15'] = 'News successfully added!';
@@ -224,8 +224,18 @@ $lang['error_114'] = 'You do not have enough %s to unstick your character.';
 $lang['error_115'] = 'Your character is already at Lorencia Bar.';
 $lang['error_116'] = 'You do not have enough %s to clear your character pk status.';
 $lang['error_117'] = 'Your character does not have a PK status.';
-$lang['error_118'] = '';
-$lang['error_119'] = '';
+$lang['error_118'] = 'You do not have enough %s to clear your character\'s skill tree.';
+$lang['error_119'] = 'Could not load your character\'s master level information, please contact support.';
+$lang['error_120'] = 'Your character does not meet the level requirement to clear its skill tree.';
+$lang['error_121'] = 'Your character does not meet the master level requirement to clear its skill tree.';
+$lang['error_122'] = '';
+$lang['error_123'] = '';
+$lang['error_124'] = '';
+$lang['error_125'] = '';
+$lang['error_126'] = '';
+$lang['error_127'] = '';
+$lang['error_128'] = '';
+$lang['error_129'] = '';
 
 # registration
 $lang['register_txt_1'] = 'Username:';
@@ -340,8 +350,9 @@ $lang['clearst_txt_2'] = 'Master Level';
 $lang['clearst_txt_3'] = 'Zen';
 $lang['clearst_txt_4'] = 'GO';
 $lang['clearst_txt_5'] = 'Points';
-$lang['clearst_txt_6'] = 'Your character must be master level %s';
+$lang['clearst_txt_6'] = 'Your character must be at least master level %s';
 $lang['clearst_txt_7'] = 'Your character must have at least %s zen to reset the skill tree';
+$lang['clearst_txt_8'] = 'Your character must be at least level %s';
 
 # donation
 $lang['donation_txt_2'] = 'Credits';

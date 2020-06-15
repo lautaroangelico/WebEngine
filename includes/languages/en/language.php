@@ -85,7 +85,7 @@ $lang['success_7'] = 'We have sent you an email address with your new password! 
 $lang['success_8'] = 'Your character has been successfully reset.';
 $lang['success_9'] = 'Your character\'s stats have been successfully reset.';
 $lang['success_10'] = 'Your character\'s PK level has been successfully reset.';
-$lang['success_11'] = 'Your character been successfully unstuck.';
+$lang['success_11'] = 'Your character been successfully moved to Lorencia\'s Bar.';
 $lang['success_12'] = 'Your character\'s master level been successfully cleared.';
 $lang['success_13'] = '';
 $lang['success_14'] = '';
@@ -220,8 +220,12 @@ $lang['error_110'] = 'Could not load character class base stats, please contact 
 $lang['error_111'] = 'The provided user id is not valid.';
 $lang['error_112'] = 'The provided username is not valid.';
 $lang['error_113'] = 'You do not have enough %s to reset your character stats.';
-$lang['error_114'] = '';
-$lang['error_115'] = '';
+$lang['error_114'] = 'You do not have enough %s to unstick your character.';
+$lang['error_115'] = 'Your character is already at Lorencia Bar.';
+$lang['error_116'] = '';
+$lang['error_117'] = '';
+$lang['error_118'] = '';
+$lang['error_119'] = '';
 
 # registration
 $lang['register_txt_1'] = 'Username:';

@@ -19,6 +19,10 @@ class Character {
 	protected $_username;
 	protected $_character;
 	
+	protected $_unstickMap = 0;
+	protected $_unstickCoordX = 125;
+	protected $_unstickCoordY = 125;
+	
 	function __construct() {
 		
 		// load databases
@@ -218,33 +222,64 @@ class Character {
 		}
 	}
 	
-	public function CharacterUnstick($username,$character_name) {
-		try {
-			if(!check_value($username)) throw new Exception(lang('error_23',true));
-			if(!check_value($character_name)) throw new Exception(lang('error_23',true));
-			if(!Validator::UsernameLength($username)) throw new Exception(lang('error_23',true));
-			if(!Validator::AlphaNumeric($username)) throw new Exception(lang('error_23',true));
-			if(!$this->CharacterExists($character_name)) throw new Exception(lang('error_37',true));
-			if(!$this->CharacterBelongsToAccount($character_name,$username)) throw new Exception(lang('error_37',true));
-			if($this->common->accountOnline($username)) throw new Exception(lang('error_14',true));
-			
-			$characterData = $this->CharacterData($character_name);
-			if(mconfig('unstick_enable_zen_requirement')) {
-				if($characterData[_CLMN_CHR_ZEN_] < mconfig('unstick_price_zen')) throw new Exception(lang('error_34',true));
-				$deductZen = $this->DeductZEN($character_name, mconfig('unstick_price_zen'));
-				if(!$deductZen) throw new Exception(lang('error_34',true));
-			}
-			
-			// MOVE CHARACTER TO LORENCIA BAR (DEFAULT COORDS)
-			$update = $this->moveCharacter($character_name,0,125,125);
-			if(!$update) throw new Exception(lang('error_23',true));
-			
-			// SUCCESS
-			message('success', lang('success_11',true));
-			
-		} catch(Exception $ex) {
-			message('error', $ex->getMessage());
+	public function CharacterUnstick() {
+		// filters
+		if(!check_value($this->_username)) throw new Exception(lang('error_21'));
+		if(!check_value($this->_character)) throw new Exception(lang('error_21'));
+		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
+		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_37'));
+		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_37'));
+		if($this->common->accountOnline($this->_username)) throw new Exception(lang('error_14'));
+		
+		// character data
+		$characterData = $this->CharacterData($this->_character);
+		
+		// check position
+		if($characterData[_CLMN_CHR_MAP_] == $this->_unstickMap) {
+			if($characterData[_CLMN_CHR_MAP_X_] == $this->_unstickCoordX && $characterData[_CLMN_CHR_MAP_Y_] == $this->_unstickCoordY) throw new Exception(lang('error_115'));
 		}
+		
+		// zen requirement
+		$zenRequirement = mconfig('zen_cost');
+		
+		// credit requirement
+		$creditConfig = mconfig('credit_config');
+		$creditCost = mconfig('credit_cost');
+		if($creditCost > 0 && $creditConfig != 0) {
+			$creditSystem = new CreditSystem();
+			$creditSystem->setConfigId($creditConfig);
+			$configSettings = $creditSystem->showConfigs(true);
+			switch($configSettings['config_user_col_id']) {
+				case 'userid':
+					$creditSystem->setIdentifier($this->_userid);
+					break;
+				case 'username':
+					$creditSystem->setIdentifier($this->_username);
+					break;
+				case 'character':
+					$creditSystem->setIdentifier($this->_character);
+					break;
+				default:
+					throw new Exception("Invalid identifier (credit system).");
+			}
+			if($creditSystem->getCredits() < $creditCost) throw new Exception(langf('error_114', array($configSettings['config_title'])));
+		}
+		
+		// check zen
+		if($zenRequirement > 0) if($characterData[_CLMN_CHR_ZEN_] < $zenRequirement) throw new Exception(lang('error_34'));
+		
+		// deduct zen
+		if(!$this->DeductZEN($this->_character, $zenRequirement)) throw new Exception(lang('error_34'));
+		
+		// move character
+		$update = $this->moveCharacter($this->_character, $this->_unstickMap, $this->_unstickCoordX, $this->_unstickCoordY);
+		if(!$update) throw new Exception(lang('error_21'));
+		
+		// subtract credits
+		if($creditCost > 0 && $creditConfig != 0) $creditSystem->subtractCredits($creditCost);
+		
+		// success
+		message('success', lang('success_11'));
 	}
 	
 	public function CharacterClearSkillTree($username,$character_name) {

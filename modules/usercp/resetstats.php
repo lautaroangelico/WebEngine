@@ -69,7 +69,7 @@ try {
 	echo '</table>';
 	
 	echo '<div class="module-requirements text-center">';
-		if(mconfig('resetstats_enable_zen_requirement')) echo '<p>'.langf('resetstats_txt_9', array(number_format(mconfig('resetstats_price_zen')))).'</p>';
+		if(mconfig('zen_cost') > 0) echo '<p>'.langf('resetstats_txt_9', array(number_format(mconfig('zen_cost')))).'</p>';
 	echo '</div>';
 	
 } catch(Exception $ex) {

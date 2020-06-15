@@ -36,7 +36,7 @@ $webengineModules = array(
 		array('Change Password','mypassword'),
 		array('Change Email','myemail'),
 		array('Character Reset','reset'),
-		array('Fix Stats','resetstats'),
+		array('Reset Stats','resetstats'),
 		array('Unstick Character','unstick'),
 		array('Vote and Reward','vote'),
 		array('Buy Zen','buyzen'),

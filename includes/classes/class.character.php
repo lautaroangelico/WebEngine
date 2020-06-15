@@ -13,6 +13,12 @@
 
 class Character {
 	
+	protected $_classData;
+	
+	protected $_userid;
+	protected $_username;
+	protected $_character;
+	
 	function __construct() {
 		
 		// load databases
@@ -21,9 +27,28 @@ class Character {
 		// common
 		$this->common = new common();
 		
+		// class data
+		$classData = custom('character_class');
+		if(!is_array($classData)) throw new Exception(lang('error_108'));
+		$this->_classData = $classData;
+		
+	}
+	
+	public function setUserid($userid) {
+		if(!Validator::UnsignedNumber($userid)) throw new Exception(lang('error_111'));
+		$this->_userid = $userid;
+	}
+	
+	public function setUsername($username) {
+		if(!Validator::UsernameLength($username)) throw new Exception(lang('error_112'));
+		$this->_username = $username;
+	}
+	
+	public function setCharacter($character) {
+		$this->_character = $character;
 	}
 
-	function CharacterReset($username,$character_name,$userid) {
+	public function CharacterReset($username,$character_name,$userid) {
 		try {
 			if(!check_value($username)) throw new Exception(lang('error_23',true));
 			if(!check_value($character_name)) throw new Exception(lang('error_23',true));
@@ -78,68 +103,94 @@ class Character {
 		}
 	}
 	
-	function CharacterResetStats($username,$character_name,$userid) {
-		try {
-			if(!check_value($username)) throw new Exception(lang('error_23',true));
-			if(!check_value($character_name)) throw new Exception(lang('error_23',true));
-			if(!Validator::Number($userid)) throw new Exception(lang('error_23',true));
-			if(!Validator::UsernameLength($username)) throw new Exception(lang('error_23',true));
-			if(!Validator::AlphaNumeric($username)) throw new Exception(lang('error_23',true));
-			if(!$this->CharacterExists($character_name)) throw new Exception(lang('error_35',true));
-			if(!$this->CharacterBelongsToAccount($character_name,$username)) throw new Exception(lang('error_35',true));
-			if($this->common->accountOnline($username)) throw new Exception(lang('error_14',true));
-			
-			$characterData = $this->CharacterData($character_name);
-			
-			if(mconfig('resetstats_enable_zen_requirement')) {
-				if($characterData[_CLMN_CHR_ZEN_] < mconfig('resetstats_price_zen')) throw new Exception(lang('error_34',true));
-				$deductZen = $this->DeductZEN($character_name, mconfig('resetstats_price_zen'));
-				if(!$deductZen) throw new Exception(lang('error_34',true));
+	public function CharacterResetStats() {
+		// filters
+		if(!check_value($this->_username)) throw new Exception(lang('error_21'));
+		if(!check_value($this->_character)) throw new Exception(lang('error_21'));
+		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
+		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_35'));
+		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_35'));
+		if($this->common->accountOnline($this->_username)) throw new Exception(lang('error_14'));
+		
+		// character data
+		$characterData = $this->CharacterData($this->_character);
+		
+		// zen requirement
+		$zenRequirement = mconfig('zen_cost');
+		
+		// credit requirement
+		$creditConfig = mconfig('credit_config');
+		$creditCost = mconfig('credit_cost');
+		if($creditCost > 0 && $creditConfig != 0) {
+			$creditSystem = new CreditSystem();
+			$creditSystem->setConfigId($creditConfig);
+			$configSettings = $creditSystem->showConfigs(true);
+			switch($configSettings['config_user_col_id']) {
+				case 'userid':
+					$creditSystem->setIdentifier($this->_userid);
+					break;
+				case 'username':
+					$creditSystem->setIdentifier($this->_username);
+					break;
+				case 'character':
+					$creditSystem->setIdentifier($this->_character);
+					break;
+				default:
+					throw new Exception("Invalid identifier (credit system).");
 			}
-			
-			// some data
-			$new_stats = mconfig('resetstats_new_stats');
-			$chr_str = $characterData[_CLMN_CHR_STAT_STR_];
-			$chr_agi = $characterData[_CLMN_CHR_STAT_AGI_];
-			$chr_vit = $characterData[_CLMN_CHR_STAT_VIT_];
-			$chr_ene = $characterData[_CLMN_CHR_STAT_ENE_];
-			$chr_cmd = $characterData[_CLMN_CHR_STAT_CMD_];
-			
-			if($chr_cmd >= 1) {
-				$levelup_points = ($chr_str+$chr_agi+$chr_vit+$chr_ene+$chr_cmd) - ($new_stats*5);
-				if($levelup_points < 1) { $levelup_points = 0; }
-				$update_query = "UPDATE "._TBL_CHR_." SET 
-				"._CLMN_CHR_STAT_STR_." = :newstats, 
-				"._CLMN_CHR_STAT_AGI_." = :newstats, 
-				"._CLMN_CHR_STAT_VIT_." = :newstats, 
-				"._CLMN_CHR_STAT_ENE_." = :newstats, 
-				"._CLMN_CHR_STAT_CMD_." = :newstats, 
-				"._CLMN_CHR_LVLUP_POINT_." = "._CLMN_CHR_LVLUP_POINT_." + :lvlp 
-				WHERE "._CLMN_CHR_NAME_." = :chr";
-			} else {
-				$levelup_points = (($chr_str+$chr_agi+$chr_vit+$chr_ene)-($new_stats*4));
-				if($levelup_points < 1) { $levelup_points = 0; }
-				$update_query = "UPDATE "._TBL_CHR_." SET 
-				"._CLMN_CHR_STAT_STR_." = :newstats, 
-				"._CLMN_CHR_STAT_AGI_." = :newstats, 
-				"._CLMN_CHR_STAT_VIT_." = :newstats, 
-				"._CLMN_CHR_STAT_ENE_." = :newstats, 
-				"._CLMN_CHR_LVLUP_POINT_." = "._CLMN_CHR_LVLUP_POINT_." + :lvlp
-				WHERE "._CLMN_CHR_NAME_." = :chr";
-			}
-			
-			$update = $this->muonline->query($update_query, array('newstats' => $new_stats, 'lvlp' => $levelup_points, 'chr' => $character_name));
-			if(!$update) throw new Exception(lang('error_23',true));
-			
-			// SUCCESS
-			message('success', lang('success_9',true));
-			
-		} catch(Exception $ex) {
-			message('error', $ex->getMessage());
+			if($creditSystem->getCredits() < $creditCost) throw new Exception(langf('error_113', array($configSettings['config_title'])));
 		}
+		
+		// check zen
+		if($zenRequirement > 0) if($characterData[_CLMN_CHR_ZEN_] < $zenRequirement) throw new Exception(lang('error_34'));
+		
+		// base stats
+		$base_stats = $this->_getClassBaseStats($characterData[_CLMN_CHR_CLASS_]);
+		$base_stats_points = array_sum($base_stats);
+		
+		// calculate new level up points
+		$levelUpPoints = $characterData[_CLMN_CHR_STAT_STR_]+$characterData[_CLMN_CHR_STAT_AGI_]+$characterData[_CLMN_CHR_STAT_VIT_]+$characterData[_CLMN_CHR_STAT_ENE_];
+		if(array_key_exists(_CLMN_CHR_STAT_CMD_, $characterData)) {
+			$levelUpPoints += $characterData[_CLMN_CHR_STAT_CMD_];
+		}
+		if($base_stats_points > 0) {
+			$levelUpPoints -= $base_stats_points;
+		}
+		
+		// query data
+		$data = array_merge(
+			array(
+				'player' => $characterData[_CLMN_CHR_NAME_],
+				'points' => $levelUpPoints,
+			),
+			$base_stats
+		);
+		
+		// zen
+		if($zenRequirement > 0) {
+			$data['zen'] = $zenRequirement;
+		}
+		
+		// query
+		$query = "UPDATE "._TBL_CHR_." SET "._CLMN_CHR_STAT_STR_." = :str, "._CLMN_CHR_STAT_AGI_." = :agi, "._CLMN_CHR_STAT_VIT_." = :vit, "._CLMN_CHR_STAT_ENE_." = :ene";
+		if(array_key_exists(_CLMN_CHR_STAT_CMD_, $characterData)) $query .= ", "._CLMN_CHR_STAT_CMD_." = :cmd";
+		if($zenRequirement > 0) {
+			$query .= ", "._CLMN_CHR_ZEN_." = "._CLMN_CHR_ZEN_." - :zen";
+		}
+		$query .= ", "._CLMN_CHR_LVLUP_POINT_." = "._CLMN_CHR_LVLUP_POINT_." + :points WHERE "._CLMN_CHR_NAME_." = :player";
+		
+		// reset stats
+		$result = $this->muonline->query($query, $data);
+		if(!$result) throw new Exception(lang('error_21'));
+		
+		// subtract credits
+		if($creditCost > 0 && $creditConfig != 0) $creditSystem->subtractCredits($creditCost);
+		
+		// success
+		message('success', lang('success_9'));
 	}
 	
-	function CharacterClearPK($username,$character_name) {
+	public function CharacterClearPK($username,$character_name) {
 		try {
 			if(!check_value($username)) throw new Exception(lang('error_23',true));
 			if(!check_value($character_name)) throw new Exception(lang('error_23',true));
@@ -167,7 +218,7 @@ class Character {
 		}
 	}
 	
-	function CharacterUnstick($username,$character_name) {
+	public function CharacterUnstick($username,$character_name) {
 		try {
 			if(!check_value($username)) throw new Exception(lang('error_23',true));
 			if(!check_value($character_name)) throw new Exception(lang('error_23',true));
@@ -196,7 +247,7 @@ class Character {
 		}
 	}
 	
-	function CharacterClearSkillTree($username,$character_name) {
+	public function CharacterClearSkillTree($username,$character_name) {
 		try {
 			if(!check_value($username)) throw new Exception(lang('error_23',true));
 			if(!check_value($character_name)) throw new Exception(lang('error_23',true));
@@ -233,7 +284,7 @@ class Character {
 		}
 	}
 	
-	function CharacterAddStats($username,$character_name,$str=0,$agi=0,$vit=0,$ene=0,$com=0) {
+	public function CharacterAddStats($username,$character_name,$str=0,$agi=0,$vit=0,$ene=0,$com=0) {
 		global $custom;
 		try {
 			if(!check_value($username)) throw new Exception(lang('error_23',true));
@@ -297,7 +348,7 @@ class Character {
 		}
 	}
 	
-	function AccountCharacter($username) {
+	public function AccountCharacter($username) {
 		if(!check_value($username)) return;
 		if(!Validator::UsernameLength($username)) return;
 		if(!Validator::AlphaNumeric($username)) return;
@@ -314,7 +365,7 @@ class Character {
 		return $return;
 	}
 	
-	function CharacterData($character_name) {
+	public function CharacterData($character_name) {
 		if(!check_value($character_name)) return;
 		$result = $this->muonline->query_fetch_single("SELECT * FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." = ?", array($character_name));
 		if(!is_array($result)) return;
@@ -322,7 +373,7 @@ class Character {
 		
 	}
 	
-	function CharacterBelongsToAccount($character_name,$username) {
+	public function CharacterBelongsToAccount($character_name,$username) {
 		if(!check_value($character_name)) return;
 		if(!check_value($username)) return;
 		if(!Validator::UsernameLength($username)) return;
@@ -334,14 +385,14 @@ class Character {
 		
 	}
 	
-	function CharacterExists($character_name) {
+	public function CharacterExists($character_name) {
 		if(!check_value($character_name)) return;
 		$check = $this->muonline->query_fetch_single("SELECT * FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." = ?", array($character_name));
 		if(!is_array($check)) return;
 		return true;
 	}
 	
-	function DeductZEN($character_name,$zen_amount) {
+	public function DeductZEN($character_name,$zen_amount) {
 		if(!check_value($character_name)) return;
 		if(!check_value($zen_amount)) return;
 		if(!Validator::UnsignedNumber($zen_amount)) return;
@@ -355,14 +406,14 @@ class Character {
 		return true;
 	}
 	
-	function moveCharacter($character_name,$map=0,$x=125,$y=125) {
+	public function moveCharacter($character_name,$map=0,$x=125,$y=125) {
 		if(!check_value($character_name)) return;
 		$move = $this->muonline->query("UPDATE "._TBL_CHR_." SET "._CLMN_CHR_MAP_." = ?, "._CLMN_CHR_MAP_X_." = ?, "._CLMN_CHR_MAP_Y_." = ? WHERE "._CLMN_CHR_NAME_." = ?", array($map, $x, $y, $character_name));
 		if(!$move) return;
 		return true;
 	}
 	
-	function AccountCharacterIDC($username) {
+	public function AccountCharacterIDC($username) {
 		if(!check_value($username)) return;
 		if(!Validator::UsernameLength($username)) return;
 		if(!Validator::AlphaNumeric($username)) return;
@@ -372,11 +423,11 @@ class Character {
 	}
 	
 	// To be removed (backwards compatibility)
-	function GenerateCharacterClassAvatar($code=0,$alt=true,$img_tags=true) {
+	public function GenerateCharacterClassAvatar($code=0,$alt=true,$img_tags=true) {
 		return getPlayerClassAvatar($code, $img_tags, $alt, 'tables-character-class-img');
 	}
 	
-	function getMasterLevelInfo($character_name) {
+	public function getMasterLevelInfo($character_name) {
 		if(!check_value($character_name)) return;
 		if(!$this->CharacterExists($character_name)) return;
 		$CharInfo = $this->muonline->query_fetch_single("SELECT * FROM "._TBL_MASTERLVL_." WHERE "._CLMN_ML_NAME_." = ?", array($character_name));
@@ -384,7 +435,7 @@ class Character {
 		return $CharInfo;
 	}
 	
-	function resetMasterLevelData($character_name) {
+	public function resetMasterLevelData($character_name) {
 		if(!check_value($character_name)) return;
 		if(!$this->CharacterExists($character_name)) return;
 		if(defined(_CLMN_ML_NEXP_)) {
@@ -396,12 +447,19 @@ class Character {
 		return true;
 	}
 	
-	function resetMagicList($character_name) {
+	public function resetMagicList($character_name) {
 		if(!check_value($character_name)) return;
 		if(!$this->CharacterExists($character_name)) return;
 		$reset = $this->muonline->query("UPDATE "._TBL_CHR_." SET "._CLMN_CHR_MAGIC_L_." = null WHERE "._CLMN_CHR_NAME_." = ?", array($character_name));
 		if(!$reset) return;
 		return true;
+	}
+	
+	protected function _getClassBaseStats($class) {
+		if(!array_key_exists($class, $this->_classData)) throw new Exception(lang('error_109'));
+		if(!array_key_exists('base_stats', $this->_classData[$class])) throw new Exception(lang('error_110'));
+		if(!is_array($this->_classData[$class]['base_stats'])) throw new Exception(lang('error_110'));
+		return $this->_classData[$class]['base_stats'];
 	}
 	
 }

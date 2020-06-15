@@ -47,7 +47,7 @@ $lang['module_titles_txt_14'] = 'Frequently Asked Questions';
 $lang['module_titles_txt_15'] = 'Forgot Password';
 $lang['module_titles_txt_16'] = 'Unstick Character';
 $lang['module_titles_txt_17'] = 'Server Information';
-$lang['module_titles_txt_18'] = 'Fix Stats';
+$lang['module_titles_txt_18'] = 'Reset Stats';
 $lang['module_titles_txt_19'] = 'Clear Skill-Tree';
 $lang['module_titles_txt_20'] = 'Email Verification';
 $lang['module_titles_txt_21'] = 'PayPal';
@@ -69,7 +69,7 @@ $lang['usercp_menu_txt_4'] = 'Vote for Credits';
 $lang['usercp_menu_txt_5'] = 'Donate for Credits';
 $lang['usercp_menu_txt_6'] = 'Unstick Character';
 $lang['usercp_menu_txt_7'] = 'V.I.P. Subscription';
-$lang['usercp_menu_txt_8'] = 'Fix Stats';
+$lang['usercp_menu_txt_8'] = 'Reset Stats';
 $lang['usercp_menu_txt_9'] = 'Clear Skill-Tree';
 $lang['usercp_menu_txt_10'] = 'Add Stats';
 $lang['usercp_menu_txt_11'] = 'Buy Zen';
@@ -213,8 +213,15 @@ $lang['error_104'] = 'There are no cron jobs in the database.';
 $lang['error_105'] = 'The requested action is not valid.';
 $lang['error_106'] = 'The new cron could not be added, please fill all the required information.';
 $lang['error_107'] = 'Another cron with the same file already exists.';
-$lang['error_108'] = '';
-$lang['error_109'] = '';
+
+$lang['error_108'] = 'Could not load characters class data, please contact support.';
+$lang['error_109'] = 'Your character class is not valid, please contact support.';
+$lang['error_110'] = 'Could not load character class base stats, please contact support.';
+$lang['error_111'] = 'The provided user id is not valid.';
+$lang['error_112'] = 'The provided username is not valid.';
+$lang['error_113'] = 'You do not have enough %s to reset your character stats.';
+$lang['error_114'] = '';
+$lang['error_115'] = '';
 
 # registration
 $lang['register_txt_1'] = 'Username:';
@@ -351,16 +358,16 @@ $lang['resetcharacter_txt_6'] = 'Your character must be level %s';
 $lang['resetcharacter_txt_7'] = 'Your character must have at least %s zen to be reset';
 $lang['resetcharacter_txt_8'] = 'You have been rewarded with %s credits!';
 
-# fix stats
+# reset stats
 $lang['resetstats_txt_1'] = 'Character';
 $lang['resetstats_txt_2'] = 'Level';
-$lang['resetstats_txt_3'] = 'Strength';
-$lang['resetstats_txt_4'] = 'Agility';
-$lang['resetstats_txt_5'] = 'Vitality';
-$lang['resetstats_txt_6'] = 'Energy';
-$lang['resetstats_txt_7'] = 'Command';
-$lang['resetstats_txt_8'] = 'Fix';
-$lang['resetstats_txt_9'] = 'Your character must have at least %s zen to fix stats';
+$lang['resetstats_txt_3'] = 'STR';
+$lang['resetstats_txt_4'] = 'AGI';
+$lang['resetstats_txt_5'] = 'VIT';
+$lang['resetstats_txt_6'] = 'ENE';
+$lang['resetstats_txt_7'] = 'CMD';
+$lang['resetstats_txt_8'] = 'Reset';
+$lang['resetstats_txt_9'] = 'Your character must have at least %s zen to reset stats';
 
 # unstick
 $lang['unstickcharacter_txt_1'] = 'Character';

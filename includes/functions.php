@@ -567,3 +567,10 @@ function getPlayerClass($class=0) {
 	if(!array_key_exists($class, $custom['character_class'])) return 'Unknown';
 	return $custom['character_class'][$class][0];
 }
+
+function custom($index) {
+	global $custom;
+	if(!is_array($custom)) return;
+	if(!array_key_exists($index, $custom)) return;
+	return $custom[$index];
+}

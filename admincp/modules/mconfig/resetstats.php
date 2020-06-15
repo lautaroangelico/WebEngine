@@ -67,13 +67,13 @@ $creditSystem = new CreditSystem();
 		<tr>
 			<th>Zen Cost<br/><span>Amount of zen required to reset the character stats. Set to 0 to disable zen requirement.</span></th>
 			<td>
-				<input class="form-control" type="text" name="setting_2" value="<?=mconfig('zen_cost')?>"/>
+				<input class="form-control" type="text" name="setting_2" value="<?php echo mconfig('zen_cost'); ?>"/>
 			</td>
 		</tr>
 		<tr>
 			<th>Credit Cost<br/><span>Amount of credits required to reset the character stats. Set to 0 to disable credit requirement.</span></th>
 			<td>
-				<input class="form-control" type="text" name="setting_4" value="<?=mconfig('credit_cost')?>"/>
+				<input class="form-control" type="text" name="setting_4" value="<?php echo mconfig('credit_cost'); ?>"/>
 			</td>
 		</tr>
 		<tr>

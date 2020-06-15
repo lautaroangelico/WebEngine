@@ -59,7 +59,7 @@ $creditSystem = new CreditSystem();
 <form action="" method="post">
 	<table class="table table-striped table-bordered table-hover module_config_tables">
 		<tr>
-			<th>Status<br/><span>Enable/disable the fix stats module.</span></th>
+			<th>Status<br/><span>Enable/disable the clear pk module.</span></th>
 			<td>
 				<?php enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
 			</td>

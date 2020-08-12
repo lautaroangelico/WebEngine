@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <settings>
 	<active>1</active>
-	<addstats_enable_zen_requirement>1</addstats_enable_zen_requirement>
-	<addstats_price_zen>10000000</addstats_price_zen>
-	<addstats_max_stats>32767</addstats_max_stats>
-	<addstats_minimum_add_points>10</addstats_minimum_add_points>
+	<zen_cost>1000000</zen_cost>
+	<max_stats>32767</max_stats>
+	<minimum_limit>100</minimum_limit>
+	<credit_config>0</credit_config>
+	<credit_cost>0</credit_cost>
+	<required_level>150</required_level>
+	<required_master_level>0</required_master_level>
 </settings>

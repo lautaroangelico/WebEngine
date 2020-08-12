@@ -27,6 +27,12 @@ class Character {
 	
 	protected $_skilEnhanceTreeLevel = 800;
 	
+	protected $_strength = 0;
+	protected $_agility = 0;
+	protected $_vitality = 0;
+	protected $_energy = 0;
+	protected $_command = 0;
+	
 	function __construct() {
 		
 		// load databases
@@ -54,6 +60,31 @@ class Character {
 	
 	public function setCharacter($character) {
 		$this->_character = $character;
+	}
+	
+	public function setStrength($value) {
+		if(!Validator::UnsignedNumber($value)) throw new Exception(lang('error_122'));
+		$this->_strength = $value;
+	}
+	
+	public function setAgility($value) {
+		if(!Validator::UnsignedNumber($value)) throw new Exception(lang('error_122'));
+		$this->_agility = $value;
+	}
+	
+	public function setVitality($value) {
+		if(!Validator::UnsignedNumber($value)) throw new Exception(lang('error_122'));
+		$this->_vitality = $value;
+	}
+	
+	public function setEnergy($value) {
+		if(!Validator::UnsignedNumber($value)) throw new Exception(lang('error_122'));
+		$this->_energy = $value;
+	}
+	
+	public function setCommand($value) {
+		if(!Validator::UnsignedNumber($value)) throw new Exception(lang('error_122'));
+		$this->_command = $value;
 	}
 
 	public function CharacterReset($username,$character_name,$userid) {
@@ -433,69 +464,121 @@ class Character {
 		message('success', lang('success_12'));
 	}
 	
-	public function CharacterAddStats($username,$character_name,$str=0,$agi=0,$vit=0,$ene=0,$com=0) {
-		global $custom;
-		try {
-			if(!check_value($username)) throw new Exception(lang('error_23',true));
-			if(!check_value($character_name)) throw new Exception(lang('error_23',true));
-			if(!Validator::UsernameLength($username)) throw new Exception(lang('error_23',true));
-			if(!Validator::AlphaNumeric($username)) throw new Exception(lang('error_23',true));
-			if(!$this->CharacterExists($character_name)) throw new Exception(lang('error_64',true));
-			if(!$this->CharacterBelongsToAccount($character_name,$username)) throw new Exception(lang('error_64',true));
-			if($this->common->accountOnline($username)) throw new Exception(lang('error_14',true));
-			
-			$characterData = $this->CharacterData($character_name);
-			
-			if($str < 1) { $str = 0; }
-			if($agi < 1) { $agi = 0; }
-			if($vit < 1) { $vit = 0; }
-			if($ene < 1) { $ene = 0; }
-			if($com < 1) { $com = 0; }
-			
-			$total_add_points = $str+$agi+$vit+$ene+$com;
-			if($total_add_points < mconfig('addstats_minimum_add_points')) throw new Exception(lang('error_54',true).mconfig('addstats_minimum_add_points'));
-			if($total_add_points > $characterData[_CLMN_CHR_LVLUP_POINT_]) throw new Exception(lang('error_51',true));
-			
-			if($com >= 1) {
-				if(!in_array($characterData[_CLMN_CHR_CLASS_], $custom['character_cmd'])) throw new Exception(lang('error_52',true));
-			}
-			
-			$max_stats = mconfig('addstats_max_stats');
-			$sum_str = $str+$characterData[_CLMN_CHR_STAT_STR_];
-			$sum_agi = $agi+$characterData[_CLMN_CHR_STAT_AGI_];
-			$sum_vit = $vit+$characterData[_CLMN_CHR_STAT_VIT_];
-			$sum_ene = $ene+$characterData[_CLMN_CHR_STAT_ENE_];
-			$sum_com = $com+$characterData[_CLMN_CHR_STAT_CMD_];
-			
-			if($sum_str > $max_stats) throw new Exception(lang('error_53',true));
-			if($sum_agi > $max_stats) throw new Exception(lang('error_53',true));
-			if($sum_vit > $max_stats) throw new Exception(lang('error_53',true));
-			if($sum_ene > $max_stats) throw new Exception(lang('error_53',true));
-			if($sum_com > $max_stats) throw new Exception(lang('error_53',true));
-			
-			if(mconfig('addstats_enable_zen_requirement')) {
-				if($characterData[_CLMN_CHR_ZEN_] < mconfig('addstats_price_zen')) throw new Exception(lang('error_34',true));
-				$deductZen = $this->DeductZEN($character_name, mconfig('addstats_price_zen'));
-				if(!$deductZen) throw new Exception(lang('error_34',true));
-			}
-			
-			$query = $this->muonline->query("UPDATE "._TBL_CHR_." SET 
-			"._CLMN_CHR_STAT_STR_." = "._CLMN_CHR_STAT_STR_." + ?,
-			"._CLMN_CHR_STAT_AGI_." = "._CLMN_CHR_STAT_AGI_." + ?,
-			"._CLMN_CHR_STAT_VIT_." = "._CLMN_CHR_STAT_VIT_." + ?,
-			"._CLMN_CHR_STAT_ENE_." = "._CLMN_CHR_STAT_ENE_." + ?,
-			"._CLMN_CHR_STAT_CMD_." = "._CLMN_CHR_STAT_CMD_." + ?,
-			"._CLMN_CHR_LVLUP_POINT_." = "._CLMN_CHR_LVLUP_POINT_." - ? 
-			WHERE "._CLMN_CHR_NAME_." = ?", array($str, $agi, $vit, $ene, $com, $total_add_points, $character_name));
-			if(!$query) throw new Exception(lang('error_23',true));
-			
-			// SUCCESS
-			message('success',lang('success_17',true));
-			
-		} catch(Exception $ex) {
-			message('error', $ex->getMessage());
+	public function CharacterAddStats() {
+		// filters
+		if(!check_value($this->_username)) throw new Exception(lang('error_21'));
+		if(!check_value($this->_character)) throw new Exception(lang('error_21'));
+		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
+		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_64'));
+		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_64'));
+		
+		// points
+		$pointsTotal = $this->_strength+$this->_agility+$this->_vitality+$this->_energy+$this->_command;
+		
+		// points minimum limit
+		if($pointsTotal < mconfig('minimum_limit')) throw new Exception(langf('error_54', array(mconfig('minimum_limit'))));
+		
+		// check online status
+		$Account = new Account();
+		if($Account->accountOnline($this->_username)) throw new Exception(lang('error_14'));
+		
+		// character data
+		$characterData = $this->CharacterData($this->_character);
+		
+		// check level up points
+		if($characterData[_CLMN_CHR_LVLUP_POINT_] < $pointsTotal) throw new Exception(lang('error_51'));
+		
+		// new stats
+		$str = $characterData[_CLMN_CHR_STAT_STR_]+$this->_strength;
+		$agi = $characterData[_CLMN_CHR_STAT_AGI_]+$this->_agility;
+		$vit = $characterData[_CLMN_CHR_STAT_VIT_]+$this->_vitality;
+		$ene = $characterData[_CLMN_CHR_STAT_ENE_]+$this->_energy;
+		
+		// check stat limits
+		if($str > mconfig('max_stats')) throw new Exception(langf('error_53', array(number_format(mconfig('max_stats')))));
+		if($agi > mconfig('max_stats')) throw new Exception(langf('error_53', array(number_format(mconfig('max_stats')))));
+		if($vit > mconfig('max_stats')) throw new Exception(langf('error_53', array(number_format(mconfig('max_stats')))));
+		if($ene > mconfig('max_stats')) throw new Exception(langf('error_53', array(number_format(mconfig('max_stats')))));
+		
+		// cmd
+		if(array_key_exists(_CLMN_CHR_STAT_CMD_, $characterData) && $this->_command >= 1) {
+			if(!in_array($characterData[_CLMN_CHR_CLASS_], custom('character_cmd'))) throw new Exception(lang('error_52'));
+			$cmd = $characterData[_CLMN_CHR_STAT_CMD_]+$this->_command;
+			if($cmd > mconfig('max_stats')) throw new Exception(langf('error_53', array(number_format(mconfig('max_stats')))));
 		}
-	}
+		
+		// check required level (regular)
+		if($characterData[_CLMN_CHR_LVL_] < mconfig('required_level')) throw new Exception(lang('error_123'));
+		
+		if(mconfig('required_master_level') >= 1) {
+			// character master level data
+			$characterMasterLvlData = _TBL_CHR_ != _TBL_MASTERLVL_ ? $this->getMasterLevelInfo($this->_character) : $characterData;
+			if(!is_array($characterMasterLvlData)) throw new Exception(lang('error_119'));
+			
+			// check required level (master)
+			if($characterMasterLvlData[_CLMN_ML_LVL_] < mconfig('required_master_level')) throw new Exception(lang('error_124'));
+		}
+		
+		// zen requirement
+		$zenRequirement = mconfig('zen_cost');
+		
+		// check zen
+		if($zenRequirement > 0) if($characterData[_CLMN_CHR_ZEN_] < $zenRequirement) throw new Exception(lang('error_34'));
+		
+		// credit requirement
+		$creditConfig = mconfig('credit_config');
+		$creditCost = mconfig('credit_cost');
+		if($creditCost > 0 && $creditConfig != 0) {
+			$creditSystem = new CreditSystem();
+			$creditSystem->setConfigId($creditConfig);
+			$configSettings = $creditSystem->showConfigs(true);
+			switch($configSettings['config_user_col_id']) {
+				case 'userid':
+					$creditSystem->setIdentifier($this->_userid);
+					break;
+				case 'username':
+					$creditSystem->setIdentifier($this->_username);
+					break;
+				case 'character':
+					$creditSystem->setIdentifier($this->_character);
+					break;
+				default:
+					throw new Exception("Invalid identifier (credit system).");
+			}
+			if($creditSystem->getCredits() < $creditCost) throw new Exception(langf('error_125', array($configSettings['config_title'])));
+		}
+		
+		// deduct zen
+		if(!$this->DeductZEN($this->_character, $zenRequirement)) throw new Exception(lang('error_34'));
+		
+		// add stats
+		$data = array(
+			'str' => $str,
+			'agi' => $agi,
+			'vit' => $vit,
+			'ene' => $ene,
+			'total' => $pointsTotal,
+			'player' => $characterData[_CLMN_CHR_NAME_],
+		);
+		if($cmd >= 1) $data['cmd'] = $cmd;
+		
+		$query = "UPDATE "._TBL_CHR_." SET "._CLMN_CHR_LVLUP_POINT_." = "._CLMN_CHR_LVLUP_POINT_." - :total, ";
+		if($cmd >= 1) $query .= _CLMN_CHR_STAT_CMD_ . " = :cmd, ";
+		$query .= _CLMN_CHR_STAT_STR_ . " = :str, ";
+		$query .= _CLMN_CHR_STAT_AGI_ . " = :agi, ";
+		$query .= _CLMN_CHR_STAT_VIT_ . " = :vit, ";
+		$query .= _CLMN_CHR_STAT_ENE_ . " = :ene";
+		$query .= " WHERE "._CLMN_CHR_NAME_." = :player";
+		
+		$result = $this->muonline->query($query, $data);
+		if(!$result) throw new Exception(lang('error_21'));
+		
+		// subtract credits
+		if($creditCost > 0 && $creditConfig != 0) $creditSystem->subtractCredits($creditCost);
+		
+		// success
+		message('success', lang('success_17'));
+	}	
 	
 	public function AccountCharacter($username) {
 		if(!check_value($username)) return;

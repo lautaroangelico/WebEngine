@@ -232,9 +232,9 @@ $lang['error_122'] = 'One of more entered values are not valid, please try again
 $lang['error_123'] = 'Your character does not meet the level requirement to add stats.';
 $lang['error_124'] = 'Your character does not meet the master level requirement to add stats.';
 $lang['error_125'] = 'You do not have enough %s to add stats to your character.';
-$lang['error_126'] = '';
-$lang['error_127'] = '';
-$lang['error_128'] = '';
+$lang['error_126'] = 'You do not have enough %s to reset your character.';
+$lang['error_127'] = 'You have reached the maximum number of resets with this character.';
+$lang['error_128'] = 'Missing character class group, please contact support.';
 $lang['error_129'] = '';
 
 # registration
@@ -370,8 +370,11 @@ $lang['resetcharacter_txt_3'] = 'Zen';
 $lang['resetcharacter_txt_4'] = 'Resets';
 $lang['resetcharacter_txt_5'] = 'Reset';
 $lang['resetcharacter_txt_6'] = 'Your character must be level %s';
-$lang['resetcharacter_txt_7'] = 'Your character must have at least %s zen to be reset';
-$lang['resetcharacter_txt_8'] = 'You have been rewarded with %s credits!';
+$lang['resetcharacter_txt_7'] = 'Your character must have at least %s zen';
+$lang['resetcharacter_txt_8'] = 'You will be rewarded with %s credits';
+$lang['resetcharacter_txt_9'] = 'You must have at least %s credits to reset your character';
+$lang['resetcharacter_txt_10'] = 'You can reset a maximum of %s times';
+$lang['resetcharacter_txt_11'] = 'Your character\'s inventory will be cleared, make sure to place all equipment in your vault.';
 
 # reset stats
 $lang['resetstats_txt_1'] = 'Character';

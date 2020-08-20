@@ -86,60 +86,149 @@ class Character {
 		if(!Validator::UnsignedNumber($value)) throw new Exception(lang('error_122'));
 		$this->_command = $value;
 	}
-
-	public function CharacterReset($username,$character_name,$userid) {
-		try {
-			if(!check_value($username)) throw new Exception(lang('error_23',true));
-			if(!check_value($character_name)) throw new Exception(lang('error_23',true));
-			if(!Validator::Number($userid)) throw new Exception(lang('error_23',true));
-			if(!Validator::UsernameLength($username)) throw new Exception(lang('error_23',true));
-			if(!Validator::AlphaNumeric($username)) throw new Exception(lang('error_23',true));
-			if(!$this->CharacterExists($character_name)) throw new Exception(lang('error_32',true));
-			if(!$this->CharacterBelongsToAccount($character_name,$username)) throw new Exception(lang('error_32',true));
-			if($this->common->accountOnline($username)) throw new Exception(lang('error_14',true));
-			
-			$characterData = $this->CharacterData($character_name);
-			if($characterData[_CLMN_CHR_LVL_] < mconfig('resets_required_level')) throw new Exception(lang('error_33',true));
-			
-			if(mconfig('resets_enable_zen_requirement')) {
-				if($characterData[_CLMN_CHR_ZEN_] < mconfig('resets_price_zen')) throw new Exception(lang('error_34',true));
-				$deductZen = $this->DeductZEN($character_name, mconfig('resets_price_zen'));
-				if(!$deductZen) throw new Exception(lang('error_34',true));
-			}
-			
-			$update = $this->muonline->query("UPDATE "._TBL_CHR_." SET "._CLMN_CHR_LVL_." = 1,"._CLMN_CHR_RSTS_." = "._CLMN_CHR_RSTS_." + 1 WHERE "._CLMN_CHR_NAME_." = ?", array($character_name));
-			if(!$update) throw new Exception(lang('error_23',true));
-			
-			// SUCCESS
-			message('success', lang('success_8',true));
-			
-			if(mconfig('resets_enable_credit_reward')) {
-				try {
-					$creditSystem = new CreditSystem();
-					$creditSystem->setConfigId(mconfig('credit_config'));
-					$configSettings = $creditSystem->showConfigs(true);
-					switch($configSettings['config_user_col_id']) {
-						case 'userid':
-							$creditSystem->setIdentifier($_SESSION['userid']);
-							break;
-						case 'username':
-							$creditSystem->setIdentifier($_SESSION['username']);
-							break;
-						case 'character':
-							$creditSystem->setIdentifier($character_name);
-							break;
-						default:
-							throw new Exception("Invalid identifier (credit system).");
-					}
-					$creditSystem->addCredits(mconfig('resets_credits_reward'));
-					
-					message('success', langf('resetcharacter_txt_8', array(mconfig('resets_credits_reward'))));
-				} catch (Exception $ex) {}
-			}
-			
-		} catch(Exception $ex) {
-			message('error', $ex->getMessage());
+	
+	public function CharacterReset() {
+		// filters
+		if(!check_value($this->_username)) throw new Exception(lang('error_21'));
+		if(!check_value($this->_character)) throw new Exception(lang('error_21'));
+		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
+		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_32'));
+		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_32'));
+		
+		// check online status
+		$Account = new Account();
+		if($Account->accountOnline($this->_username)) throw new Exception(lang('error_14'));
+		
+		// character data
+		$characterData = $this->CharacterData($this->_character);
+		
+		// next reset
+		$resetNumber = $characterData[_CLMN_CHR_RSTS_]+1;
+		
+		// level requirement
+		if(mconfig('required_level') >= 1) {
+			if($characterData[_CLMN_CHR_LVL_] < mconfig('required_level')) throw new Exception(lang('error_33'));
 		}
+		
+		// maximum resets
+		$maxResets = mconfig('maximum_resets');
+		if($maxResets > 0) {
+			if($resetNumber > $maxResets) throw new Exception(lang('error_127'));
+		}
+		
+		// stats
+		$clearStats = mconfig('keep_stats') == 1 ? false : true;
+		
+		// points
+		$newLevelUpPoints = mconfig('points_reward') >= 1 ? mconfig('points_reward') : 0;
+		if(mconfig('multiply_points_by_resets') == 1) {
+			$newLevelUpPoints = $newLevelUpPoints*$resetNumber;
+		}
+		
+		// existing lvl up points (only when keeping stats)
+		if(!$clearStats) {
+			$newLevelUpPoints += $characterData[_CLMN_CHR_LVLUP_POINT_];
+		}
+		
+		// class
+		$revertClass = mconfig('revert_class_evolution') == 1 ? true : false;
+		if($revertClass) {
+			if(!array_key_exists('class_group', $this->_classData[$characterData[_CLMN_CHR_CLASS_]])) throw new Exception(lang('error_128'));
+			$classGroup = $this->_classData[$characterData[_CLMN_CHR_CLASS_]]['class_group'];
+		}
+		
+		// zen requirement
+		$zenRequirement = mconfig('zen_cost');
+		if($zenRequirement > 0) if($characterData[_CLMN_CHR_ZEN_] < $zenRequirement) throw new Exception(lang('error_34'));
+		$newZen = $characterData[_CLMN_CHR_ZEN_]-$zenRequirement;
+		
+		// credit requirement
+		$creditConfig = mconfig('credit_config');
+		$creditCost = mconfig('credit_cost');
+		if($creditCost > 0 && $creditConfig != 0) {
+			$creditSystem = new CreditSystem();
+			$creditSystem->setConfigId($creditConfig);
+			$configSettings = $creditSystem->showConfigs(true);
+			switch($configSettings['config_user_col_id']) {
+				case 'userid':
+					$creditSystem->setIdentifier($this->_userid);
+					break;
+				case 'username':
+					$creditSystem->setIdentifier($this->_username);
+					break;
+				case 'character':
+					$creditSystem->setIdentifier($this->_character);
+					break;
+				default:
+					throw new Exception("Invalid identifier (credit system).");
+			}
+			if($creditSystem->getCredits() < $creditCost) throw new Exception(langf('error_126', array($configSettings['config_title'])));
+		}
+		
+		// base stats
+		$base_stats = $this->_getClassBaseStats($characterData[_CLMN_CHR_CLASS_]);
+		
+		// inventory
+		$clearInventory = mconfig('clear_inventory') == 1 ? true : false;
+		
+		// query data
+		if($revertClass) $data['class'] = $classGroup;
+		if($clearStats) $data['str'] = $base_stats['str'];
+		if($clearStats) $data['agi'] = $base_stats['agi'];
+		if($clearStats) $data['vit'] = $base_stats['vit'];
+		if($clearStats) $data['ene'] = $base_stats['ene'];
+		if($clearStats) $data['cmd'] = $base_stats['cmd'];
+		$data['points'] = $newLevelUpPoints;
+		if($zenRequirement > 0) $data['zen'] = $newZen;
+		$data['name'] = $characterData[_CLMN_CHR_NAME_];
+		
+		// query
+		$query = "UPDATE Character SET ";
+		$query .= _CLMN_CHR_LVL_ . " = 1, ";
+		if($revertClass) $query .= _CLMN_CHR_CLASS_ . " = :class, ";
+		if($revertClass) $query .= _CLMN_CHR_QUEST_ . " = NULL, ";
+		if($clearStats) $query .= _CLMN_CHR_STAT_STR_ . " = :str, ";
+		if($clearStats) $query .= _CLMN_CHR_STAT_AGI_ . " = :agi, ";
+		if($clearStats) $query .= _CLMN_CHR_STAT_VIT_ . " = :vit, ";
+		if($clearStats) $query .= _CLMN_CHR_STAT_ENE_ . " = :ene, ";
+		if($clearStats) $query .= _CLMN_CHR_STAT_CMD_ . " = :cmd, ";
+		if($zenRequirement > 0) $query .= _CLMN_CHR_ZEN_ . " = :zen, ";
+		if($clearInventory) $query .= _CLMN_CHR_INV_ . " = NULL, ";
+		$query .= _CLMN_CHR_LVLUP_POINT_ . " = :points, ";
+		$query .= _CLMN_CHR_RSTS_ . " = "._CLMN_CHR_RSTS_."+1 ";
+		$query .= "WHERE "._CLMN_CHR_NAME_." = :name";
+		
+		// reset
+		$result = $this->muonline->query($query, $data);
+		if(!$result) throw new Exception(lang('error_23'));
+		
+		// subtract credits
+		if($creditCost > 0 && $creditConfig != 0) $creditSystem->subtractCredits($creditCost);
+		
+		// reward credits
+		$creditRewardConfig = mconfig('credit_reward_config');
+		$creditReward = mconfig('credit_reward');
+		if($creditReward > 0 && $creditRewardConfig != 0) {
+			$creditSystem->setConfigId($creditRewardConfig);
+			$configSettings = $creditSystem->showConfigs(true);
+			switch($configSettings['config_user_col_id']) {
+				case 'userid':
+					$creditSystem->setIdentifier($this->_userid);
+					break;
+				case 'username':
+					$creditSystem->setIdentifier($this->_username);
+					break;
+				case 'character':
+					$creditSystem->setIdentifier($this->_character);
+					break;
+				default:
+					throw new Exception("Invalid identifier (credit system).");
+			}
+			$creditSystem->addCredits($creditReward);
+		}
+		
+		// success
+		message('success', lang('success_8'));
 	}
 	
 	public function CharacterResetStats() {

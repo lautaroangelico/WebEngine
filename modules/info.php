@@ -3,16 +3,16 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
  */
 
 // Module Title
-echo '<div class="page-title"><span>'.lang('module_titles_txt_17',true).'</span></div>';
+echo '<div class="page-title"><span>'.lang('module_titles_txt_17').'</span></div>';
 
 ?>
 
@@ -26,27 +26,19 @@ echo '<div class="page-title"><span>'.lang('module_titles_txt_17',true).'</span>
 	<tbody>
 		<tr>
 			<td style="width:50%;">Server Version</td>
-			<td style="width:50%;">Season 14</td>
+			<td style="width:50%;"><?php echo config('server_info_season'); ?></td>
 		</tr>
 		<tr>
 			<td style="width:50%;">Experience</td>
-			<td style="width:50%;">10x</td>
-		</tr>
-		<tr>
-			<td style="width:50%;">Drop</td>
-			<td style="width:50%;">30%</td>
+			<td style="width:50%;"><?php echo config('server_info_exp'); ?></td>
 		</tr>
 		<tr>
 			<td style="width:50%;">Master Experience</td>
-			<td style="width:50%;">5x</td>
+			<td style="width:50%;"><?php echo config('server_info_masterexp'); ?></td>
 		</tr>
 		<tr>
-			<td style="width:50%;">Reset Limit</td>
-			<td style="width:50%;">Unlimited</td>
-		</tr>
-		<tr>
-			<td style="width:50%;">Points per Reset</td>
-			<td style="width:50%;">500</td>
+			<td style="width:50%;">Drop</td>
+			<td style="width:50%;"><?php echo config('server_info_drop'); ?></td>
 		</tr>
 	</tbody>
 </table>

@@ -55,6 +55,7 @@ define('_TBL_CHR_', 'Character');
 	define('_CLMN_CHR_MAP_Y_', 'MapPosY');
 	define('_CLMN_CHR_MAGIC_L_', 'MagicList');
 	define('_CLMN_CHR_INV_', 'Inventory');
+	define('_CLMN_CHR_QUEST_', 'Quest');
 
 define('_TBL_MASTERLVL_', 'MasterSkillTree');
 	define('_CLMN_ML_NAME_', 'Name');

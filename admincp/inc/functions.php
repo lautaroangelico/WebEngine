@@ -131,3 +131,15 @@ function updateDownloadsCache() {
 	updateCacheFile('downloads.cache', $cacheData);
 	return true;
 }
+
+function weekDaySelectOptions($selected='Monday') {
+	$days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+	foreach($days as $row) {
+		if($selected == $row) {
+			$result .= '<option value="'.$row.'" selected>'.$row.'</option>';
+		} else {
+			$result .= '<option value="'.$row.'">'.$row.'</option>';
+		}
+	}
+	return $result;
+}

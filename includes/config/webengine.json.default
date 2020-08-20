@@ -42,5 +42,6 @@
     "server_info_season": "Season 15",
     "server_info_exp": "500x",
     "server_info_masterexp": "250x",
-    "server_info_drop": "50%"
+    "server_info_drop": "50%",
+    "maximum_online": "500"
 }

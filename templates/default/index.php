@@ -23,9 +23,9 @@ if(is_array($serverInfoCache)) {
 	$srvInfo = explode("|", $serverInfoCache[1][0]);
 }
 
-$maxOnline = 5000;
+$maxOnline = config('maximum_online', true);
 $onlinePlayers = check_value($srvInfo[3]) ? $srvInfo[3] : 0;
-$onlinePlayersPercent = $onlinePlayers*100/$maxOnline;
+$onlinePlayersPercent = check_value($maxOnline) ? $onlinePlayers*100/$maxOnline : 0;
 ?>
 <!DOCTYPE html>
 <html>
@@ -97,7 +97,7 @@ $onlinePlayersPercent = $onlinePlayers*100/$maxOnline;
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="col-xs-12 header-info-block">
-						
+						<?php if(check_value(config('maximum_online', true))) { ?>
 						<div class="row">
 							<div class="col-xs-6 text-left">
 								<?php echo lang('sidebar_srvinfo_txt_5'); ?>:
@@ -113,7 +113,7 @@ $onlinePlayersPercent = $onlinePlayers*100/$maxOnline;
 								</div>
 							</div>
 						</div>
-						
+						<?php } ?>
 						<div class="row">
 							<div class="col-xs-6 text-left">
 								<?php echo lang('server_time'); ?>:

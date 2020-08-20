@@ -41,6 +41,11 @@ $allowedSettings = array(
 	'social_link_facebook',
 	'social_link_instagram',
 	'social_link_discord',
+	'server_info_season',
+	'server_info_exp',
+	'server_info_masterexp',
+	'server_info_drop',
+	'maximum_online',
 );
 
 if(check_value($_POST['settings_submit'])) {
@@ -167,6 +172,22 @@ if(check_value($_POST['settings_submit'])) {
 		# social link discord
 		if(check_value($_POST['social_link_discord'])) if(!Validator::Url($_POST['social_link_discord'])) throw new Exception('The discord link setting is not a valid URL.');
 		$setting['social_link_discord'] = $_POST['social_link_discord'];
+		
+		# server info season
+		$setting['server_info_season'] = $_POST['server_info_season'];
+		
+		# server info exp
+		$setting['server_info_exp'] = $_POST['server_info_exp'];
+		
+		# server info master exp
+		$setting['server_info_masterexp'] = $_POST['server_info_masterexp'];
+		
+		# server info drop
+		$setting['server_info_drop'] = $_POST['server_info_drop'];
+		
+		# maximum online
+		if(check_value($_POST['maximum_online'])) if(!Validator::UnsignedNumber($_POST['maximum_online'])) throw new Exception('Invalid setting (maximum_online)');
+		$setting['maximum_online'] = $_POST['maximum_online'];
 		
 		# webengine configs
 		$webengineConfigurations = webengineConfigs();
@@ -561,6 +582,56 @@ echo '<div class="col-md-12">';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="social_link_discord" value="'.config('social_link_discord',true).'">';
+				echo '</td>';
+			echo '</tr>';
+			
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>Server Info: Season</strong>';
+					echo '<p class="setting-description">Leave empty to hide this information.</p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<input type="text" class="form-control" name="server_info_season" value="'.config('server_info_season',true).'">';
+				echo '</td>';
+			echo '</tr>';
+			
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>Server Info: Experience</strong>';
+					echo '<p class="setting-description">Leave empty to hide this information.</p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<input type="text" class="form-control" name="server_info_exp" value="'.config('server_info_exp',true).'">';
+				echo '</td>';
+			echo '</tr>';
+			
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>Server Info: Master Experience</strong>';
+					echo '<p class="setting-description">Leave empty to hide this information.</p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<input type="text" class="form-control" name="server_info_masterexp" value="'.config('server_info_masterexp',true).'">';
+				echo '</td>';
+			echo '</tr>';
+			
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>Server Info: Drop</strong>';
+					echo '<p class="setting-description">Leave empty to hide this information.</p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<input type="text" class="form-control" name="server_info_drop" value="'.config('server_info_drop',true).'">';
+				echo '</td>';
+			echo '</tr>';
+			
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>Maximum Online Players</strong>';
+					echo '<p class="setting-description">Maximum amount of players that your server may allow. Leave empty to hide this information.</p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<input type="text" class="form-control" name="maximum_online" value="'.config('maximum_online',true).'">';
 				echo '</td>';
 			echo '</tr>';
 			

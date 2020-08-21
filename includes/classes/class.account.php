@@ -84,6 +84,11 @@ class Account extends common {
 		$result = $this->memuonline->query($query, $data);
 		if(!$result) throw new Exception(lang('error_22',true));
 		
+		# old season support
+		if(config('season_1_support')) {
+			@$this->memuonline->query("INSERT INTO VI_CURR_INFO (ends_days, chek_code, used_time, memb___id, memb_name, memb_guid, sno__numb, Bill_Section, Bill_Value, Bill_Hour, Surplus_Point, Surplus_Minute, Increase_Days) VALUES ('2005', '1', '1234', ?, '', '1', '7', '6', '3', '6', '6', '2020-01-01 00:00:00', '0')", array($username));
+		}
+		
 		# send welcome email
 		if($regCfg['send_welcome_email']) {
 			$this->sendWelcomeEmail($username, $email);
@@ -406,6 +411,11 @@ class Account extends common {
 		
 		# delete verification request
 		$this->deleteRegistrationVerification($username);
+		
+		# old season support
+		if(config('season_1_support')) {
+			@$this->memuonline->query("INSERT INTO VI_CURR_INFO (ends_days, chek_code, used_time, memb___id, memb_name, memb_guid, sno__numb, Bill_Section, Bill_Value, Bill_Hour, Surplus_Point, Surplus_Minute, Increase_Days) VALUES ('2005', '1', '1234', ?, '', '1', '7', '6', '3', '6', '6', '2020-01-01 00:00:00', '0')", array($verifyKey['registration_account']));
+		}
 		
 		# send welcome email
 		if($regCfg['send_welcome_email']) {

@@ -43,5 +43,6 @@
     "server_info_exp": "500x",
     "server_info_masterexp": "250x",
     "server_info_drop": "50%",
-    "maximum_online": "500"
+    "maximum_online": "500",
+    "season_1_support": false
 }

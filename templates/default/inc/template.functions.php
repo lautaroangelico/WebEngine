@@ -11,49 +11,6 @@
  * http://opensource.org/licenses/MIT
  */
 
-function templateDisplayCSBanner() {
-	loadModuleConfigs('castlesiege');
-	if(!mconfig('active')) return;
-	if(!mconfig('enable_banner')) return;
-	
-	$ranking_data = loadCache('castle_siege.cache');
-	if(is_array($ranking_data)) {
-		$logo = returnGuildLogo($ranking_data['castle'][_CLMN_GUILD_LOGO_], 100);
-		$guild = guildProfile($ranking_data['castle'][_CLMN_MCD_GUILD_OWNER_]);
-		$master = playerProfile($ranking_data['castle'][_CLMN_GUILD_MASTER_]);
-	} else {
-		$logo = returnGuildLogo('1111111111111111111111111114411111144111111111111111111111111111', 100);
-		$guild = '-';
-		$master = '-';
-	}
-	
-	$cs = cs_CalculateTimeLeft();
-	$timeleft = sec_to_dhms($cs);
-	
-	echo '<div class="castle-siege-banner">';
-		echo '<div class="col-xs-2 text-center vcenter">';
-			echo $logo;
-		echo '</div>';
-		echo '<div class="col-xs-3 text-center vcenter">';
-			echo ''.lang('csbanner_txt_1',true).'<br />';
-			echo '<span class="guild_owner">'.$guild.'</span>';
-		echo '</div>';
-		echo '<div class="col-xs-3 text-center vcenter">';
-			echo ''.lang('csbanner_txt_3',true).'<br />';
-			echo '<span class="guild_master">'.$master.'</span>';
-		echo '</div>';
-		echo '<div class="col-xs-4 text-center vcenter">';
-			echo lang('csbanner_txt_2',true).'<br />';
-			echo '<span class="guild_countdown" id="cscountdown">';
-				if($cs > 86400) echo $timeleft[0] . '<span>d</span> ';
-				if($cs > 3600) echo $timeleft[1] . '<span>h</span> ';
-				if($cs > 60) echo $timeleft[2] . '<span>m</span> ';
-				echo $timeleft[3] . '<span>s</span> ';
-			echo '</span>';
-		echo '</div>';
-	echo '</div>';
-}
-
 function templateBuildNavbar() {
 	$cfg = loadConfig('navbar');
 	if(!is_array($cfg)) return;
@@ -117,4 +74,49 @@ function templateBuildUsercp() {
 		}
 	}
 	echo '</ul>';
+}
+
+function templateCastleSiegeWidget() {
+	$castleSiege = new CastleSiege();
+	if(!$castleSiege->showWidget()) return;
+	$siegeData = $castleSiege->siegeData();
+	if(!is_array($siegeData)) return;
+	
+	if($siegeData['castle_data'][_CLMN_MCD_OCCUPY_] == 1) {
+		$guildOwner = guildProfile($siegeData['castle_data'][_CLMN_MCD_GUILD_OWNER_]);
+		$guildOwnerMark = $siegeData['castle_owner_alliance'][0][_CLMN_GUILD_LOGO_];
+		$guildMaster = playerProfile($siegeData['castle_owner_alliance'][0][_CLMN_GUILD_MASTER_]);
+	} else {
+		$guildOwner = '-';
+		$guildOwnerMark = '1111111111111111111111111114411111144111111111111111111111111111';
+		$guildMaster = '-';
+	}
+	
+	echo '<div class="panel castle-owner-widget">';
+		echo '<div class="panel-heading">';
+			echo '<h3 class="panel-title">'.lang('castlesiege_widget_title').'</h3>';
+		echo '</div>';
+		echo '<div class="panel-body">';
+			echo '<div class="row">';
+				echo '<div class="col-sm-6 text-center">';
+					echo returnGuildLogo($guildOwnerMark, 100);
+				echo '</div>';
+				echo '<div class="col-sm-6">';
+					echo '<span class="alt">'.lang('castlesiege_txt_2').'</span><br />';
+					echo $guildOwner . '<br /><br />';
+					echo '<span class="alt">'.lang('castlesiege_txt_12').'</span><br />';
+					echo $guildMaster;
+				echo '</div>';
+			echo '</div>';
+			echo '<div class="row" style="margin-top: 20px;">';
+				echo '<div class="col-sm-12 text-center">';
+					echo '<span class="alt">'.lang('castlesiege_txt_21').'</span><br />';
+					echo $siegeData['current_stage']['title'] . '<br /><br />';
+					echo '<span class="alt">'.lang('castlesiege_txt_1').'</span><br />';
+					echo $siegeData['warfare_stage_countdown'] . '<br /><br />';
+					echo '<a href="'.__BASE_URL__.'castlesiege" class="btn btn-castlewidget btn-xs">'.lang('castlesiege_txt_7').'</a>';
+				echo '</div>';
+			echo '</div>';
+		echo '</div>';
+	echo '</div>';
 }

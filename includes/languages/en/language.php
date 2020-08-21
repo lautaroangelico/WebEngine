@@ -409,9 +409,9 @@ $lang['addstats_txt_12'] = 'Each stat can have a maximum of %s points';
 $lang['addstats_txt_13'] = 'You must add at least %s level up points to use this feature';
 
 # castle siege banner
-$lang['csbanner_txt_1'] = 'Castle Owner';
-$lang['csbanner_txt_2'] = 'Battle Begins In';
-$lang['csbanner_txt_3'] = 'Guild Master';
+$lang['csbanner_txt_1'] = 'Castle Owner'; // to be removed
+$lang['csbanner_txt_2'] = 'Battle Begins In'; // to be removed
+$lang['csbanner_txt_3'] = 'Guild Master'; // to be removed
 
 # profiles
 $lang['profiles_txt_1'] = 'Guild Profile';
@@ -485,6 +485,7 @@ $lang['castlesiege_time_2'] = '%s hours %s minutes';
 $lang['castlesiege_time_3'] = '%s minutes';
 $lang['castlesiege_time_4'] = 'Less than one minute.';
 $lang['castlesiege_battle_duration'] = '%s hours %s minutes';
+$lang['castlesiege_widget_title'] = 'Castle Siege';
 
 # buy zen
 $lang['buyzen_txt_1'] = 'Buy Zen';

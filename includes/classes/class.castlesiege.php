@@ -32,6 +32,7 @@ class CastleSiege {
 	protected $_showBattleDuration = true;
 	protected $_showRegisteredGuilds = true;
 	protected $_showSchedule = true;
+	protected $_showWidget = true;
 	
 	protected $_stages;
 	protected $_schedule;
@@ -60,6 +61,7 @@ class CastleSiege {
 		$this->_showBattleDuration = $cfg['show_battle_duration'];
 		$this->_showRegisteredGuilds = $cfg['show_registered_guilds'];
 		$this->_showSchedule = $cfg['show_schedule'];
+		$this->_showWidget = $cfg['show_widget'];
 		$this->_friendlyDateFormat = $cfg['schedule_date_format'];
 		$this->_stages = $cfg['stages'];
 		
@@ -190,6 +192,10 @@ class CastleSiege {
 	
 	public function showSchedule() {
 		return $this->_showSchedule;
+	}
+	
+	public function showWidget() {
+		return $this->_showWidget;
 	}
 	
 	public function moduleEnabled() {

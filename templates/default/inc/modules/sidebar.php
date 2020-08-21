@@ -70,6 +70,9 @@ if(is_array($srvInfo)) {
 	echo '</div>';
 }
 
+// Castle Siege Block
+templateCastleSiegeWidget();
+
 // Top Level
 $levelRankingData = LoadCacheData('rankings_level.cache');
 $topLevelLimit = 5;

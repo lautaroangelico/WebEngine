@@ -164,8 +164,6 @@ $lang['error_62'] = 'The language switching system is disabled.';
 $lang['error_63'] = 'The selected language is not valid.';
 $lang['error_64'] = 'You do not have permission to add stats to this character.';
 $lang['error_65'] = 'Could not switch language.';
-
-# credit system errors
 $lang['error_66'] = 'You have not set a configuration id.';
 $lang['error_67'] = 'The userid entered is not valid.';
 $lang['error_68'] = 'The username entered contains non-allowed characters.';
@@ -190,8 +188,6 @@ $lang['error_86'] = 'There has been an error editing the configuration, check fo
 $lang['error_87'] = 'There has been an error deleting the configuration, check for database errors.';
 $lang['error_88'] = 'Identifier not set, cannot check online status.';
 $lang['error_89'] = 'There was an error getting the credits value.';
-
-# email system errors
 $lang['error_90'] = 'Could not load email configurations.';
 $lang['error_91'] = 'Could not load email template.';
 $lang['error_92'] = 'Email address invalid, cannot send email.';
@@ -200,20 +196,16 @@ $lang['error_94'] = 'Could not load custom email template (you must provide a fu
 $lang['error_95'] = 'Email template has not been set.';
 $lang['error_96'] = 'No recipient email address has been set.';
 $lang['error_97'] = 'Email subject has not been set.';
-
 $lang['error_98'] = 'Login configurations missing.';
 $lang['error_99'] = 'There was an error while editing the news.';
 $lang['error_100'] = 'Could not load vote system configurations.';
 $lang['error_101'] = 'IP Address is not valid.';
 $lang['error_102'] = 'Credit configuration has not been set (voting system).';
-
 $lang['error_103'] = 'Castle siege data could not be loaded, please contact support.';
-
 $lang['error_104'] = 'There are no cron jobs in the database.';
 $lang['error_105'] = 'The requested action is not valid.';
 $lang['error_106'] = 'The new cron could not be added, please fill all the required information.';
 $lang['error_107'] = 'Another cron with the same file already exists.';
-
 $lang['error_108'] = 'Could not load characters class data, please contact support.';
 $lang['error_109'] = 'Your character class is not valid, please contact support.';
 $lang['error_110'] = 'Could not load character class base stats, please contact support.';
@@ -235,7 +227,6 @@ $lang['error_125'] = 'You do not have enough %s to add stats to your character.'
 $lang['error_126'] = 'You do not have enough %s to reset your character.';
 $lang['error_127'] = 'You have reached the maximum number of resets with this character.';
 $lang['error_128'] = 'Missing character class group, please contact support.';
-$lang['error_129'] = '';
 
 # registration
 $lang['register_txt_1'] = 'Username:';

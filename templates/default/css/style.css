@@ -1,3 +1,19 @@
+/*!
+    
+ =========================================================
+ * WebEngine CMS
+ * https://webenginecms.org/
+ =========================================================
+ 
+ * Author Lautaro Angelico (https://lautaroangelico.com/)
+ * Copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ 
+ * Licensed under the MIT license
+ * http://opensource.org/licenses/MIT
+ 
+ =========================================================
+ 
+*/
 html {
 	min-width: 1040px;
 	height: 100%;
@@ -79,7 +95,11 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 	color: #666666;
 	padding: 40px;
 	overflow: auto;
-	margin: 0px auto;
+	margin: 0px auto 100px auto;
+	-webkit-border-radius: 0px 0px 5px 5px;
+	-moz-border-radius: 0px 0px 5px 5px;
+	border-radius: 0px 0px 5px 5px;
+	-khtml-border-radius: 0px 0px 5px 5px;
 }
 	.footer > .footer-container {
 		width: 100%;
@@ -130,52 +150,6 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 	color: #ffffff !important;
 	text-decoration: none;
 }
-
-
-/* CASTLE SIEGE BANNER */
-.castle-siege-banner {
-	width: 1040px;
-	background: #000 url('../img/castle_siege_banner_bg.jpg') no-repeat center center;
-	background-size: cover;
-	margin: 0px auto;
-	padding: 20px;
-	-moz-box-shadow: 0 0 10px #000;
-	-webkit-box-shadow: 0 0 10px #000;
-	box-shadow: 0 0 10px #000;
-	overflow: auto;
-	font-family: 'Fredoka One', cursive;
-	color: #74beff;
-	-webkit-border-radius: 5px 5px 0px 0px;
-    -moz-border-radius: 5px 5px 0px 0px;
-    border-radius: 5px 5px 0px 0px;
-    -khtml-border-radius: 5px 5px 0px 0px;
-	text-shadow: 1px 1px 3px #000000;
-}
-	.castle-siege-banner img {
-		-webkit-border-radius: 5px;
-		-moz-border-radius: 5px;
-		border-radius: 5px;
-		-khtml-border-radius: 5px;
-		-moz-box-shadow: 0 0 10px #000;
-		-webkit-box-shadow: 0 0 10px #000;
-		box-shadow: 0 0 10px #000;
-	}
-	.castle-siege-banner .guild_owner, .castle-siege-banner .guild_owner a {
-		color: #ffffff;
-		font-size: 45px;
-	}
-	.castle-siege-banner .guild_master, .castle-siege-banner .guild_master a {
-		color: #ffffff;
-		font-size: 45px;
-	}
-	.castle-siege-banner .guild_countdown {
-		color: #ffffff;
-		font-size: 45px;
-	}
-		.castle-siege-banner .guild_countdown span {
-			color: #ffcc00;
-			font-size: 24px;
-		}
 
 .admincp-button {
 	position:absolute;
@@ -436,67 +410,6 @@ height: 40px;
 border: 0px;
 }
 
-/* CASTLE SIEGE CSS */
-.csinfo_container {
-	background: url('../img/castle_siege.jpg') no-repeat top right;
-	background-size: cover;
-	width: 100%;
-	padding: 20px;
-	margin-bottom: 20px;
-	border: 1px solid #333;
-	-moz-box-shadow: 0 0 10px #555;
-	-webkit-box-shadow: 0 0 10px #555;
-	box-shadow: 0 0 10px #555;
-	-moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    -khtml-border-radius: 10px;
-}
-.csinfo_content {
-	width: 100%;
-	height: 180px;
-	margin: 10px 0px 0px 10px;
-	display: inline-block;
-}
-	.csinfo_glogo {
-		float: left;
-		width: 30%;
-		height: 180px;
-		text-align: center;
-	}
-	.csinfo_ginfo {
-		float: left;
-		width: 70%;
-		padding: 0px 10px;
-	}
-	
-		.csinfo_ginfo table {
-			table-layout: fixed;
-			width: 400px;
-		}
-			.csinfo_ginfo table tr td {
-				padding: 3px 0px;
-				font-size: 20px;
-				color: #fff;
-			}
-			.csinfo_ginfo table tr td:first-child {
-				color: #9a7e46;
-			}
-			
-.csinfo_glist {
-	list-style-type: none;
-	margin: 0px;
-	padding: 0px;
-}
-	.csinfo_glist li {
-		float: left;
-		width: 30%;
-		padding: 8px 10px;
-	}
-	.csinfo_glist li:hover {
-		background: #0d0c0b;
-	}
-
 .module-requirements {
 	font-size: 12px;
 	margin-top: 20px;
@@ -525,6 +438,7 @@ border: 0px;
 
 .panel-usercp {
 	background: url('../img/usercp_bg.jpg') no-repeat top center;
+	background-size: cover;
 }
 
 .panel-usercp ul {

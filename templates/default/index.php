@@ -67,6 +67,8 @@ $onlinePlayersPercent = check_value($maxOnline) ? $onlinePlayers*100/$maxOnline 
 							<li><a href="<?php echo __BASE_URL__ . 'language/switch/to/pt'; ?>" title="Português"><img src="<?php echo getCountryFlag('BR'); ?>" /> BR</a></li>
 							<li><a href="<?php echo __BASE_URL__ . 'language/switch/to/ro'; ?>" title="Romanian"><img src="<?php echo getCountryFlag('RO'); ?>" /> RO</a></li>
 							<li><a href="<?php echo __BASE_URL__ . 'language/switch/to/cn'; ?>" title="Simplified Chinese"><img src="<?php echo getCountryFlag('CN'); ?>" /> CN</a></li>
+							<li><a href="<?php echo __BASE_URL__ . 'language/switch/to/ru'; ?>" title="Russian"><img src="<?php echo getCountryFlag('RU'); ?>" /> RU</a></li>
+							<li><a href="<?php echo __BASE_URL__ . 'language/switch/to/lt'; ?>" title="Lithuanian"><img src="<?php echo getCountryFlag('LT'); ?>" /> LT</a></li>
 						</ul>
 					<?php } ?>
 					</div>

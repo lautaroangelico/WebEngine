@@ -1,18 +1,18 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
  */
-?>
-<h2>Fix Stats Settings</h2>
-<?php
+
+echo '<h2>Reset Stats Settings</h2>';
+
 function saveChanges() {
 	global $_POST;
 	foreach($_POST as $setting) {
@@ -24,10 +24,21 @@ function saveChanges() {
 	$xmlPath = __PATH_MODULE_CONFIGS__.'usercp.resetstats.xml';
 	$xml = simplexml_load_file($xmlPath);
 	
+	if(!check_value($_POST['setting_1'])) throw new Exception('Invalid setting (active)');
+	if(!in_array($_POST['setting_1'], array(0, 1))) throw new Exception('Invalid setting (active)');
 	$xml->active = $_POST['setting_1'];
-	$xml->resetstats_enable_zen_requirement = $_POST['setting_2'];
-	$xml->resetstats_price_zen = $_POST['setting_3'];
-	$xml->resetstats_new_stats = $_POST['setting_4'];
+	
+	if(!check_value($_POST['setting_2'])) throw new Exception('Invalid setting (zen_cost)');
+	if(!Validator::UnsignedNumber($_POST['setting_2'])) throw new Exception('Invalid setting (zen_cost)');
+	$xml->zen_cost = $_POST['setting_2'];
+	
+	if(!check_value($_POST['setting_3'])) throw new Exception('Invalid setting (credit_config)');
+	if(!Validator::UnsignedNumber($_POST['setting_3'])) throw new Exception('Invalid setting (credit_config)');
+	$xml->credit_config = $_POST['setting_3'];
+	
+	if(!check_value($_POST['setting_4'])) throw new Exception('Invalid setting (credit_cost)');
+	if(!Validator::UnsignedNumber($_POST['setting_4'])) throw new Exception('Invalid setting (credit_cost)');
+	$xml->credit_cost = $_POST['setting_4'];
 	
 	$save = $xml->asXML($xmlPath);
 	if($save) {
@@ -42,31 +53,33 @@ if(check_value($_POST['submit_changes'])) {
 }
 
 loadModuleConfigs('usercp.resetstats');
+
+$creditSystem = new CreditSystem();
 ?>
 <form action="" method="post">
 	<table class="table table-striped table-bordered table-hover module_config_tables">
 		<tr>
-			<th>Status<br/><span>Enable/disable the fix stats module.</span></th>
+			<th>Status<br/><span>Enable/disable the reset stats module.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
-			<th>Zen Requirement<br/></th>
+			<th>Zen Cost<br/><span>Amount of zen required to reset the character stats. Set to 0 to disable zen requirement.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_2',mconfig('resetstats_enable_zen_requirement'),'Enabled','Disabled'); ?>
+				<input class="form-control" type="text" name="setting_2" value="<?php echo mconfig('zen_cost'); ?>"/>
 			</td>
 		</tr>
 		<tr>
-			<th>Zen<br/><span>If zen requirement is enabled, set the price of this feature.</span></th>
+			<th>Credit Cost<br/><span>Amount of credits required to reset the character stats. Set to 0 to disable credit requirement.</span></th>
 			<td>
-				<input class="input-small" type="text" name="setting_3" value="<?=mconfig('resetstats_price_zen')?>"/>
+				<input class="form-control" type="text" name="setting_4" value="<?php echo mconfig('credit_cost'); ?>"/>
 			</td>
 		</tr>
 		<tr>
-			<th>New Stats<br/><span>After fixing stats, set the default points to add to each stat.</span></th>
+			<th>Credit Configuration<br/><span></span></th>
 			<td>
-				<input class="input-small" type="text" name="setting_4" value="<?=mconfig('resetstats_new_stats')?>"/>
+				<?php echo $creditSystem->buildSelectInput("setting_3", mconfig('credit_config'), "form-control"); ?>
 			</td>
 		</tr>
 		<tr>

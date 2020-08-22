@@ -26,10 +26,6 @@
 			<filename>PASSWORD_RECOVERY_COMPLETED</filename>
 		</template>
 		<template>
-			<subject>Your {SERVER_NAME} Master Key</subject>
-			<filename>MASTER_KEY_RECOVERY</filename>
-		</template>
-		<template>
 			<subject>Welcome to {SERVER_NAME}!</subject>
 			<filename>WELCOME_EMAIL</filename>
 		</template>

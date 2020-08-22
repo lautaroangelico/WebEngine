@@ -40,12 +40,11 @@ class Rankings {
 			array(lang('rankings_txt_2',true), 'resets', mconfig('rankings_enable_resets')),
 			array(lang('rankings_txt_3',true), 'killers', mconfig('rankings_enable_pk')),
 			array(lang('rankings_txt_4',true), 'guilds', mconfig('rankings_enable_guilds')),
-			array(lang('rankings_txt_5',true), 'grandresets', mconfig('rankings_enable_gr'), array('mue', 'muemu', 'louis', 'xteam')),
-			array(lang('rankings_txt_6',true), 'online', mconfig('rankings_enable_online'), array('mue', 'muemu', 'louis', 'xteam')),
+			array(lang('rankings_txt_5',true), 'grandresets', mconfig('rankings_enable_gr')),
+			array(lang('rankings_txt_6',true), 'online', mconfig('rankings_enable_online'), array('xteam')),
 			array(lang('rankings_txt_7',true), 'votes', mconfig('rankings_enable_votes')),
 			array(lang('rankings_txt_8',true), 'gens', mconfig('rankings_enable_gens')),
 			array(lang('rankings_txt_22',true), 'master', mconfig('rankings_enable_master')),
-			array(lang('rankings_txt_24',true), 'pvplaststand', mconfig('rankings_enable_pvplaststand'), array('mue')),
 		);
 		
 		// extra menu links
@@ -83,9 +82,6 @@ class Rankings {
 			case 'master':
 				$this->_masterlevelRanking();
 				break;
-			case 'pvplaststand':
-				$this->_pvplaststandRanking();
-				break;
 			case 'gens':
 				$this->_gensRanking();
 				break;
@@ -95,63 +91,12 @@ class Rankings {
 	}
 	
 	private function _levelsRanking() {
-		switch($this->serverFiles) {
-			case "mue":
-				if(mconfig('combine_level_masterlevel')) {
-					// level + master level combined (different tables)
-					$result = $this->_getLevelRankingData(true, false);
-				} else {
-					// level only
-					$result = $this->_getLevelRankingData(false);
-				}
-				break;
-			case "igcn":
-				if(mconfig('combine_level_masterlevel')) {
-					// level + master level combined (same tables)
-					$result = $this->_getLevelRankingData(true, true);
-				} else {
-					// level only
-					$result = $this->_getLevelRankingData(false);
-				}
-				break;
-			case "muemu":
-				if(mconfig('combine_level_masterlevel')) {
-					// level + master level combined (different tables)
-					$result = $this->_getLevelRankingData(true, false);
-				} else {
-					// level only
-					$result = $this->_getLevelRankingData(false);
-				}
-				break;
-			case "louis":
-				if(mconfig('combine_level_masterlevel')) {
-					// level + master level combined (different tables)
-					$result = $this->_getLevelRankingData(true, false);
-				} else {
-					// level only
-					$result = $this->_getLevelRankingData(false);
-				}
-				break;
-			case "xteam":
-				if(mconfig('combine_level_masterlevel')) {
-					// level + master level combined (different tables)
-					$result = $this->_getLevelRankingData(true, false);
-				} else {
-					// level only
-					$result = $this->_getLevelRankingData(false);
-				}
-				break;
-			case "custom":
-				if(mconfig('combine_level_masterlevel')) {
-					// level + master level combined (same tables)
-					$result = $this->_getLevelRankingData(true, true);
-				} else {
-					// level only
-					$result = $this->_getLevelRankingData(false);
-				}
-				break;
-			default:
-				return;
+		if(mconfig('combine_level_masterlevel')) {
+			// level + master level combined (same tables)
+			$result = $this->_getLevelRankingData(true);
+		} else {
+			// level only
+			$result = $this->_getLevelRankingData(false);
 		}
 		if(!is_array($result)) return;
 		
@@ -160,63 +105,12 @@ class Rankings {
 	}
 	
 	private function _resetsRanking() {
-		switch($this->serverFiles) {
-			case "mue":
-				if(mconfig('combine_level_masterlevel')) {
-					// level + master level combined (different tables)
-					$result = $this->_getResetRankingData(true, false);
-				} else {
-					// level only
-					$result = $this->_getResetRankingData(false);
-				}
-				break;
-			case "igcn":
-				if(mconfig('combine_level_masterlevel')) {
-					// level + master level combined (same tables)
-					$result = $this->_getResetRankingData(true, true);
-				} else {
-					// level only
-					$result = $this->_getResetRankingData(false);
-				}
-				break;
-			case "muemu":
-				if(mconfig('combine_level_masterlevel')) {
-					// level + master level combined (different tables)
-					$result = $this->_getResetRankingData(true, false);
-				} else {
-					// level only
-					$result = $this->_getResetRankingData(false);
-				}
-				break;
-			case "louis":
-				if(mconfig('combine_level_masterlevel')) {
-					// level + master level combined (different tables)
-					$result = $this->_getResetRankingData(true, false);
-				} else {
-					// level only
-					$result = $this->_getResetRankingData(false);
-				}
-				break;
-			case "xteam":
-				if(mconfig('combine_level_masterlevel')) {
-					// level + master level combined (different tables)
-					$result = $this->_getResetRankingData(true, false);
-				} else {
-					// level only
-					$result = $this->_getResetRankingData(false);
-				}
-				break;
-			case "custom":
-				if(mconfig('combine_level_masterlevel')) {
-					// level + master level combined (same tables)
-					$result = $this->_getResetRankingData(true, true);
-				} else {
-					// level only
-					$result = $this->_getResetRankingData(false);
-				}
-				break;
-			default:
-				return;
+		if(mconfig('combine_level_masterlevel')) {
+			// level + master level combined (same tables)
+			$result = $this->_getResetRankingData(true);
+		} else {
+			// level only
+			$result = $this->_getResetRankingData(false);
 		}
 		if(!is_array($result)) return;
 
@@ -225,63 +119,12 @@ class Rankings {
 	}
 	
 	private function _killersRanking() {
-		switch($this->serverFiles) {
-			case "mue":
-				if(mconfig('combine_level_masterlevel')) {
-					// level + master level combined (different tables)
-					$result = $this->_getKillersRankingData(true, false);
-				} else {
-					// level only
-					$result = $this->_getKillersRankingData(false);
-				}
-				break;
-			case "igcn":
-				if(mconfig('combine_level_masterlevel')) {
-					// level + master level combined (same tables)
-					$result = $this->_getKillersRankingData(true, true);
-				} else {
-					// level only
-					$result = $this->_getKillersRankingData(false);
-				}
-				break;
-			case "muemu":
-				if(mconfig('combine_level_masterlevel')) {
-					// level + master level combined (different tables)
-					$result = $this->_getKillersRankingData(true, false);
-				} else {
-					// level only
-					$result = $this->_getKillersRankingData(false);
-				}
-				break;
-			case "louis":
-				if(mconfig('combine_level_masterlevel')) {
-					// level + master level combined (different tables)
-					$result = $this->_getKillersRankingData(true, false);
-				} else {
-					// level only
-					$result = $this->_getKillersRankingData(false);
-				}
-				break;
-			case "xteam":
-				if(mconfig('combine_level_masterlevel')) {
-					// level + master level combined (different tables)
-					$result = $this->_getKillersRankingData(true, false);
-				} else {
-					// level only
-					$result = $this->_getKillersRankingData(false);
-				}
-				break;
-			case "custom":
-				if(mconfig('combine_level_masterlevel')) {
-					// level + master level combined (same tables)
-					$result = $this->_getKillersRankingData(true, true);
-				} else {
-					// level only
-					$result = $this->_getKillersRankingData(false);
-				}
-				break;
-			default:
-				return;
+		if(mconfig('combine_level_masterlevel')) {
+			// level + master level combined (different tables)
+			$result = $this->_getKillersRankingData(true);
+		} else {
+			// level only
+			$result = $this->_getKillersRankingData(false);
 		}
 		if(!is_array($result)) return;
 
@@ -292,22 +135,7 @@ class Rankings {
 	private function _grandresetsRanking() {
 		$this->mu = Connection::Database('MuOnline');
 		
-		switch($this->serverFiles) {
-			case "mue":
-				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.", "._CLMN_CHR_GRSTS_.", "._CLMN_CHR_RSTS_.", "._CLMN_CHR_CLASS_.", "._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_GRSTS_." >= 1 AND "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_GRSTS_." DESC, "._CLMN_CHR_RSTS_." DESC");
-				break;
-			case "muemu":
-				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.", "._CLMN_CHR_GRSTS_.", "._CLMN_CHR_RSTS_.", "._CLMN_CHR_CLASS_.", "._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_GRSTS_." >= 1 AND "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_GRSTS_." DESC, "._CLMN_CHR_RSTS_." DESC");
-				break;
-			case "louis":
-				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.", "._CLMN_CHR_GRSTS_.", "._CLMN_CHR_RSTS_.", "._CLMN_CHR_CLASS_.", "._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_GRSTS_." >= 1 AND "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_GRSTS_." DESC, "._CLMN_CHR_RSTS_." DESC");
-				break;
-			case "xteam":
-				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.", "._CLMN_CHR_GRSTS_.", "._CLMN_CHR_RSTS_.", "._CLMN_CHR_CLASS_.", "._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_GRSTS_." >= 1 AND "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_GRSTS_." DESC, "._CLMN_CHR_RSTS_." DESC");
-				break;
-			default:
-				return;
-		}
+		$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.", "._CLMN_CHR_GRSTS_.", "._CLMN_CHR_RSTS_.", "._CLMN_CHR_CLASS_.", "._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_GRSTS_." >= 1 AND "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_GRSTS_." DESC, "._CLMN_CHR_RSTS_." DESC");
 		if(!is_array($result)) return;
 
 		$cache = BuildCacheData($result);
@@ -330,27 +158,12 @@ class Rankings {
 	private function _masterlevelRanking() {
 		$this->mu = Connection::Database('MuOnline');
 		
-		switch($this->serverFiles) {
-			case "mue":
-				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." t1."._CLMN_ML_NAME_.", t1."._CLMN_ML_LVL_.", t2."._CLMN_CHR_CLASS_.", t2."._CLMN_CHR_LVL_.", t2."._CLMN_CHR_MAP_." FROM "._TBL_MASTERLVL_." AS t1 INNER JOIN "._TBL_CHR_." AS t2 ON t1."._CLMN_ML_NAME_." = t2."._CLMN_CHR_NAME_." WHERE t1."._CLMN_ML_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND t1."._CLMN_ML_LVL_." > 0 ORDER BY t1."._CLMN_ML_LVL_." DESC, t2."._CLMN_CHR_LVL_." DESC");
-				break;
-			case "igcn":
-				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.", "._CLMN_ML_LVL_.", "._CLMN_CHR_CLASS_.", "._CLMN_CHR_LVL_.", "._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND "._CLMN_ML_LVL_." > 0 ORDER BY "._CLMN_ML_LVL_." DESC");
-				break;
-			case "muemu":
-				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." t1."._CLMN_ML_NAME_.", t1."._CLMN_ML_LVL_.", t2."._CLMN_CHR_CLASS_.", t2."._CLMN_CHR_LVL_.", t2."._CLMN_CHR_MAP_." FROM "._TBL_MASTERLVL_." AS t1 INNER JOIN "._TBL_CHR_." AS t2 ON t1."._CLMN_ML_NAME_." = t2."._CLMN_CHR_NAME_." WHERE t1."._CLMN_ML_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND t1."._CLMN_ML_LVL_." > 0 ORDER BY t1."._CLMN_ML_LVL_." DESC, t2."._CLMN_CHR_LVL_." DESC");
-				break;
-			case "louis":
-				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." t1."._CLMN_ML_NAME_.", t1."._CLMN_ML_LVL_.", t2."._CLMN_CHR_CLASS_.", t2."._CLMN_CHR_LVL_.", t2."._CLMN_CHR_MAP_." FROM "._TBL_MASTERLVL_." AS t1 INNER JOIN "._TBL_CHR_." AS t2 ON t1."._CLMN_ML_NAME_." = t2."._CLMN_CHR_NAME_." WHERE t1."._CLMN_ML_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND t1."._CLMN_ML_LVL_." > 0 ORDER BY t1."._CLMN_ML_LVL_." DESC, t2."._CLMN_CHR_LVL_." DESC");
-				break;
-			case "xteam":
-				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." t1."._CLMN_ML_NAME_.", t1."._CLMN_ML_LVL_.", t2."._CLMN_CHR_CLASS_.", t2."._CLMN_CHR_LVL_.", t2."._CLMN_CHR_MAP_." FROM "._TBL_MASTERLVL_." AS t1 INNER JOIN "._TBL_CHR_." AS t2 ON t1."._CLMN_ML_NAME_." = t2."._CLMN_CHR_NAME_." WHERE t1."._CLMN_ML_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND t1."._CLMN_ML_LVL_." > 0 ORDER BY t1."._CLMN_ML_LVL_." DESC, t2."._CLMN_CHR_LVL_." DESC");
-				break;
-			case "custom":
-				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.", "._CLMN_ML_LVL_.", "._CLMN_CHR_CLASS_.", "._CLMN_CHR_LVL_.", "._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND "._CLMN_ML_LVL_." > 0 ORDER BY "._CLMN_ML_LVL_." DESC");
-				break;
-			default:
-				return;
+		if(_TBL_CHR_ == _TBL_MASTERLVL_) {
+			// Master Level and Character in same table
+			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.", "._CLMN_ML_LVL_.", "._CLMN_CHR_CLASS_.", "._CLMN_CHR_LVL_.", "._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND "._CLMN_ML_LVL_." > 0 ORDER BY "._CLMN_ML_LVL_." DESC");
+		} else {
+			// Master Level in separate table
+			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." t1."._CLMN_ML_NAME_.", t1."._CLMN_ML_LVL_.", t2."._CLMN_CHR_CLASS_.", t2."._CLMN_CHR_LVL_.", t2."._CLMN_CHR_MAP_." FROM "._TBL_MASTERLVL_." AS t1 INNER JOIN "._TBL_CHR_." AS t2 ON t1."._CLMN_ML_NAME_." = t2."._CLMN_CHR_NAME_." WHERE t1."._CLMN_ML_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND t1."._CLMN_ML_LVL_." > 0 ORDER BY t1."._CLMN_ML_LVL_." DESC, t2."._CLMN_CHR_LVL_." DESC");
 		}
 		if(!is_array($result)) return;
 
@@ -359,41 +172,22 @@ class Rankings {
 	}
 	
 	private function _gensRanking() {
-		switch($this->serverFiles) {
-			default:
-				$duprianData = $this->_generateGensRankingData(1);
-				if(!is_array($duprianData)) $duprianData = array();
-				
-				$vanertData = $this->_generateGensRankingData(2);
-				if(!is_array($vanertData)) $vanertData = array();
-				
-				$rankingData = array_merge($duprianData,$vanertData);
-				usort($rankingData, function($a, $b) {
-					return $b['contribution'] - $a['contribution'];
-				});
-				$result = array_slice($rankingData, 0, $this->_results);
-		}
+		$duprianData = $this->_generateGensRankingData(1);
+		if(!is_array($duprianData)) $duprianData = array();
+		
+		$vanertData = $this->_generateGensRankingData(2);
+		if(!is_array($vanertData)) $vanertData = array();
+		
+		$rankingData = array_merge($duprianData,$vanertData);
+		usort($rankingData, function($a, $b) {
+			return $b['contribution'] - $a['contribution'];
+		});
+		$result = array_slice($rankingData, 0, $this->_results);
 		if(empty($result)) return;
 		if(!is_array($result)) return;
 		
 		$cache = BuildCacheData($result);
 		UpdateCache('rankings_gens.cache',$cache);
-	}
-	
-	private function _pvplaststandRanking() {
-		$this->mu = Connection::Database('MuOnline');
-		
-		switch($this->serverFiles) {
-			case "mue":
-				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.", "._CLMN_CHR_CLASS_.", "._CLMN_CHR_PVPLS_WIN_.", "._CLMN_CHR_MAP_." FROM "._TBL_CHR_." ORDER BY "._CLMN_CHR_PVPLS_WIN_." DESC");
-				break;
-			default:
-				return;
-		}
-		if(!is_array($result)) return;
-		
-		$cache = BuildCacheData($result);
-		UpdateCache('rankings_pvplaststand.cache',$cache);
 	}
 	
 	private function _votesRanking() {
@@ -431,28 +225,6 @@ class Rankings {
 		$this->mu = Connection::Database('MuOnline');
 		
 		switch($this->serverFiles) {
-			case "mue":
-				if($this->config['SQL_USE_2_DB']) {
-					$muLogEx = $this->me->query_fetch("SELECT TOP ".$this->_results." "._CLMN_LOGEX_ACCID_.", sum("._CLMN_LOGEX_OD_.") as TotalOnlineTime FROM "._TBL_LOGEX_." GROUP BY "._CLMN_LOGEX_ACCID_." ORDER BY TotalOnlineTime DESC");
-					if(is_array($muLogEx)) {
-						$result = array();
-						$character = new Character();
-						foreach($muLogEx as $key => $thisUser) {
-							$characterName = $character->AccountCharacterIDC($thisUser[_CLMN_LOGEX_ACCID_]);
-							$characterData = $character->CharacterData($characterName);
-							$result[$key] = array($characterName, $thisUser['TotalOnlineTime'], $characterData[_CLMN_CHR_CLASS_], $characterData[_CLMN_CHR_MAP_]);
-						}
-					}
-				} else {
-					$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." tb2."._CLMN_GAMEIDC_.", sum(tb1."._CLMN_LOGEX_OD_.") AS TotalOnlineDuration, tb3."._CLMN_CHR_CLASS_.", tb3."._CLMN_CHR_MAP_." FROM "._TBL_LOGEX_." AS tb1 INNER JOIN "._TBL_AC_." AS tb2 ON tb1."._CLMN_LOGEX_ACCID_." = tb2."._CLMN_AC_ID_." INNER JOIN "._TBL_CHR_." AS tb3 ON tb2."._CLMN_GAMEIDC_." = tb3."._CLMN_CHR_NAME_." WHERE tb3."._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") GROUP BY tb1."._CLMN_LOGEX_ACCID_.", tb2."._CLMN_GAMEIDC_.", tb3."._CLMN_CHR_CLASS_." ORDER BY TotalOnlineDuration DESC");
-				}
-				break;
-			case "muemu":
-				$result = $this->_getOnlineRankingDataMembStatHours();
-				break;
-			case "louis":
-				$result = $this->_getOnlineRankingDataMembStatHours();
-				break;
 			case "xteam":
 				$result = $this->_getOnlineRankingDataMembStatHours();
 				break;
@@ -494,15 +266,10 @@ class Rankings {
 	private function _generateGensRankingData($influence=1) {
 		$this->mu = Connection::Database('MuOnline');
 		
-		$result = $this->mu->query_fetch("SELECT * FROM "._TBL_GENS_." WHERE "._CLMN_GENS_TYPE_." = ? AND "._CLMN_GENS_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_GENS_POINT_." DESC", array($influence));
+		$result = $this->mu->query_fetch("SELECT t1."._CLMN_GENS_NAME_.", t1."._CLMN_GENS_TYPE_.", t1."._CLMN_GENS_POINT_.", t2."._CLMN_CHR_LVL_.", t2."._CLMN_CHR_CLASS_.", t2."._CLMN_CHR_MAP_." FROM "._TBL_GENS_." as t1 INNER JOIN "._TBL_CHR_." as t2 ON t1."._CLMN_GENS_NAME_." = t2."._CLMN_CHR_NAME_." WHERE t1."._CLMN_GENS_TYPE_." = ? AND t1."._CLMN_GENS_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY t1."._CLMN_GENS_POINT_." DESC", array($influence));
 		if(!is_array($result)) return;
 		
-		$Character = new Character();
-		
 		foreach($result as $rankPos => $row) {
-			$characterData = $Character->CharacterData($row[_CLMN_GENS_NAME_]);
-			if(!is_array($characterData)) continue;
-			
 			$gensRank = getGensRank($row[_CLMN_GENS_POINT_]);
 			if($row[_CLMN_GENS_POINT_] >= 10000) {
 				$gensRank = getGensLeadershipRank($rankPos);
@@ -513,9 +280,9 @@ class Rankings {
 				'influence' => $row[_CLMN_GENS_TYPE_],
 				'contribution' => $row[_CLMN_GENS_POINT_],
 				'rank' => $gensRank,
-				'level' => $characterData[_CLMN_CHR_LVL_],
-				'class' => $characterData[_CLMN_CHR_CLASS_],
-				'map' => $characterData[_CLMN_CHR_MAP_]
+				'level' => $row[_CLMN_CHR_LVL_],
+				'class' => $row[_CLMN_CHR_CLASS_],
+				'map' => $row[_CLMN_CHR_MAP_]
 			);
 		}
 		
@@ -523,7 +290,7 @@ class Rankings {
 		return $rankingData;
 	}
 	
-	private function _getLevelRankingData($combineMasterLevel=false, $masterLevelInSameTable=false) {
+	private function _getLevelRankingData($combineMasterLevel=false) {
 		$this->mu = Connection::Database('MuOnline');
 		
 		// level only (no master level)
@@ -533,37 +300,39 @@ class Rankings {
 			return $result;
 		}
 		
-		// level + master level (in same table)
-		if($masterLevelInSameTable) {
+		if(_TBL_CHR_ == _TBL_MASTERLVL_) {
+			
+			// level + master level (in same table)
 			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.",("._CLMN_CHR_LVL_."+"._CLMN_ML_LVL_.") as "._CLMN_CHR_LVL_.","._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_LVL_." DESC");
 			if(!is_array($result)) return;
 			return $result;
+		} else {
+		
+			// level + master level (different tables)
+			$Character = new Character();
+			$characters = $this->mu->query_fetch("SELECT "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_LVL_.","._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_LVL_." DESC");
+			if(!is_array($characters)) return;
+			foreach($characters as $row) {
+				$masterLevelInfo = $Character->getMasterLevelInfo($row[_CLMN_CHR_NAME_]);
+				$rankingData[] = array(
+					_CLMN_CHR_NAME_ => $row[_CLMN_CHR_NAME_],
+					_CLMN_CHR_CLASS_ => $row[_CLMN_CHR_CLASS_],
+					_CLMN_CHR_LVL_ => $row[_CLMN_CHR_LVL_]+$masterLevelInfo[_CLMN_ML_LVL_],
+					_CLMN_CHR_MAP_ => $row[_CLMN_CHR_MAP_],
+				);
+			}
+			
+			usort($rankingData, function($a, $b) {
+				return $b[_CLMN_CHR_LVL_] - $a[_CLMN_CHR_LVL_];
+			});
+			
+			$result = array_slice($rankingData, 0, $this->_results);
+			if(!is_array($result)) return;
+			return $result;
 		}
-		
-		// level + master level (different tables)
-		$Character = new Character();
-		$characters = $this->mu->query_fetch("SELECT "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_LVL_.","._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_LVL_." DESC");
-		if(!is_array($characters)) return;
-		foreach($characters as $row) {
-			$masterLevelInfo = $Character->getMasterLevelInfo($row[_CLMN_CHR_NAME_]);
-			$rankingData[] = array(
-				_CLMN_CHR_NAME_ => $row[_CLMN_CHR_NAME_],
-				_CLMN_CHR_CLASS_ => $row[_CLMN_CHR_CLASS_],
-				_CLMN_CHR_LVL_ => $row[_CLMN_CHR_LVL_]+$masterLevelInfo[_CLMN_ML_LVL_],
-				_CLMN_CHR_MAP_ => $row[_CLMN_CHR_MAP_],
-			);
-		}
-		
-		usort($rankingData, function($a, $b) {
-			return $b[_CLMN_CHR_LVL_] - $a[_CLMN_CHR_LVL_];
-		});
-		
-		$result = array_slice($rankingData, 0, $this->_results);
-		if(!is_array($result)) return;
-		return $result;
 	}
 	
-	private function _getResetRankingData($combineMasterLevel=false, $masterLevelInSameTable=false) {
+	private function _getResetRankingData($combineMasterLevel=false) {
 		$this->mu = Connection::Database('MuOnline');
 		
 		// level only (no master level)
@@ -573,21 +342,21 @@ class Rankings {
 			return $result;
 		}
 		
-		// level + master level (in same table)
-		if($masterLevelInSameTable) {
+		if(_TBL_CHR_ == _TBL_MASTERLVL_) {
+			// level + master level (in same table)
 			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_RSTS_.",("._CLMN_CHR_LVL_."+"._CLMN_ML_LVL_.") as "._CLMN_CHR_LVL_.","._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND "._CLMN_CHR_RSTS_." > 0 ORDER BY "._CLMN_CHR_RSTS_." DESC, "._CLMN_CHR_LVL_." DESC");
 			if(!is_array($result)) return;
 			return $result;
+		} else {
+			// level + master level (different tables)
+			$Character = new Character();
+			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._TBL_CHR_."."._CLMN_CHR_NAME_.", "._TBL_CHR_."."._CLMN_CHR_CLASS_.", "._TBL_CHR_."."._CLMN_CHR_RSTS_.", ("._TBL_CHR_."."._CLMN_CHR_LVL_." + "._TBL_MASTERLVL_."."._CLMN_ML_LVL_.") as "._CLMN_CHR_LVL_.", "._TBL_CHR_."."._CLMN_CHR_MAP_." FROM "._TBL_CHR_." INNER JOIN "._TBL_MASTERLVL_." ON "._TBL_CHR_."."._CLMN_CHR_NAME_." = "._TBL_MASTERLVL_."."._CLMN_ML_NAME_." WHERE "._TBL_CHR_."."._CLMN_CHR_NAME_." NOT IN (".$this->_rankingsExcludeChars().") AND "._TBL_CHR_."."._CLMN_CHR_RSTS_." > 0 ORDER BY "._TBL_CHR_."."._CLMN_CHR_RSTS_." DESC, "._CLMN_CHR_LVL_." DESC");
+			if(!is_array($result)) return;
+			return $result;
 		}
-		
-		// level + master level (different tables)
-		$Character = new Character();
-		$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._TBL_CHR_."."._CLMN_CHR_NAME_.", "._TBL_CHR_."."._CLMN_CHR_CLASS_.", "._TBL_CHR_."."._CLMN_CHR_RSTS_.", ("._TBL_CHR_."."._CLMN_CHR_LVL_." + "._TBL_MASTERLVL_."."._CLMN_ML_LVL_.") as "._CLMN_CHR_LVL_.", "._TBL_CHR_."."._CLMN_CHR_MAP_." FROM "._TBL_CHR_." INNER JOIN "._TBL_MASTERLVL_." ON "._TBL_CHR_."."._CLMN_CHR_NAME_." = "._TBL_MASTERLVL_."."._CLMN_ML_NAME_." WHERE "._TBL_CHR_."."._CLMN_CHR_NAME_." NOT IN (".$this->_rankingsExcludeChars().") AND "._TBL_CHR_."."._CLMN_CHR_RSTS_." > 0 ORDER BY "._TBL_CHR_."."._CLMN_CHR_RSTS_." DESC, "._CLMN_CHR_LVL_." DESC");
-		if(!is_array($result)) return;
-		return $result;
 	}
 	
-	private function _getKillersRankingData($combineMasterLevel=false, $masterLevelInSameTable=false) {
+	private function _getKillersRankingData($combineMasterLevel=false) {
 		$this->mu = Connection::Database('MuOnline');
 		
 		// level only (no master level)
@@ -597,23 +366,23 @@ class Rankings {
 			return $result;
 		}
 		
-		// level + master level (in same table)
-		if($masterLevelInSameTable) {
+		if(_TBL_CHR_ == _TBL_MASTERLVL_) {
+			// level + master level (in same table)
 			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_PK_KILLS_.",("._CLMN_CHR_LVL_."+"._CLMN_ML_LVL_.") as "._CLMN_CHR_LVL_.","._CLMN_CHR_MAP_.","._CLMN_CHR_PK_LEVEL_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND "._CLMN_CHR_PK_KILLS_." > 0 ORDER BY "._CLMN_CHR_PK_KILLS_." DESC");
 			if(!is_array($result)) return;
 			return $result;
+		} else {
+			// level + master level (different tables)
+			$Character = new Character();
+			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_PK_KILLS_.","._CLMN_CHR_LVL_.","._CLMN_CHR_MAP_.","._CLMN_CHR_PK_LEVEL_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND "._CLMN_CHR_PK_KILLS_." > 0 ORDER BY "._CLMN_CHR_PK_KILLS_." DESC");
+			if(!is_array($result)) return;
+			foreach($result as $key => $row) {
+				$masterLevelInfo = $Character->getMasterLevelInfo($row[_CLMN_CHR_NAME_]);
+				if(!is_array($masterLevelInfo)) continue;
+				$result[$key][_CLMN_CHR_LVL_] = $row[_CLMN_CHR_LVL_]+$masterLevelInfo[_CLMN_ML_LVL_];
+			}
+			return $result;
 		}
-		
-		// level + master level (different tables)
-		$Character = new Character();
-		$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_PK_KILLS_.","._CLMN_CHR_LVL_.","._CLMN_CHR_MAP_.","._CLMN_CHR_PK_LEVEL_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND "._CLMN_CHR_PK_KILLS_." > 0 ORDER BY "._CLMN_CHR_PK_KILLS_." DESC");
-		if(!is_array($result)) return;
-		foreach($result as $key => $row) {
-			$masterLevelInfo = $Character->getMasterLevelInfo($row[_CLMN_CHR_NAME_]);
-			if(!is_array($masterLevelInfo)) continue;
-			$result[$key][_CLMN_CHR_LVL_] = $row[_CLMN_CHR_LVL_]+$masterLevelInfo[_CLMN_ML_LVL_];
-		}
-		return $result;
 	}
 	
 	private function _getOnlineRankingDataMembStatHours() {

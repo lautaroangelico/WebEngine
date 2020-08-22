@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -132,22 +132,14 @@ function updateDownloadsCache() {
 	return true;
 }
 
-function commonCronTimes() {
-	return array(
-		60 => '1 minute (60 sec)',
-		300 => '5 minutes (300 sec)',
-		600 => '10 minutes (600 sec)',
-		900 => '15 minutes (900 sec)',
-		1800 => '30 minutes (1,800 sec)',
-		3600 => '1 hour (3,600 sec)',
-		21600 => '6 hours (21,600 sec)',
-		43200 => '12 hours (43,200 sec)',
-		86400 => '1 day (86,400 sec)',
-		604800 => '7 days (604,800 sec)',
-		1296000 => '15 days (1,296,000 sec)',
-		2592000 => '1 month (2,592,000 sec)',
-		7776000 => '3 months (7,776,000 sec)',
-		15552000 => '6 months (15,552,000 sec)',
-		31104000 => '1 year (31,104,000 sec)',
-	);
+function weekDaySelectOptions($selected='Monday') {
+	$days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+	foreach($days as $row) {
+		if($selected == $row) {
+			$result .= '<option value="'.$row.'" selected>'.$row.'</option>';
+		} else {
+			$result .= '<option value="'.$row.'">'.$row.'</option>';
+		}
+	}
+	return $result;
 }

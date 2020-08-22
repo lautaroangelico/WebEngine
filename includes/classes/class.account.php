@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -83,6 +83,11 @@ class Account extends common {
 		# register account
 		$result = $this->memuonline->query($query, $data);
 		if(!$result) throw new Exception(lang('error_22',true));
+		
+		# old season support
+		if(config('season_1_support')) {
+			@$this->memuonline->query("INSERT INTO VI_CURR_INFO (ends_days, chek_code, used_time, memb___id, memb_name, memb_guid, sno__numb, Bill_Section, Bill_Value, Bill_Hour, Surplus_Point, Surplus_Minute, Increase_Days) VALUES ('2005', '1', '1234', ?, '', '1', '7', '6', '3', '6', '6', '2020-01-01 00:00:00', '0')", array($username));
+		}
 		
 		# send welcome email
 		if($regCfg['send_welcome_email']) {
@@ -324,34 +329,6 @@ class Account extends common {
 		}
 	}
 	
-	public function masterKeyRecoveryProcess($user_id) {
-		if(!check_value($user_id)) throw new Exception(lang('error_23',true));
-		if(check_value($_COOKIE['webengine_masterkey'])) throw new Exception(lang('error_50',true));
-		
-		$accountData = $this->accountInformation($user_id);
-		if(!check_value($accountData[_CLMN_MASTER_KEY_])) throw new Exception(lang('error_49',true));
-		
-		if($this->accountOnline($accountData[_CLMN_USERNM_])) throw new Exception(lang('error_14',true));
-		
-		try {
-			$email = new Email();
-			$email->setTemplate('MASTER_KEY_RECOVERY');
-			$email->addVariable('{USERNAME}', $accountData[_CLMN_USERNM_]);
-			$email->addVariable('{CURRENT_MASTERKEY}', $accountData[_CLMN_MASTER_KEY_]);
-			$email->addAddress($accountData[_CLMN_EMAIL_]);
-			$email->send();
-			
-			message('success', lang('success_16',true));
-			setcookie("webengine_masterkey", $accountData[_CLMN_USERNM_], time()+3600);  /* expire in 1 hour */
-		} catch (Exception $ex) {
-			if($this->_debug) {
-				throw new Exception($ex->getMessage());
-			} else {
-				throw new Exception(lang('error_23',true));
-			}
-		}
-	}
-	
 	public function changeEmailAddress($accountId, $newEmail, $ipAddress) {
 		if(!check_value($accountId)) throw new Exception(lang('error_21',true));
 		if(!check_value($newEmail)) throw new Exception(lang('error_21',true));
@@ -435,6 +412,11 @@ class Account extends common {
 		# delete verification request
 		$this->deleteRegistrationVerification($username);
 		
+		# old season support
+		if(config('season_1_support')) {
+			@$this->memuonline->query("INSERT INTO VI_CURR_INFO (ends_days, chek_code, used_time, memb___id, memb_name, memb_guid, sno__numb, Bill_Section, Bill_Value, Bill_Hour, Surplus_Point, Surplus_Minute, Increase_Days) VALUES ('2005', '1', '1234', ?, '', '1', '7', '6', '3', '6', '6', '2020-01-01 00:00:00', '0')", array($verifyKey['registration_account']));
+		}
+		
 		# send welcome email
 		if($regCfg['send_welcome_email']) {
 			$this->sendWelcomeEmail($verifyKey['registration_account'],$verifyKey['registration_email']);
@@ -473,6 +455,37 @@ class Account extends common {
 		$result = $this->memuonline->query("INSERT INTO ".WEBENGINE_ACCOUNT_COUNTRY." (account, country) VALUES (?, ?)", array($this->_account, $this->_country));
 		if(!$result) return;
 		return true;
+	}
+	
+	public function getServerList() {
+		$result = $this->memuonline->query_fetch("SELECT DISTINCT("._CLMN_MS_GS_.") FROM "._TBL_MS_."");
+		if(!is_array($result)) return;
+		foreach($result as $row) {
+			$servers[] = $row[_CLMN_MS_GS_];
+		}
+		return $servers;
+	}
+	
+	public function getOnlineAccountCount($server=null) {
+		if(check_value($server)) {
+			$result = $this->memuonline->query_fetch_single("SELECT COUNT(*) as online FROM "._TBL_MS_." WHERE "._CLMN_CONNSTAT_." = 1 AND "._CLMN_MS_GS_." = ?", array($server));
+			if(!is_array($result)) return 0;
+			return $result['online'];
+		}
+		$result = $this->memuonline->query_fetch_single("SELECT COUNT(*) as online FROM "._TBL_MS_." WHERE "._CLMN_CONNSTAT_." = 1");
+		if(!is_array($result)) return 0;
+		return $result['online'];
+	}
+	
+	public function getOnlineAccountList($server=null) {
+		if(check_value($server)) {
+			$result = $this->memuonline->query_fetch("SELECT "._CLMN_MS_MEMBID_.", "._CLMN_MS_GS_.", "._CLMN_MS_IP_." FROM "._TBL_MS_." WHERE "._CLMN_CONNSTAT_." = 1 AND "._CLMN_MS_GS_." = ?", array($server));
+			if(!is_array($result)) return;
+			return $result;
+		}
+		$result = $this->memuonline->query_fetch("SELECT "._CLMN_MS_MEMBID_.", "._CLMN_MS_GS_.", "._CLMN_MS_IP_." FROM "._TBL_MS_." WHERE "._CLMN_CONNSTAT_." = 1");
+		if(!is_array($result)) return;
+		return $result;
 	}
 	
 	private function sendRegistrationVerificationEmail($username, $account_email, $key) {

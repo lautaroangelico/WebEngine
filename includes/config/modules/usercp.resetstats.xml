@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <settings>
 	<active>1</active>
-	<resetstats_enable_zen_requirement>1</resetstats_enable_zen_requirement>
-	<resetstats_price_zen>10000000</resetstats_price_zen>
-	<resetstats_new_stats>25</resetstats_new_stats>
+	<zen_cost>1000000</zen_cost>
+	<credit_config>0</credit_config>
+	<credit_cost>0</credit_cost>
 </settings>

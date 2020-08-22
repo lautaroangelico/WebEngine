@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -24,7 +24,14 @@ try {
 	if(!is_array($AccountCharacters)) throw new Exception(lang('error_46',true));
 	
 	if(check_value($_POST['submit'])) {
-		$Character->CharacterResetStats($_SESSION['username'], $_POST['character'], $_SESSION['userid']);
+		try {
+			$Character->setUserid($_SESSION['userid']);
+			$Character->setUsername($_SESSION['username']);
+			$Character->setCharacter($_POST['character']);
+			$Character->CharacterResetStats();
+		} catch(Exception $ex) {
+			message('error', $ex->getMessage());
+		}
 	}
 	
 	echo '<table class="table general-table-ui">';
@@ -62,7 +69,7 @@ try {
 	echo '</table>';
 	
 	echo '<div class="module-requirements text-center">';
-		if(mconfig('resetstats_enable_zen_requirement')) echo '<p>'.langf('resetstats_txt_9', array(number_format(mconfig('resetstats_price_zen')))).'</p>';
+		if(mconfig('zen_cost') > 0) echo '<p>'.langf('resetstats_txt_9', array(number_format(mconfig('zen_cost')))).'</p>';
 	echo '</div>';
 	
 } catch(Exception $ex) {

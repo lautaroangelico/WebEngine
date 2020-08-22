@@ -52,32 +52,5 @@
         "visibility": "always",
         "newtab": false,
         "order": 60
-    },
-    {
-        "active": true,
-        "type": "internal",
-        "phrase": "menu_txt_3",
-        "link": "register",
-        "visibility": "guest",
-        "newtab": false,
-        "order": 70
-    },
-    {
-        "active": true,
-        "type": "internal",
-        "phrase": "menu_txt_4",
-        "link": "login",
-        "visibility": "guest",
-        "newtab": false,
-        "order": 80
-    },
-    {
-        "active": true,
-        "type": "internal",
-        "phrase": "menu_txt_6",
-        "link": "logout",
-        "visibility": "user",
-        "newtab": false,
-        "order": 90
     }
 ]

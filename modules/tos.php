@@ -1,17 +1,17 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
  */
 ?>
-<div class="page-title"><span><?php lang('module_titles_txt_9'); ?></span></div>
+<div class="page-title"><span><?php echo lang('module_titles_txt_9'); ?></span></div>
 <ol class="tos_list">
 	<li>
 		<strong>Legal Agreement:</strong><br />

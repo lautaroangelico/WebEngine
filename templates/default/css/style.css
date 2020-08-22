@@ -1,3 +1,19 @@
+/*!
+    
+ =========================================================
+ * WebEngine CMS
+ * https://webenginecms.org/
+ =========================================================
+ 
+ * Author Lautaro Angelico (https://lautaroangelico.com/)
+ * Copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ 
+ * Licensed under the MIT license
+ * http://opensource.org/licenses/MIT
+ 
+ =========================================================
+ 
+*/
 html {
 	min-width: 1040px;
 	height: 100%;
@@ -10,6 +26,12 @@ body {
 	font-size: 14px;
 	margin: 0;
 	height: 100%;
+}
+
+@media only screen and (min-width: 2000px) {
+	body {
+		background: #000000 url('../img/background-2600.jpg') no-repeat top center !important;
+	}
 }
 
 a {
@@ -41,7 +63,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 #header {
 	width: 100%;
 	margin: 0px auto;
-	padding: 80px 0px;
+	padding: 80px 0px 10px 0px;
 	text-align: center;
 	color: #fff;
 }
@@ -52,6 +74,10 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 	height: auto;
 	margin: 0px auto;
 	padding: 20px 0px;
+	-webkit-border-radius: 5px 5px 0px 0px;
+	-moz-border-radius: 5px 5px 0px 0px;
+	border-radius: 5px 5px 0px 0px;
+	-khtml-border-radius: 5px 5px 0px 0px;
 }
 
 #content {
@@ -62,39 +88,41 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 }
 
 .footer {
-	background: #171717 url('../img/footer_background.jpg') no-repeat bottom center;
-	background-size: cover;
+	background: #efefef;
 	font-family: 'Segoe UI', 'Lucida Sans Unicode', 'Lucida Grande', 'Tahoma', 'Arial', 'sans-serif';
-	width: 100%;
-	font-size: 14px;
-	color: #777777;
-	padding: 60px 0px;
+	width: 1040px;
+	font-size: 12px;
+	color: #666666;
+	padding: 40px;
 	overflow: auto;
+	margin: 0px auto 100px auto;
+	-webkit-border-radius: 0px 0px 5px 5px;
+	-moz-border-radius: 0px 0px 5px 5px;
+	border-radius: 0px 0px 5px 5px;
+	-khtml-border-radius: 0px 0px 5px 5px;
 }
 	.footer > .footer-container {
-		width: 1040px;
+		width: 100%;
 		margin: 0px auto;
 	}
-	.footer-time-title {
-		color: #ffffff;
-		font-weight: bold;
+		.footer > .footer-container a:hover {
+			text-decoration: underline !important;
+		}
+	.footer hr {
+		border-top: 1px solid #cacaca;
 	}
-	.footer-time {
-		font-size: 48px;
-		color: #ff3214;
-		font-weight: bold;
-		position: relative;
-		top: -10px;
+	.footer .footer-social-link {
+		filter: grayscale(100%);
+		transition: all .3s ease;
 	}
-	.footer-date {
-		position: relative;
-		top: -20px;
-		font-size: 12px;
+	.footer .footer-social-link:hover {
+		filter: grayscale(0%);
 	}
 
 #navbar {
-	background: #171717;
 	width: 100%;
+	backdrop-filter: blur(5px);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 #navbar ul{
@@ -104,7 +132,6 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 }
 
 #navbar ul li {
-	font-family: 'PT Sans', sans-serif;
 	list-style-type: none;
 	display: inline-block;
 	font-size: 16px;
@@ -112,62 +139,17 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 
 #navbar ul li a {
 	display: inline-block;
-	color: #ffffff !important;
+	color: #cccccc !important;
 	text-decoration: none;
-	padding: 15px 30px;
+	padding: 20px 30px;
+	transition: all .3s ease;
+	text-transform: uppercase;
 }
 
 #navbar ul li a:active, #navbar ul li a:focus, #navbar ul li a:hover {
 	color: #ffffff !important;
 	text-decoration: none;
-	background: #ed1c24;
 }
-
-
-/* CASTLE SIEGE BANNER */
-.castle-siege-banner {
-	width: 1040px;
-	background: #000 url('../img/castle_siege_banner_bg.jpg') no-repeat center center;
-	background-size: cover;
-	margin: 0px auto;
-	padding: 20px;
-	-moz-box-shadow: 0 0 10px #000;
-	-webkit-box-shadow: 0 0 10px #000;
-	box-shadow: 0 0 10px #000;
-	overflow: auto;
-	font-family: 'Fredoka One', cursive;
-	color: #74beff;
-	-webkit-border-radius: 5px 5px 0px 0px;
-    -moz-border-radius: 5px 5px 0px 0px;
-    border-radius: 5px 5px 0px 0px;
-    -khtml-border-radius: 5px 5px 0px 0px;
-	text-shadow: 1px 1px 3px #000000;
-}
-	.castle-siege-banner img {
-		-webkit-border-radius: 5px;
-		-moz-border-radius: 5px;
-		border-radius: 5px;
-		-khtml-border-radius: 5px;
-		-moz-box-shadow: 0 0 10px #000;
-		-webkit-box-shadow: 0 0 10px #000;
-		box-shadow: 0 0 10px #000;
-	}
-	.castle-siege-banner .guild_owner, .castle-siege-banner .guild_owner a {
-		color: #ffffff;
-		font-size: 45px;
-	}
-	.castle-siege-banner .guild_master, .castle-siege-banner .guild_master a {
-		color: #ffffff;
-		font-size: 45px;
-	}
-	.castle-siege-banner .guild_countdown {
-		color: #ffffff;
-		font-size: 45px;
-	}
-		.castle-siege-banner .guild_countdown span {
-			color: #ffcc00;
-			font-size: 24px;
-		}
 
 .admincp-button {
 	position:absolute;
@@ -190,20 +172,21 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 	border: 0px;
 	-moz-border-radius: 0px;
 	border-radius: 0px;
-	-moz-box-shadow: 0 0 10px #e3e3e3;
-	-webkit-box-shadow: 0 0 10px #e3e3e3;
-	box-shadow: 0 0 10px #e3e3e3;
+	-moz-box-shadow: 0 0 0px #e3e3e3;
+	-webkit-box-shadow: 0 0 0px #e3e3e3;
+	box-shadow: 0 0 0px #e3e3e3;
 }
 .panel-news .panel-heading {
-	padding-top: 20px;
-	padding-bottom: 20px;
-	background: #ffefef;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 .panel-news .panel-title {
-	color: #c04e4e;
-	font-family: 'PT Sans', sans-serif;
-	font-size: 18px;
+	color: #000000;
+	font-size: 24px;
 	font-weight: bold;
+}
+.panel-news .panel-body {
+	padding: 10px;
 }
 .panel-news .panel-footer {
 	border-top: 1px solid #e7e7e7;
@@ -219,9 +202,6 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 	width: 100%;
 	border-spacing: 0;
 	border-collapse: collapse;
-	-moz-box-shadow: 0 0 5px #e3e3e3;
-	-webkit-box-shadow: 0 0 5px #e3e3e3;
-	box-shadow: 0 0 5px #e3e3e3;
 }
 
 .rankings-class-image {
@@ -430,67 +410,6 @@ height: 40px;
 border: 0px;
 }
 
-/* CASTLE SIEGE CSS */
-.csinfo_container {
-	background: url('../img/castle_siege.jpg') no-repeat top right;
-	background-size: cover;
-	width: 100%;
-	padding: 20px;
-	margin-bottom: 20px;
-	border: 1px solid #333;
-	-moz-box-shadow: 0 0 10px #555;
-	-webkit-box-shadow: 0 0 10px #555;
-	box-shadow: 0 0 10px #555;
-	-moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    -khtml-border-radius: 10px;
-}
-.csinfo_content {
-	width: 100%;
-	height: 180px;
-	margin: 10px 0px 0px 10px;
-	display: inline-block;
-}
-	.csinfo_glogo {
-		float: left;
-		width: 30%;
-		height: 180px;
-		text-align: center;
-	}
-	.csinfo_ginfo {
-		float: left;
-		width: 70%;
-		padding: 0px 10px;
-	}
-	
-		.csinfo_ginfo table {
-			table-layout: fixed;
-			width: 400px;
-		}
-			.csinfo_ginfo table tr td {
-				padding: 3px 0px;
-				font-size: 20px;
-				color: #fff;
-			}
-			.csinfo_ginfo table tr td:first-child {
-				color: #9a7e46;
-			}
-			
-.csinfo_glist {
-	list-style-type: none;
-	margin: 0px;
-	padding: 0px;
-}
-	.csinfo_glist li {
-		float: left;
-		width: 30%;
-		padding: 8px 10px;
-	}
-	.csinfo_glist li:hover {
-		background: #0d0c0b;
-	}
-
 .module-requirements {
 	font-size: 12px;
 	margin-top: 20px;
@@ -519,6 +438,7 @@ border: 0px;
 
 .panel-usercp {
 	background: url('../img/usercp_bg.jpg') no-repeat top center;
+	background-size: cover;
 }
 
 .panel-usercp ul {
@@ -634,3 +554,207 @@ border: 0px;
 /* WEBENGINE CMS */
 .webengine-powered { color: #777 !important; }
 .webengine-powered:active, .webengine-powered:hover { color: #ff3214 !important; }
+
+/* GLOBAL TOP BAR */
+.global-top-bar {
+	width: 100%;
+	background: #101010;
+	color: #777777;
+	padding: 7px 0px 2px 0px;
+	text-transform: uppercase;
+	font-size: 12px;
+}
+	.global-top-bar .global-top-bar-content {
+		width: 1040px;
+		margin: 0px auto;
+	}
+		.global-top-bar .global-top-bar-content .row {
+			margin: 0px;
+			padding: 0px;
+		}
+	.global-top-bar a.logout {
+		color: #ff0000 !important;
+	}
+	.global-top-bar a {
+		color: #999999 !important;
+	}
+	.global-top-bar a:hover {
+		color: #ffffff !important;
+	}
+.global-top-bar-nopadding {
+	padding: 0px !important;
+}
+.global-top-bar-separator {
+	padding: 0px 5px;
+}
+
+/* LANGUAGE PICKER */
+.webengine-language-switcher {
+	display: inline-block;
+	list-style: none;
+	padding: 0px !important;
+	margin: 0px !important;
+	width: 46px;
+	height: 19px;
+	overflow: hidden;
+	transition: all .3s ease;
+}
+.webengine-language-switcher:hover {
+	width: 400px;
+}
+	.webengine-language-switcher li {
+		display: inline-block;
+		list-style-type: none;
+		background: #333333;
+		padding: 0px 5px 2px 5px;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
+		-khtml-border-radius: 3px;
+		transition: all .3s ease;
+	}
+	.webengine-language-switcher li:hover {
+		-webkit-filter: brightness(120%);
+		filter: brightness(120%);
+	}
+	.webengine-language-switcher li a {
+		color: #999999;
+	}
+	.webengine-language-switcher li a:hover {
+		color: #ffffff !important;
+	}
+
+/* WEBSITE LOGO */
+.webengine-mu-logo {
+	transition: all .3s ease;
+}
+	.webengine-mu-logo:hover {
+		-webkit-filter: brightness(120%);
+		filter: brightness(120%);
+	}
+
+/* HEADER INFO */
+.header-info-container {
+	width: 1040px;
+	margin: 0px auto;
+	text-align: right;
+}
+	.header-info-container .header-info {
+		display: inline-block;
+		width: 350px;
+		background: rgba(0, 0, 0, 0.3);
+		backdrop-filter: blur(5px);
+		margin: 0px;
+		padding: 20px;
+		overflow: auto;
+		-moz-box-shadow: 0 0 15px rgba(0,0,0,0.7);
+		-webkit-box-shadow: 0 0 15px rgba(0,0,0,0.7);
+		box-shadow: 0 0 15px rgba(0,0,0,0.7);
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
+		-khtml-border-radius: 5px;
+		text-shadow: 1px 1px 3px #000000;
+		color: #ffffff;
+		border: 1px solid rgba(255,255,255,0.1);
+		font-size: 12px;
+	}
+		.header-info-container .header-info .header-info-block {
+			padding: 0px;
+			color: #aaaaaa;
+		}
+		.header-info-container .header-info .header-info-block #tServerTime, .header-info-container .header-info .header-info-block #tLocalTime {
+			color: #ffffff;
+		}
+		.header-info-container .header-info .header-info-block #tServerDate, .header-info-container .header-info .header-info-block #tLocalDate {
+			color: #cccccc;
+		}
+		.header-info-container .header-info .header-info-block .online-count {
+			color: #00ff00;
+		}
+	
+/* ONLINE BAR */
+.webengine-online-bar {
+	width: 100%;
+	background: #000000;
+	border: 1px solid #555555;
+	height: 8px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding: 0px;
+	-webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -khtml-border-radius: 4px;
+	overflow: hidden;
+	transition: all .3s ease;
+}
+	.webengine-online-bar .webengine-online-bar-progress {
+		height: 8px;
+		background: #00ff00 url('../img/online_progress_bar.jpg') no-repeat left center;
+		-webkit-border-radius: 0px 1px 1px 0px;
+		-moz-border-radius: 0px 1px 1px 0px;
+		-khtml-border-radius: 0px 1px 1px 0px;
+		border-radius: 0px 1px 1px 0px;
+	}
+	.webengine-online-bar:hover {
+		-webkit-filter: brightness(120%);
+		filter: brightness(120%);
+	}
+
+/* MY ACCOUNT CHARACTER LIST */
+.myaccount-character-block {
+	background: #333;
+	border: 1px solid #666;
+	padding: 5px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	display: inline-block;
+	margin: 0px auto;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+	.myaccount-character-block img {
+		width: 100px;
+		height: auto;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+		-moz-box-shadow: 0 0 5px #000;
+		-webkit-box-shadow: 0 0 5px #000;
+		box-shadow: 0 0 5px #000;
+		-moz-transition: all 0.3s ease;
+		-o-transition: all 0.3s ease;
+		-webkit-transition: all 0.3s ease;
+		transition: all 0.3s ease;
+	}
+		.myaccount-character-block img:hover {
+			-webkit-filter: brightness(120%);
+			filter: brightness(120%);
+		}
+.myaccount-character-block-location {
+	font-size: 12px;
+	color: #000;
+	margin-bottom: 20px;
+	margin-top: 2px;
+	line-height: 1.2;
+}
+.myaccount-character-block-level {
+	position: relative;
+	top: -77px;
+	display: inline-block;
+	background: rgba(0,0,0,0.5);
+	padding: 0px 5px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	color: #fff;
+	font-size: 10px;
+}
+.myaccount-character-name a {
+	font-weight: bold;
+	color: #000;
+	font-size: 16px;
+}

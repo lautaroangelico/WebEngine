@@ -1,44 +1,62 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
  */
-?>
-<h1 class="page-header">Online Accounts</h1>
-<?php
-$onlinedb = (config('SQL_USE_2_DB',true) == true ? $dB2 : $dB);
-$online = $onlinedb->query_fetch("SELECT "._CLMN_MS_MEMBID_.","._CLMN_MS_GS_." FROM "._TBL_MS_." WHERE "._CLMN_CONNSTAT_." = 1");
-if(is_array($online)) {
-	message('',count($online),'Total Online:');
-	
-	echo '<table class="table table-condensed table-hover">
-	<thead>
-	<tr>
-	<th>Account</th>
-	<th>Server</th>
-	<th></th>
-	</tr>
-	</thead>
-	<tbody>';
-	foreach($online as $thisAccount) {
-		echo '<tr>';
-		echo '<td>'.$thisAccount[_CLMN_MS_MEMBID_].'</td>';
-		echo '<td>'.$thisAccount[_CLMN_MS_GS_].'</td>';
-		echo '<td style="text-align:right;"><a href="'.admincp_base("accountinfo&id=".$common->retrieveUserID($thisAccount[_CLMN_MS_MEMBID_])).'" class="btn btn-xs btn-default">Account Information</a></td>';
-		echo '</tr>';
-	}
-	echo '
-	</tbody>
-	</table>';
-} else {
-	message('error','No online accounts.');
+
+echo '<h1 class="page-header">Online Accounts</h1>';
+
+$Account = new Account();
+$serverList = $Account->getServerList();
+
+if(is_array($serverList)) {
+	echo '<div class="row">';
+		echo '<h3>By Server:</h3>';
+		foreach($serverList as $server) {
+			echo '<div class="col-xs-12 col-md-4 col-lg-3 text-center">';
+				echo '<pre><strong>'.$server.'</strong>: '.number_format($Account->getOnlineAccountCount($server)).'</pre>';
+			echo '</div>';
+		}
+	echo '</div>';
 }
 
-?>
+echo '<div class="row">';
+	echo '<h3>Total Online:</h3>';
+	echo '<div class="col-xs-12 col-md-4 col-lg-3 text-center">';
+		echo '<pre><strong>TOTAL</strong>: '.number_format($Account->getOnlineAccountCount()).'</pre>';
+	echo '</div>';
+echo '</div>';
+
+$onlineAccounts = $Account->getOnlineAccountList();
+echo '<div class="row">';
+	echo '<h3>Account List:</h3>';
+	if(is_array($onlineAccounts)) {
+		echo '<table class="table table-condensed table-hover">';
+			echo '<thead>';
+				echo '<tr>';
+					echo '<th>Account</th>';
+					echo '<th>IP Address</th>';
+					echo '<th>Server</th>';
+				echo '</tr>';
+			echo '</thead>';
+			echo '<tbody>';
+			foreach($onlineAccounts as $row) {
+				echo '<tr>';
+					echo '<td><a href="'.admincp_base('accountinfo&u='.$row[_CLMN_MS_MEMBID_]).'" target="_blank">'.$row[_CLMN_MS_MEMBID_].'</a></td>';
+					echo '<td>'.$row[_CLMN_MS_IP_].'</td>';
+					echo '<td>'.$row[_CLMN_MS_GS_].'</td>';
+				echo '</tr>';
+			}
+			echo '</tbody>';
+		echo '</table>';
+	} else {
+		message('warning', 'There are no online accounts.');
+	}
+echo '</div>';

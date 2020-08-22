@@ -1,0 +1,90 @@
+{
+    "active": "1",
+    "hide_idle": "0",
+    "live_data": "0",
+    "show_castle_owner": "1",
+    "show_castle_owner_alliance": "1",
+    "show_battle_countdown": "1",
+    "show_castle_information": "1",
+    "show_current_stage": "1",
+    "show_next_stage": "1",
+    "show_battle_duration": "1",
+    "show_registered_guilds": "1",
+    "show_schedule": "1",
+    "schedule_date_format": "l, F jS g:i A",
+	"show_widget": "1",
+    "stages": [
+        {
+            "title": "castlesiege_schedule_1",
+            "is_idle": false,
+            "is_battle": false,
+            "start_day": "Monday",
+            "start_time": "00:00",
+            "end_day": "Tuesday",
+            "end_time": "23:59"
+        },
+        {
+            "title": "castlesiege_schedule_6",
+            "is_idle": true,
+            "is_battle": false,
+            "start_day": "Wednesday",
+            "start_time": "00:00",
+            "end_day": "Wednesday",
+            "end_time": "01:59"
+        },
+        {
+            "title": "castlesiege_schedule_2",
+            "is_idle": false,
+            "is_battle": false,
+            "start_day": "Wednesday",
+            "start_time": "02:00",
+            "end_day": "Thursday",
+            "end_time": "23:59"
+        },
+        {
+            "title": "castlesiege_schedule_6",
+            "is_idle": true,
+            "is_battle": false,
+            "start_day": "Friday",
+            "start_time": "00:00",
+            "end_day": "Friday",
+            "end_time": "01:59"
+        },
+        {
+            "title": "castlesiege_schedule_3",
+            "is_idle": false,
+            "is_battle": false,
+            "start_day": "Friday",
+            "start_time": "02:00",
+            "end_day": "Friday",
+            "end_time": "11:59"
+        },
+        {
+            "title": "castlesiege_schedule_4",
+            "is_idle": false,
+            "is_battle": false,
+            "start_day": "Friday",
+            "start_time": "12:00",
+            "end_day": "Sunday",
+            "end_time": "15:59"
+        },
+        {
+            "title": "castlesiege_schedule_5",
+            "is_idle": false,
+            "is_battle": true,
+            "start_day": "Sunday",
+            "start_time": "16:00",
+            "end_day": "Sunday",
+            "end_time": "17:00"
+        },
+        {
+            "title": "castlesiege_schedule_6",
+            "is_idle": true,
+            "is_battle": false,
+            "start_day": "Sunday",
+            "start_time": "17:01",
+            "end_day": "Sunday",
+            "end_time": "23:59"
+        }
+    ]
+}

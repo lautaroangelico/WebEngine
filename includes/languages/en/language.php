@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -20,9 +20,9 @@ $lang['switch_lang'] = 'Switch Language';
 $lang['menu_txt_1'] = 'Home';
 $lang['menu_txt_2'] = 'Forum';
 $lang['menu_txt_3'] = 'Register';
-$lang['menu_txt_4'] = 'Login';
-$lang['menu_txt_5'] = 'User CP';
-$lang['menu_txt_6'] = 'Logout';
+$lang['menu_txt_4'] = 'Log In';
+$lang['menu_txt_5'] = 'My Account';
+$lang['menu_txt_6'] = 'Log Out';
 $lang['menu_txt_7'] = 'Downloads';
 $lang['menu_txt_8'] = 'Donate';
 $lang['menu_txt_9'] = 'Vote & Reward';
@@ -47,16 +47,16 @@ $lang['module_titles_txt_14'] = 'Frequently Asked Questions';
 $lang['module_titles_txt_15'] = 'Forgot Password';
 $lang['module_titles_txt_16'] = 'Unstick Character';
 $lang['module_titles_txt_17'] = 'Server Information';
-$lang['module_titles_txt_18'] = 'Fix Stats';
+$lang['module_titles_txt_18'] = 'Reset Stats';
 $lang['module_titles_txt_19'] = 'Clear Skill-Tree';
 $lang['module_titles_txt_20'] = 'Email Verification';
 $lang['module_titles_txt_21'] = 'PayPal';
 $lang['module_titles_txt_22'] = 'Super Rewards';
 $lang['module_titles_txt_23'] = 'Western Union';
-$lang['module_titles_txt_24'] = 'Master Key Recovery';
+$lang['module_titles_txt_24'] = 'Privacy Policy';
 $lang['module_titles_txt_25'] = 'Add Stats';
 $lang['module_titles_txt_26'] = 'Contact Us';
-$lang['module_titles_txt_27'] = 'PagSeguro';
+$lang['module_titles_txt_27'] = 'Refund Policy';
 $lang['module_titles_txt_28'] = 'Buy Zen';
 $lang['module_titles_txt_29'] = 'Castle Siege';
 
@@ -69,7 +69,7 @@ $lang['usercp_menu_txt_4'] = 'Vote for Credits';
 $lang['usercp_menu_txt_5'] = 'Donate for Credits';
 $lang['usercp_menu_txt_6'] = 'Unstick Character';
 $lang['usercp_menu_txt_7'] = 'V.I.P. Subscription';
-$lang['usercp_menu_txt_8'] = 'Fix Stats';
+$lang['usercp_menu_txt_8'] = 'Reset Stats';
 $lang['usercp_menu_txt_9'] = 'Clear Skill-Tree';
 $lang['usercp_menu_txt_10'] = 'Add Stats';
 $lang['usercp_menu_txt_11'] = 'Buy Zen';
@@ -85,13 +85,13 @@ $lang['success_7'] = 'We have sent you an email address with your new password! 
 $lang['success_8'] = 'Your character has been successfully reset.';
 $lang['success_9'] = 'Your character\'s stats have been successfully reset.';
 $lang['success_10'] = 'Your character\'s PK level has been successfully reset.';
-$lang['success_11'] = 'Your character been successfully unstuck.';
-$lang['success_12'] = 'Your character\'s master level been successfully cleared.';
+$lang['success_11'] = 'Your character been successfully moved to Lorencia\'s Bar.';
+$lang['success_12'] = 'Your character\'s master skill tree been successfully cleared.';
 $lang['success_13'] = '';
 $lang['success_14'] = '';
 $lang['success_15'] = 'News successfully added!';
-$lang['success_16'] = 'Your master key has been successfully sent to your email address.';
-$lang['success_17'] = 'Stats successfully added!';
+$lang['success_16'] = '';
+$lang['success_17'] = 'Your character\'s level up points have been successfully added.';
 $lang['success_18'] = 'A verification link has been sent to your email to complete the registration.';
 $lang['success_19'] = 'Please check your current email address to proceed.';
 $lang['success_20'] = 'Your account\'s email address has been successfully changed.';
@@ -147,12 +147,12 @@ $lang['error_45'] = 'Invalid Operation, redirecting to home.';
 $lang['error_46'] = 'Your account has no characters.';
 $lang['error_47'] = 'This module is not currently enabled, please try again later.';
 $lang['error_48'] = 'Your request could not be processed because the email system is not active, please contact the support team.';
-$lang['error_49'] = 'Your account does not have a master key.';
-$lang['error_50'] = 'You already requested your master key less than an hour ago, try again later.';
-$lang['error_51'] = 'You do not have enough level-up points.';
-$lang['error_52'] = 'Command can only be added to DL class.';
-$lang['error_53'] = 'You have exceeded the max stats, please try again.';
-$lang['error_54'] = 'You did not add the minimum required points to add: ';
+$lang['error_49'] = 'The provided cron id is not valid.';
+$lang['error_50'] = 'The provided cron file does not exist.';
+$lang['error_51'] = 'You have exceeded the amount of available level up points to add.';
+$lang['error_52'] = 'Command stat can only be added to the Dark Lord class.';
+$lang['error_53'] = 'Your stats may not exceed the %s points limit.';
+$lang['error_54'] = 'You must add at least %s level up points.';
 $lang['error_55'] = 'Buying the selected amount will exceed the zen limit allowed per character, please choose a different amount.';
 $lang['error_56'] = 'The name entered is not valid.';
 $lang['error_57'] = 'The message entered is not valid.';
@@ -164,8 +164,6 @@ $lang['error_62'] = 'The language switching system is disabled.';
 $lang['error_63'] = 'The selected language is not valid.';
 $lang['error_64'] = 'You do not have permission to add stats to this character.';
 $lang['error_65'] = 'Could not switch language.';
-
-# credit system errors
 $lang['error_66'] = 'You have not set a configuration id.';
 $lang['error_67'] = 'The userid entered is not valid.';
 $lang['error_68'] = 'The username entered contains non-allowed characters.';
@@ -190,8 +188,6 @@ $lang['error_86'] = 'There has been an error editing the configuration, check fo
 $lang['error_87'] = 'There has been an error deleting the configuration, check for database errors.';
 $lang['error_88'] = 'Identifier not set, cannot check online status.';
 $lang['error_89'] = 'There was an error getting the credits value.';
-
-# email system errors
 $lang['error_90'] = 'Could not load email configurations.';
 $lang['error_91'] = 'Could not load email template.';
 $lang['error_92'] = 'Email address invalid, cannot send email.';
@@ -200,12 +196,37 @@ $lang['error_94'] = 'Could not load custom email template (you must provide a fu
 $lang['error_95'] = 'Email template has not been set.';
 $lang['error_96'] = 'No recipient email address has been set.';
 $lang['error_97'] = 'Email subject has not been set.';
-
 $lang['error_98'] = 'Login configurations missing.';
 $lang['error_99'] = 'There was an error while editing the news.';
 $lang['error_100'] = 'Could not load vote system configurations.';
 $lang['error_101'] = 'IP Address is not valid.';
 $lang['error_102'] = 'Credit configuration has not been set (voting system).';
+$lang['error_103'] = 'Castle siege data could not be loaded, please contact support.';
+$lang['error_104'] = 'There are no cron jobs in the database.';
+$lang['error_105'] = 'The requested action is not valid.';
+$lang['error_106'] = 'The new cron could not be added, please fill all the required information.';
+$lang['error_107'] = 'Another cron with the same file already exists.';
+$lang['error_108'] = 'Could not load characters class data, please contact support.';
+$lang['error_109'] = 'Your character class is not valid, please contact support.';
+$lang['error_110'] = 'Could not load character class base stats, please contact support.';
+$lang['error_111'] = 'The provided user id is not valid.';
+$lang['error_112'] = 'The provided username is not valid.';
+$lang['error_113'] = 'You do not have enough %s to reset your character stats.';
+$lang['error_114'] = 'You do not have enough %s to unstick your character.';
+$lang['error_115'] = 'Your character is already at Lorencia Bar.';
+$lang['error_116'] = 'You do not have enough %s to clear your character pk status.';
+$lang['error_117'] = 'Your character does not have a PK status.';
+$lang['error_118'] = 'You do not have enough %s to clear your character\'s skill tree.';
+$lang['error_119'] = 'Could not load your character\'s master level information, please contact support.';
+$lang['error_120'] = 'Your character does not meet the level requirement to clear its skill tree.';
+$lang['error_121'] = 'Your character does not meet the master level requirement to clear its skill tree.';
+$lang['error_122'] = 'One of more entered values are not valid, please try again.';
+$lang['error_123'] = 'Your character does not meet the level requirement to add stats.';
+$lang['error_124'] = 'Your character does not meet the master level requirement to add stats.';
+$lang['error_125'] = 'You do not have enough %s to add stats to your character.';
+$lang['error_126'] = 'You do not have enough %s to reset your character.';
+$lang['error_127'] = 'You have reached the maximum number of resets with this character.';
+$lang['error_128'] = 'Missing character class group, please contact support.';
 
 # registration
 $lang['register_txt_1'] = 'Username:';
@@ -238,10 +259,13 @@ $lang['myaccount_txt_8'] = 'Frozen';
 $lang['myaccount_txt_9'] = 'Online';
 $lang['myaccount_txt_10'] = 'Offline';
 $lang['myaccount_txt_12'] = 'Credits:';
-$lang['myaccount_txt_13'] = 'Master Key:';
+$lang['myaccount_txt_13'] = 'Date';
 $lang['myaccount_txt_14'] = 'recover';
-$lang['myaccount_txt_15'] = 'Character(s):';
-$lang['myaccount_txt_16'] = 'none';
+$lang['myaccount_txt_15'] = 'My Characters:';
+$lang['myaccount_txt_16'] = 'Connection History';
+$lang['myaccount_txt_17'] = 'Server';
+$lang['myaccount_txt_18'] = 'IP';
+$lang['myaccount_txt_19'] = 'Action';
 
 # voting
 $lang['vfc_txt_1'] = 'TopSite';
@@ -276,7 +300,7 @@ $lang['rankings_txt_5'] = 'Top Grand Resets';
 $lang['rankings_txt_6'] = 'Top Online';
 $lang['rankings_txt_7'] = 'Top Votes';
 $lang['rankings_txt_8'] = 'Top Gens';
-$lang['rankings_txt_9'] = 'Top PVP Last Stand';
+$lang['rankings_txt_9'] = '';
 $lang['rankings_txt_10'] = 'Character';
 $lang['rankings_txt_11'] = 'Class';
 $lang['rankings_txt_12'] = 'Level';
@@ -291,8 +315,8 @@ $lang['rankings_txt_20'] = 'Last Updated @';
 $lang['rankings_txt_21'] = 'Grand Resets';
 $lang['rankings_txt_22'] = 'Top Master Level';
 $lang['rankings_txt_23'] = 'Master Level';
-$lang['rankings_txt_24'] = 'Top PvP Last Stand';
-$lang['rankings_txt_25'] = 'Times Won';
+$lang['rankings_txt_24'] = '';
+$lang['rankings_txt_25'] = '';
 $lang['rankings_txt_26'] = 'Gens Duprian';
 $lang['rankings_txt_27'] = 'Gens Vanert';
 $lang['rankings_txt_28'] = 'Guild Logo';
@@ -307,7 +331,7 @@ $lang['rankings_txt_35'] = 'Pk Level';
 # clear pk
 $lang['clearpk_txt_1'] = 'Character';
 $lang['clearpk_txt_2'] = 'Zen';
-$lang['clearpk_txt_3'] = 'Kills';
+$lang['clearpk_txt_3'] = 'PK Status';
 $lang['clearpk_txt_4'] = 'Clear PK';
 $lang['clearpk_txt_5'] = 'Your character must have at least %s zen to clear pk';
 
@@ -317,8 +341,9 @@ $lang['clearst_txt_2'] = 'Master Level';
 $lang['clearst_txt_3'] = 'Zen';
 $lang['clearst_txt_4'] = 'GO';
 $lang['clearst_txt_5'] = 'Points';
-$lang['clearst_txt_6'] = 'Your character must be master level %s';
+$lang['clearst_txt_6'] = 'Your character must be at least master level %s';
 $lang['clearst_txt_7'] = 'Your character must have at least %s zen to reset the skill tree';
+$lang['clearst_txt_8'] = 'Your character must be at least level %s';
 
 # donation
 $lang['donation_txt_2'] = 'Credits';
@@ -336,19 +361,22 @@ $lang['resetcharacter_txt_3'] = 'Zen';
 $lang['resetcharacter_txt_4'] = 'Resets';
 $lang['resetcharacter_txt_5'] = 'Reset';
 $lang['resetcharacter_txt_6'] = 'Your character must be level %s';
-$lang['resetcharacter_txt_7'] = 'Your character must have at least %s zen to be reset';
-$lang['resetcharacter_txt_8'] = 'You have been rewarded with %s credits!';
+$lang['resetcharacter_txt_7'] = 'Your character must have at least %s zen';
+$lang['resetcharacter_txt_8'] = 'You will be rewarded with %s credits';
+$lang['resetcharacter_txt_9'] = 'You must have at least %s credits to reset your character';
+$lang['resetcharacter_txt_10'] = 'You can reset a maximum of %s times';
+$lang['resetcharacter_txt_11'] = 'Your character\'s inventory will be cleared, make sure to place all equipment in your vault.';
 
-# fix stats
+# reset stats
 $lang['resetstats_txt_1'] = 'Character';
 $lang['resetstats_txt_2'] = 'Level';
-$lang['resetstats_txt_3'] = 'Strength';
-$lang['resetstats_txt_4'] = 'Agility';
-$lang['resetstats_txt_5'] = 'Vitality';
-$lang['resetstats_txt_6'] = 'Energy';
-$lang['resetstats_txt_7'] = 'Command';
-$lang['resetstats_txt_8'] = 'Fix';
-$lang['resetstats_txt_9'] = 'Your character must have at least %s zen to fix stats';
+$lang['resetstats_txt_3'] = 'STR';
+$lang['resetstats_txt_4'] = 'AGI';
+$lang['resetstats_txt_5'] = 'VIT';
+$lang['resetstats_txt_6'] = 'ENE';
+$lang['resetstats_txt_7'] = 'CMD';
+$lang['resetstats_txt_8'] = 'Reset';
+$lang['resetstats_txt_9'] = 'Your character must have at least %s zen to reset stats';
 
 # unstick
 $lang['unstickcharacter_txt_1'] = 'Character';
@@ -356,12 +384,9 @@ $lang['unstickcharacter_txt_2'] = 'Zen';
 $lang['unstickcharacter_txt_3'] = 'Unstick';
 $lang['unstickcharacter_txt_4'] = 'Your character must have at least %s zen to unstick';
 
-# recover master key
-$lang['masterkey_txt_1'] = 'Send master key to my email now!';
-
 # add stats
 $lang['addstats_txt_1'] = 'Character';
-$lang['addstats_txt_2'] = '<strong>%s</strong> level up points available';
+$lang['addstats_txt_2'] = '<strong>%s</strong> points available';
 $lang['addstats_txt_3'] = 'Strength';
 $lang['addstats_txt_4'] = 'Agility';
 $lang['addstats_txt_5'] = 'Vitality';
@@ -369,11 +394,15 @@ $lang['addstats_txt_6'] = 'Energy';
 $lang['addstats_txt_7'] = 'Command';
 $lang['addstats_txt_8'] = 'Add Points';
 $lang['addstats_txt_9'] = 'Your character must have at least %s zen to add stats';
+$lang['addstats_txt_10'] = 'Your character must be at least master level %s';
+$lang['addstats_txt_11'] = 'Your character must be at least level %s';
+$lang['addstats_txt_12'] = 'Each stat can have a maximum of %s points';
+$lang['addstats_txt_13'] = 'You must add at least %s level up points to use this feature';
 
 # castle siege banner
-$lang['csbanner_txt_1'] = 'Castle Owner';
-$lang['csbanner_txt_2'] = 'Battle Begins In';
-$lang['csbanner_txt_3'] = 'Guild Master';
+$lang['csbanner_txt_1'] = 'Castle Owner'; // to be removed
+$lang['csbanner_txt_2'] = 'Battle Begins In'; // to be removed
+$lang['csbanner_txt_3'] = 'Guild Master'; // to be removed
 
 # profiles
 $lang['profiles_txt_1'] = 'Guild Profile';
@@ -407,14 +436,47 @@ $lang['sidebar_srvinfo_txt_2'] = 'Total Accounts';
 $lang['sidebar_srvinfo_txt_3'] = 'Total Characters';
 $lang['sidebar_srvinfo_txt_4'] = 'Total Guilds';
 $lang['sidebar_srvinfo_txt_5'] = 'Online Users';
+$lang['sidebar_srvinfo_txt_6'] = 'Version';
+$lang['sidebar_srvinfo_txt_7'] = 'Experience';
+$lang['sidebar_srvinfo_txt_8'] = 'Master Experience';
+$lang['sidebar_srvinfo_txt_9'] = 'Drop';
 
 # castle siege
-$lang['castlesiege_txt_2'] = 'Castle Owner:';
-$lang['castlesiege_txt_3'] = 'Zen:';
-$lang['castlesiege_txt_4'] = 'Tax Chaos:';
-$lang['castlesiege_txt_5'] = 'Tax Store:';
-$lang['castlesiege_txt_6'] = 'Tax Hunt Zone:';
-$lang['castlesiege_txt_7'] = 'Registered Guilds';
+$lang['castlesiege_txt_1'] = 'Castle Siege Battle';
+$lang['castlesiege_txt_2'] = 'Castle Owner';
+$lang['castlesiege_txt_3'] = 'Trial Money:';
+$lang['castlesiege_txt_4'] = 'Tax Rate Goblin:';
+$lang['castlesiege_txt_5'] = 'Tax Rate NPC:';
+$lang['castlesiege_txt_6'] = 'Tax Rate Trial:';
+$lang['castlesiege_txt_7'] = 'Castle Information';
+$lang['castlesiege_txt_8'] = 'Zen';
+$lang['castlesiege_txt_9'] = 'Current Stage:';
+$lang['castlesiege_txt_10'] = 'Next Stage:';
+$lang['castlesiege_txt_11'] = 'Battle Duration:';
+$lang['castlesiege_txt_12'] = 'Guild Master';
+$lang['castlesiege_txt_13'] = 'Castle Owner Alliance';
+$lang['castlesiege_txt_14'] = 'Guild';
+$lang['castlesiege_txt_15'] = 'Master';
+$lang['castlesiege_txt_16'] = 'Logo';
+$lang['castlesiege_txt_17'] = 'Score';
+$lang['castlesiege_txt_18'] = 'Members';
+$lang['castlesiege_txt_19'] = 'Registered Guilds';
+$lang['castlesiege_txt_20'] = 'Event Schedule';
+$lang['castlesiege_txt_21'] = 'Stage';
+$lang['castlesiege_txt_22'] = 'Start Date';
+$lang['castlesiege_txt_23'] = 'End Date';
+$lang['castlesiege_schedule_1'] = 'Guild Registration Period';
+$lang['castlesiege_schedule_2'] = 'Registration period for Mark of Lord';
+$lang['castlesiege_schedule_3'] = 'Announcement';
+$lang['castlesiege_schedule_4'] = 'Castle Preparation';
+$lang['castlesiege_schedule_5'] = 'Siege Warfare';
+$lang['castlesiege_schedule_6'] = 'Idle';
+$lang['castlesiege_time_1'] = '%s days %s hours';
+$lang['castlesiege_time_2'] = '%s hours %s minutes';
+$lang['castlesiege_time_3'] = '%s minutes';
+$lang['castlesiege_time_4'] = 'Less than one minute.';
+$lang['castlesiege_battle_duration'] = '%s hours %s minutes';
+$lang['castlesiege_widget_title'] = 'Castle Siege';
 
 # buy zen
 $lang['buyzen_txt_1'] = 'Buy Zen';
@@ -428,3 +490,12 @@ $lang['buyzen_txt_6'] = 'credit(s)';
 $lang['contactus_txt_1'] = 'Email Address';
 $lang['contactus_txt_2'] = 'Message';
 $lang['contactus_txt_3'] = 'Send';
+
+# footer
+$lang['footer_terms'] = 'Terms of Service';
+$lang['footer_privacy'] = 'Privacy Policy';
+$lang['footer_refund'] = 'Refund Policy';
+$lang['footer_info'] = 'Server Information';
+$lang['footer_contact'] = 'Contact Us';
+$lang['footer_copyright'] = '%s &copy; %s, ALL RIGHTS RESERVED.';
+$lang['footer_webzen_copyright'] = 'This site is in no way associated with or endorsed by Webzen Inc.';

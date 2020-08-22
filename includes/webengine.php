@@ -3,15 +3,15 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
  */
 
-//session_name('WebEngine120'); # session name (change to your server name and uncomment)
+//session_name('WebEngine121'); # session name (change to your server name and uncomment)
 //session_set_cookie_params(0, '/', 'muonline.com'); # same session with and without www protocol (edit with your domain and uncomment)
 if(access != 'cron') {
 	@ob_start();
@@ -19,7 +19,7 @@ if(access != 'cron') {
 }
 
 # Version
-define('__WEBENGINE_VERSION__', '1.2.0');
+define('__WEBENGINE_VERSION__', '1.2.1');
 
 # Set Encoding
 @ini_set('default_charset', 'utf-8');
@@ -61,6 +61,8 @@ define('__PATH_CONFIGS__', __PATH_INCLUDES__.'config/');
 define('__PATH_MODULE_CONFIGS__', __PATH_CONFIGS__.'modules/');
 define('__PATH_CRON__', __PATH_INCLUDES__.'cron/');
 define('__PATH_LOGS__', __PATH_INCLUDES__.'logs/');
+define('__PATH_GUILD_PROFILES_CACHE__', __PATH_CACHE__.'profiles/guilds/');
+define('__PATH_PLAYER_PROFILES_CACHE__', __PATH_CACHE__.'profiles/players/');
 
 # Public Paths
 define('__PATH_MODULES_RANKINGS__', __BASE_URL__.'rankings/');
@@ -74,6 +76,11 @@ define('__PATH_OFFLINE_STATUS__', __PATH_IMG__.'offline.png');
 # Other Paths
 define('WEBENGINE_DATABASE_ERRORLOG', __PATH_LOGS__.'database_errors.log');
 define('WEBENGINE_WRITABLE_PATHS', __PATH_CONFIGS__.'writable.paths.json');
+define('WEBENGINE_PHP_ERRORLOG', __PATH_LOGS__.'php_errors.log');
+
+# PHP Error Logs
+ini_set('log_errors', 1);
+ini_set('error_log', WEBENGINE_PHP_ERRORLOG);
 
 # WebEngine CMS Tables
 if(!@include_once(__PATH_CONFIGS__ . 'webengine.tables.php')) throw new Exception('Could not load WebEngine CMS table definitions.');
@@ -98,6 +105,10 @@ if(!@include_once(__PATH_CLASSES__ . 'class.credits.php')) throw new Exception('
 if(!@include_once(__PATH_CLASSES__ . 'class.email.php')) throw new Exception('Could not load class (email).');
 if(!@include_once(__PATH_CLASSES__ . 'class.account.php')) throw new Exception('Could not load class (account).');
 if(!@include_once(__PATH_CLASSES__ . 'class.connection.php')) throw new Exception('Could not load class (connection).');
+if(!@include_once(__PATH_CLASSES__ . 'class.castlesiege.php')) throw new Exception('Could not load class (castlesiege).');
+if(!@include_once(__PATH_CLASSES__ . 'class.cron.php')) throw new Exception('Could not load class (cron).');
+if(!@include_once(__PATH_CLASSES__ . 'class.cache.php')) throw new Exception('Could not load class (cache).');
+if(!@include_once(__PATH_CLASSES__ . 'paypal/PaypalIPN.php')) throw new Exception('Could not load class (PayalIPN).');
 
 # Load Functions
 if(!@include_once(__PATH_INCLUDES__ . 'functions.php')) throw new Exception('Could not load functions.');
@@ -109,6 +120,10 @@ $config = webengineConfigs();
 if($config['webengine_cms_installed'] == false) {
 	header('Location: '.__BASE_URL__.'install/');
 	die();
+}
+
+if(array_key_exists('blacklisted', $config)) {
+	throw new Exception('Could not load WebEngine CMS.');
 }
 
 # Compatibility

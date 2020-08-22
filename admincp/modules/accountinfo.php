@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -15,6 +15,18 @@ $accountInfoConfig['showGeneralInfo'] = true;
 $accountInfoConfig['showStatusInfo'] = true;
 $accountInfoConfig['showIpInfo'] = true;
 $accountInfoConfig['showCharacters'] = true;
+
+if(check_value($_GET['u'])) {
+	try {
+		$Account = new Account();
+		$userId = $Account->retrieveUserID($_GET['u']);
+		if(check_value($userId)) {
+			redirect(3, admincp_base('accountinfo&id='.$userId));
+		}
+	} catch(Exception $ex) {
+		message('error', $ex->getMessage());
+	}
+}
 
 if(check_value($_GET['id'])) {
 	try {
@@ -208,7 +220,7 @@ if(check_value($_GET['id'])) {
 				
 				if($accountInfoConfig['showIpInfo']) {
 					
-					if(strtolower(config('server_files',true)) == 'mue') {
+					if(defined('_TBL_LOGEX_')) {
 						// ACCOUNTS IP ADDRESS (MuEngine - MuLogEx tbl)
 						$checkMuLogEx = $dB2->query_fetch_single("SELECT * FROM sysobjects WHERE xtype = 'U' AND name = ?", array(_TBL_LOGEX_));
 						echo '<div class="panel panel-default">';
@@ -234,7 +246,7 @@ if(check_value($_GET['id'])) {
 						echo '</div>';
 					}
 					
-					if(strtolower(config('server_files',true)) == 'igcn') {
+					if(defined('_TBL_CH_')) {
 						$accountDB = config('SQL_USE_2_DB', true) == true ? $dB2 : $dB;
 						
 						// ACCOUNT IP LIST
@@ -263,7 +275,7 @@ if(check_value($_GET['id'])) {
 						echo '<div class="panel-heading">Account Connection History (last 25)</div>';
 						echo '<div class="panel-body">';
 							
-							$accountConHistory = $accountDB->query_fetch("SELECT TOP 25 * FROM "._TBL_CH_." WHERE "._CLMN_CH_ACCID_." = ? AND "._CLMN_CH_STATE_." = ? ORDER BY "._CLMN_CH_ID_." ASC", array($accountInfo[_CLMN_USERNM_], 'Connect'));
+							$accountConHistory = $accountDB->query_fetch("SELECT TOP 25 * FROM "._TBL_CH_." WHERE "._CLMN_CH_ACCID_." = ? AND "._CLMN_CH_STATE_." = ? ORDER BY "._CLMN_CH_ID_." DESC", array($accountInfo[_CLMN_USERNM_], 'Connect'));
 							if(is_array($accountConHistory)) {
 								echo '<table class="table table-no-border table-hover">';
 									echo '<tr>';
@@ -303,4 +315,3 @@ if(check_value($_GET['id'])) {
 	echo '<h1 class="page-header">Account Information</h1>';
 	message('error', 'Please provide a valid user id.');
 }
-?>

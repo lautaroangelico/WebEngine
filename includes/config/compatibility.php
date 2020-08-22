@@ -22,11 +22,11 @@ $webengine['file_compatibility'] = array(
 		'file' => 'igcn.tables.php',
 	),
 	'xteam' => array(
-		'name' => 'X-Team',
+		'name' => 'X-Team, MuEmu, Louis',
 		'file' => 'xteam.tables.php',
 	),
 	'custom' => array(
-		'name' => 'Custom',
+		'name' => 'Custom (IGCN Based)',
 		'file' => 'custom.tables.php',
 	),
 );

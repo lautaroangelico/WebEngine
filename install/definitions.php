@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -16,7 +16,7 @@ if(!defined('access') or !access or access != 'install') die();
 /**
  * INSTALLER_VERSION
  */
-define('INSTALLER_VERSION', '1.2.0');
+define('INSTALLER_VERSION', '1.2.1');
 
 /**
  * WEBENGINE_CONFIGURATION_FILE
@@ -79,9 +79,8 @@ $install['cron_jobs'] = array(
 	array('Grand Resets Ranking','Scheduled task to update characters grand reset ranking','grandresets_ranking.php','300','1','0'),
 	array('Online Ranking','Scheduled task to update top online ranking','online_ranking.php','300','1','0'),
 	array('Gens Ranking','Scheduled task to update gens ranking','gens_ranking.php','300','1','0'),
-	array('PvP Last Stand Ranking','Scheduled task to update characters pvp last stand ranking','pvplaststand_ranking.php','300','1','0'),
 	array('Votes Ranking','Scheduled task to update vote rankings','votes_ranking.php','300','1','0'),
-	array('Castle Siege Owner','Saves castle siege guild owner name and logo in cache','castle_siege.php','300','1','0'),
+	array('Castle Siege','Saves castle siege information in cache','castle_siege.php','300','1','0'),
 	array('Ban System','Scheduled task to lift temporal bans','temporal_bans.php','300','1','0'),
 	array('Server Info','Scheduled task to update the sidebar statistics information','server_info.php','300','1','0'),
 	array('Account Country','Scheduled task to detect the accounts country by their ip address','account_country.php','60','1','0'),

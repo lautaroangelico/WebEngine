@@ -79,7 +79,7 @@ class CastleSiege {
 	}
 	
 	public function siegeData() {
-		$this->_initDatabase();
+		if($this->_liveData == true) $this->_initDatabase();
 		
 		$result = array(
 			'current_stage' => $this->getCurrentStage(),

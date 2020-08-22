@@ -26,7 +26,6 @@
     "config\/navbar.json",
     "config\/usercp.json",
     "config\/webengine.json",
-    "config\/modules\/castlesiege.xml",
     "config\/modules\/contact.xml",
     "config\/modules\/donation.paypal.xml",
     "config\/modules\/donation.xml",

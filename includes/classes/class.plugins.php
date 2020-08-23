@@ -260,12 +260,13 @@ class Plugins {
 	private function _getBuidHash($filePath) {
 		$fileContents = file_get_contents($filePath);
 		$srch = preg_match("/@build/", $fileContents, $matches, PREG_OFFSET_CAPTURE);
-		if(is_array($matches)) {
+		if(is_array($matches) && count($matches) > 0) {
 			$build = substr($fileContents, $matches[0][1]+7, 32);
 			if(!check_value($build)) return;
 			if(strlen($build) !=32) return;
 			return $build;
 		}
+		return;
 	}
 	
 	private function _validateBuildHash($hash) {

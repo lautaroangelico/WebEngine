@@ -17,6 +17,6 @@ include('../includes/webengine.php');
 
 echo json_encode(
 	array(
-		'ServerTime' => date("Y-m-d H:i:s")
+		'ServerTime' => date("Y/m/d H:i:s")
 	)
 );

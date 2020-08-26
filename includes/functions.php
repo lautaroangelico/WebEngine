@@ -236,43 +236,9 @@ function sec_to_dhms($input_seconds=0) {
 	return array($days,$hours,$minutes,$seconds);
 }
 
-/*
- * Calculates the exact time left before the next Castle Siege battle.
- * Configs:
- * 		- cs_battle_day: Values: 1(Monday) to 7(Sunday)
- * 		- cs_battle_time: Value: h:m:s (in 24 hour format!)
- * 		- cs_battle_duration: Value: numeric (time in minutes!)
- * 
-*/
+# to be removed
 function cs_CalculateTimeLeft() {
-	loadModuleConfigs('castlesiege');
-	$weekDays = array("", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
-	$battleDay = $weekDays[mconfig('cs_battle_day')];
-	$today = date("l");
-	$battleTime = mconfig('cs_battle_time');
-	$battleDate = strtotime("next $battleDay $battleTime");
-	$timeOffset = $battleDate - time();
-	if($today == $battleDay) {
-		$currentTime = strtotime(date("H:i:s"));
-		$battleTimeToday = strtotime($battleTime);
-		$timeOffsetToday = $battleTimeToday - time();
-		if($battleTimeToday > $currentTime) {
-			// CS BATTLE IS TODAY
-			return $timeOffsetToday;
-		} else {
-			$timeOffsetToday = $timeOffsetToday*(-1);
-			if((mconfig('cs_battle_duration')*60) > $timeOffsetToday) {
-				// CS BATTLE IN PROGRESS
-				return;
-			} else {
-				// CS BATTLE IS ON NEXT DATE
-				return $timeOffset;
-			}
-		}
-	} else {
-		// CS BATTLE IS ON NEXT DATE
-		return $timeOffset;
-	}
+	return 0;
 }
 
 function updateCronLastRun($file) {

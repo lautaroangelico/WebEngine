@@ -209,6 +209,7 @@ class Character {
 		$creditRewardConfig = mconfig('credit_reward_config');
 		$creditReward = mconfig('credit_reward');
 		if($creditReward > 0 && $creditRewardConfig != 0) {
+			$creditSystem = new CreditSystem();
 			$creditSystem->setConfigId($creditRewardConfig);
 			$configSettings = $creditSystem->showConfigs(true);
 			switch($configSettings['config_user_col_id']) {

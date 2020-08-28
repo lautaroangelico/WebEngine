@@ -73,8 +73,6 @@ var csTime = {
 				document.getElementById("siegeTimer").innerHTML = countdown;
 			}
 		}
-		
-		console.log(b.csNextStageTimeLeft);
 	}
 };
 

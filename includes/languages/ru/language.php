@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
@@ -20,8 +20,8 @@ $lang['switch_lang'] = 'Переключить язык';
 $lang['menu_txt_1'] = 'Главный';
 $lang['menu_txt_2'] = 'Форум';
 $lang['menu_txt_3'] = 'Зарегистрироваться';
-$lang['menu_txt_4'] = 'Авторизоваться';
-$lang['menu_txt_5'] = 'Панель пользователя';
+$lang['menu_txt_4'] = 'Войти';
+$lang['menu_txt_5'] = 'Мой аккаунт';
 $lang['menu_txt_6'] = 'Выйти';
 $lang['menu_txt_7'] = 'Загрузки';
 $lang['menu_txt_8'] = 'жертвовать';
@@ -47,16 +47,16 @@ $lang['module_titles_txt_14'] = 'Часто задаваемые вопросы'
 $lang['module_titles_txt_15'] = 'Забыл пароль';
 $lang['module_titles_txt_16'] = 'Sброс характра';
 $lang['module_titles_txt_17'] = 'Информация о сервере';
-$lang['module_titles_txt_18'] = 'Исправьте Stats';
+$lang['module_titles_txt_18'] = 'Обнулить статы';
 $lang['module_titles_txt_19'] = 'Очистить Skill-Tree';
 $lang['module_titles_txt_20'] = 'Подтверждение по элетронной почте';
 $lang['module_titles_txt_21'] = 'PayPal';
 $lang['module_titles_txt_22'] = 'Супер Награды';
 $lang['module_titles_txt_23'] = 'Western Union';
-$lang['module_titles_txt_24'] = 'Мастер Ключ Восстановление';
+$lang['module_titles_txt_24'] = 'Политика Конфиденциальности';
 $lang['module_titles_txt_25'] = 'Добавить Stats';
 $lang['module_titles_txt_26'] = 'Связаться с нами';
-$lang['module_titles_txt_27'] = 'PagSeguro';
+$lang['module_titles_txt_27'] = 'Политика Возврата';
 $lang['module_titles_txt_28'] = 'Купить Zen';
 $lang['module_titles_txt_29'] = 'Castle Siege';
 
@@ -69,7 +69,7 @@ $lang['usercp_menu_txt_4'] = 'Голосовать за кредиты';
 $lang['usercp_menu_txt_5'] = 'Купить кредиты';
 $lang['usercp_menu_txt_6'] = 'телепорт Характер';
 $lang['usercp_menu_txt_7'] = 'V.I.P';
-$lang['usercp_menu_txt_8'] = 'Исправить Stats';
+$lang['usercp_menu_txt_8'] = 'Обнулить статы';
 $lang['usercp_menu_txt_9'] = 'Очистить Skill-Tree';
 $lang['usercp_menu_txt_10'] = 'Добавить Stats';
 $lang['usercp_menu_txt_11'] = 'купить Zen';
@@ -85,13 +85,13 @@ $lang['success_7'] = 'Мы отправили вам адрес электрон
 $lang['success_8'] = 'Ваш персонаж был успешно сброшен.';
 $lang['success_9'] = 'Статистика вашего персонажа была успешно сброшена.';
 $lang['success_10'] = 'Уровень PK вашего персонажа был успешно сброшен.';
-$lang['success_11'] = 'Ваш персонаж был успешно расклеен.';
-$lang['success_12'] = 'Уровень мастерства вашего персонажа был успешно очищен.';
+$lang['success_11'] = 'Ваш персонаж успешно телепортирован в Lorencia Bar.';
+$lang['success_12'] = 'Очки Мастер Дерева вашего персонажа успешно сброшены';
 $lang['success_13'] = '';
 $lang['success_14'] = '';
 $lang['success_15'] = 'Новости успешно добавлены!';
-$lang['success_16'] = 'Ваш мастер-ключ был успешно отправлен на ваш адрес электронной почты.';
-$lang['success_17'] = 'Статистика успешно добавлена!';
+$lang['success_16'] = '';
+$lang['success_17'] = 'Свободные поинты вашего персонажа были успешно добавлены';
 $lang['success_18'] = 'Ссылка для подтверждения была отправлена ​​на ваш электронный адрес для завершения регистрации.';
 $lang['success_19'] = 'Пожалуйста, проверьте ваш текущий адрес электронной почты, чтобы продолжить.';
 $lang['success_20'] = 'Адрес электронной почты вашей учетной записи был успешно изменен.';
@@ -147,12 +147,12 @@ $lang['error_45'] = 'Неверная операция, перенаправле
 $lang['error_46'] = 'В вашем аккаунте нет символов.';
 $lang['error_47'] = 'Этот модуль в настоящее время не включен, повторите попытку позже.';
 $lang['error_48'] = 'Ваш запрос не может быть обработан, так как система электронной почты не активна, обратитесь в службу поддержки.';
-$lang['error_49'] = 'Ваш аккаунт не имеет мастер-ключа.';
-$lang['error_50'] = 'Вы уже запросили свой мастер-ключ менее часа назад, повторите попытку позже.';
-$lang['error_51'] = 'У вас недостаточно очков повышения.';
-$lang['error_52'] = 'Команду можно добавить только в класс DL.';
-$lang['error_53'] = 'Вы превысили максимальную статистику, пожалуйста, попробуйте еще раз.';
-$lang['error_54'] = 'Вы не добавили минимально необходимых баллов для добавления: ';
+$lang['error_49'] = 'Указанный идентификатор cron недействителен.';
+$lang['error_50'] = 'Указанный идентификатор cron файл не существует';
+$lang['error_51'] = 'Вы превысили количество доступных поинтов для распределения.';
+$lang['error_52'] = 'Характеристка Command может быть добавлена только персонажу Dark Lord.';
+$lang['error_53'] = 'Ваши характеристики не могут превышать %s поинтов.';
+$lang['error_54'] = 'Вы должны распределить как минимум %s свободных поинтов.';
 $lang['error_55'] = 'Покупка выбранной суммы превысит лимит Zen разрешенный для персонажа, выберите другую сумму.';
 $lang['error_56'] = 'Введенное имя недействительно.';
 $lang['error_57'] = 'Введенное сообщение недействительно.';
@@ -164,8 +164,6 @@ $lang['error_62'] = 'Система переключения языков отк
 $lang['error_63'] = 'Выбранный язык недействителен.';
 $lang['error_64'] = 'У вас нет разрешения на добавление статистики к этому персонажу.';
 $lang['error_65'] = 'Не удалось сменить язык.';
-
-# credit system errors
 $lang['error_66'] = 'Вы не установили идентификатор конфигурации.';
 $lang['error_67'] = 'Введенный ID пользователя недействителен.';
 $lang['error_68'] = 'Введенное имя пользователя содержит недопустимые символы.';
@@ -190,8 +188,6 @@ $lang['error_86'] = 'Произошла ошибка при редактиров
 $lang['error_87'] = 'Произошла ошибка при удалении конфигурации, проверьте ошибки базы данных.';
 $lang['error_88'] = 'Идентификатор не установлен, не может проверить статус онлайн.';
 $lang['error_89'] = 'Произошла ошибка при получении значения кредитов.';
-
-# email system errors
 $lang['error_90'] = 'Не удалось загрузить настройки электронной почты.';
 $lang['error_91'] = 'Не удалось загрузить шаблон электронной почты.';
 $lang['error_92'] = 'Адрес электронной почты недействителен, не может отправить письмо.';
@@ -200,7 +196,6 @@ $lang['error_94'] = 'Не удалось загрузить пользовате
 $lang['error_95'] = 'Шаблон электронной почты не был установлен.';
 $lang['error_96'] = 'Адрес электронной почты получателя не был установлен.';
 $lang['error_97'] = 'Тема письма не была установлена.';
-
 $lang['error_98'] = 'Конфигурации входа отсутствуют.';
 $lang['error_99'] = 'При редактировании новости произошла ошибка.';
 $lang['error_100'] = 'Не удалось загрузить настройки системы голосования.';
@@ -238,10 +233,10 @@ $lang['myaccount_txt_8'] = 'замороженный';
 $lang['myaccount_txt_9'] = 'онлайн';
 $lang['myaccount_txt_10'] = 'Не в сети';
 $lang['myaccount_txt_12'] = 'Кредиты:';
-$lang['myaccount_txt_13'] = 'Мастер ключ:';
+$lang['myaccount_txt_13'] = 'Дата';
 $lang['myaccount_txt_14'] = 'оправляться';
-$lang['myaccount_txt_15'] = 'Персонажи:';
-$lang['myaccount_txt_16'] = 'никто';
+$lang['myaccount_txt_15'] = 'Мои Персонажи';
+$lang['myaccount_txt_16'] = 'История Подключения';
 
 # voting
 $lang['vfc_txt_1'] = 'TopSite';
@@ -276,7 +271,7 @@ $lang['rankings_txt_5'] = 'Топ Гранд Ресетс';
 $lang['rankings_txt_6'] = 'Топ онлайн';
 $lang['rankings_txt_7'] = 'Топ Голосов';
 $lang['rankings_txt_8'] = 'Топ Генс';
-$lang['rankings_txt_9'] = 'Топ PVP Last Stand';
+$lang['rankings_txt_9'] = '';
 $lang['rankings_txt_10'] = 'Персонаж';
 $lang['rankings_txt_11'] = 'класс';
 $lang['rankings_txt_12'] = 'уровень';
@@ -291,8 +286,8 @@ $lang['rankings_txt_20'] = 'Последнее обновление @';
 $lang['rankings_txt_21'] = 'Гранд Ресетс';
 $lang['rankings_txt_22'] = 'Топ Мастер Уровень';
 $lang['rankings_txt_23'] = 'Мастер уровень';
-$lang['rankings_txt_24'] = 'Топ PvP Last Stand';
-$lang['rankings_txt_25'] = 'Times Won';
+$lang['rankings_txt_24'] = '';
+$lang['rankings_txt_25'] = '';
 $lang['rankings_txt_26'] = 'Генс Duprian';
 $lang['rankings_txt_27'] = 'Генс Vanert';
 $lang['rankings_txt_28'] = 'Логотип Гильдии';
@@ -307,7 +302,7 @@ $lang['rankings_txt_35'] = 'Уровень ПК';
 # clear pk
 $lang['clearpk_txt_1'] = 'персонаж';
 $lang['clearpk_txt_2'] = 'Zen';
-$lang['clearpk_txt_3'] = 'Убийства';
+$lang['clearpk_txt_3'] = 'Статус убийцы';
 $lang['clearpk_txt_4'] = 'Очистить ПК';
 $lang['clearpk_txt_5'] = 'Ваш персонаж должен иметь как минимум %s zen, чтобы очистить ПК';
 
@@ -317,7 +312,7 @@ $lang['clearst_txt_2'] = 'Мастер уровень';
 $lang['clearst_txt_3'] = 'Zen';
 $lang['clearst_txt_4'] = 'GO';
 $lang['clearst_txt_5'] = 'Поинты';
-$lang['clearst_txt_6'] = 'Ваш персонаж должен быть мастер уровня %s';
+$lang['clearst_txt_6'] = 'Ваш персонаж должен иметь как минимум %s мастер уровень';
 $lang['clearst_txt_7'] = 'Ваш персонаж должен иметь как минимум %s zen для сброса skill tree';
 
 # donation
@@ -336,19 +331,19 @@ $lang['resetcharacter_txt_3'] = 'Zen';
 $lang['resetcharacter_txt_4'] = 'Ресеты';
 $lang['resetcharacter_txt_5'] = 'Ресет';
 $lang['resetcharacter_txt_6'] = 'Ваш персонаж должен быть уровня %s';
-$lang['resetcharacter_txt_7'] = 'Ваш персонаж должен иметь как минимум %s zen для сброса';
-$lang['resetcharacter_txt_8'] = 'Вы были вознаграждены %s кредитами!';
+$lang['resetcharacter_txt_7'] = 'Ваш персонаж должен иметь как минимум %s зен';
+$lang['resetcharacter_txt_8'] = 'Вы будете вознаграждены в виде %s кредитов';
 
 # fix stats
 $lang['resetstats_txt_1'] = 'персонаж';
 $lang['resetstats_txt_2'] = 'уровень';
-$lang['resetstats_txt_3'] = 'Strength';
-$lang['resetstats_txt_4'] = 'Agility';
-$lang['resetstats_txt_5'] = 'Vitality';
-$lang['resetstats_txt_6'] = 'Energy';
-$lang['resetstats_txt_7'] = 'Command';
-$lang['resetstats_txt_8'] = 'Fix';
-$lang['resetstats_txt_9'] = 'Ваш персонаж должен иметь как минимум %s Zen, чтобы исправить статистику.';
+$lang['resetstats_txt_3'] = 'СИЛА';
+$lang['resetstats_txt_4'] = 'ЛОВКОСТЬ';
+$lang['resetstats_txt_5'] = 'ЖИВУЧЕСТЬ';
+$lang['resetstats_txt_6'] = 'ЭНЕРГИЯ';
+$lang['resetstats_txt_7'] = 'КОМАНДА';
+$lang['resetstats_txt_8'] = 'Ресет';
+$lang['resetstats_txt_9'] = 'Ваш персонаж должен иметь как минимум %s зен для сброса статов';
 
 # unstick
 $lang['unstickcharacter_txt_1'] = 'персонаж';
@@ -361,7 +356,7 @@ $lang['masterkey_txt_1'] = 'Отправить мастер-ключ на мою
 
 # add stats
 $lang['addstats_txt_1'] = 'персонаж';
-$lang['addstats_txt_2'] = '<strong>%s</strong> доступные уровни повышения';
+$lang['addstats_txt_2'] = '%s поинтов доступно';
 $lang['addstats_txt_3'] = 'Strength';
 $lang['addstats_txt_4'] = 'Agility';
 $lang['addstats_txt_5'] = 'Vitality';
@@ -409,12 +404,12 @@ $lang['sidebar_srvinfo_txt_4'] = 'Всего гильдий';
 $lang['sidebar_srvinfo_txt_5'] = 'Пользователи онлайн';
 
 # castle siege
-$lang['castlesiege_txt_2'] = 'Владелец замка:';
-$lang['castlesiege_txt_3'] = 'Zen:';
-$lang['castlesiege_txt_4'] = 'Налоговый хаос:';
-$lang['castlesiege_txt_5'] = 'Налоговый магазин:';
-$lang['castlesiege_txt_6'] = 'Зона налоговой охоты:';
-$lang['castlesiege_txt_7'] = 'Зарегистрированные гильдии';
+$lang['castlesiege_txt_2'] = 'Владелец Замка';
+$lang['castlesiege_txt_3'] = 'Деньги Замка:';
+$lang['castlesiege_txt_4'] = 'Ставка налога у Гоблина:';
+$lang['castlesiege_txt_5'] = 'Ставка налога у Магазинов:';
+$lang['castlesiege_txt_6'] = 'Ставка налога у Замка:';
+$lang['castlesiege_txt_7'] = 'Информация Замка';
 
 # buy zen
 $lang['buyzen_txt_1'] = 'купить Zen';
@@ -428,3 +423,82 @@ $lang['buyzen_txt_6'] = 'кредит (ов)';
 $lang['contactus_txt_1'] = 'Адрес электронной почты';
 $lang['contactus_txt_2'] = 'Сообщение';
 $lang['contactus_txt_3'] = 'послать';
+
+# new phrases
+$lang['error_103'] = 'Не удалось загрузить данные Осады Замка, пожалуйста, обратитесь в службу поддержки';
+$lang['error_104'] = 'Нету cron заданий в базе данных.';
+$lang['error_105'] = 'Запрошенное действие недействительно.';
+$lang['error_106'] = 'Не удалось добавить новый cron, заполните пожалуйста всю необходимую информацию.';
+$lang['error_107'] = 'Другой cron с таким же файлом уже существует';
+$lang['error_108'] = 'Не удалось загрузить данные класса символов, пожалуйста, обратитесь в службу поддержки.';
+$lang['error_109'] = 'Класс вашего персонажа недействителен, пожалуйста обратитесь в службу поддержки.';
+$lang['error_110'] = 'Не удалось загрузить базовую статистику класса персонажа, пожалуйста, обратитесь в службу поддержки.';
+$lang['error_111'] = 'Указанный логин пользователя недействителен.';
+$lang['error_112'] = 'Указанное имя пользователя недействительно';
+$lang['error_113'] = 'У вас недостаточно %s для того чтобы выполнить ресет вашего персонажа.';
+$lang['error_114'] = 'У вас недостаточно %s чтобы освободить вашего персонажа';
+$lang['error_115'] = 'Ваш персонаж уже находится в Lorencia Bar.';
+$lang['error_116'] = 'У вас недостаточно %s для того чтобы отмыть ваши убийства.';
+$lang['error_117'] = 'Ваш персонаж не имеет статус убийцы.';
+$lang['error_118'] = 'У вас недостаточно %s для того чтобы сбросить мастер дерево вашего персонажа.';
+$lang['error_119'] = 'Не удалось загрузить информацию о мастер уровне вашего персонажа, пожалуйста, обратитесь в службу поддержки.';
+$lang['error_120'] = 'Ваш персонаж не соответствует требуемого уровня чтобы сбросить поинты мастер дерева.';
+$lang['error_121'] = 'Ваш персонаж не соответствует требованиям мастер уровня для того чтобы сбросить поинты мастер дерева.';
+$lang['error_122'] = 'Одно или несколько введенных значений недействительны, попробуйте еще раз.';
+$lang['error_123'] = 'Ваш персонаж не соответствует требуемого уровня для распределения поинтов.';
+$lang['error_124'] = 'Ваш персонаж не соответствует требованиям мастер уровня для того чтобы добавить поинты.';
+$lang['error_125'] = 'У вас недостаточно %s для распределения свободных поинтов вашему персонажу.';
+$lang['error_126'] = 'У вас недостаточно %s для выполнения ресета вашего персонажа';
+$lang['error_127'] = 'Вы достигли максимального количества ресетов для данного персонажа.';
+$lang['error_128'] = 'Отсутствует группа классов персонажей, пожалуйста, обратитесь в службу поддержки.';
+$lang['myaccount_txt_17'] = 'Сервер';
+$lang['myaccount_txt_18'] = 'ИП Адрес';
+$lang['myaccount_txt_19'] = 'Действие';
+$lang['clearst_txt_8'] = 'Ваш персонаж должен быть как минимум %s уровень.';
+$lang['resetcharacter_txt_9'] = 'Вы должен иметь как минимум %s кредитов для выполнения ресета вашего персонажа.';
+$lang['resetcharacter_txt_10'] = 'Вы можете произвести максимум %s ресетов.';
+$lang['resetcharacter_txt_11'] = 'Инвентарь вашего персонажа будет очищен, убедитесь что вы положили все вещи в ваш банк.';
+$lang['addstats_txt_10'] = 'Ваш персонаж должен иметь как минимум %s мастер уровень.';
+$lang['addstats_txt_11'] = 'Ваш персонаж должен иметь как минимум %s уровень';
+$lang['addstats_txt_12'] = 'Любая характеристика может иметь ограничение в виде %s поинтов';
+$lang['addstats_txt_13'] = 'Вам необходимо добавить как минимум %s свободных поинтов для того чтобы использовать данную функцию.';
+$lang['sidebar_srvinfo_txt_6'] = 'Версия';
+$lang['sidebar_srvinfo_txt_7'] = 'Опыт';
+$lang['sidebar_srvinfo_txt_8'] = 'Мастер опыт';
+$lang['sidebar_srvinfo_txt_9'] = 'Выпадение';
+$lang['castlesiege_txt_1'] = 'Битва за осаду Замка';
+$lang['castlesiege_txt_8'] = 'Зен';
+$lang['castlesiege_txt_9'] = 'Текущий этап:';
+$lang['castlesiege_txt_10'] = 'Следующий этап:';
+$lang['castlesiege_txt_11'] = 'Длительность Битвы:';
+$lang['castlesiege_txt_12'] = 'Глава Гильдии';
+$lang['castlesiege_txt_13'] = 'Союзники владельцев Замка';
+$lang['castlesiege_txt_14'] = 'Гильдия';
+$lang['castlesiege_txt_15'] = 'Глава';
+$lang['castlesiege_txt_16'] = 'Логотип';
+$lang['castlesiege_txt_17'] = 'Очки';
+$lang['castlesiege_txt_18'] = 'Участники';
+$lang['castlesiege_txt_19'] = 'Зарегистрированные гильдии';
+$lang['castlesiege_txt_20'] = 'Расписание мероприятия';
+$lang['castlesiege_txt_21'] = 'Этап';
+$lang['castlesiege_txt_22'] = 'Начало Даты';
+$lang['castlesiege_txt_23'] = 'Конец Даты';
+$lang['castlesiege_schedule_1'] = 'Период регистрации гильдий';
+$lang['castlesiege_schedule_2'] = 'Период регистрации Sign of Lord';
+$lang['castlesiege_schedule_3'] = 'Объявление';
+$lang['castlesiege_schedule_4'] = 'Подготовка Замка';
+$lang['castlesiege_schedule_5'] = 'Осада Замка';
+$lang['castlesiege_schedule_6'] = 'Нет активности';
+$lang['castlesiege_time_1'] = '%s дней %s часов';
+$lang['castlesiege_time_2'] = '%s часов %s минут';
+$lang['castlesiege_time_3'] = '%s минут';
+$lang['castlesiege_time_4'] = 'Меньше чем одна минута';
+$lang['castlesiege_battle_duration'] = '%s часов %s минут';
+$lang['castlesiege_widget_title'] = 'Осада Замка';
+$lang['footer_terms'] = 'Условия Использования';
+$lang['footer_privacy'] = 'Политика Конфиденциальности';
+$lang['footer_refund'] = 'Политика Возврата';
+$lang['footer_info'] = 'Информация о Сервере';
+$lang['footer_contact'] = 'Контакты';
+$lang['footer_copyright'] = '%s © %s ВСЕ ПРАВА ЗАЩИЩЕНЫ.';
+$lang['footer_webzen_copyright'] = 'Этот сайт никоим образом не связан и не одобрен Webzen Inc.';

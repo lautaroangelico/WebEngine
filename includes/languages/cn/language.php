@@ -3,15 +3,17 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
+ * 
+ * Translation by: nemoma#0001 (discord)
+ * 
  */
 
-# Translated by nemoma
 # general
 $lang['server_time'] = '服务器时间';
 $lang['user_time'] = '本地时间';

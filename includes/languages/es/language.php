@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -13,7 +13,7 @@
 
 /**
  * Spanish Translation
- * By: Supay
+ * By: Supay, Lautaro
  */
 
 # General
@@ -26,7 +26,7 @@ $lang['menu_txt_1'] = 'Inicio';
 $lang['menu_txt_2'] = 'Foro';
 $lang['menu_txt_3'] = 'Registro';
 $lang['menu_txt_4'] = 'Entrar';
-$lang['menu_txt_5'] = 'Panel de Usuario';
+$lang['menu_txt_5'] = 'Mi Cuenta';
 $lang['menu_txt_6'] = 'Salir';
 $lang['menu_txt_7'] = 'Descargas';
 $lang['menu_txt_8'] = 'Donaciones';
@@ -58,10 +58,10 @@ $lang['module_titles_txt_20'] = 'Verificación de correo electrónico';
 $lang['module_titles_txt_21'] = 'PayPal';
 $lang['module_titles_txt_22'] = 'Super Rewards';
 $lang['module_titles_txt_23'] = 'Western Union';
-$lang['module_titles_txt_24'] = 'Recuperar Master Key';
+$lang['module_titles_txt_24'] = 'Politica de Privacidad';
 $lang['module_titles_txt_25'] = 'Agregar Stats';
 $lang['module_titles_txt_26'] = 'Contáctanos';
-$lang['module_titles_txt_27'] = 'PagSeguro';
+$lang['module_titles_txt_27'] = 'Reembolsos';
 $lang['module_titles_txt_28'] = 'Comprar Zen';
 $lang['module_titles_txt_29'] = 'Castle Siege';
 
@@ -90,13 +90,13 @@ $lang['success_7'] = 'Hemos enviado un correo electrónico con su nueva contrase
 $lang['success_8'] = 'Su personaje ha sido reseteado correctamente.';
 $lang['success_9'] = 'Las estadísticas de su personaje han sido reseteadas correctamente. ';
 $lang['success_10'] = 'El nivel PK de su personaje ha sido limpiado correctamente. ';
-$lang['success_11'] = 'Tu personaje ha sido exitosamente desatorado.';
-$lang['success_12'] = 'El nivel maestro de su personaje ha sido reseteado correctamente. ';
+$lang['success_11'] = 'Tu personaje ha sido movido al bar de Lorencia.';
+$lang['success_12'] = 'El árbol de habilidades de tu personaje ha sido reseteado.';
 $lang['success_13'] = '';
 $lang['success_14'] = '';
 $lang['success_15'] = 'Noticias añadidas correctamente!';
-$lang['success_16'] = 'Su Master Key ha sido enviada con éxito a su dirección de correo electrónico.';
-$lang['success_17'] = 'Stats añadidos correctamente!';
+$lang['success_16'] = '';
+$lang['success_17'] = 'Los puntos han sido agregados a tu personaje.';
 $lang['success_18'] = 'Un enlace de verificación ha sido enviado a su correo electrónico para completar el registro.';
 $lang['success_19'] = 'Por favor, compruebe su dirección de correo electrónico actual para continuar.';
 $lang['success_20'] = 'La dirección de correo electrónico de su cuenta se ha cambiado correctamente. ';
@@ -152,12 +152,12 @@ $lang['error_45'] = 'Operación no válida, redirigiendo a inicio.';
 $lang['error_46'] = 'Su cuenta no tiene caracteres.';
 $lang['error_47'] = 'Este módulo no está habilitada actualmente, por favor intente de nuevo más tarde.';
 $lang['error_48'] = 'Su solicitud no pudo ser procesada debido a que el sistema de correo electrónico no está activo, por favor, póngase en contacto con el equipo de apoyo';
-$lang['error_49'] = 'Su cuenta no tiene una Master Key.';
-$lang['error_50'] = 'Usted ya ha solicitado su clave maestra hace menos de una hora, a intentarlo más tarde';
-$lang['error_51'] = 'Usted no tiene suficientes puntos de nivel de seguimiento.';
-$lang['error_52'] = 'Command sólo puede ser añadido a la clase DL.';
-$lang['error_53'] = 'Se ha superado las estadísticas max, por favor intente de nuevo.';
-$lang['error_54'] = 'No ha añadido los puntos necesarios mínimos para añadir:';
+$lang['error_49'] = 'El id de cron proporcionado no es valido.';
+$lang['error_50'] = 'El archivo de cron proporcionado no es valido.';
+$lang['error_51'] = 'Has excedido la cantidad de puntos disponibles para agregar.';
+$lang['error_52'] = 'Unicamente la clase Dark Lord puede agregar puntos de command.';
+$lang['error_53'] = 'Tus stats no deberan exceder el maximo de %s puntos.';
+$lang['error_54'] = 'Debes agregar al menos %s puntos.';
 $lang['error_55'] = 'La compra de la cantidad seleccionada superará el límite permitido zen por personaje, por favor elija una cantidad diferente.';
 $lang['error_56'] = 'El nombre introducido no es válido.';
 $lang['error_57'] = 'El mensaje introducido no es válido.';
@@ -169,8 +169,6 @@ $lang['error_62'] = 'El sistema de cambio de idioma está desactivada.';
 $lang['error_63'] = 'El idioma seleccionado no es válido.';
 $lang['error_64'] = 'Usted no tiene permiso para añadir estadísticas para este personaje';
 $lang['error_65'] = 'No se pudo cambiar el idioma.';
-
-# errores en el sistema de crédito
 $lang['error_66'] = 'No ha establecido un ID de configuración.';
 $lang['error_67'] = 'El ID de usuario introducido no es válido.';
 $lang['error_68'] = 'El nombre de usuario introducido contiene caracteres no permitidos.';
@@ -195,8 +193,6 @@ $lang['error_86'] = 'Ha habido un error al editar la configuración, comprobar s
 $lang['error_87'] = 'Ha habido un error al eliminar la configuración, comprobar los errores de base de datos';
 $lang['error_88'] = 'Identificador no se establece, no se puede comprobar el estado en línea';
 $lang['error_89'] = 'Hubo un error al obtener el valor de los créditos.';
-
-# errores en el sistema de correo electrónico
 $lang['error_90'] = 'No se pudo cargar configuraciones de correo electrónico.';
 $lang['error_91'] = 'No puede mostrarse la plantilla de correo electrónico.';
 $lang['error_92'] = 'Dirección de correo electrónico no válida, no pueden enviar correo electrónico.';
@@ -205,12 +201,37 @@ $lang['error_94'] = 'No se pudo cargar la plantilla de correo electrónico perso
 $lang['error_95'] = 'Plantilla de correo electrónico no se ha establecido.';
 $lang['error_96'] = 'No hay ninguna dirección de correo del destinatario se ha establecido.';
 $lang['error_97'] = 'asunto del correo electrónico no se ha establecido.';
-
 $lang['error_98'] = 'Iniciar sesión configuraciones que faltan.';
 $lang['error_99'] = 'Se produjo un error durante la edición de las noticias';
 $lang['error_100'] = 'No se pudo cargar configuraciones de sistemas voto.';
 $lang['error_101'] = 'Dirección IP no es válida.';
 $lang['error_102'] = 'Configuración de crédito no se ha establecido (sistema de votación)';
+$lang['error_103'] = 'La información de castle siege no se pudo cargar, contacta a soporte tecnico.';
+$lang['error_104'] = 'No existen crons en la base de datos.';
+$lang['error_105'] = 'La accion pedida no es valida.';
+$lang['error_106'] = 'El nuevo cron no pudo ser agregado, favor de llenar todos los campos requeridos.';
+$lang['error_107'] = 'Ya existe un cron con el mismo nombre.';
+$lang['error_108'] = 'No se pudo cargar la información de la clase del personaje, contacta a soporte tecnico.';
+$lang['error_109'] = 'La clase de tu personaje no es valida, contacta a soporte tecnico.';
+$lang['error_110'] = 'No se pudo cargar la información de stats base de tu clase, contacta a soporte tecnico.';
+$lang['error_111'] = 'El id de usuario proporcionado no es valido.';
+$lang['error_112'] = 'El nombre de usuario proporcionado no es valido.';
+$lang['error_113'] = 'No tienes suficientes %s para resetear los stats de tu personaje.';
+$lang['error_114'] = 'No tienes suficientes %s para mover de ubicacion tu personaje.';
+$lang['error_115'] = 'Tu personaje ya se encuentra en el Bar de Lorencia.';
+$lang['error_116'] = 'No tienes suficientes %s para resetear el estado de PK de tu personaje.';
+$lang['error_117'] = 'Tu personaje no es PK.';
+$lang['error_118'] = 'No tienes suficientes %s para resetear el arbol de habilidades de tu personaje.';
+$lang['error_119'] = 'No se pudo cargar la información de nivel maestro de tu personaje, contacta a soporte tecnico.';
+$lang['error_120'] = 'Tu personaje no cuenta con el nivel requerido para resetear el arbol de habilidades.';
+$lang['error_121'] = 'Tu personaje no cuenta con el nivel maestro requerido para resetear el arbol de habilidades.';
+$lang['error_122'] = 'Los valores ingresados no son validos, favor de intentar nuevamente.';
+$lang['error_123'] = 'Tu personaje no cuenta con el nivel requerido para agregar puntos.';
+$lang['error_124'] = 'Tu personaje no cuenta con el nivel maestro requerido para agregar puntos.';
+$lang['error_125'] = 'No tienes suficientes %s para agregar puntos a tu personaje.';
+$lang['error_126'] = 'No tienes suficientes %s para resetear tu personaje.';
+$lang['error_127'] = 'Has alcanzado el maximo de resets con este personaje.';
+$lang['error_128'] = 'No se pudo cargar la información del grupo de clase, contacta a soporte tecnico.';
 
 # registro
 $lang['register_txt_1'] = 'Nombre de usuario:';
@@ -243,10 +264,13 @@ $lang['myaccount_txt_8'] = 'Congelada';
 $lang['myaccount_txt_9'] = 'En línea';
 $lang['myaccount_txt_10'] = 'Desconectado';
 $lang['myaccount_txt_12'] = 'Créditos:';
-$lang['myaccount_txt_13'] = 'Master Key:';
+$lang['myaccount_txt_13'] = 'Fecha';
 $lang['myaccount_txt_14'] = 'Recuperar';
-$lang['myaccount_txt_15'] = 'Personaje(s):';
-$lang['myaccount_txt_16'] = 'ninguno';
+$lang['myaccount_txt_15'] = 'Mis Personajes:';
+$lang['myaccount_txt_16'] = 'Historial de Conexion';
+$lang['myaccount_txt_17'] = 'Server';
+$lang['myaccount_txt_18'] = 'IP';
+$lang['myaccount_txt_19'] = 'Accion';
 
 # votar
 $lang['vfc_txt_1'] = 'TopSite';
@@ -281,7 +305,7 @@ $lang['rankings_txt_5'] = 'Top Grand Resets';
 $lang['rankings_txt_6'] = 'Top Online';
 $lang['rankings_txt_7'] = 'Top Votes';
 $lang['rankings_txt_8'] = 'Top Gens';
-$lang['rankings_txt_9'] = 'Top PVP Last Stand';
+$lang['rankings_txt_9'] = '';
 $lang['rankings_txt_10'] = 'Personaje';
 $lang['rankings_txt_11'] = 'Clase';
 $lang['rankings_txt_12'] = 'Nivel';
@@ -296,8 +320,8 @@ $lang['rankings_txt_20'] = 'Última actualización @';
 $lang['rankings_txt_21'] = 'Grand Resets';
 $lang['rankings_txt_22'] = 'Top Master Level';
 $lang['rankings_txt_23'] = 'Master Level';
-$lang['rankings_txt_24'] = 'Top PvP Last Stand';
-$lang['rankings_txt_25'] = 'Veces ganadas';
+$lang['rankings_txt_24'] = '';
+$lang['rankings_txt_25'] = '';
 $lang['rankings_txt_26'] = 'Gens Duprian';
 $lang['rankings_txt_27'] = 'Gens Vanert';
 $lang['rankings_txt_28'] = 'Guild logo';
@@ -312,7 +336,7 @@ $lang['rankings_txt_35'] = 'Nivel de Pk';
 # Limpiar PK
 $lang['clearpk_txt_1'] = 'Personaje';
 $lang['clearpk_txt_2'] = 'Zen';
-$lang['clearpk_txt_3'] = 'Asesinatos';
+$lang['clearpk_txt_3'] = 'Estado PK';
 $lang['clearpk_txt_4'] = 'Borrar PK';
 $lang['clearpk_txt_5'] = 'Su personaje debe tener al menos %s Zen para borrar Pk';
 
@@ -322,8 +346,9 @@ $lang['clearst_txt_2'] = 'Nivel Maestro';
 $lang['clearst_txt_3'] = 'Zen';
 $lang['clearst_txt_4'] = 'GO';
 $lang['clearst_txt_5'] = 'Puntos';
-$lang['clearst_txt_6'] = 'Su personaje debe ser nivel maestro %s';
+$lang['clearst_txt_6'] = 'Tu personaje debe tener como minimo nivel %s maestro.';
 $lang['clearst_txt_7'] = 'Su personaje debe tener al menos %s Zen para restablecer el árbol de habilidades';
+$lang['clearst_txt_8'] = 'Tu personaje debe tener como minimo nivel %s';
 
 # donación
 $lang['donation_txt_2'] = 'Créditos';
@@ -341,19 +366,22 @@ $lang['resetcharacter_txt_3'] = 'Zen';
 $lang['resetcharacter_txt_4'] = 'Resets';
 $lang['resetcharacter_txt_5'] = 'Reset';
 $lang['resetcharacter_txt_6'] = 'Su personaje debe ser nivel %s';
-$lang['resetcharacter_txt_7'] = 'Su personaje debe tener al menos %s Zen para resetear';
-$lang['resetcharacter_txt_8'] = '! Usted ha sido recompensado con %s créditos';
+$lang['resetcharacter_txt_7'] = 'Tu personaje debe tener como minimo %s zen';
+$lang['resetcharacter_txt_8'] = 'Seras recompensado con %s credits';
+$lang['resetcharacter_txt_9'] = 'Debes contar como minimo con %s creditos para resetear tu personaje';
+$lang['resetcharacter_txt_10'] = 'Puedes resetear tu personaje un maximo de %s veces';
+$lang['resetcharacter_txt_11'] = 'El inventario de tu personaje sera borrado, asegurate de guardar tus items en el baul.';
 
 # Arreglar stats
 $lang['resetstats_txt_1'] = 'Personaje';
 $lang['resetstats_txt_2'] = 'Nivel';
-$lang['resetstats_txt_3'] = 'Fuerza';
-$lang['resetstats_txt_4'] = 'Agilidad';
-$lang['resetstats_txt_5'] = 'Vitalidad';
-$lang['resetstats_txt_6'] = 'Energía';
-$lang['resetstats_txt_7'] = 'Comando';
-$lang['resetstats_txt_8'] = 'Arreglar';
-$lang['resetstats_txt_9'] = 'Su personaje debe tener al menos %s Zen para resetear las estadísticas';
+$lang['resetstats_txt_3'] = 'STR';
+$lang['resetstats_txt_4'] = 'AGI';
+$lang['resetstats_txt_5'] = 'VIT';
+$lang['resetstats_txt_6'] = 'ENE';
+$lang['resetstats_txt_7'] = 'CMD';
+$lang['resetstats_txt_8'] = 'Resetear';
+$lang['resetstats_txt_9'] = 'Tu personaje debe tener como mínimo %s zen para resetear los stats.';
 
 # unstick
 $lang['unstickcharacter_txt_1'] = 'personaje';
@@ -366,7 +394,7 @@ $lang['masterkey_txt_1'] = 'Enviar Master Key a mi correo electrónico ahora!';
 
 # Añadir las estadísticas
 $lang['addstats_txt_1'] = 'Personaje';
-$lang['addstats_txt_2'] = '<strong>%s</strong> puntos disponibles';
+$lang['addstats_txt_2'] = '%s puntos disponibles';
 $lang['addstats_txt_3'] = 'Fuerza';
 $lang['addstats_txt_4'] = 'agilidad';
 $lang['addstats_txt_5'] = 'vitalidad';
@@ -374,6 +402,10 @@ $lang['addstats_txt_6'] = 'Energía';
 $lang['addstats_txt_7'] = 'Comando';
 $lang['addstats_txt_8'] = 'Agregar puntos';
 $lang['addstats_txt_9'] = 'Su personaje debe tener al menos %s Zen añadir stats';
+$lang['addstats_txt_10'] = 'Tu personaje debe tener como minimo nivel maestro %s';
+$lang['addstats_txt_11'] = 'Tu personaje debe tener como minimo nivel %s';
+$lang['addstats_txt_12'] = 'Cada stat puede tener un maximo de %s puntos';
+$lang['addstats_txt_13'] = 'Debes agregar como minimo %s puntos para utilizar esta herramienta';
 
 # Castillo bandera de asedio
 $lang['csbanner_txt_1'] = 'Dueño del Castillo';
@@ -412,14 +444,47 @@ $lang['sidebar_srvinfo_txt_2'] = 'Cuentas totales';
 $lang['sidebar_srvinfo_txt_3'] = 'Personajes totales';
 $lang['sidebar_srvinfo_txt_4'] = 'Guilds totales';
 $lang['sidebar_srvinfo_txt_5'] = 'Usuarios en línea';
+$lang['sidebar_srvinfo_txt_6'] = 'Version';
+$lang['sidebar_srvinfo_txt_7'] = 'Experiencia';
+$lang['sidebar_srvinfo_txt_8'] = 'Experiencia Maestra';
+$lang['sidebar_srvinfo_txt_9'] = 'Drop';
 
 # Castillo de sitio
-$lang['castlesiege_txt_2'] = 'Dueño del Castillo:';
-$lang['castlesiege_txt_3'] = 'Zen:';
-$lang['castlesiege_txt_4'] = 'Impuesto CM:';
-$lang['castlesiege_txt_5'] = 'Impuesto NPC Shop:';
-$lang['castlesiege_txt_6'] = 'Impuesto LOT:';
-$lang['castlesiege_txt_7'] = 'Guilds registrados';
+$lang['castlesiege_txt_1'] = 'Batalla Castle Siege';
+$lang['castlesiege_txt_2'] = 'Dueño del Castillo';
+$lang['castlesiege_txt_3'] = 'Trial Money:';
+$lang['castlesiege_txt_4'] = 'Tax Rate Goblin:';
+$lang['castlesiege_txt_5'] = 'Tax Rate NPC:';
+$lang['castlesiege_txt_6'] = 'Tax Rate Trial:';
+$lang['castlesiege_txt_7'] = 'Información del Castillo';
+$lang['castlesiege_txt_8'] = 'Zen';
+$lang['castlesiege_txt_9'] = 'Estapa Actual:';
+$lang['castlesiege_txt_10'] = 'Siguiente Etapa:';
+$lang['castlesiege_txt_11'] = 'Duracion de la Battalla:';
+$lang['castlesiege_txt_12'] = 'Guild Master';
+$lang['castlesiege_txt_13'] = 'Alianza del Castillo';
+$lang['castlesiege_txt_14'] = 'Guild';
+$lang['castlesiege_txt_15'] = 'Master';
+$lang['castlesiege_txt_16'] = 'Logo';
+$lang['castlesiege_txt_17'] = 'Puntuación';
+$lang['castlesiege_txt_18'] = 'Miembros';
+$lang['castlesiege_txt_19'] = 'Guilds Registrados';
+$lang['castlesiege_txt_20'] = 'Calendario del Evento';
+$lang['castlesiege_txt_21'] = 'Etapa';
+$lang['castlesiege_txt_22'] = 'Fecha de Inicio';
+$lang['castlesiege_txt_23'] = 'Fecha Final';
+$lang['castlesiege_schedule_1'] = 'Periodo de Registracion de Guilds';
+$lang['castlesiege_schedule_2'] = 'Periodo de Registracion de Mark of Lord';
+$lang['castlesiege_schedule_3'] = 'Anuncio';
+$lang['castlesiege_schedule_4'] = 'Preparacion del Castillo';
+$lang['castlesiege_schedule_5'] = 'Batalla de Castle Siege';
+$lang['castlesiege_schedule_6'] = 'Espera';
+$lang['castlesiege_time_1'] = '%s dias %s horas';
+$lang['castlesiege_time_2'] = '%s horas %s minutos';
+$lang['castlesiege_time_3'] = '%s minutos';
+$lang['castlesiege_time_4'] = 'Menos de un minuto.';
+$lang['castlesiege_battle_duration'] = '%s horas %s minutos';
+$lang['castlesiege_widget_title'] = 'Castle Siege';
 
 # Compran zen
 $lang['buyzen_txt_1'] = 'Comprar Zen';
@@ -433,3 +498,12 @@ $lang['buyzen_txt_6'] = 'Crédito(s)';
 $lang['contactus_txt_1'] = 'Dirección de correo electrónico';
 $lang['contactus_txt_2'] = 'Mensaje';
 $lang['contactus_txt_3'] = 'Enviar';
+
+# footer
+$lang['footer_terms'] = 'Terminos de Servicio';
+$lang['footer_privacy'] = 'Politica de Privacidad';
+$lang['footer_refund'] = 'Politica de Reembolsos';
+$lang['footer_info'] = 'Información del Servidor';
+$lang['footer_contact'] = 'Contactanos';
+$lang['footer_copyright'] = '%s © %s, TODOS LOS DERECHOS RESERVADOS.';
+$lang['footer_webzen_copyright'] = 'Este sitio no está asociado ni respaldado de ninguna manera por Webzen Inc.';

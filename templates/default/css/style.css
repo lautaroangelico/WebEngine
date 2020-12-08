@@ -350,64 +350,72 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 
 /* PAYPAL */
 .paypal-gateway-container {
-width: 100%;
-background: #1a2133;
-border: 1px solid #2e374f;
-}
-
-.paypal-gateway-logo {
-width: 100%;
-height: 68px;
-background: #fff9ec url('../img/paypal-logo-200-68.png') no-repeat top center;
-margin-bottom: 10px;
--moz-border-radius: 3px;
--webkit-border-radius: 3px;
-border-radius: 3px;
+	width: 100%;
 }
 
 .paypal-gateway-content {
-margin: 10px;
-background: #fef2da;
-border: 2px solid #f79433;
-padding: 10px;
-overflow: auto;
+	background: #fef2da;
+	border: 3px solid #f79433;
+	padding: 15px;
+	overflow: auto;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	font-weight: bold;
+}
+
+.paypal-gateway-logo {
+	width: 100%;
+	height: 100px;
+	background: #fff9ec url('../img/paypal-logo-200-68.png') no-repeat center;
+	background-size: contain;
+	margin-bottom: 15px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
 }
 
 .paypal-gateway-conversion-rate {
-margin: 0px auto;
-text-align: center;
-color: #000;
-font-size: 18px;
-padding: 10px 0px;
+	margin: 0px auto;
+	text-align: center;
+	color: #000;
+	font-size: 18px;
+	padding: 10px 0px;
 }
 
 .paypal-gateway-form {
-width: 100%;
-margin: 0px auto;
-text-align: center;
+	width: 100%;
+	margin: 20px auto;
+	text-align: center;
 }
 
 .paypal-gateway-form div {
-display: inline-block;
-padding: 0px 10px;
-color: #000;
-font-size: 18px;
+	display: inline-block;
+	padding: 0px 10px;
+	color: #000;
+	font-size: 24px;
 }
 
 .paypal-gateway-form input[type=text] {
-width: 40px;
+	width: 60px;
+	font-size: 24px;
+	border: 3px solid #f79433;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	color: #f79433;
 }
 
 .paypal-gateway-continue {
-margin: 0px auto;
-text-align: center;
+	margin: 0px auto;
+	text-align: center;
 }
 
 .paypal-gateway-continue input[type=submit] {
-background: url('../img/paypal-submit.jpg') no-repeat;
-width: 200px;
-height: 40px;
-border: 0px;
+	background: url('../img/paypal-submit.jpg') no-repeat;
+	width: 200px;
+	height: 40px;
+	border: 0px;
 }
 
 .module-requirements {

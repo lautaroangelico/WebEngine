@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -31,7 +31,6 @@ function saveChanges() {
 	$xml->rankings_enable_online = $_POST['setting_10'];
 	$xml->rankings_enable_guilds = $_POST['setting_11'];
 	$xml->rankings_enable_master = $_POST['setting_12'];
-	$xml->rankings_enable_pvplaststand = $_POST['setting_13'];
 	$xml->rankings_enable_gens = $_POST['setting_14'];
 	$xml->rankings_enable_votes = $_POST['setting_15'];
 	$xml->rankings_excluded_characters = $_POST['setting_16'];
@@ -127,12 +126,6 @@ $moduleConfig = simplexml_load_file($xmlPath);
 			<th>Master Level Rankings<br/></th>
 			<td>
 				<?php enabledisableCheckboxes('setting_12',$moduleConfig->rankings_enable_master,'Enabled','Disabled'); ?>
-			</td>
-		</tr>
-		<tr>
-			<th>PvP Last Stand Rankings<br/></th>
-			<td>
-				<?php enabledisableCheckboxes('setting_13',$moduleConfig->rankings_enable_pvplaststand,'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>

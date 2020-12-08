@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
  * 
@@ -218,8 +218,8 @@ $lang['register_txt_2'] = 'Senha:';
 $lang['register_txt_3'] = 'Confirme a senha:';
 $lang['register_txt_4'] = 'Endereço de e-mail:';
 $lang['register_txt_5'] = 'Criar conta';
-$lang['register_txt_6'] = '4 a 10 caracteres numéricos';
-$lang['register_txt_7'] = '4 a 32 caracteres';
+$lang['register_txt_6'] = '%s a %s caracteres numéricos';
+$lang['register_txt_7'] = '%s a %s caracteres';
 $lang['register_txt_8'] = 'redigite sua senha';
 $lang['register_txt_9'] = 'por favor, use um endereço de e-mail válido';
 $lang['register_txt_10'] = 'Ao se registrar você concorda com o nosso <br><a href="%s" target="_blank">Termos de Serviço</a>.';

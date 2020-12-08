@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -49,14 +49,14 @@ try {
 				echo '<label for="webengineRegistration1" class="col-sm-4 control-label">'.lang('register_txt_1',true).'</label>';
 				echo '<div class="col-sm-8">';
 					echo '<input type="text" class="form-control" id="webengineRegistration1" name="webengineRegister_user" required>';
-					echo '<span id="helpBlock" class="help-block">'.lang('register_txt_6',true).'</span>';
+					echo '<span id="helpBlock" class="help-block">'.langf('register_txt_6', array(config('username_min_len', true), config('username_max_len', true))).'</span>';
 				echo '</div>';
 			echo '</div>';
 			echo '<div class="form-group">';
 				echo '<label for="webengineRegistration2" class="col-sm-4 control-label">'.lang('register_txt_2',true).'</label>';
 				echo '<div class="col-sm-8">';
 					echo '<input type="password" class="form-control" id="webengineRegistration2" name="webengineRegister_pwd" required>';
-					echo '<span id="helpBlock" class="help-block">'.lang('register_txt_7',true).'</span>';
+					echo '<span id="helpBlock" class="help-block">'.langf('register_txt_7', array(config('password_min_len', true), config('password_max_len', true))).'</span>';
 				echo '</div>';
 			echo '</div>';
 			echo '<div class="form-group">';

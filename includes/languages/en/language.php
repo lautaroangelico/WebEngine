@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
@@ -220,7 +220,7 @@ $lang['error_118'] = 'You do not have enough %s to clear your character\'s skill
 $lang['error_119'] = 'Could not load your character\'s master level information, please contact support.';
 $lang['error_120'] = 'Your character does not meet the level requirement to clear its skill tree.';
 $lang['error_121'] = 'Your character does not meet the master level requirement to clear its skill tree.';
-$lang['error_122'] = 'One of more entered values are not valid, please try again.';
+$lang['error_122'] = 'One or more entered values are not valid, please try again.';
 $lang['error_123'] = 'Your character does not meet the level requirement to add stats.';
 $lang['error_124'] = 'Your character does not meet the master level requirement to add stats.';
 $lang['error_125'] = 'You do not have enough %s to add stats to your character.';

@@ -152,9 +152,13 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 }
 
 .admincp-button {
-	position:absolute;
-	top:10px;
-	right:10px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background: #ffffff !important;
+	border: 2px solid #000000 !important;
+	color: #000000 !important;
+	font-weight: bold !important;
 }
 
 .page-title {

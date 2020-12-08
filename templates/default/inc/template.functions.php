@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
@@ -119,4 +119,31 @@ function templateCastleSiegeWidget() {
 			echo '</div>';
 		echo '</div>';
 	echo '</div>';
+}
+
+function templateLanguageSelector() {
+	$langList = array(
+		'en' => array('English', 'US'),
+		'es' => array('Español', 'ES'),
+		'ph' => array('Filipino', 'PH'),
+		'br' => array('Português', 'BR'),
+		'ro' => array('Romanian', 'RO'),
+		'cn' => array('Simplified Chinese', 'CN'),
+		'ru' => array('Russian', 'RU'),
+		'lt' => array('Lithuanian', 'LT'),
+	);
+	
+	if(isset($_SESSION['language_display'])) {
+		$lang = $_SESSION['language_display'];
+	} else {
+		$lang = config('language_default', true);
+	}
+	
+	echo '<ul class="webengine-language-switcher">';
+		echo '<li><a href="'.__BASE_URL__.'language/switch/to/'.strtolower($lang).'" title="'.$langList[$lang][0].'"><img src="'.getCountryFlag($langList[$lang][1]).'" /> '.strtoupper($lang).'</a></li>';
+		foreach($langList as $language => $languageInfo) {
+			if($language == $lang) continue;
+			echo '<li><a href="'.__BASE_URL__.'language/switch/to/'.strtolower($language).'" title="'.$languageInfo[0].'"><img src="'.getCountryFlag($languageInfo[1]).'" /> '.strtoupper($language).'</a></li>';
+		}
+	echo '</ul>';
 }

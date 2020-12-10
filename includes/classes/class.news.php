@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -65,10 +65,10 @@ class News {
 				
 					// collect data
 					$news_data = array(
-						htmlentities($title),
+						base64_encode($title),
 						$author,
 						time(),
-						$content,
+						base64_encode($content),
 						$comments
 					);
 					
@@ -121,8 +121,8 @@ class News {
 			if(!$this->newsIdExists($id)) { return false; }
 			if($this->checkTitle($title) && $this->checkContent($content)) {
 				$editData = array(
-					$title,
-					$content,
+					base64_encode($title),
+					base64_encode($content),
 					$author,
 					strtotime($date),
 					$comments,
@@ -166,6 +166,12 @@ class News {
 		$this->db = Connection::Database('Me_MuOnline');
 		$news = $this->db->query_fetch("SELECT * FROM ".WEBENGINE_NEWS." ORDER BY news_id DESC");
 		if(is_array($news)) {
+			
+			foreach($news as $id => $data) {
+				$news[$id]['news_title'] = base64_decode($data['news_title']);
+				$news[$id]['news_content'] = base64_decode($data['news_content']);
+			}
+			
 			return $news;
 		} else {
 			return null;
@@ -243,6 +249,8 @@ class News {
 		
 		foreach($newsList as $key => $row) {
 			$this->setId($row['news_id']);
+			$row['news_title'] = base64_decode($row['news_title']);
+			$row['news_content'] = base64_decode($row['news_content']);
 			$newsTranslations = $this->getNewsTranslationsDataList();
 			if(!is_array($newsTranslations)) continue;
 			foreach($newsTranslations as $translation) {
@@ -305,6 +313,10 @@ class News {
 		if(check_value($id) && $this->newsIdExists($id)) {
 			$query = $this->db->query_fetch_single("SELECT * FROM ".WEBENGINE_NEWS." WHERE news_id = ?", array($id));
 			if($query && is_array($query)) {
+				
+				$query['news_title'] = base64_decode($query['news_title']);
+				$query['news_content'] = base64_decode($query['news_content']);
+				
 				return $query;
 			}
 		}
@@ -335,7 +347,7 @@ class News {
 			if(in_array($this->_language, $newsTranslations)) throw new Exception('A translation for this language already exists, please use the edit news translation module.');
 		}
 		
-		$result = $this->db->query("INSERT INTO ".WEBENGINE_NEWS_TRANSLATIONS." (news_id, news_language, news_title, news_content) VALUES (?, ?, ?, ?)", array($this->_id, $this->_language, $this->_title, $this->_content));
+		$result = $this->db->query("INSERT INTO ".WEBENGINE_NEWS_TRANSLATIONS." (news_id, news_language, news_title, news_content) VALUES (?, ?, ?, ?)", array($this->_id, $this->_language, base64_encode($this->_title), base64_encode($this->_content)));
 		if(!$result) throw new Exception('Could not add the news translation.');
 		
 		$newsTranslationFile = __PATH_NEWS_TRANSLATIONS_CACHE__.'news_'.$this->_id.'_'.$this->_language.'.cache';
@@ -360,7 +372,7 @@ class News {
 		if(!check_value($this->_title)) throw new Exception('The provided news title is not valid.');
 		if(!check_value($this->_content)) throw new Exception('The provided news content is not valid.');
 		
-		$result = $this->db->query("UPDATE ".WEBENGINE_NEWS_TRANSLATIONS." SET news_title = ?, news_content = ? WHERE news_id = ? AND news_language = ?", array($this->_title, $this->_content, $this->_id, $this->_language));
+		$result = $this->db->query("UPDATE ".WEBENGINE_NEWS_TRANSLATIONS." SET news_title = ?, news_content = ? WHERE news_id = ? AND news_language = ?", array(base64_encode($this->_title), base64_encode($this->_content), $this->_id, $this->_language));
 		if(!$result) throw new Exception('Could not update the news translation.');
 		
 		$newsTranslationFile = __PATH_NEWS_TRANSLATIONS_CACHE__.'news_'.$this->_id.'_'.$this->_language.'.cache';

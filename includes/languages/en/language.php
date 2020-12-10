@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
@@ -24,7 +24,7 @@ $lang['menu_txt_4'] = 'Log In';
 $lang['menu_txt_5'] = 'My Account';
 $lang['menu_txt_6'] = 'Log Out';
 $lang['menu_txt_7'] = 'Downloads';
-$lang['menu_txt_8'] = 'Donate';
+$lang['menu_txt_8'] = 'Buy Credits';
 $lang['menu_txt_9'] = 'Vote & Reward';
 $lang['menu_txt_10'] = 'Rankings';
 $lang['menu_txt_11'] = 'Info';
@@ -39,8 +39,8 @@ $lang['module_titles_txt_6'] = 'Change Password';
 $lang['module_titles_txt_7'] = 'Vote for Credits';
 $lang['module_titles_txt_8'] = 'Downloads';
 $lang['module_titles_txt_9'] = 'Terms of Service';
-$lang['module_titles_txt_10'] = 'TOP Rankings';
-$lang['module_titles_txt_11'] = 'Donate for Credits';
+$lang['module_titles_txt_10'] = 'Top Rankings';
+$lang['module_titles_txt_11'] = 'Buy Credits';
 $lang['module_titles_txt_12'] = 'Reset Character';
 $lang['module_titles_txt_13'] = 'Clear PK';
 $lang['module_titles_txt_14'] = 'Frequently Asked Questions';
@@ -50,7 +50,7 @@ $lang['module_titles_txt_17'] = 'Server Information';
 $lang['module_titles_txt_18'] = 'Reset Stats';
 $lang['module_titles_txt_19'] = 'Clear Skill-Tree';
 $lang['module_titles_txt_20'] = 'Email Verification';
-$lang['module_titles_txt_21'] = 'PayPal';
+$lang['module_titles_txt_21'] = 'Buy credits with PayPal';
 $lang['module_titles_txt_22'] = 'Super Rewards';
 $lang['module_titles_txt_23'] = 'Western Union';
 $lang['module_titles_txt_24'] = 'Privacy Policy';
@@ -66,7 +66,7 @@ $lang['usercp_menu_txt_1'] = 'My Account';
 $lang['usercp_menu_txt_2'] = 'Reset Character';
 $lang['usercp_menu_txt_3'] = 'Clear PK';
 $lang['usercp_menu_txt_4'] = 'Vote for Credits';
-$lang['usercp_menu_txt_5'] = 'Donate for Credits';
+$lang['usercp_menu_txt_5'] = 'Buy Credits';
 $lang['usercp_menu_txt_6'] = 'Unstick Character';
 $lang['usercp_menu_txt_7'] = 'V.I.P. Subscription';
 $lang['usercp_menu_txt_8'] = 'Reset Stats';
@@ -220,7 +220,7 @@ $lang['error_118'] = 'You do not have enough %s to clear your character\'s skill
 $lang['error_119'] = 'Could not load your character\'s master level information, please contact support.';
 $lang['error_120'] = 'Your character does not meet the level requirement to clear its skill tree.';
 $lang['error_121'] = 'Your character does not meet the master level requirement to clear its skill tree.';
-$lang['error_122'] = 'One of more entered values are not valid, please try again.';
+$lang['error_122'] = 'One or more entered values are not valid, please try again.';
 $lang['error_123'] = 'Your character does not meet the level requirement to add stats.';
 $lang['error_124'] = 'Your character does not meet the master level requirement to add stats.';
 $lang['error_125'] = 'You do not have enough %s to add stats to your character.';
@@ -234,8 +234,8 @@ $lang['register_txt_2'] = 'Password:';
 $lang['register_txt_3'] = 'Confirm Password:';
 $lang['register_txt_4'] = 'Email Address:';
 $lang['register_txt_5'] = 'Create Account';
-$lang['register_txt_6'] = '4 to 10 aplha-numeric characters';
-$lang['register_txt_7'] = '4 to 32 characters';
+$lang['register_txt_6'] = '%s to %s aplha-numeric characters long';
+$lang['register_txt_7'] = '%s to %s characters long';
 $lang['register_txt_8'] = 're-type your password';
 $lang['register_txt_9'] = 'please use a valid email address';
 $lang['register_txt_10'] = 'By registering you agree to our <br><a href="%s" target="_blank">Terms of Service</a>.';

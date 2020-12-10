@@ -3,12 +3,15 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
+ * 
+ * Translation by: Krutoyed#2820 (discord)
+ * 
  */
 
 # general
@@ -21,7 +24,7 @@ $lang['menu_txt_1'] = 'Namai';
 $lang['menu_txt_2'] = 'Forumas';
 $lang['menu_txt_3'] = 'Registracija';
 $lang['menu_txt_4'] = 'Prisijungti';
-$lang['menu_txt_5'] = 'Vartotojo VVP';
+$lang['menu_txt_5'] = 'Mano Profilis';
 $lang['menu_txt_6'] = 'Atsijungti';
 $lang['menu_txt_7'] = 'Siuntiniai';
 $lang['menu_txt_8'] = 'Paaukoti';
@@ -47,16 +50,16 @@ $lang['module_titles_txt_14'] = 'Dažnai užduodami klausimai';
 $lang['module_titles_txt_15'] = 'Pamiršote slaptažodį';
 $lang['module_titles_txt_16'] = 'Atstatyti personaža';
 $lang['module_titles_txt_17'] = 'Informacija apie serverį';
-$lang['module_titles_txt_18'] = 'Ištaisyti taškus';
+$lang['module_titles_txt_18'] = 'Nuresetinti taškus';
 $lang['module_titles_txt_19'] = 'Išvalyti Skill-Tree';
 $lang['module_titles_txt_20'] = 'El. pašto patvirtinimas';
 $lang['module_titles_txt_21'] = 'PayPal';
 $lang['module_titles_txt_22'] = 'Super apdovanojimai';
 $lang['module_titles_txt_23'] = 'Western Union';
-$lang['module_titles_txt_24'] = 'Pagrindinio rakto atkūrimas';
+$lang['module_titles_txt_24'] = 'Privatumo politika';
 $lang['module_titles_txt_25'] = 'Pridėti taškus';
 $lang['module_titles_txt_26'] = 'Susisiekite su mumis';
-$lang['module_titles_txt_27'] = 'PagSeguro';
+$lang['module_titles_txt_27'] = 'Grąžinimo politika';
 $lang['module_titles_txt_28'] = 'Pirkti Zen';
 $lang['module_titles_txt_29'] = 'Castle Siege';
 
@@ -69,7 +72,7 @@ $lang['usercp_menu_txt_4'] = 'Balsuokite už kreditu';
 $lang['usercp_menu_txt_5'] = 'Paaukok už kreditus';
 $lang['usercp_menu_txt_6'] = 'Atstatyti personaža';
 $lang['usercp_menu_txt_7'] = 'V.I.P. Prenumerata';
-$lang['usercp_menu_txt_8'] = 'Ištaisyti taškus';
+$lang['usercp_menu_txt_8'] = 'Nuresetinti taškus';
 $lang['usercp_menu_txt_9'] = 'Išvalyti Skill-Tree';
 $lang['usercp_menu_txt_10'] = 'Pridėti taškus';
 $lang['usercp_menu_txt_11'] = 'Pirkti Zen';
@@ -85,13 +88,13 @@ $lang['success_7'] = 'Mes jums išsiuntėme el. Pašto adresą su nauju slaptaž
 $lang['success_8'] = 'Jūsų personažas buvo sėkmingai resetintas.';
 $lang['success_9'] = 'Jūsų personažo taškai sėkmingai nustatyti iš naujo';
 $lang['success_10'] = 'Jūsų veikėjo PK lygis sėkmingai iš naujo nustatytas.';
-$lang['success_11'] = 'Tavo personažas buvo sėkmingai ištaisytas.';
-$lang['success_12'] = 'Jūsų personažo Master Level buvo sėkmingai išvalytas.';
+$lang['success_11'] = 'Jūsų personažas sėkmingai perkeltas į „Lorencia“ barą.';
+$lang['success_12'] = 'Jūsų personažo master skill tree buvo sėkmingai išvalytas.';
 $lang['success_13'] = '';
 $lang['success_14'] = '';
 $lang['success_15'] = 'Naujienos sėkmingai pridėtos!';
-$lang['success_16'] = 'Jūsų pagrindinis raktas sėkmingai išsiųstas jūsų el. Pašto adresu.';
-$lang['success_17'] = 'Taškai sėkmingai pridėti!';
+$lang['success_16'] = '';
+$lang['success_17'] = 'Jūsų personažo aukštesnio lygio taškai sėkmingai pridėti.';
 $lang['success_18'] = 'Norėdami užpildyti registraciją, į jūsų el. Pašto adresą buvo nusiųsta patvirtinimo nuoroda.';
 $lang['success_19'] = 'Norėdami tęsti, patikrinkite dabartinį el. Pašto adresą.';
 $lang['success_20'] = 'Jūsų paskyros el. Pašto adresas sėkmingai pakeistas.';
@@ -147,12 +150,12 @@ $lang['error_45'] = 'Neteisinga operacija, nukreipimas į namus.';
 $lang['error_46'] = 'Jūsų paskyroje nėra simbolių.';
 $lang['error_47'] = 'Šiuo metu šis modulis neįgalintas. Vėliau bandykite dar kartą.';
 $lang['error_48'] = 'Jūsų užklausos nepavyko apdoroti, nes el. Pašto sistema neaktyvi, susisiekite su palaikymo komanda.';
-$lang['error_49'] = 'Jūsų paskyroje nėra pagrindinio rakto.';
-$lang['error_50'] = 'Jūs jau paprašėte pagrindinio rakto mažiau nei prieš valandą, bandykite dar kartą vėliau.';
-$lang['error_51'] = 'Jūs neturite pakankamai „level-up“ taškų.';
-$lang['error_52'] = 'Komanda gali būti pridedama tik prie DL klasės.';
-$lang['error_53'] = 'Viršijote maksimaliai taškų, bandykite dar kartą.';
-$lang['error_54'] = 'Jūs nepridėjote būtiniausių taškų, kuriuos reikia pridėti: ';
+$lang['error_49'] = 'Pateiktas cron ID negalioja.';
+$lang['error_50'] = 'Pateikto „cron“ failo nėra.';
+$lang['error_51'] = 'Viršijote prieinamų papildomų taškų kiekį.';
+$lang['error_52'] = '„Command stat“ galima pridėti tik prie „Dark Lord“ klasės.';
+$lang['error_53'] = 'Jūsų taškai negali viršyti %s taškų ribos.';
+$lang['error_54'] = 'Turite pridėti bent %s aukštesnio lygio taškus.';
 $lang['error_55'] = 'Pirkdami pasirinktą sumą viršysite leistiną zeno ribą vienam simboliui, prašome pasirinkti kitą sumą.';
 $lang['error_56'] = 'Įvestas vardas negalioja.';
 $lang['error_57'] = 'Įvestas pranešimas negalioja.';
@@ -164,8 +167,6 @@ $lang['error_62'] = 'Kalbų perjungimo sistema yra išjungta.';
 $lang['error_63'] = 'Pasirinkta kalba netinkama.';
 $lang['error_64'] = 'Neturite leidimo pridėti statistikos apie šį simbolį.';
 $lang['error_65'] = 'Nepavyko pakeisti kalbos.';
-
-# credit system errors
 $lang['error_66'] = 'Nenustatėte konfigūracijos ID.';
 $lang['error_67'] = 'Įvestas vartotojo vardas negalioja';
 $lang['error_68'] = 'Įvestą vartotojo vardą sudaro neleidžiami simboliai.';
@@ -190,8 +191,6 @@ $lang['error_86'] = 'Redaguojant konfigūraciją įvyko klaida, patikrinkite, ar
 $lang['error_87'] = 'Ištrinant konfigūraciją įvyko klaida, patikrinkite, ar nėra duomenų bazės klaidų.';
 $lang['error_88'] = 'Identifikatorius nenustatytas, negali patikrinti internetinės būsenos';
 $lang['error_89'] = 'Gaunant kreditų vertę įvyko klaida.';
-
-# email system errors
 $lang['error_90'] = 'Nepavyko įkelti el. Pašto konfigūracijos.';
 $lang['error_91'] = 'Nepavyko įkelti el. Pašto šablono.';
 $lang['error_92'] = 'El. Pašto adresas neteisingas, el. Pašto siųsti negalima.';
@@ -200,12 +199,37 @@ $lang['error_94'] = 'Nepavyko įkelti tinkinto el. Pašto šablono (turite patei
 $lang['error_95'] = 'El. Pašto šablonas nebuvo nustatytas.';
 $lang['error_96'] = 'Nebuvo nustatytas joks gavėjo el. Pašto adresas.';
 $lang['error_97'] = 'El. Pašto tema nebuvo nustatyta.';
-
 $lang['error_98'] = 'Trūksta prisijungimo konfigūracijų.';
 $lang['error_99'] = 'Redaguojant naujienas įvyko klaida.';
 $lang['error_100'] = 'Nepavyko įkelti balsavimo sistemos konfigūracijų';
 $lang['error_101'] = 'IP adresas negalioja.';
 $lang['error_102'] = 'Kredito konfigūracija nebuvo nustatyta (balsavimo sistema).';
+$lang['error_103'] = 'Pilies apgulties duomenų nepavyko įkelti. Susisiekite su adminstracija.';
+$lang['error_104'] = 'Duomenų bazėje nėra „cron“ darbų.';
+$lang['error_105'] = 'Prašomas veiksmas negalioja.';
+$lang['error_106'] = 'Naujo „cron“ pridėti nepavyko, užpildykite visą reikiamą informaciją.';
+$lang['error_107'] = 'Jau egzistuoja dar vienas „cron“ su ta pačia byla.';
+$lang['error_108'] = 'Nepavyko įkelti personažų klasės duomenų. Susisiekite su adminstracija.';
+$lang['error_109'] = 'Jūsų personažo klasė negalioja, susisiekite su adminstracija.';
+$lang['error_110'] = 'Nepavyko įkelti personažų klasės pagrindinės statistikos, usisiekite su adminstracija.';
+$lang['error_111'] = 'Pateiktas vartotojo ID neteisingas.';
+$lang['error_112'] = 'Pateiktas vartotojo vardas neteisingas.';
+$lang['error_113'] = 'Jūs neturite pakankamai %s, kad galėtumėte nuresitinti personažo taškus.';
+$lang['error_114'] = 'Jūs neturite pakankamai %s, kad atstatytį savo personažą.';
+$lang['error_115'] = 'Jūsų personažas jau yra „Lorencia“ bare.';
+$lang['error_116'] = 'Jūs neturite pakankamai %s, kad išvalytumėte personažo pk būseną.';
+$lang['error_117'] = 'Jūsų personažas neturi PK būsenos.';
+$lang['error_118'] = 'Jūs neturite pakankamai %s, kad išvalytumėte savo personažo "skill tree".';
+$lang['error_119'] = 'Nepavyko įkelti jūsų personažo pagrindinio lygio informacijos. Susisiekite su administracija.';
+$lang['error_120'] = 'Jūsų personažas neatitinka lygio reikalavimo išvalyti "skill tree".';
+$lang['error_121'] = 'Jūsų personažas neatitinka pagrindinio lygio (master level) reikalavimo išvalyti "skill tree".';
+$lang['error_122'] = 'Viena iš daugiau įvestų verčių negalioja, bandykite dar kartą.';
+$lang['error_123'] = 'Jūsų personažas neatitinka lygio reikalavimo pridėti taškus.';
+$lang['error_124'] = 'Jūsų personažas neatitinka pagrindinio lygio(master leve;) reikalavimo pridėti taškus.';
+$lang['error_125'] = 'Jūs neturite pakankamai %s, kad pridėtumėte taškus prie savo personažo.';
+$lang['error_126'] = 'Jūs neturite pakankamai %s, kad nuresetinti personažą.';
+$lang['error_127'] = 'Pasiekėte maksimalų šio personažo resetu skaičių.';
+$lang['error_128'] = 'Trūksta personažų klasės grupės. Susisiekite su administracija.';
 
 # registration
 $lang['register_txt_1'] = 'Vartotojo vardas:';
@@ -213,8 +237,8 @@ $lang['register_txt_2'] = 'Slaptažodis:';
 $lang['register_txt_3'] = 'Patvirtinti slaptažodį:';
 $lang['register_txt_4'] = 'Elektroninio pašto adresas:';
 $lang['register_txt_5'] = 'Sukurti paskyrą';
-$lang['register_txt_6'] = '4–10 raidinių-skaitinių ženklų';
-$lang['register_txt_7'] = '4–32 simboliai';
+$lang['register_txt_6'] = '%s – %s raidinių-skaitinių ženklų';
+$lang['register_txt_7'] = '%s – %s simboliai';
 $lang['register_txt_8'] = 'Pakartokite savo slaptažodį';
 $lang['register_txt_9'] = 'Naudokite galiojantį el. pašto adresą';
 $lang['register_txt_10'] = 'Registruodamiesi sutinkate su mūsų <br> <a href="%s" target="_blank"> paslaugų teikimo sąlygomis </a.';
@@ -238,10 +262,13 @@ $lang['myaccount_txt_8'] = 'Šaldyta';
 $lang['myaccount_txt_9'] = 'Prisijungęs';
 $lang['myaccount_txt_10'] = 'Neprisijungęs';
 $lang['myaccount_txt_12'] = 'Kreditai';
-$lang['myaccount_txt_13'] = 'Pagrindinis raktas:';
+$lang['myaccount_txt_13'] = 'Data';
 $lang['myaccount_txt_14'] = 'Susigrąžinti';
-$lang['myaccount_txt_15'] = 'Personažas(ai):';
-$lang['myaccount_txt_16'] = 'nė vienas';
+$lang['myaccount_txt_15'] = 'Mano personažai:';
+$lang['myaccount_txt_16'] = 'Prisijungimu istorija';
+$lang['myaccount_txt_17'] = 'Serveris';
+$lang['myaccount_txt_18'] = 'IP';
+$lang['myaccount_txt_19'] = 'Veiksmas';
 
 # voting
 $lang['vfc_txt_1'] = 'TopSite';
@@ -276,7 +303,7 @@ $lang['rankings_txt_5'] = 'Top Grand Resetai';
 $lang['rankings_txt_6'] = 'Top Prisijungę';
 $lang['rankings_txt_7'] = 'Top Balsai';
 $lang['rankings_txt_8'] = 'Top Žmonės';
-$lang['rankings_txt_9'] = 'Top PVP Last Stand';
+$lang['rankings_txt_9'] = '';
 $lang['rankings_txt_10'] = 'Charakteris';
 $lang['rankings_txt_11'] = 'Klasė';
 $lang['rankings_txt_12'] = 'Lygis';
@@ -291,8 +318,8 @@ $lang['rankings_txt_20'] = 'Paskutinį kartą atnaujinta @';
 $lang['rankings_txt_21'] = 'Grand Resetai';
 $lang['rankings_txt_22'] = 'Top Master Lygis';
 $lang['rankings_txt_23'] = 'Master Lygis';
-$lang['rankings_txt_24'] = 'Top PvP Last Stand';
-$lang['rankings_txt_25'] = 'Times Won';
+$lang['rankings_txt_24'] = '';
+$lang['rankings_txt_25'] = '';
 $lang['rankings_txt_26'] = 'Gens Duprian';
 $lang['rankings_txt_27'] = 'Gens Vanert';
 $lang['rankings_txt_28'] = 'Gildijos Logotipas';
@@ -307,7 +334,7 @@ $lang['rankings_txt_35'] = 'Pk Lygis';
 # clear pk
 $lang['clearpk_txt_1'] = 'Charakteris';
 $lang['clearpk_txt_2'] = 'Zen';
-$lang['clearpk_txt_3'] = 'Nužudymu';
+$lang['clearpk_txt_3'] = 'PK būsena';
 $lang['clearpk_txt_4'] = 'Išvalyti PK';
 $lang['clearpk_txt_5'] = 'Tavo veikėjas turi turėti %s zen, kad išvalytum pk';
 
@@ -317,8 +344,9 @@ $lang['clearst_txt_2'] = 'Master Lygis';
 $lang['clearst_txt_3'] = 'Zen';
 $lang['clearst_txt_4'] = 'GO';
 $lang['clearst_txt_5'] = 'Taškai';
-$lang['clearst_txt_6'] = 'Tavo personažas turi būti master lygio %s';
+$lang['clearst_txt_6'] = 'Jūsų personažas turi būti bent jau master level %s';
 $lang['clearst_txt_7'] = 'Tavo personažas turi turėti %s zen, kad galėtum atkurti skill-tree';
+$lang['clearst_txt_8'] = 'Jūsų personažas turi būti %s';
 
 # donation
 $lang['donation_txt_2'] = 'Kreditai';
@@ -336,19 +364,22 @@ $lang['resetcharacter_txt_3'] = 'Zen';
 $lang['resetcharacter_txt_4'] = 'Resetai';
 $lang['resetcharacter_txt_5'] = 'Resetas';
 $lang['resetcharacter_txt_6'] = 'Tavo personažas turi būti lygus %s';
-$lang['resetcharacter_txt_7'] = 'Jei norite reseto, jūsų personažas turi turėti bent %s zen';
-$lang['resetcharacter_txt_8'] = 'Jums buvo suteikta %s kreditų!';
+$lang['resetcharacter_txt_7'] = 'Jūsų personažas turi bent jau turėti %s zen';
+$lang['resetcharacter_txt_8'] = 'Būsite apdovanoti %s kreditais';
+$lang['resetcharacter_txt_9'] = 'Norėdami atkurti savo personažą, turite turėti %s kreditų';
+$lang['resetcharacter_txt_10'] = 'Galite nuresetinti daugiausiai %s kartų';
+$lang['resetcharacter_txt_11'] = 'Jūsų personažo inventorius bus išvalytas, būtinai įdėkite visą įrangą į savo saugyklą.';
 
 # fix stats
 $lang['resetstats_txt_1'] = 'Charakteris';
 $lang['resetstats_txt_2'] = 'Lygis';
-$lang['resetstats_txt_3'] = 'Strength';
-$lang['resetstats_txt_4'] = 'Agility';
-$lang['resetstats_txt_5'] = 'Vitality';
-$lang['resetstats_txt_6'] = 'Energy';
-$lang['resetstats_txt_7'] = 'Command';
-$lang['resetstats_txt_8'] = 'Pataisyti';
-$lang['resetstats_txt_9'] = 'Norint pataisyti taškus, jūsų personažas turi būti %s zen';
+$lang['resetstats_txt_3'] = 'STR';
+$lang['resetstats_txt_4'] = 'AGI';
+$lang['resetstats_txt_5'] = 'VIT';
+$lang['resetstats_txt_6'] = 'ENE';
+$lang['resetstats_txt_7'] = 'CMD';
+$lang['resetstats_txt_8'] = 'Resetas';
+$lang['resetstats_txt_9'] = 'Jūsų personažas turi turėti bent %s zen, kad būtų galima iš naujo nuresetinti taškus';
 
 # unstick
 $lang['unstickcharacter_txt_1'] = 'Charakteris';
@@ -361,7 +392,7 @@ $lang['masterkey_txt_1'] = 'Siųsti pagrindinį raktą į mano el. Paštą dabar
 
 # add stats
 $lang['addstats_txt_1'] = 'Charakteris';
-$lang['addstats_txt_2'] = '<strong>%s</strong> pasiekti aukštesnius taškus';
+$lang['addstats_txt_2'] = '%s turimų taškų';
 $lang['addstats_txt_3'] = 'Strength';
 $lang['addstats_txt_4'] = 'Agility';
 $lang['addstats_txt_5'] = 'Vitality';
@@ -369,6 +400,10 @@ $lang['addstats_txt_6'] = 'Energy';
 $lang['addstats_txt_7'] = 'Command';
 $lang['addstats_txt_8'] = 'Pridėti tašk';
 $lang['addstats_txt_9'] = 'Jei norite pridėti taškų, jūsų personažas turi būti bent %s zen';
+$lang['addstats_txt_10'] = 'Jūsų personažas turi būti bent jau pagrindinio lygio "master level" %s';
+$lang['addstats_txt_11'] = 'Jūsų personažas turi būti bent jau lygus %s';
+$lang['addstats_txt_12'] = 'Kiekviena statistika gali turėti ne daugiau kaip %s taškų';
+$lang['addstats_txt_13'] = 'Norėdami naudoti šią funkciją, turite pridėti bent %s aukštesnio lygio taškus';
 
 # castle siege banner
 $lang['csbanner_txt_1'] = 'Pilies savininkas';
@@ -407,14 +442,47 @@ $lang['sidebar_srvinfo_txt_2'] = 'Iš viso vartotojų';
 $lang['sidebar_srvinfo_txt_3'] = 'Iš viso personažų';
 $lang['sidebar_srvinfo_txt_4'] = 'Iš viso gildijų';
 $lang['sidebar_srvinfo_txt_5'] = 'Prisijungę vartotojai';
+$lang['sidebar_srvinfo_txt_6'] = 'Versija';
+$lang['sidebar_srvinfo_txt_7'] = 'Patirtis';
+$lang['sidebar_srvinfo_txt_8'] = 'Meistro Patirtis';
+$lang['sidebar_srvinfo_txt_9'] = 'Dropas';
 
 # castle siege
-$lang['castlesiege_txt_2'] = 'Pilies savininkas:';
-$lang['castlesiege_txt_3'] = 'Zen:';
-$lang['castlesiege_txt_4'] = 'Mokesčių chaosas:';
-$lang['castlesiege_txt_5'] = 'Mokesčių parduotuvė:';
-$lang['castlesiege_txt_6'] = 'Mokesčių medžioklės zona:';
-$lang['castlesiege_txt_7'] = 'Registruotos gildijos';
+$lang['castlesiege_txt_1'] = 'Pilies apgulties mūšis';
+$lang['castlesiege_txt_2'] = 'Pilies savininkas';
+$lang['castlesiege_txt_3'] = 'Bandomieji pinigai:';
+$lang['castlesiege_txt_4'] = 'Mokesčio tarifas Goblin:';
+$lang['castlesiege_txt_5'] = 'Mokesčio tarifas NPC:';
+$lang['castlesiege_txt_6'] = 'Mokesčio tarifo bandymas:';
+$lang['castlesiege_txt_7'] = 'Pilies informacija';
+$lang['castlesiege_txt_8'] = 'Zen';
+$lang['castlesiege_txt_9'] = 'Dabartinis etapas:';
+$lang['castlesiege_txt_10'] = 'Kitas etapas:';
+$lang['castlesiege_txt_11'] = 'Mūšio trukmė:';
+$lang['castlesiege_txt_12'] = 'Gildijos meistras';
+$lang['castlesiege_txt_13'] = 'Pilies savininkų aljansas';
+$lang['castlesiege_txt_14'] = 'Gildija';
+$lang['castlesiege_txt_15'] = 'Meistras';
+$lang['castlesiege_txt_16'] = 'Logotipas';
+$lang['castlesiege_txt_17'] = 'Rezultatas';
+$lang['castlesiege_txt_18'] = 'Nariai';
+$lang['castlesiege_txt_19'] = 'Registruota gildijų';
+$lang['castlesiege_txt_20'] = 'Renginių tvarkaraštis';
+$lang['castlesiege_txt_21'] = 'Etapas';
+$lang['castlesiege_txt_22'] = 'Pradžios data';
+$lang['castlesiege_txt_23'] = 'Pabaigos data';
+$lang['castlesiege_schedule_1'] = 'Gildijos registracijos laikotarpis';
+$lang['castlesiege_schedule_2'] = '„Lord of Mark“ registracijos laikotarpis';
+$lang['castlesiege_schedule_3'] = 'Skelbimas';
+$lang['castlesiege_schedule_4'] = 'Pilies paruošimas';
+$lang['castlesiege_schedule_5'] = 'pgulties karas';
+$lang['castlesiege_schedule_6'] = 'Neaktyvus';
+$lang['castlesiege_time_1'] = '%s dienos %s valandos';
+$lang['castlesiege_time_2'] = '%s valandos %s minutės';
+$lang['castlesiege_time_3'] = '%s minučių';
+$lang['castlesiege_time_4'] = 'Mažiau nei viena minutė.';
+$lang['castlesiege_battle_duration'] = '%s valandos %s minutės';
+$lang['castlesiege_widget_title'] = 'Pilies apgultis';
 
 # buy zen
 $lang['buyzen_txt_1'] = 'Pirkti Zen';
@@ -428,3 +496,12 @@ $lang['buyzen_txt_6'] = 'kreditas (-ai)';
 $lang['contactus_txt_1'] = 'Elektroninio pašto adresas';
 $lang['contactus_txt_2'] = 'Žinutė';
 $lang['contactus_txt_3'] = 'Siųsti';
+
+# footer
+$lang['footer_terms'] = 'Paslaugų teikimo sąlygos';
+$lang['footer_privacy'] = 'Privatumo politika';
+$lang['footer_refund'] = 'Grąžinimo politika';
+$lang['footer_info'] = 'Serverio informacija';
+$lang['footer_contact'] = 'usisiekite su mumis';
+$lang['footer_copyright'] = '%s © %s, VISOS TEISĖS SAUGOMOS.';
+$lang['footer_webzen_copyright'] = 'Ši svetainė jokiu būdu nėra susijusi ir nepatvirtinta „Webzen Inc.“.';

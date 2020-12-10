@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-//session_name('WebEngine121'); # session name (change to your server name and uncomment)
+//session_name('WebEngine122'); # session name (change to your server name and uncomment)
 //session_set_cookie_params(0, '/', 'muonline.com'); # same session with and without www protocol (edit with your domain and uncomment)
 if(access != 'cron') {
 	@ob_start();
@@ -19,7 +19,7 @@ if(access != 'cron') {
 }
 
 # Version
-define('__WEBENGINE_VERSION__', '1.2.1');
+define('__WEBENGINE_VERSION__', '1.2.2');
 
 # Set Encoding
 @ini_set('default_charset', 'utf-8');

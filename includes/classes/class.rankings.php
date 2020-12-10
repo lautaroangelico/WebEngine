@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
@@ -15,6 +15,7 @@ class Rankings {
 	
 	private $_results;
 	private $_excludedCharacters = array('');
+	private $_excludedGuilds = array('');
 	private $_rankingsMenu;
 	
 	function __construct() {
@@ -31,6 +32,12 @@ class Rankings {
 		if(check_value(mconfig('rankings_excluded_characters'))) {
 			$excludedCharacters = explode(",", mconfig('rankings_excluded_characters'));
 			$this->_excludedCharacters = $excludedCharacters;
+		}
+		
+		// excluded guilds
+		if(check_value(mconfig('rankings_excluded_guilds'))) {
+			$excludedGuilds = explode(",", mconfig('rankings_excluded_guilds'));
+			$this->_excludedGuilds = $excludedGuilds;
 		}
 		
 		// rankings menu
@@ -145,10 +152,17 @@ class Rankings {
 	private function _guildsRanking() {
 		$this->mu = Connection::Database('MuOnline');
 		
-		switch($this->serverFiles) {
+		switch(mconfig('guild_score_formula')) {
+			case 2:
+				$result = $this->mu->query_fetch("SELECT "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_.", (SELECT "._CLMN_GUILD_MASTER_." FROM "._TBL_GUILD_." WHERE "._CLMN_GUILD_NAME_." = "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_.") as "._CLMN_GUILD_MASTER_.", SUM("._TBL_CHR_."."._CLMN_CHR_STAT_STR_."+"._TBL_CHR_."."._CLMN_CHR_STAT_AGI_."+"._TBL_CHR_."."._CLMN_CHR_STAT_VIT_."+"._TBL_CHR_."."._CLMN_CHR_STAT_ENE_."+"._TBL_CHR_."."._CLMN_CHR_STAT_CMD_.") as "._CLMN_GUILD_SCORE_.", (SELECT CONVERT(varchar(max), "._CLMN_GUILD_LOGO_.", 2) FROM "._TBL_GUILD_." WHERE "._CLMN_GUILD_NAME_." = "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_.") as "._CLMN_GUILD_LOGO_." FROM "._TBL_GUILDMEMB_." INNER JOIN "._TBL_CHR_." ON "._TBL_CHR_."."._CLMN_CHR_NAME_." = "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_CHAR_." INNER JOIN "._TBL_GUILD_." ON "._TBL_GUILD_."."._CLMN_GUILD_NAME_." = "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_." WHERE "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_." NOT IN(".$this->_rankingsExcludeGuilds().") GROUP BY "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_." ORDER BY "._CLMN_GUILD_SCORE_." DESC");
+				break;
+			case 3:
+				$result = $this->mu->query_fetch("SELECT "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_.", (SELECT "._CLMN_GUILD_MASTER_." FROM "._TBL_GUILD_." WHERE "._CLMN_GUILD_NAME_." = "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_.") as "._CLMN_GUILD_MASTER_.", SUM("._TBL_CHR_."."._CLMN_CHR_STAT_STR_."+"._TBL_CHR_."."._CLMN_CHR_STAT_AGI_."+"._TBL_CHR_."."._CLMN_CHR_STAT_VIT_."+"._TBL_CHR_."."._CLMN_CHR_STAT_ENE_.") as "._CLMN_GUILD_SCORE_.", (SELECT CONVERT(varchar(max), "._CLMN_GUILD_LOGO_.", 2) FROM "._TBL_GUILD_." WHERE "._CLMN_GUILD_NAME_." = "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_.") as "._CLMN_GUILD_LOGO_." FROM "._TBL_GUILDMEMB_." INNER JOIN "._TBL_CHR_." ON "._TBL_CHR_."."._CLMN_CHR_NAME_." = "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_CHAR_." INNER JOIN "._TBL_GUILD_." ON "._TBL_GUILD_."."._CLMN_GUILD_NAME_." = "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_." WHERE "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_." NOT IN(".$this->_rankingsExcludeGuilds().") GROUP BY "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_." ORDER BY "._CLMN_GUILD_SCORE_." DESC");
+				break;
 			default:
-				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_GUILD_NAME_.","._CLMN_GUILD_MASTER_.","._CLMN_GUILD_SCORE_.",CONVERT(varchar(max), "._CLMN_GUILD_LOGO_.", 2) as "._CLMN_GUILD_LOGO_." FROM "._TBL_GUILD_." ORDER BY "._CLMN_GUILD_SCORE_." DESC");
+				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_GUILD_NAME_.","._CLMN_GUILD_MASTER_.","._CLMN_GUILD_SCORE_.",CONVERT(varchar(max), "._CLMN_GUILD_LOGO_.", 2) as "._CLMN_GUILD_LOGO_." FROM "._TBL_GUILD_." WHERE G_Name NOT IN(".$this->_rankingsExcludeGuilds().") ORDER BY "._CLMN_GUILD_SCORE_." DESC");
 		}
+		
 		if(!is_array($result)) return;
 
 		$cache = BuildCacheData($result);
@@ -259,6 +273,15 @@ class Rankings {
 		$return = array();
 		foreach($this->_excludedCharacters as $characterName) {
 			$return[] = "'".$characterName."'";
+		}
+		return implode(",", $return);
+	}
+	
+	private function _rankingsExcludeGuilds() {
+		if(!is_array($this->_excludedGuilds)) return;
+		$return = array();
+		foreach($this->_excludedGuilds as $guildName) {
+			$return[] = "'".$guildName."'";
 		}
 		return implode(",", $return);
 	}

@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
@@ -22,7 +22,10 @@ class Handler {
 		# object instances
 		$handler = $this;
 		
-		# load language	
+		# load language
+		if(strtolower($config['language_default']) != 'en') {
+			$this->_loadLanguagePhrases('en');
+		}
 		$this->_loadLanguagePhrases($config['language_default']);
 		if($config['language_switch_active']) {
 			if(check_value($_SESSION['language_display'])) {

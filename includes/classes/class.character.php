@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
@@ -434,7 +434,7 @@ class Character {
 		if($zenRequirement > 0) if($characterData[_CLMN_CHR_ZEN_] < $zenRequirement) throw new Exception(lang('error_34'));
 		
 		// deduct zen
-		if(!$this->DeductZEN($this->_character, $zenRequirement)) throw new Exception(lang('error_34'));
+		if($zenRequirement > 0) if(!$this->DeductZEN($this->_character, $zenRequirement)) throw new Exception(lang('error_34'));
 		
 		// move character
 		$update = $this->_moveCharacter($this->_character, $this->_unstickMap, $this->_unstickCoordX, $this->_unstickCoordY);
@@ -545,7 +545,7 @@ class Character {
 		if(!$clearMasterSkillTree) throw new Exception(lang('error_21'));
 		
 		// deduct zen
-		if(!$this->DeductZEN($this->_character, $zenRequirement)) throw new Exception(lang('error_34'));
+		if($zenRequirement > 0) if(!$this->DeductZEN($this->_character, $zenRequirement)) throw new Exception(lang('error_34'));
 		
 		// subtract credits
 		if($creditCost > 0 && $creditConfig != 0) $creditSystem->subtractCredits($creditCost);
@@ -639,7 +639,7 @@ class Character {
 		}
 		
 		// deduct zen
-		if(!$this->DeductZEN($this->_character, $zenRequirement)) throw new Exception(lang('error_34'));
+		if($zenRequirement > 0) if(!$this->DeductZEN($this->_character, $zenRequirement)) throw new Exception(lang('error_34'));
 		
 		// add stats
 		$data = array(

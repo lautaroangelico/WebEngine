@@ -19,21 +19,12 @@
     },
     {
         "active": true,
-        "type": "external",
-        "phrase": "menu_txt_2",
-        "link": "https:\/\/forum.webenginecms.org\/",
-        "visibility": "always",
-        "newtab": true,
-        "order": 30
-    },
-    {
-        "active": true,
         "type": "internal",
         "phrase": "menu_txt_7",
         "link": "downloads",
         "visibility": "always",
         "newtab": false,
-        "order": 40
+        "order": 30
     },
     {
         "active": true,
@@ -42,7 +33,7 @@
         "link": "donation",
         "visibility": "always",
         "newtab": false,
-        "order": 50
+        "order": 40
     },
     {
         "active": true,
@@ -51,6 +42,6 @@
         "link": "rankings",
         "visibility": "always",
         "newtab": false,
-        "order": 60
+        "order": 50
     }
 ]

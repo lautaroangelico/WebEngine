@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -41,6 +41,7 @@ try {
 	$i = 0;
 	foreach($ranking_data as $rdata) {
 		$onlineStatus = mconfig('show_online_status') ? in_array($rdata[1], $onlineCharacters) ? '<img src="'.__PATH_ONLINE_STATUS__.'" class="online-status-indicator"/>' : '<img src="'.__PATH_OFFLINE_STATUS__.'" class="online-status-indicator"/>' : '';
+		$multiplier = mconfig('guild_score_formula') == 1 ? 1 : mconfig('guild_score_multiplier');
 		if($i>=1) {
 			echo '<tr>';
 			if(mconfig('rankings_show_place_number')) {
@@ -49,7 +50,7 @@ try {
 			echo '<td>'.guildProfile($rdata[0]).'</td>';
 			echo '<td>'.returnGuildLogo($rdata[3], 40).'</td>';
 			echo '<td>'.playerProfile($rdata[1]).$onlineStatus.'</td>';
-			echo '<td>'.number_format($rdata[2]).'</td>';
+			echo '<td>'.number_format(floor($rdata[2]*$multiplier)).'</td>';
 			echo '</tr>';
 		}
 		$i++;

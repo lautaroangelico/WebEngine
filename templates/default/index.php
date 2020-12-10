@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.2
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
@@ -59,18 +59,7 @@ $onlinePlayersPercent = check_value($maxOnline) ? $onlinePlayers*100/$maxOnline 
 			<div class="global-top-bar-content">
 				<div class="row">
 					<div class="col-xs-6 text-left global-top-bar-nopadding">
-					<?php if(config('language_switch_active',true)) { ?>
-						<ul class="webengine-language-switcher">
-							<li><a href="<?php echo __BASE_URL__ . 'language/switch/to/en'; ?>" title="English"><img src="<?php echo getCountryFlag('US'); ?>" /> EN</a></li>
-							<li><a href="<?php echo __BASE_URL__ . 'language/switch/to/es'; ?>" title="Español"><img src="<?php echo getCountryFlag('ES'); ?>" /> ES</a></li>
-							<li><a href="<?php echo __BASE_URL__ . 'language/switch/to/ph'; ?>" title="Filipino"><img src="<?php echo getCountryFlag('PH'); ?>" /> PH</a></li>
-							<li><a href="<?php echo __BASE_URL__ . 'language/switch/to/pt'; ?>" title="Português"><img src="<?php echo getCountryFlag('BR'); ?>" /> BR</a></li>
-							<li><a href="<?php echo __BASE_URL__ . 'language/switch/to/ro'; ?>" title="Romanian"><img src="<?php echo getCountryFlag('RO'); ?>" /> RO</a></li>
-							<li><a href="<?php echo __BASE_URL__ . 'language/switch/to/cn'; ?>" title="Simplified Chinese"><img src="<?php echo getCountryFlag('CN'); ?>" /> CN</a></li>
-							<li><a href="<?php echo __BASE_URL__ . 'language/switch/to/ru'; ?>" title="Russian"><img src="<?php echo getCountryFlag('RU'); ?>" /> RU</a></li>
-							<li><a href="<?php echo __BASE_URL__ . 'language/switch/to/lt'; ?>" title="Lithuanian"><img src="<?php echo getCountryFlag('LT'); ?>" /> LT</a></li>
-						</ul>
-					<?php } ?>
+					<?php if(config('language_switch_active',true)) templateLanguageSelector(); ?>
 					</div>
 					<div class="col-xs-6 text-right global-top-bar-nopadding">
 					<?php if(isLoggedIn()) { ?>

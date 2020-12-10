@@ -7,6 +7,34 @@ $(function() {
 	
 	// Initiate bootstrap tooltips
 	$('[data-toggle="tooltip"]').tooltip();
+	
+	// PayPal Buy Credits
+	if($('#paypal_conversion_rate_value').length) {
+		var paypal_cr = parseInt($('#paypal_conversion_rate_value').html());
+		if($('#amount').length) {
+			document.getElementById('amount').onkeyup = function(ev) {
+				var num = 0;
+				var c = 0;
+				var event = window.event || ev;
+				var code = (event.keyCode) ? event.keyCode : event.charCode;
+				for(num=0;num<this.value.length;num++) {
+					c = this.value.charCodeAt(num);
+					if(c<48 || c>57) {
+						document.getElementById('result').innerHTML = '0';
+						document.getElementById('amount').value = '';
+						return false;
+					}
+				}
+				num = parseInt(this.value);
+				if(isNaN(num)) {
+					document.getElementById('result').innerHTML = '0';
+				} else {
+					var result = (paypal_cr*num).toString();
+					document.getElementById('result').innerHTML = result;
+				}
+			}
+		}
+	}
 });
 
 var csTime = {

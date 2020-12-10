@@ -19,4 +19,7 @@
 	<show_country_flags>1</show_country_flags>
 	<show_location>1</show_location>
 	<show_online_status>1</show_online_status>
+	<guild_score_formula>2</guild_score_formula>
+	<guild_score_multiplier>0.001</guild_score_multiplier>
+	<rankings_excluded_guilds></rankings_excluded_guilds>
 </settings>

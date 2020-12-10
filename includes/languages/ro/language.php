@@ -29,7 +29,7 @@ $lang['menu_txt_6'] = 'Ieșire';
 $lang['menu_txt_7'] = 'Descărcări';
 $lang['menu_txt_8'] = 'Donează';
 $lang['menu_txt_9'] = 'Votează & Câștigă';
-$lang['menu_txt_10'] ='Clasamente';
+$lang['menu_txt_10'] ='Rankings';
 $lang['menu_txt_11'] = 'Informații';
  
 # module titles
@@ -233,21 +233,21 @@ $lang['error_128'] = 'Lipsește grupul de clase de personaje, vă rugăm să con
  
 # registration
 $lang['register_txt_1'] = 'Utilizator:';
-$lang['register_txt_2'] = 'Parolă:';
-$lang['register_txt_3'] = 'Confirmă Parolă:';
+$lang['register_txt_2'] = 'Parola:';
+$lang['register_txt_3'] = 'Confirmăți Parola:';
 $lang['register_txt_4'] = 'Adresă Email:';
 $lang['register_txt_5'] = 'Create Account';
-$lang['register_txt_6'] = 'Din %s până la %s caractere alfanumerice';
-$lang['register_txt_7'] = 'Din %s până la %s caractere';
-$lang['register_txt_8'] = 'rescrieți parola';
+$lang['register_txt_6'] = 'Din 4 până la 10 caractere alfanumerice';
+$lang['register_txt_7'] = 'Din 4 până la 32 caractere';
+$lang['register_txt_8'] = 'Confirmăți Parola';
 $lang['register_txt_9'] = 'vă rugăm folosiți un email real';
-$lang['register_txt_10'] = 'Prin înregistrare ești de acord cu <br><a href="%s" target="_blank">Termenii și Condițiile</a>.';
+$lang['register_txt_10'] = 'Prin înregistrare sunteți de acord cu <br><a href="%s" target="_blank">Termenii și Condițiile</a>.';
  
 # login
-$lang['login_txt_1'] = 'Utilizator:';
+$lang['login_txt_1'] = 'Cont:';
 $lang['login_txt_2'] = 'Parolă:';
 $lang['login_txt_3'] = 'Autentificare';
-$lang['login_txt_4'] = 'Parolă uitată?';
+$lang['login_txt_4'] = 'Restituie Parolă';
 $lang['login_txt_5'] = 'Ai folosit %s din %s încercări de autentificare. După cele %s încercări folosite, nu te vei putea autentifica pentru 15 minute.';
  
 # account
@@ -256,14 +256,14 @@ $lang['myaccount_txt_2'] = 'Utilizator:';
 $lang['myaccount_txt_3'] = 'Adresă Email:';
 $lang['myaccount_txt_4'] = 'Parolă:';
 $lang['myaccount_txt_5'] = 'Stare Activitate:';
-$lang['myaccount_txt_6'] = 'schimbă';
+$lang['myaccount_txt_6'] = 'Schimbă';
 $lang['myaccount_txt_7'] = 'Activ';
 $lang['myaccount_txt_8'] = 'Înghețat';
 $lang['myaccount_txt_9'] = 'Activ';
 $lang['myaccount_txt_10'] = 'Inactiv';
 $lang['myaccount_txt_12'] = 'Credite:';
 $lang['myaccount_txt_13'] = 'Dată';
-$lang['myaccount_txt_14'] = 'recuperare';
+$lang['myaccount_txt_14'] = 'Recuperare';
 $lang['myaccount_txt_15'] = 'Personaje:';
 $lang['myaccount_txt_16'] = 'Istoricul Conexiunilor';
 $lang['myaccount_txt_17'] = 'Server';
@@ -280,10 +280,10 @@ $lang['forgotpass_txt_1'] = 'Adresă Email:';
 $lang['forgotpass_txt_2'] = 'Trimite recuperare email';
  
 # downloads
-$lang['downloads_txt_1'] = 'Fișier';
-$lang['downloads_txt_2'] = 'Gazdă';
+$lang['downloads_txt_1'] = 'Fișiere';
+$lang['downloads_txt_2'] = 'Link';
 $lang['downloads_txt_3'] = 'Mărime Fișier';
-$lang['downloads_txt_4'] = 'MO';
+$lang['downloads_txt_4'] = 'MB';
 $lang['downloads_txt_5'] = 'Descărcare';
 $lang['downloads_txt_6'] = 'Descărcări Client';
 $lang['downloads_txt_7'] = 'Descărcări Adaosuri';
@@ -300,7 +300,7 @@ $lang['rankings_txt_2'] = 'Top Reseturi';
 $lang['rankings_txt_3'] = 'Top Ucigași';
 $lang['rankings_txt_4'] = 'Top Bresle';
 $lang['rankings_txt_5'] = 'Top Grand Reseturi';
-$lang['rankings_txt_6'] = 'Top Activitate';
+$lang['rankings_txt_6'] = 'Top Online';
 $lang['rankings_txt_7'] = 'Top Voturi';
 $lang['rankings_txt_8'] = 'Top Gens';
 $lang['rankings_txt_9'] = '';
@@ -309,7 +309,7 @@ $lang['rankings_txt_11'] = 'Clasă';
 $lang['rankings_txt_12'] = 'Nivel';
 $lang['rankings_txt_13'] = 'Reseturi';
 $lang['rankings_txt_14'] = 'Omoruri';
-$lang['rankings_txt_15'] = 'Timp Activitate Întreagă';
+$lang['rankings_txt_15'] = 'Timpul întregii activități';
 $lang['rankings_txt_16'] = 'Ore';
 $lang['rankings_txt_17'] = 'Nume Breaslă';
 $lang['rankings_txt_18'] = 'Conducător Breaslă';
@@ -336,7 +336,7 @@ $lang['clearpk_txt_1'] = 'Personaj';
 $lang['clearpk_txt_2'] = 'Zen';
 $lang['clearpk_txt_3'] = 'Status PK';
 $lang['clearpk_txt_4'] = 'Clear PK';
-$lang['clearpk_txt_5'] = 'Personajul tău trebuie să aibă măcar %s zen pentru a face clear pk';
+$lang['clearpk_txt_5'] = 'Personajul tău trebuie să dețină cel puțin %s zen pentru a face clear pk';
  
 # clear skill tree
 $lang['clearst_txt_1'] = 'Personaj';
@@ -344,9 +344,9 @@ $lang['clearst_txt_2'] = 'Master Level';
 $lang['clearst_txt_3'] = 'Zen';
 $lang['clearst_txt_4'] = 'Aplică';
 $lang['clearst_txt_5'] = 'Puncte';
-$lang['clearst_txt_6'] = 'Personajul tău trebuie să aibă măcar nivelul %s';
-$lang['clearst_txt_7'] = 'Personajul tău trebuie să aibă măcar %s zen pentru a reseta skill tree';
-$lang['clearst_txt_8'] = 'Personajul tău trebuie să fie măcar nivelul %s';
+$lang['clearst_txt_6'] = 'Personajul tău trebuie să dețină cel puțin nivelul %s';
+$lang['clearst_txt_7'] = 'Personajul tău trebuie să dețină cel puțin %s zen pentru a Reseta Skill Tree';
+$lang['clearst_txt_8'] = 'Personajul tău trebuie să dețină cel puțin nivelul %s';
  
 # donation
 $lang['donation_txt_2'] = 'Credite';
@@ -363,47 +363,47 @@ $lang['resetcharacter_txt_2'] = 'Nivel';
 $lang['resetcharacter_txt_3'] = 'Zen';
 $lang['resetcharacter_txt_4'] = 'Reseturi';
 $lang['resetcharacter_txt_5'] = 'Resetează';
-$lang['resetcharacter_txt_6'] = 'Personajul tău trebuie să fie de nivelul %s';
-$lang['resetcharacter_txt_7'] = 'Personajul tău trebuie să aibă măcar %s zen';
+$lang['resetcharacter_txt_6'] = 'Personajul tău trebuie să fie nivelul %s';
+$lang['resetcharacter_txt_7'] = 'Personajul tău trebuie să fie dețină cel puțin %s zen';
 $lang['resetcharacter_txt_8'] = 'Vei fi recompensat cu %s credite';
-$lang['resetcharacter_txt_9'] = 'Trebuie să ai măcar %s credite pentru a-ți reseta personajul.';
+$lang['resetcharacter_txt_9'] = 'Trebuie să ai cel puțin %s credite pentru a-ți reseta personajul.';
 $lang['resetcharacter_txt_10'] = 'Puteți reseta personajul de maxim %s ori';
-$lang['resetcharacter_txt_11'] = 'Inventarul personajului tău va fi șters, asigură-te că așezi toate echipamentele în seiful tău.';
+$lang['resetcharacter_txt_11'] = 'Inventarul personajului tău va fi șters, asigură-te că așezi toate echipamentele în safeul tău.';
  
 # fix stats
 $lang['resetstats_txt_1'] = 'Personaj';
 $lang['resetstats_txt_2'] = 'Nivel';
-$lang['resetstats_txt_3'] = 'STR';
-$lang['resetstats_txt_4'] = 'AGI';
-$lang['resetstats_txt_5'] = 'VIT';
-$lang['resetstats_txt_6'] = 'ENE';
-$lang['resetstats_txt_7'] = 'CMD';
+$lang['resetstats_txt_3'] = 'Strength';
+$lang['resetstats_txt_4'] = 'Agility';
+$lang['resetstats_txt_5'] = 'Vitality';
+$lang['resetstats_txt_6'] = 'Energy';
+$lang['resetstats_txt_7'] = 'Command';
 $lang['resetstats_txt_8'] = 'Reset';
-$lang['resetstats_txt_9'] = 'Personajul tău trebuie să aibă măcar %s zen pentru a reseta stats';
+$lang['resetstats_txt_9'] = 'Personajul tău trebuie să dețină cel puțin %s zen pentru a reseta punctele';
  
 # unstick
 $lang['unstickcharacter_txt_1'] = 'Personaj';
 $lang['unstickcharacter_txt_2'] = 'Zen';
 $lang['unstickcharacter_txt_3'] = 'Deblocare';
-$lang['unstickcharacter_txt_4'] = 'Personajul tău trebuie să aibă măcar %s zen pentru a-l debloca';
+$lang['unstickcharacter_txt_4'] = 'Personajul tău trebuie să dețină cel puțin %s zen pentru a-l debloca';
  
 # recover master key
-$lang['masterkey_txt_1'] = 'Trimite master key-ul pe mail acum!';
+$lang['masterkey_txt_1'] = 'Trimite master key-ul pe email acum!';
  
 # add stats
 $lang['addstats_txt_1'] = 'Personaj';
 $lang['addstats_txt_2'] = '%s puncte disponibile';
-$lang['addstats_txt_3'] = 'Forță';
-$lang['addstats_txt_4'] = 'Agilitate';
-$lang['addstats_txt_5'] = 'Vitalitate';
-$lang['addstats_txt_6'] = 'Energie';
-$lang['addstats_txt_7'] = 'Comandă';
+$lang['addstats_txt_3'] = 'Strength';
+$lang['addstats_txt_4'] = 'Agility';
+$lang['addstats_txt_5'] = 'Vitality';
+$lang['addstats_txt_6'] = 'Energy';
+$lang['addstats_txt_7'] = 'Command';
 $lang['addstats_txt_8'] = 'Adaugă Puncte';
-$lang['addstats_txt_9'] = 'Personajul tău trebuie să aibă măcar %s zen pentru a adăuga stats';
-$lang['addstats_txt_10'] = 'Personajul tău trebuie să aibă măcar Master Level %s';
-$lang['addstats_txt_11'] = 'Personajul tău trebuie să aibă măcar nivelul %s';
-$lang['addstats_txt_12'] = 'Fiecare stat poate avea maxim %s puncte';
-$lang['addstats_txt_13'] = 'Trebuie să adaugi cel puțin %s puncte de nivel pentru a folosi această caracteristică.';
+$lang['addstats_txt_9'] = 'Personajul tău trebuie să dețină cel puțin %s zen pentru a adăuga punctele';
+$lang['addstats_txt_10'] = 'Personajul tău trebuie să dețină cel puțin Master Level %s';
+$lang['addstats_txt_11'] = 'Personajul tău trebuie să dețină cel puțin Nivelul %s';
+$lang['addstats_txt_12'] = 'Fiecare characteristica poate avea maxim %s puncte';
+$lang['addstats_txt_13'] = 'Trebuie să adaugi cel puțin %s puncte pentru a folosi această funcție.';
  
 # castle siege banner
 $lang['csbanner_txt_1'] = 'Deținătorul Castelului';
@@ -416,15 +416,15 @@ $lang['profiles_txt_2'] = 'Profilul Jucătorului';
 $lang['profiles_txt_3'] = 'Conducătorul Breslei:';
 $lang['profiles_txt_4'] = 'Scor:';
 $lang['profiles_txt_5'] = 'Membri:';
-$lang['profiles_txt_6'] = 'Membri';
+$lang['profiles_txt_6'] = 'Membri:';
 $lang['profiles_txt_7'] = 'Nivel';
 $lang['profiles_txt_8'] = 'Reseturi';
-$lang['profiles_txt_9'] = 'Reseturi Grand';
-$lang['profiles_txt_10'] = 'Forță';
-$lang['profiles_txt_11'] = 'Agilitate';
-$lang['profiles_txt_12'] = 'Vitalitate';
-$lang['profiles_txt_13'] = 'Energie';
-$lang['profiles_txt_14'] = 'Comandă';
+$lang['profiles_txt_9'] = 'Grand Reseturi';
+$lang['profiles_txt_10'] = 'Strength';
+$lang['profiles_txt_11'] = 'Agility';
+$lang['profiles_txt_12'] = 'Vitality';
+$lang['profiles_txt_13'] = 'Energy';
+$lang['profiles_txt_14'] = 'Command';
 $lang['profiles_txt_15'] = 'Omoruri';
 $lang['profiles_txt_16'] = 'Guild';
 $lang['profiles_txt_17'] = 'Stare';
@@ -486,7 +486,7 @@ $lang['castlesiege_widget_title'] = 'Castle Siege';
  
 # buy zen
 $lang['buyzen_txt_1'] = 'Cumpără Zen';
-$lang['buyzen_txt_2'] = 'zen trimis către';
+$lang['buyzen_txt_2'] = 'Zen trimis către';
 $lang['buyzen_txt_3'] = 'Personaj';
 $lang['buyzen_txt_4'] = 'Zen';
 $lang['buyzen_txt_5'] = 'Cumpără';

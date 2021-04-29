@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.3
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2021 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -97,8 +97,20 @@ class Account extends common {
 		# success message
 		message('success', lang('success_1',true));
 		
-		# redirect to login (5 seconds)
-		redirect(2,'login/',5);
+		
+		if($regCfg['automatic_login']) {
+			// automatic log-in
+			try {
+				$userLogin = new login();
+				$userLogin->validateLogin($username, $password);
+			} catch(Exception $ex) {
+				redirect(1,'login/');
+			}
+		} else {
+			// redirect to log-in module
+			redirect(2, 'login/', 5);
+		}
+		
 	}
 	
 	public function changePasswordProcess($userid, $username, $password, $new_password, $confirm_new_password) {

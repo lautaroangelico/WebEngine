@@ -7,4 +7,5 @@
 	<send_welcome_email>0</send_welcome_email>
 	<verify_email>0</verify_email>
 	<verification_timelimit>24</verification_timelimit>
+	<automatic_login>1</automatic_login>
 </settings>

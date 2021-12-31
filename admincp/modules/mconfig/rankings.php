@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.2
+ * @version 1.2.4
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -41,6 +41,7 @@ function saveChanges() {
 	$xml->guild_score_formula = $_POST['setting_21'];
 	$xml->guild_score_multiplier = $_POST['setting_22'];
 	$xml->rankings_excluded_guilds = $_POST['setting_23'];
+	$xml->rankings_class_filter = $_POST['setting_24'];
 	
 	$save = $xml->asXML($xmlPath);
 	if($save) {
@@ -165,6 +166,12 @@ $moduleConfig = simplexml_load_file($xmlPath);
 			<th>Character Online Status<br /><span>If enabled, the character's online status will be displayed in the rankings.</span></th>
 			<td>
 				<?php enabledisableCheckboxes('setting_20',$moduleConfig->show_online_status,'Enabled','Disabled'); ?>
+			</td>
+		</tr>
+		<tr>
+			<th>Character Class Filter<br /><span>If enabled, the character's class filter menu will be displayed in the rankings.</span></th>
+			<td>
+				<?php enabledisableCheckboxes('setting_24',$moduleConfig->rankings_class_filter,'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 	</table>

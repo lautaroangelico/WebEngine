@@ -22,4 +22,5 @@
 	<guild_score_formula>2</guild_score_formula>
 	<guild_score_multiplier>0.001</guild_score_multiplier>
 	<rankings_excluded_guilds></rankings_excluded_guilds>
+	<rankings_class_filter>1</rankings_class_filter>
 </settings>

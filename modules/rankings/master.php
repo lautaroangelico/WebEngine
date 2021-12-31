@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.4
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -32,6 +32,8 @@ try {
 	if(mconfig('show_online_status')) $onlineCharacters = loadCache('online_characters.cache');
 	if(!is_array($onlineCharacters)) $onlineCharacters = array();
 	
+	if(mconfig('rankings_class_filter')) $Rankings->rankingsFilterMenu();
+	
 	echo '<table class="rankings-table">';
 	echo '<tr>';
 	if(mconfig('rankings_show_place_number')) {
@@ -49,7 +51,7 @@ try {
 		$characterIMG = getPlayerClassAvatar($rdata[2], true, true, 'rankings-class-image');
 		$onlineStatus = mconfig('show_online_status') ? in_array($rdata[0], $onlineCharacters) ? '<img src="'.__PATH_ONLINE_STATUS__.'" class="online-status-indicator"/>' : '<img src="'.__PATH_OFFLINE_STATUS__.'" class="online-status-indicator"/>' : '';
 		if($i>=1) {
-			echo '<tr>';
+			echo '<tr data-class-id="'.$rdata[2].'">';
 			if(mconfig('rankings_show_place_number')) {
 				echo '<td class="rankings-table-place">'.$i.'</td>';
 			}

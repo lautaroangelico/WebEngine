@@ -328,6 +328,22 @@ $lang['rankings_txt_33'] = 'Country';
 $lang['rankings_txt_34'] = 'Location';
 $lang['rankings_txt_35'] = 'Pk Level';
 
+# rankings class filter
+$lang['rankings_filter_1'] = 'All';
+$lang['rankings_filter_2'] = 'Wizards';
+$lang['rankings_filter_3'] = 'Knights';
+$lang['rankings_filter_4'] = 'Elves';
+$lang['rankings_filter_5'] = 'Gladiators';
+$lang['rankings_filter_6'] = 'Lords';
+$lang['rankings_filter_7'] = 'Summoners';
+$lang['rankings_filter_8'] = 'Fighters';
+$lang['rankings_filter_9'] = 'Lancers';
+$lang['rankings_filter_10'] = 'Rune Wizards';
+$lang['rankings_filter_11'] = 'Slayers';
+$lang['rankings_filter_12'] = 'Gun Crushers';
+$lang['rankings_filter_13'] = 'Light Wizards';
+$lang['rankings_filter_14'] = 'Lemuria Mages';
+
 # clear pk
 $lang['clearpk_txt_1'] = 'Character';
 $lang['clearpk_txt_2'] = 'Zen';

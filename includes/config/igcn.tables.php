@@ -178,6 +178,25 @@ $custom['character_class'] = array(
 );
 
 /*
+ * custom: rankings_classgroup_filter
+ */
+$custom['rankings_classgroup_filter'] = array(
+	0 => 'rankings_filter_2',
+	16 => 'rankings_filter_3',
+	32 => 'rankings_filter_4',
+	48 => 'rankings_filter_5',
+	64 => 'rankings_filter_6',
+	80 => 'rankings_filter_7',
+	96 => 'rankings_filter_8',
+	112 => 'rankings_filter_9',
+	128 => 'rankings_filter_10',
+	144 => 'rankings_filter_11',
+	160 => 'rankings_filter_12',
+	176 => 'rankings_filter_13',
+	192 => 'rankings_filter_14',
+);
+
+/*
  * custom: character_cmd
  * classes who use cmd stat
  */

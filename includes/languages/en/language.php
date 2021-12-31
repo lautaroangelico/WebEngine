@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.2
+ * @version 1.2.4
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -45,7 +45,7 @@ $lang['module_titles_txt_12'] = 'Reset Character';
 $lang['module_titles_txt_13'] = 'Clear PK';
 $lang['module_titles_txt_14'] = 'Frequently Asked Questions';
 $lang['module_titles_txt_15'] = 'Forgot Password';
-$lang['module_titles_txt_16'] = 'Unstick Character';
+$lang['module_titles_txt_16'] = 'Unstuck Character';
 $lang['module_titles_txt_17'] = 'Server Information';
 $lang['module_titles_txt_18'] = 'Reset Stats';
 $lang['module_titles_txt_19'] = 'Clear Skill-Tree';

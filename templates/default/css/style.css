@@ -6,7 +6,7 @@
  =========================================================
  
  * Author Lautaro Angelico (https://lautaroangelico.com/)
- * Copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * Copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
  
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -769,4 +769,71 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 	font-weight: bold;
 	color: #000;
 	font-size: 16px;
+}
+
+/* RANKINGS FILTER BY CLASS */
+
+.rankings-class-filter {
+	display: inline-block;
+	list-style-type: none;
+	margin: 20px auto;
+	padding: 10px 20px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	-khtml-border-radius: 10px;
+}
+
+	.rankings-class-filter li {
+		display: inline-block;
+		-moz-transition: all 0.3s ease;
+		-o-transition: all 0.3s ease;
+		-webkit-transition: all 0.3s ease;
+		transition: all 0.3s ease;
+		margin-bottom: 10px;
+	}
+	
+	.rankings-class-filter li:hover {
+		-webkit-filter: grayscale(0%);
+		filter: grayscale(0%);
+	}
+
+.rankings-class-filter-selection {
+	display: inline-block;
+	width: 75px;
+	text-align: center;
+	color: #000000;
+	font-size: 11px;
+	cursor: pointer;
+}
+
+	.rankings-class-filter-selection:hover {
+		color: #000000 !important;
+	}
+
+	.rankings-class-filter-selection:hover img {
+		-webkit-filter: brightness(120%);
+		filter: brightness(120%);
+	}
+
+.rankings-class-filter-selection img {
+	width: 40px;
+	height: auto;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	-khtml-border-radius: 50%;
+	margin-bottom: 5px;
+	-moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+	-webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.45);
+	-moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.45);
+	box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.45);
+}
+
+.rankings-class-filter-grayscale {
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
 }

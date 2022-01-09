@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.4
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -98,7 +98,7 @@ echo '</table>';
 // Account Characters
 echo '<div class="page-title"><span>'.lang('myaccount_txt_15').'</span></div>';
 if(is_array($AccountCharacters)) {
-	$onlineCharacters = loadCache('online_characters.cache');
+	$onlineCharacters = loadCache('online_characters.cache') ? loadCache('online_characters.cache') : array();
 	echo '<div class="row text-center">';
 		foreach($AccountCharacters as $characterName) {
 			$characterData = $Character->CharacterData($characterName);

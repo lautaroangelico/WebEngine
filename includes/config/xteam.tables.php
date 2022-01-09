@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.3
+ * @version 1.2.4
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -160,6 +160,22 @@ $custom['character_class'] = array(
 );
 
 /*
+ * custom: rankings_classgroup_filter
+ */
+$custom['rankings_classgroup_filter'] = array(
+	0 => 'rankings_filter_2',
+	16 => 'rankings_filter_3',
+	32 => 'rankings_filter_4',
+	48 => 'rankings_filter_5',
+	64 => 'rankings_filter_6',
+	80 => 'rankings_filter_7',
+	96 => 'rankings_filter_8',
+	112 => 'rankings_filter_9',
+	128 => 'rankings_filter_10',
+	144 => 'rankings_filter_11',
+);
+
+/*
  * custom: character_cmd
  * classes who use cmd stat
  */
@@ -199,26 +215,25 @@ $custom['map_list'] = array(
 	1 => 'Dungeon',
 	2 => 'Devias',
 	3 => 'Noria',
-	4 => 'LostTower',
-	5 => 'Exile',
+	4 => 'Lost Tower',
 	6 => 'Arena',
 	7 => 'Atlans',
 	8 => 'Tarkan',
 	9 => 'Devil Square',
 	10 => 'Icarus',
-	11 => 'Blood Castle 1',
-	12 => 'Blood Castle 2',
-	13 => 'Blood Castle 3',
-	14 => 'Blood Castle 4',
-	15 => 'Blood Castle 5',
-	16 => 'Blood Castle 6',
-	17 => 'Blood Castle 7',
-	18 => 'Chaos Castle 1',
-	19 => 'Chaos Castle 2',
-	20 => 'Chaos Castle 3',
-	21 => 'Chaos Castle 4',
-	22 => 'Chaos Castle 5',
-	23 => 'Chaos Castle 6',
+	11 => 'Blood Castle',
+	12 => 'Blood Castle',
+	13 => 'Blood Castle',
+	14 => 'Blood Castle',
+	15 => 'Blood Castle',
+	16 => 'Blood Castle',
+	17 => 'Blood Castle',
+	18 => 'Chaos Castle',
+	19 => 'Chaos Castle',
+	20 => 'Chaos Castle',
+	21 => 'Chaos Castle',
+	22 => 'Chaos Castle',
+	23 => 'Chaos Castle',
 	24 => 'Kalima 1',
 	25 => 'Kalima 2',
 	26 => 'Kalima 3',
@@ -232,24 +247,24 @@ $custom['map_list'] = array(
 	34 => 'Crywolf Fortress',
 	36 => 'Kalima 7',
 	37 => 'Kanturu',
-	38 => 'Kanturu 2',
-	39 => 'Kanturu 3',
+	38 => 'Kanturu',
+	39 => 'Kanturu',
 	40 => 'Silent Map',
-	41 => 'Barracks of Balgass',
+	41 => 'Balgass Barracks',
 	42 => 'Balgass Refuge',
-	45 => 'Illusion Temple 1',
-	46 => 'Illusion Temple 2',
-	47 => 'Illusion Temple 3',
-	48 => 'Illusion Temple 4',
-	49 => 'Illusion Temple 5',
-	50 => 'Illusion Temple 6',
+	45 => 'Illusion Temple',
+	46 => 'Illusion Temple',
+	47 => 'Illusion Temple',
+	48 => 'Illusion Temple',
+	49 => 'Illusion Temple',
+	50 => 'Illusion Temple',
 	51 => 'Elbeland',
-	52 => 'Blood Castle 8',
-	53 => 'Chaos Castle 7',
+	52 => 'Blood Castle',
+	53 => 'Chaos Castle',
 	56 => 'Swamp of Calmness',
 	57 => 'Raklion',
 	58 => 'Raklion Boss',
-	62 => 'Village\'s Santa',
+	62 => 'Santa\'s Village',
 	63 => 'Vulcanus',
 	64 => 'Duel Arena',
 	65 => 'Doppelganger',
@@ -268,11 +283,11 @@ $custom['map_list'] = array(
 	92 => 'Acheron',
 	95 => 'Debenter',
 	96 => 'Debenter',
-	97 => 'Chaos Castle Final',
+	97 => 'Chaos Castle',
 	98 => 'Ilusion Temple',
 	99 => 'Ilusion Temple',
-	100 => 'Urk Mountain',
-	101 => 'Urk Mountain',
+	100 => 'Uruk Mountain',
+	101 => 'Uruk Mountain',
 	102 => 'Tormented Square',
 	103 => 'Tormented Square',
 	104 => 'Tormented Square',
@@ -288,13 +303,22 @@ $custom['map_list'] = array(
 	118 => 'Deep Dungeon',
 	119 => 'Deep Dungeon',
 	120 => 'Deep Dungeon',
-	121 => '4th Quest',
+	121 => 'Quest Zone',
 	122 => 'Swamp of Darkness',
 	123 => 'Kubera Mine',
 	124 => 'Kubera Mine',
 	125 => 'Kubera Mine',
 	126 => 'Kubera Mine',
 	127 => 'Kubera Mine',
+	128 => 'Atlans Abyss',
+	129 => 'Atlans Abyss 2',
+	130 => 'Atlans Abyss 3',
+	131 => 'Scorched Canyon',
+	132 => 'Crimson Flame Icarus',
+	133 => 'Temple of Arnil',
+	134 => 'Aida Gray',
+	135 => 'Old Kethotum',
+	136 => 'Burning Kethotum',
 );
 
 /*

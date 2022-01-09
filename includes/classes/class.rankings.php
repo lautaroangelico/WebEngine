@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.2
+ * @version 1.2.4
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -428,6 +428,49 @@ class Rankings {
 		}
 		if(!is_array($result)) return;
 		return $result;
+	}
+	
+	private function _getRankingsFilterData() {
+		$classesData = custom('character_class');
+		$rankingsFilter = custom('rankings_classgroup_filter');
+
+		if(is_array($rankingsFilter)) {
+			foreach($rankingsFilter as $class => $phrase) {
+				if(!array_key_exists($class, $classesData)) continue;
+				
+				$filterName = lang($phrase) == 'ERROR' ? $phrase : lang($phrase);
+				$classGroupList = array();
+				foreach($classesData as $key => $row) {
+					if($row['class_group'] == $class) {
+						$classGroupList[] = $key;
+					}
+				}
+				$filterList[] = array(
+					$class,
+					implode(',', $classGroupList),
+					$filterName,
+				);
+			}
+		}
+		
+		if(!is_array($filterList)) return;
+		return $filterList;
+	}
+	
+	public function rankingsFilterMenu() {
+		$filterData = $this->_getRankingsFilterData();
+		if(!is_array($filterData)) return;
+		
+		echo '<div class="text-center">';
+			echo '<ul class="rankings-class-filter">';
+				
+				echo '<li><a onclick="rankingsFilterRemove()" class="rankings-class-filter-selection">'.getPlayerClassAvatar(-1, true, false, 'rankings-class-filter-image').'<br />'.lang('rankings_filter_1').'</a></li>';
+				
+				foreach($filterData as $row) {
+					echo '<li><a onclick="rankingsFilterByClass('.$row[1].')" class="rankings-class-filter-selection rankings-class-filter-grayscale">'.getPlayerClassAvatar($row[0], true, false, 'rankings-class-filter-image').'<br />'.$row[2].'</a></li>';
+				}
+			echo '</ul>';
+		echo '</div>';
 	}
 
 }

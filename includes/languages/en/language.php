@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.2
+ * @version 1.2.4
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -45,7 +45,7 @@ $lang['module_titles_txt_12'] = 'Reset Character';
 $lang['module_titles_txt_13'] = 'Clear PK';
 $lang['module_titles_txt_14'] = 'Frequently Asked Questions';
 $lang['module_titles_txt_15'] = 'Forgot Password';
-$lang['module_titles_txt_16'] = 'Unstick Character';
+$lang['module_titles_txt_16'] = 'Unstuck Character';
 $lang['module_titles_txt_17'] = 'Server Information';
 $lang['module_titles_txt_18'] = 'Reset Stats';
 $lang['module_titles_txt_19'] = 'Clear Skill-Tree';
@@ -327,6 +327,22 @@ $lang['rankings_txt_32'] = 'Votes';
 $lang['rankings_txt_33'] = 'Country';
 $lang['rankings_txt_34'] = 'Location';
 $lang['rankings_txt_35'] = 'Pk Level';
+
+# rankings class filter
+$lang['rankings_filter_1'] = 'All';
+$lang['rankings_filter_2'] = 'Wizards';
+$lang['rankings_filter_3'] = 'Knights';
+$lang['rankings_filter_4'] = 'Elves';
+$lang['rankings_filter_5'] = 'Gladiators';
+$lang['rankings_filter_6'] = 'Lords';
+$lang['rankings_filter_7'] = 'Summoners';
+$lang['rankings_filter_8'] = 'Fighters';
+$lang['rankings_filter_9'] = 'Lancers';
+$lang['rankings_filter_10'] = 'Rune Wizards';
+$lang['rankings_filter_11'] = 'Slayers';
+$lang['rankings_filter_12'] = 'Gun Crushers';
+$lang['rankings_filter_13'] = 'Light Wizards';
+$lang['rankings_filter_14'] = 'Lemuria Mages';
 
 # clear pk
 $lang['clearpk_txt_1'] = 'Character';

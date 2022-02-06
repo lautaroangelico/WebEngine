@@ -331,6 +331,22 @@ $lang['rankings_txt_33'] = '国家';
 $lang['rankings_txt_34'] = '地区';
 $lang['rankings_txt_35'] = 'PK等级';
 
+# rankings class filter
+$lang['rankings_filter_1'] = '全部';
+$lang['rankings_filter_2'] = '魔法师';
+$lang['rankings_filter_3'] = '剑士';
+$lang['rankings_filter_4'] = '弓箭手';
+$lang['rankings_filter_5'] = '魔剑士';
+$lang['rankings_filter_6'] = '圣导师';
+$lang['rankings_filter_7'] = '召唤术师';
+$lang['rankings_filter_8'] = '格斗家';
+$lang['rankings_filter_9'] = '梦幻骑士';
+$lang['rankings_filter_10'] = '符文法师';
+$lang['rankings_filter_11'] = '疾风';
+$lang['rankings_filter_12'] = '火枪手';
+$lang['rankings_filter_13'] = 'Light Wizards';
+$lang['rankings_filter_14'] = 'Lemuria Mages';
+
 # clear pk
 $lang['clearpk_txt_1'] = '人物';
 $lang['clearpk_txt_2'] = '金';

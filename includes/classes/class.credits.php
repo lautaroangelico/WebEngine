@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.3.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2021 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -37,6 +37,7 @@ class CreditSystem {
 		// load databases
 		$this->muonline = Connection::Database('MuOnline');
 		$this->memuonline = Connection::Database('Me_MuOnline');
+		$this->we = new WebEngineDatabase();
 		
 		// instances
 		$this->common = new common();
@@ -299,7 +300,7 @@ class CreditSystem {
 	 * @return boolean
 	 */
 	private function _configurationExists($input) {
-		$check = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_CREDITS_CONFIG." WHERE config_id = ?", array($input));
+		$check = $this->we->query_fetch_single("SELECT * FROM ".WEBENGINE_CREDITS_CONFIG." WHERE config_id = ?", array($input));
 		if($check) return true;
 		return false;
 	}
@@ -333,7 +334,7 @@ class CreditSystem {
 			. "VALUES "
 			. "(:title, :database, :table, :creditscol, :usercol, :usercolid, :checkonline, :display)";
 		
-		$saveConfig = $this->memuonline->query($query, $data);
+		$saveConfig = $this->we->query($query, $data);
 		if(!$saveConfig) throw new Exception(lang('error_85'));
 	}
 	
@@ -374,7 +375,7 @@ class CreditSystem {
 			. "config_display = :display "
 			. "WHERE config_id = :id";
 		
-		$editConfig = $this->memuonline->query($query, $data);
+		$editConfig = $this->we->query($query, $data);
 		if(!$editConfig) throw new Exception(lang('error_86'));
 	}
 	
@@ -385,7 +386,7 @@ class CreditSystem {
 	 */
 	public function deleteConfig() {
 		if(!$this->_configId) throw new Exception(lang('error_66'));
-		if(!$this->memuonline->query("DELETE FROM ".WEBENGINE_CREDITS_CONFIG." WHERE config_id = ?", array($this->_configId))) {
+		if(!$this->we->query("DELETE FROM ".WEBENGINE_CREDITS_CONFIG." WHERE config_id = ?", array($this->_configId))) {
 			throw new Exception(lang('error_87'));
 		}
 	}
@@ -400,9 +401,9 @@ class CreditSystem {
 	public function showConfigs($singleConfig = false) {
 		if($singleConfig) {
 			if(!$this->_configId) throw new Exception(lang('error_66'));
-			return $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_CREDITS_CONFIG." WHERE config_id = ?", array($this->_configId));
+			return $this->we->query_fetch_single("SELECT * FROM ".WEBENGINE_CREDITS_CONFIG." WHERE config_id = ?", array($this->_configId));
 		} else {
-			$result = $this->memuonline->query_fetch("SELECT * FROM ".WEBENGINE_CREDITS_CONFIG." ORDER BY config_id ASC");
+			$result = $this->we->query_fetch("SELECT * FROM ".WEBENGINE_CREDITS_CONFIG." ORDER BY config_id ASC");
 			if($result) return $result;
 			return false;
 		}
@@ -520,7 +521,7 @@ class CreditSystem {
 			. "VALUES "
 			. "(:config, :identifier, :credits, :transaction, :timestamp, :inadmincp, :module, :ip)";
 		
-		$saveLog = $this->memuonline->query($query, $data);
+		$saveLog = $this->we->query($query, $data);
 	}
 	
 	/**
@@ -530,8 +531,8 @@ class CreditSystem {
 	 * @return array
 	 */
 	public function getLogs($limit=50) {
-		$query = str_replace(array('{LIMIT}'), array($limit), "SELECT TOP {LIMIT} * FROM ".WEBENGINE_CREDITS_LOGS." ORDER BY log_id DESC");
-		$result = $this->memuonline->query_fetch($query);
+		$query = str_replace(array('{LIMIT}'), array($limit), "SELECT * FROM ".WEBENGINE_CREDITS_LOGS." ORDER BY log_id DESC LIMIT {LIMIT}");
+		$result = $this->we->query_fetch($query);
 		if(is_array($result)) return $result;
 	}
 	

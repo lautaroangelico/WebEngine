@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.3.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2021 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -20,6 +20,7 @@ class login {
 		
 		$this->common = new common();
 		$this->me = Connection::Database('Me_MuOnline');
+		$this->we = new WebEngineDatabase();
 		
 		$loginConfigs = loadConfigurations('login');
 		if(!is_array($loginConfigs)) throw new Exception(lang('error_98'));
@@ -64,7 +65,7 @@ class login {
 		$failedLogins = $this->checkFailedLogins($ipaddress);
 		if($failedLogins < $this->_config['max_login_attempts']) return true;
 		
-		$result = $this->me->query_fetch_single("SELECT * FROM ".WEBENGINE_FLA." WHERE ip_address = ? ORDER BY id DESC", array($ipaddress));
+		$result = $this->we->query_fetch_single("SELECT * FROM ".WEBENGINE_FLA." WHERE ip_address = ? ORDER BY id DESC", array($ipaddress));
 		if(!is_array($result)) return true;
 		if(time() < $result['unlock_timestamp']) return;
 		
@@ -74,7 +75,7 @@ class login {
 	
 	public function checkFailedLogins($ipaddress) {
 		if(!Validator::Ip($ipaddress)) return;
-		$result = $this->me->query_fetch_single("SELECT * FROM ".WEBENGINE_FLA." WHERE ip_address = ? ORDER BY id DESC", array($ipaddress));
+		$result = $this->we->query_fetch_single("SELECT * FROM ".WEBENGINE_FLA." WHERE ip_address = ? ORDER BY id DESC", array($ipaddress));
 		if(!is_array($result)) return;
 		return $result['failed_attempts'];
 	}
@@ -92,21 +93,21 @@ class login {
 			# update
 			if(($failedLogins+1) >= $this->_config['max_login_attempts']) {
 				# max failed attemps -> block
-				$this->me->query("UPDATE ".WEBENGINE_FLA." SET username = ?, ip_address = ?, failed_attempts = failed_attempts + 1, unlock_timestamp = ?, timestamp = ? WHERE ip_address = ?", array($username, $ipaddress, $timeout, time(), $ipaddress));
+				$this->we->query("UPDATE ".WEBENGINE_FLA." SET username = ?, ip_address = ?, failed_attempts = failed_attempts + 1, unlock_timestamp = ?, timestamp = ? WHERE ip_address = ?", array($username, $ipaddress, $timeout, time(), $ipaddress));
 			} else {
-				$this->me->query("UPDATE ".WEBENGINE_FLA." SET username = ?, ip_address = ?, failed_attempts = failed_attempts + 1, timestamp = ? WHERE ip_address = ?", array($username, $ipaddress, time(), $ipaddress));
+				$this->we->query("UPDATE ".WEBENGINE_FLA." SET username = ?, ip_address = ?, failed_attempts = failed_attempts + 1, timestamp = ? WHERE ip_address = ?", array($username, $ipaddress, time(), $ipaddress));
 			}
 		} else {
 			# insert
 			$data = array($username, $ipaddress, 0, 1, time());
-			$this->me->query("INSERT INTO ".WEBENGINE_FLA." (username, ip_address, unlock_timestamp, failed_attempts, timestamp) VALUES (?, ?, ?, ?, ?)", $data);
+			$this->we->query("INSERT INTO ".WEBENGINE_FLA." (username, ip_address, unlock_timestamp, failed_attempts, timestamp) VALUES (?, ?, ?, ?, ?)", $data);
 		}
 	
 	}
 	
 	public function removeFailedLogins($ipaddress) {
 		if(!Validator::Ip($ipaddress)) return;
-		$this->me->query("DELETE FROM ".WEBENGINE_FLA." WHERE ip_address = ?", array($ipaddress));
+		$this->we->query("DELETE FROM ".WEBENGINE_FLA." WHERE ip_address = ?", array($ipaddress));
 	}
 	
 	public function logout() {

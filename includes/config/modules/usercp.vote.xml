@@ -2,5 +2,5 @@
 <settings>
 	<active>1</active>
 	<vote_save_logs>1</vote_save_logs>
-	<credit_config>0</credit_config>
+	<credit_config>1</credit_config>
 </settings>

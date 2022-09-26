@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.2
+ * @version 1.3.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2021 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -44,7 +44,7 @@ try {
 		if($i > mconfig('news_list_limit')) continue;
 		
 		$news_id = $newsArticle['news_id'];
-		$news_title = base64_decode($newsArticle['news_title']);
+		$news_title = $newsArticle['news_title'];
 		$news_author = $newsArticle['news_author'];
 		$news_date = $newsArticle['news_date'];
 		$news_url = __BASE_URL__.'news/'.$news_id.'/';
@@ -53,7 +53,7 @@ try {
 		if(config('language_switch_active',true)) {
 			if(check_value($_SESSION['language_display']) && is_array($newsArticle['translations'])) {
 				if(array_key_exists($_SESSION['language_display'], $newsArticle['translations'])) {
-					$news_title = base64_decode($newsArticle['translations'][$_SESSION['language_display']]);
+					$news_title = $newsArticle['translations'][$_SESSION['language_display']];
 				}
 			}
 		}

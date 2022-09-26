@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.3.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2021 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -242,7 +242,7 @@ function cs_CalculateTimeLeft() {
 }
 
 function updateCronLastRun($file) {
-	$database = Connection::Database('Me_MuOnline');
+	$database = new WebEngineDatabase();
 	$update = $database->query("UPDATE ".WEBENGINE_CRON." SET cron_last_run = ? WHERE cron_file_run = ?", array(time(), $file));
 	if(!$update) return;
 	return true;
@@ -423,7 +423,7 @@ function checkBlockedIp() {
 }
 
 function getCronList() {
-	$db = Connection::Database('Me_MuOnline');
+	$db = new WebEngineDatabase();
 	$result = $db->query_fetch("SELECT * FROM ".WEBENGINE_CRON." ORDER BY cron_id ASC");
 	if(!is_array($result)) return;
 	return $result;

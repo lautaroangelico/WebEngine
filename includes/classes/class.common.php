@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.3.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2021 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -24,6 +24,7 @@ class common {
 		// load databases
 		$this->muonline = Connection::Database('MuOnline');
 		$this->memuonline = Connection::Database('Me_MuOnline');
+		$this->we = new WebEngineDatabase();
 		
 		// configs
 		$this->_serverFiles = config('server_files',true);
@@ -130,7 +131,7 @@ class common {
 		);
 		
 		$query = "INSERT INTO ".WEBENGINE_PASSCHANGE_REQUEST." (user_id,new_password,auth_code,request_date) VALUES (?, ?, ?, ?)";
-		$result = $this->memuonline->query($query, $data);
+		$result = $this->we->query($query, $data);
 		if($result) return true;
 		return;
 	}
@@ -138,7 +139,7 @@ class common {
 	public function hasActivePasswordChangeRequest($userid) {
 		if(!check_value($userid)) return;
 		
-		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_PASSCHANGE_REQUEST." WHERE user_id = ?", array($userid));
+		$result = $this->we->query_fetch_single("SELECT * FROM ".WEBENGINE_PASSCHANGE_REQUEST." WHERE user_id = ?", array($userid));
 		if(!is_array($result)) return;
 		
 		$configs = loadConfigurations('usercp.mypassword');
@@ -153,7 +154,7 @@ class common {
 	}
 
 	public function removePasswordChangeRequest($userid) {
-		$result = $this->memuonline->query("DELETE FROM ".WEBENGINE_PASSCHANGE_REQUEST." WHERE user_id = ?", array($userid));
+		$result = $this->we->query("DELETE FROM ".WEBENGINE_PASSCHANGE_REQUEST." WHERE user_id = ?", array($userid));
 		if($result) return true;
 		return;
 	}
@@ -197,14 +198,14 @@ class common {
 		);
 		
 		$query = "INSERT INTO ".WEBENGINE_PAYPAL_TRANSACTIONS." (transaction_id, user_id, payment_amount, paypal_email, transaction_date, transaction_status, order_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-		$result = $this->memuonline->query($query, $data);
+		$result = $this->we->query($query, $data);
 		if($result) return true;
 		return;
 	}
 
 	public function paypal_transaction_reversed_updatestatus($order_id) {
 		if(check_value($order_id)) return;
-		$result = $this->memuonline->query("UPDATE ".WEBENGINE_PAYPAL_TRANSACTIONS." SET transaction_status = ? WHERE order_id = ?", array(0, $order_id));
+		$result = $this->we->query("UPDATE ".WEBENGINE_PAYPAL_TRANSACTIONS." SET transaction_status = ? WHERE order_id = ?", array(0, $order_id));
 		if($result) return true;
 		return;
 	}
@@ -230,7 +231,7 @@ class common {
 	
 	public function isIpBlocked($ip) {
 		if(!Validator::Ip($ip)) return true;
-		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_BLOCKED_IP." WHERE block_ip = ?", array($ip));
+		$result = $this->we->query_fetch_single("SELECT * FROM ".WEBENGINE_BLOCKED_IP." WHERE block_ip = ?", array($ip));
 		if(!is_array($result)) return;
 		return true;
 	}
@@ -239,7 +240,7 @@ class common {
 		if(!check_value($user)) return;
 		if(!Validator::Ip($ip)) return;
 		if($this->isIpBlocked($ip)) return;
-		$result = $this->memuonline->query("INSERT INTO ".WEBENGINE_BLOCKED_IP." (block_ip,block_by,block_date) VALUES (?,?,?)", array($ip,$user,time()));
+		$result = $this->we->query("INSERT INTO ".WEBENGINE_BLOCKED_IP." (block_ip,block_by,block_date) VALUES (?,?,?)", array($ip,$user,time()));
 		if(!$result) return;
 		
 		$this->_updateBlockedIpCache();
@@ -247,12 +248,12 @@ class common {
 	}
 
 	public function retrieveBlockedIPs() {
-		return $this->memuonline->query_fetch("SELECT * FROM ".WEBENGINE_BLOCKED_IP." ORDER BY id DESC");
+		return $this->we->query_fetch("SELECT * FROM ".WEBENGINE_BLOCKED_IP." ORDER BY id DESC");
 	}
 
 	public function unblockIpAddress($id) {
 		if(!check_value($id)) return;
-		$result = $this->memuonline->query("DELETE FROM ".WEBENGINE_BLOCKED_IP." WHERE id = ?", array($id));
+		$result = $this->we->query("DELETE FROM ".WEBENGINE_BLOCKED_IP." WHERE id = ?", array($id));
 		if(!$result) return;
 		
 		$this->_updateBlockedIpCache();

@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.3
+ * @version 1.3.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2021 Lautaro Angelico, All Rights Reserved
  * 
@@ -212,7 +212,7 @@ class Account extends common {
 		if(!Validator::UnsignedNumber($userid)) throw new Exception(lang('error_25',true));
 		if(!Validator::UnsignedNumber($authcode)) throw new Exception(lang('error_25',true));
 		
-		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_PASSCHANGE_REQUEST." WHERE user_id = ?", array($userid));
+		$result = $this->we->query_fetch_single("SELECT * FROM ".WEBENGINE_PASSCHANGE_REQUEST." WHERE user_id = ?", array($userid));
 		if(!is_array($result)) throw new Exception(lang('error_25',true));
 		
 		# load changepw configs
@@ -395,7 +395,7 @@ class Account extends common {
 	}
 	
 	public function verifyRegistrationProcess($username, $key) {
-		$verifyKey = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_account = ? AND registration_key = ?", array($username,$key));
+		$verifyKey = $this->we->query_fetch_single("SELECT * FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_account = ? AND registration_key = ?", array($username,$key));
 		if(!is_array($verifyKey)) throw new Exception(lang('error_25',true));
 		
 		# load registration configs
@@ -443,7 +443,7 @@ class Account extends common {
 	
 	public function getAccountCountry() {
 		if(!check_value($this->_account)) return;
-		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_ACCOUNT_COUNTRY." WHERE account = ?", array($this->_account));
+		$result = $this->we->query_fetch_single("SELECT * FROM ".WEBENGINE_ACCOUNT_COUNTRY." WHERE account = ?", array($this->_account));
 		if(!is_array($result)) return;
 		return $result;
 	}
@@ -456,7 +456,7 @@ class Account extends common {
 		if(!is_array($data)) return;
 		if(time() < strtotime($data['lastchange'])+$this->_countryChangeCooldown) return;
 		
-		$result = $this->memuonline->query("UPDATE ".WEBENGINE_ACCOUNT_COUNTRY." SET country = ? WHERE account = ?", array($this->_country, $this->_account));
+		$result = $this->we->query("UPDATE ".WEBENGINE_ACCOUNT_COUNTRY." SET country = ? WHERE account = ?", array($this->_country, $this->_account));
 		if(!$result) return;
 		return true;
 	}
@@ -464,7 +464,7 @@ class Account extends common {
 	public function insertAccountCountry() {
 		if(!check_value($this->_account)) return;
 		if(!check_value($this->_country)) return;
-		$result = $this->memuonline->query("INSERT INTO ".WEBENGINE_ACCOUNT_COUNTRY." (account, country) VALUES (?, ?)", array($this->_account, $this->_country));
+		$result = $this->we->query("INSERT INTO ".WEBENGINE_ACCOUNT_COUNTRY." (account, country) VALUES (?, ?)", array($this->_account, $this->_country));
 		if(!$result) return;
 		return true;
 	}
@@ -547,21 +547,21 @@ class Account extends common {
 		
 		$query = "INSERT INTO ".WEBENGINE_REGISTER_ACCOUNT." (registration_account,registration_password,registration_email,registration_date,registration_ip,registration_key) VALUES (?,?,?,?,?,?)";
 		
-		$result = $this->memuonline->query($query, $data);
+		$result = $this->we->query($query, $data);
 		if(!$result) return;
 		return $key;
 	}
 	
 	private function deleteRegistrationVerification($username) {
 		if(!check_value($username)) return;
-		$delete = $this->memuonline->query("DELETE FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_account = ?", array($username));
+		$delete = $this->we->query("DELETE FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_account = ?", array($username));
 		if($delete) return true;
 		return;
 	}
 
 	private function checkUsernameEVS($username) {
 		if(!check_value($username)) return;
-		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_account = ?", array($username));
+		$result = $this->we->query_fetch_single("SELECT * FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_account = ?", array($username));
 		
 		$configs = loadConfigurations('register');
 		if(!is_array($configs)) return;
@@ -575,7 +575,7 @@ class Account extends common {
 
 	private function checkEmailEVS($email) {
 		if(!check_value($email)) return;
-		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_email = ?", array($email));
+		$result = $this->we->query_fetch_single("SELECT * FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_email = ?", array($email));
 		
 		$configs = loadConfigurations('register');
 		if(!is_array($configs)) return;

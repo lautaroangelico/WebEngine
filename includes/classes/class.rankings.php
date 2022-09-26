@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.4
+ * @version 1.3.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2021 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -205,11 +205,11 @@ class Rankings {
 	}
 	
 	private function _votesRanking() {
-		$this->me = Connection::Database('Me_MuOnline');
+		$this->we = new WebEngineDatabase();
 		
 		$voteMonth = date("m/01/Y 00:00");
 		$voteMonthTimestamp = strtotime($voteMonth);
-		$accounts = $this->me->query_fetch("SELECT TOP ".$this->_results." user_id,COUNT(*) as count FROM ".WEBENGINE_VOTE_LOGS." WHERE timestamp >= ? GROUP BY user_id ORDER BY count DESC", array($voteMonthTimestamp));
+		$accounts = $this->we->query_fetch("SELECT user_id,COUNT(*) as count FROM ".WEBENGINE_VOTE_LOGS." WHERE timestamp >= ? GROUP BY user_id ORDER BY count DESC LIMIT ".$this->_results."", array($voteMonthTimestamp));
 		if(!is_array($accounts)) return;
 		
 		foreach($accounts as $data) {

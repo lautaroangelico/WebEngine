@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.3.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2021 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -17,6 +17,7 @@ $file_name = basename(__FILE__);
 // load databases
 $mu = Connection::Database('MuOnline');
 $me = Connection::Database('Me_MuOnline');
+$we = new WebEngineDatabase();
 
 $characterCountryCache = loadCache('character_country.cache');
 $characters = $mu->query_fetch("SELECT "._CLMN_CHR_NAME_.", "._CLMN_CHR_ACCID_." FROM "._TBL_CHR_."");
@@ -34,7 +35,7 @@ if(is_array($accountList)) {
 	}
 	$accountListString = implode(',', $accountListArray);
 	
-	$accountCountry = $me->query_fetch("SELECT * FROM ".WEBENGINE_ACCOUNT_COUNTRY." WHERE account IN(".$accountListString.")");
+	$accountCountry = $we->query_fetch("SELECT * FROM ".WEBENGINE_ACCOUNT_COUNTRY." WHERE account IN(".$accountListString.")");
 	if(is_array($accountCountry)) {
 		foreach($accountCountry as $row) {
 			$accountCountryList[utf8_encode($row['account'])] = $row['country'];

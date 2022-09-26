@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <settings>
 	<active>1</active>
-	<send_from>noreply@website.com</send_from>
-	<send_name>MuOnline</send_name>
+	<send_from>noreply@email.com</send_from>
+	<send_name>WebEngine CMS</send_name>
 	<smtp_active>0</smtp_active>
 	<smtp_host>host</smtp_host>
 	<smtp_port>587</smtp_port>

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.2
+ * @version 1.3.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2021 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -92,7 +92,7 @@ if($News->isNewsDirWritable()) {
 							if(is_array($newsTranslations)) {
 								echo '<ul>';
 									foreach($newsTranslations as $translation) {
-										echo '<li>[<span style="color:red;">'.$translation['news_language'].'</span>] '.base64_decode($translation['news_title']).' <a href="'.admincp_base('editnewstranslation&id='.$translation['news_id'].'&language='.$translation['news_language']).'" class="btn btn-xs btn-default">edit</a> <a href="'.admincp_base('managenews&deletetranslation='.$translation['news_id'].'&language='.$translation['news_language']).'" class="btn btn-xs btn-default">delete</a></li>';
+										echo '<li>[<span style="color:red;">'.$translation['news_language'].'</span>] '.$translation['news_title'].' <a href="'.admincp_base('editnewstranslation&id='.$translation['news_id'].'&language='.$translation['news_language']).'" class="btn btn-xs btn-default">edit</a> <a href="'.admincp_base('managenews&deletetranslation='.$translation['news_id'].'&language='.$translation['news_language']).'" class="btn btn-xs btn-default">delete</a></li>';
 									}
 								echo '</ul>';
 							}

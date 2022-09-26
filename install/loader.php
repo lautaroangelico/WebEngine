@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.3.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2021 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -13,7 +13,7 @@
 
 if(!defined('access') or !access or access != 'install') die();
 
-session_name('WebEngineInstaller121'); 
+session_name('WebEngineInstaller130'); 
 session_start();
 ob_start();
 
@@ -59,7 +59,6 @@ try {
 	if(!@include_once(__PATH_INCLUDES__ . 'functions.php')) throw new Exception('Could not load WebEngine CMS functions.');
 	if(!@include_once(__PATH_CLASSES__ . 'class.validator.php')) throw new Exception('Could not load WebEngine CMS validator library.');
 	if(!@include_once(__PATH_CLASSES__ . 'class.database.php')) throw new Exception('Could not load WebEngine CMS database library.');
-	if(!@include_once(__PATH_CONFIGS__ . 'compatibility.php')) throw new Exception('Could not load WebEngine CMS files compatibility.');
 	if(!@include_once(__PATH_CONFIGS__ . 'timezone.php')) throw new Exception('Could not load WebEngine CMS timezone.');
 	
 	$writablePaths = loadJsonFile(__PATH_CONFIGS__.WEBENGINE_WRITABLE_PATHS_FILE);

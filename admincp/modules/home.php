@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.3.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2021 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -78,7 +78,7 @@ echo '<div class="row">';
 				echo '</div>';
 				
 				// Scheduled Tasks
-				$scheduledTasks = $database->query_fetch_single("SELECT COUNT(*) as result FROM ".WEBENGINE_CRON."");
+				$scheduledTasks = count(getCronList());
 				echo '<div class="list-group-item">';
 					echo 'Scheduled Tasks (cron)';
 					echo '<span class="pull-right text-muted small">'.number_format($scheduledTasks['result']).'</span>';

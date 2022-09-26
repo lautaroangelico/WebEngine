@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.3.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2021 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -14,7 +14,7 @@
 <h1 class="page-header">PayPal Donations</h1>
 <?php
 try {
-	$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
+	$database = new WebEngineDatabase();
 	
 	$paypalDonations = $database->query_fetch("SELECT * FROM ".WEBENGINE_PAYPAL_TRANSACTIONS." ORDER BY id DESC");
 	if(!is_array($paypalDonations)) throw new Exception("There are no PayPal transactions in the database.");

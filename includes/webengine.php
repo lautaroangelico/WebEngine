@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.4
+ * @version 1.3.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
  * 
@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-//session_name('WebEngine124'); # session name (change to your server name and uncomment)
+//session_name('WebEngine130'); # session name (change to your server name and uncomment)
 //session_set_cookie_params(0, '/', 'muonline.com'); # same session with and without www protocol (edit with your domain and uncomment)
 if(access != 'cron') {
 	@ob_start();
@@ -19,7 +19,7 @@ if(access != 'cron') {
 }
 
 # Version
-define('__WEBENGINE_VERSION__', '1.2.4');
+define('__WEBENGINE_VERSION__', '1.3.0');
 
 # Set Encoding
 @ini_set('default_charset', 'utf-8');
@@ -109,6 +109,7 @@ if(!@include_once(__PATH_CLASSES__ . 'class.castlesiege.php')) throw new Excepti
 if(!@include_once(__PATH_CLASSES__ . 'class.cron.php')) throw new Exception('Could not load class (cron).');
 if(!@include_once(__PATH_CLASSES__ . 'class.cache.php')) throw new Exception('Could not load class (cache).');
 if(!@include_once(__PATH_CLASSES__ . 'paypal/PaypalIPN.php')) throw new Exception('Could not load class (PayalIPN).');
+if(!@include_once(__PATH_CLASSES__ . 'class.sqlite.php')) throw new Exception('Could not load class (sqlite).');
 
 # Load Functions
 if(!@include_once(__PATH_INCLUDES__ . 'functions.php')) throw new Exception('Could not load functions.');
@@ -125,10 +126,6 @@ if($config['webengine_cms_installed'] == false) {
 if(array_key_exists('blacklisted', $config)) {
 	throw new Exception('Could not load WebEngine CMS.');
 }
-
-# Compatibility
-if(!@include_once(__PATH_CONFIGS__ . 'compatibility.php')) throw new Exception('Could not load file compatibility.');
-if(!array_key_exists(strtolower($config['server_files']), $webengine['file_compatibility'])) throw new Exception('The server files configuration is not valid.');
 
 # Configurations Check
 $checkConfigs = true;
@@ -148,7 +145,7 @@ if($checkConfigs) {
 }
 
 # Load Table Definitions
-if(!@include_once(__PATH_CONFIGS__ . $webengine['file_compatibility'][strtolower($config['server_files'])]['file'])) throw new Exception('Could not load the table definitions.');
+if(!@include_once(__PATH_CONFIGS__ . 'mu.tables.php')) throw new Exception('Could not load the table definitions.');
 
 # CMS Status
 if(!$config['system_active'] && access != 'cron') {

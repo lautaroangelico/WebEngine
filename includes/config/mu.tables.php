@@ -3,7 +3,7 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.4
+ * @version 1.3.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
  * @copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
  * 

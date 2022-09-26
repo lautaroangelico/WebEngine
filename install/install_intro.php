@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.4
+ * @version 1.2.1
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -44,7 +44,7 @@ if(check_value($_GET['action'])) {
 	<div class="panel-body" style="font-size:10px;">
 		The MIT License (MIT)<br /><br />
 
-		Copyright (c) 2022 Lautaro Angelico<br /><br />
+		Copyright (c) 2020 Lautaro Angelico<br /><br />
 
 		Permission is hereby granted, free of charge, to any person obtaining a copy of<br />
 		this software and associated documentation files (the "Software"), to deal in<br />

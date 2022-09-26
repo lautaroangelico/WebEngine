@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.3.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2021 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -14,11 +14,12 @@
 <h1 class="page-header">Ban Account</h1>
 <?php
 	$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
+	$we = new WebEngineDatabase();
 	
 	// Add ban system cron if doesn't exist
 	$banCron = "INSERT INTO ".WEBENGINE_CRON." (cron_name, cron_description, cron_file_run, cron_run_time, cron_status, cron_protected, cron_file_md5) VALUES ('Ban System', 'Scheduled task to lift temporal bans', 'temporal_bans.php', '3600', 1, 1, '1a3787c5179afddd1bfb09befda3d1c7')";
-	$checkBanCron = $database->query_fetch_single("SELECT * FROM ".WEBENGINE_CRON." WHERE cron_file_run = ?", array("temporal_bans.php"));
-	if(!is_array($checkBanCron)) $database->query($banCron);
+	$checkBanCron = $we->query_fetch_single("SELECT * FROM ".WEBENGINE_CRON." WHERE cron_file_run = ?", array("temporal_bans.php"));
+	if(!is_array($checkBanCron)) $we->query($banCron);
 	
 	if(check_value($_POST['submit_ban'])) {
 		try {
@@ -53,7 +54,7 @@
 				'reason' => (check_value($_POST['ban_reason']) ? $_POST['ban_reason'] : "")
 			);
 			
-			$logBan = $database->query("INSERT INTO ".WEBENGINE_BAN_LOG." (account_id, banned_by, ban_type, ban_date, ban_days, ban_reason) VALUES (:acc, :by, :type, :date, :days, :reason)", $banLogData);
+			$logBan = $we->query("INSERT INTO ".WEBENGINE_BAN_LOG." (account_id, banned_by, ban_type, ban_date, ban_days, ban_reason) VALUES (:acc, :by, :type, :date, :days, :reason)", $banLogData);
 			if(!$logBan) throw new Exception("Could not log ban (check tables)[1].");
 			
 			// Add temporal ban
@@ -65,8 +66,8 @@
 					'days' => $_POST['ban_days'],
 					'reason' => (check_value($_POST['ban_reason']) ? $_POST['ban_reason'] : "")
 				);
-				$tempBan = $database->query("INSERT INTO ".WEBENGINE_BANS." (account_id, banned_by, ban_date, ban_days, ban_reason) VALUES (:acc, :by, :date, :days, :reason)", $tempBanData);
-				if(!$tempBan) throw new Exception("Could not add temporal ban (check tables)[2]. - " . $database->error);
+				$tempBan = $we->query("INSERT INTO ".WEBENGINE_BANS." (account_id, banned_by, ban_date, ban_days, ban_reason) VALUES (:acc, :by, :date, :days, :reason)", $tempBanData);
+				if(!$tempBan) throw new Exception("Could not add temporal ban (check tables)[2]. - " . $we->error);
 			}
 			
 			// Ban Account

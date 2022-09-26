@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.3.0
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2021 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -13,79 +13,74 @@
 
 if(!defined('access') or !access or access != 'install') die();
 ?>
-<h3>Create Tables</h3>
+<h3>Website Configuration</h3>
 <br />
 <?php
-try {
-	if(check_value($_POST['install_step_3_submit'])) {
-		if(!check_value($_POST['install_step_3_error'])) {
-			# move to next step
-			$_SESSION['install_cstep']++;
-			header('Location: install.php');
-			die();
-		} else {
-			echo '<div class="alert alert-danger" role="alert">One of more errors have been logged, cannot continue.</div>';
-		}
-	}
-	
-	if(check_value($_SESSION['install_sql_db2'])) {
-		$mudb = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db2'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass'], $_SESSION['install_sql_dsn']);
-	} else {
-		$mudb = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db1'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass'], $_SESSION['install_sql_dsn']);
-	}
-	
-	if($mudb->dead) {
-		throw new Exception("Could not connect to database");
-	}
-	
-	// SQL List
-	if(!is_array($install['sql_list'])) throw new Exception('Could not load WebEngine CMS SQL tables list.');
-	foreach($install['sql_list'] as $sqlFileName => $sqlTableName) {
-		if(!file_exists('sql/' . $sqlFileName . '.txt')) {
-			throw new Exception('The installation script is missing SQL tables.');
-		}
-	}
-	
-	$error = false;
-	
-	echo '<div class="list-group">';
-	foreach($install['sql_list'] as $sqlFileName => $sqlTableName) {
-		$sqlFileContents = file_get_contents('sql/'.$sqlFileName.'.txt');
-		if(!$sqlFileContents) continue;
+if(check_value($_POST['install_step_3_submit'])) {
+	try {
+		# check for empty values
+		if(!check_value($_POST['install_step_3_1'])) throw new Exception('You must complete all required fields.');
 		
-		// rename table
-		$query = str_replace('{TABLE_NAME}', $sqlTableName, $sqlFileContents);
-		if(!$query) continue;
+		# check admin user
+		if(!Validator::AlphaNumeric($_POST['install_step_3_1'])) throw new Exception('The admin account username can only contain alpha-numeric characters.');
 		
-		// delete table
-		if($_GET['force'] == 1) {
-			$mudb->query("DROP TABLE " . $sqlTableName);
-		}
+		# check database connection data
+		if(!check_value($_SESSION['install_sql_host'])) throw new Exception('Database connection info missing, restart installation process.');
+		if(!check_value($_SESSION['install_sql_db1'])) throw new Exception('Database connection info missing, restart installation process.');
+		if(!check_value($_SESSION['install_sql_user'])) throw new Exception('Database connection info missing, restart installation process.');
+		if(!check_value($_SESSION['install_sql_pass'])) throw new Exception('Database connection info missing, restart installation process.');
+		if(!check_value($_SESSION['install_sql_dsn'])) throw new Exception('Database connection info missing, restart installation process.');
 		
-		// check if exists
-		$tableExists = $mudb->query_fetch_single("SELECT * FROM sysobjects WHERE xtype = 'U' AND name = ?", array($sqlTableName));
+		// Set Configs
+		$webengineDefaultConfig['admins'] = array($_POST['install_step_3_1'] => 100);
+		$webengineDefaultConfig['SQL_DB_HOST'] = $_SESSION['install_sql_host'];
+		$webengineDefaultConfig['SQL_DB_NAME'] = $_SESSION['install_sql_db1'];
+		$webengineDefaultConfig['SQL_DB_2_NAME'] = $_SESSION['install_sql_db2'];
+		$webengineDefaultConfig['SQL_DB_USER'] = $_SESSION['install_sql_user'];
+		$webengineDefaultConfig['SQL_DB_PASS'] = $_SESSION['install_sql_pass'];
+		$webengineDefaultConfig['SQL_DB_PORT'] = $_SESSION['install_sql_port'];
+		$webengineDefaultConfig['SQL_USE_2_DB'] = check_value($_SESSION['install_sql_db2']) ? true : false;
+		$webengineDefaultConfig['SQL_PDO_DRIVER'] = $_SESSION['install_sql_dsn'];
+		$webengineDefaultConfig['SQL_ENABLE_MD5'] = $_SESSION['install_sql_md5'];
+		$webengineDefaultConfig['webengine_cms_installed'] = true;
 		
-		if(!$tableExists) {
-			$create = $mudb->query($query);
-			if($create) {
-				echo '<div class="list-group-item">'.$sqlTableName.'<span class="label label-success pull-right">Created</span></div>';
-			} else {
-				echo '<div class="list-group-item">'.$sqlTableName.'<span class="label label-danger pull-right">Error</span></div>';
-				$error = true;
-			}
-		} else {
-			echo '<div class="list-group-item">'.$sqlTableName.'<span class="label label-default pull-right">Already Exists</span></div>';
-		}
+		# encode settings
+		$newWebengineConfigs = json_encode($webengineDefaultConfig, JSON_PRETTY_PRINT);
+		if($newWebengineConfigs == false) throw new Exception('Could not encode WebEngine CMS configurations.');
+		
+		# save configurations
+		$cfgFile = fopen($webengineConfigsPath, 'w');
+		if(!$cfgFile) throw new Exception('Could not open WebEngine CMS Configurations file.');
+		$cfgUpdate = fwrite($cfgFile, $newWebengineConfigs);
+		if(!$cfgUpdate) throw new Exception('Could not save WebEngine CMS Configurations file.');
+		fclose($cfgFile);
+		
+		# clear session data
+		$_SESSION = array();
+		session_destroy();
+		
+		# redirect to website home
+		header('Location: ' . __BASE_URL__);
+		die();
+		
+	} catch (Exception $ex) {
+		echo '<div class="alert alert-danger" role="alert">'.$ex->getMessage().'</div>';
 	}
-	echo '</div>';
-	
-	echo '<form method="post">';
-		if($error) echo '<input type="hidden" name="install_step_3_error" value="1"/>';
-		echo '<a href="'.__INSTALL_URL__.'install.php" class="btn btn-default">Re-Check</a> ';
-		echo '<button type="submit" name="install_step_3_submit" value="continue" class="btn btn-success">Continue</button>';
-		echo '<a href="'.__INSTALL_URL__.'install.php?force=1" class="btn btn-danger pull-right">Delete Tables and Create Again</a>';
-	echo '</form>';
-	
-} catch (Exception $ex) {
-	echo '<div class="alert alert-danger" role="alert">'.$ex->getMessage().'</div>';
 }
+
+?>
+<form class="form-horizontal" method="post">
+	<div class="form-group">
+		<label for="input_1" class="col-sm-3 control-label">Admin account</label>
+		<div class="col-sm-9">
+			<input type="text" name="install_step_3_1" class="form-control" id="input_1" required>
+			<p class="help-block">Type the username of the account that will have full admincp access. If the account does not yet exist, make sure to create it after completing the installation process.</p>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<div class="col-sm-offset-3 col-sm-9">
+			<button type="submit" name="install_step_3_submit" value="continue" class="btn btn-success">Complete Installation</button>
+		</div>
+	</div>
+</form>

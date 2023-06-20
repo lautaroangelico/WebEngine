@@ -29,26 +29,31 @@ try {
 		}
 	}
 	
-	echo '<div class="col-xs-8 col-xs-offset-2" style="margin-top:30px;">';
-		echo '<form class="form-horizontal" action="" method="post">';
-			echo '<div class="form-group">';
-				echo '<label for="webengineLogin1" class="col-sm-4 control-label">'.lang('login_txt_1',true).'</label>';
-				echo '<div class="col-sm-8">';
+	echo '<div class="col-12 col-sm-6 col-md-8 mx-auto" style="margin-top:30px;">';
+		echo '<form class="form-horizontal needs-validation" action="" method="post">';
+
+
+				echo '<div class="input-group">';
+					echo '<span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>';
 					echo '<input type="text" class="form-control" id="webengineLogin1" name="webengineLogin_user" required>';
 				echo '</div>';
-			echo '</div>';
-			echo '<div class="form-group">';
-				echo '<label for="webengineLogin2" class="col-sm-4 control-label">'.lang('login_txt_2',true).'</label>';
-				echo '<div class="col-sm-8">';
+				echo '<small class="text-muted">Ingrese su usuario</small>';
+
+				echo '<div class="input-group mt-2">';
+					echo '<span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>';
 					echo '<input type="password" class="form-control" id="webengineLogin2" name="webengineLogin_pwd" required>';
-					echo '<span id="helpBlock" class="help-block"><a href="'.__BASE_URL__.'forgotpassword/">'.lang('login_txt_4',true).'</a></span>';
 				echo '</div>';
-			echo '</div>';
-			echo '<div class="form-group">';
-				echo '<div class="col-sm-offset-4 col-sm-8">';
-					echo '<button type="submit" name="webengineLogin_submit" value="submit" class="btn btn-primary">'.lang('login_txt_3',true).'</button>';
+				echo '<small class="text-muted">Ingrese su password</small>';
+				echo '<span id="helpBlock" class="help-block text-end"><br><a href="'.__BASE_URL__.'forgotpassword/">'.lang('login_txt_4',true).'</a></span>';
+
+				echo '<div class="input-group mt-2">';
+					echo '<div class="d-grid gap-2 col-12 mx-auto">';
+						echo '<button type="submit" name="webengineLogin_submit" value="submit" class="btn btn-primary">'.lang('login_txt_3',true).'</button>';
+					echo '</div>';
 				echo '</div>';
-			echo '</div>';
+	
+
+
 		echo '</form>';
 	echo '</div>';
 

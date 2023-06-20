@@ -6,15 +6,17 @@
  =========================================================
  
  * Author Lautaro Angelico (https://lautaroangelico.com/)
- * Copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
+ * Copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
  
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
  
  =========================================================
- 
+ .
 */
 /* GUILD PROFILES */
+
+.fixitemsview {padding-right:0px !important; background-color:#1d1b1b;}
 .profiles_guild_card {
 	width: 100%;
 	background: #000000 url('../img/profiles/guild.jpg') no-repeat;
@@ -86,9 +88,9 @@
 	.GL.profiles_player_card, .ML.profiles_player_card, .SL.profiles_player_card { background: url('../img/profiles/gl.jpg') no-repeat; background-size: cover; }
 	.RW.profiles_player_card, .RSM.profiles_player_card, .GRM.profiles_player_card { background: url('../img/profiles/rw.jpg') no-repeat; background-size: cover; }
 	.SLR.profiles_player_card, .SLRR.profiles_player_card, .MSLR.profiles_player_card, .SLTR.profiles_player_card { background: url('../img/profiles/sl.jpg') no-repeat; background-size: cover; }
-	.GC.profiles_player_card, .GB.profiles_player_card, .MGB.profiles_player_card, .HGC.profiles_player_card { background: url('../img/profiles/gc.jpg') no-repeat; background-size: cover; }
-	.LIW.profiles_player_card, .LIM.profiles_player_card, .SHW.profiles_player_card, .LUW.profiles_player_card { background: url('../img/profiles/liw.jpg') no-repeat; background-size: cover; }
+  .LIW.profiles_player_card, .LIM.profiles_player_card, .SHW.profiles_player_card, .LUW.profiles_player_card { background: url('../img/profiles/liw.jpg') no-repeat; background-size: cover; }
 	.LEM.profiles_player_card, .WAM.profiles_player_card, .ARM.profiles_player_card, .MYM.profiles_player_card { background: url('../img/profiles/lem.jpg') no-repeat; background-size: cover; }
+	.IK.profiles_player_card, .IMK.profiles_player_card, .IM.profiles_player_card, .MYK.profiles_player_card { background: url('../img/profiles/ik.jpg') no-repeat; background-size: cover; }
 
 .profiles_player_content {
 	float: right;
@@ -101,7 +103,7 @@
 }
 
 .profiles_player_table .cname {
-	font-family: 'Cinzel', serif;
+	font-family: 'BebasNeueRegular', serif;
 	text-align: center;
 	font-size: 24px;
 	color: #fff;
@@ -131,4 +133,242 @@
 }
 .profiles_player_table_info tr td:first-child {
 	text-align: right;
+}
+
+
+
+/* ITEM TOOLTIP */
+.item-box {
+    background: rgba(0, 0, 0, 0.7);
+    text-align: center;
+    width: 100%;
+    white-space: nowrap;
+    min-width: 200px;
+    padding-bottom: 10px;
+    font-size: 12px;
+	padding-bottom:25%;
+}
+.item-name {
+    padding: 4px 8px;
+}
+.item-serial {
+    color: #ffffff !important;
+    padding-top: 10px;
+}
+.item-info {
+    color: #ffffff !important;
+}
+.item-info-section {
+    padding-top: 10px;
+}
+.item-class-req {
+    color: #b4b4b4 !important;
+}
+.item-opt-jog {
+    color: #ff99cc !important;
+    padding-top: 10px;
+}
+.item-opt-harmony {
+    color: #ffcc00 !important;
+    padding-top: 10px;
+}
+.item-opt-skill {
+    color: #9aadd5 !important;
+}
+.item-opt-luck {
+    color: #9aadd5 !important;
+}
+.item-opt-life {
+    color: #9aadd5 !important;
+}
+.item-opt-exc {
+    color: #4d668d !important;
+    padding-top: 10px;
+}
+.item-opt-anc {
+    color: #9aadd5 !important;
+    padding-top: 10px;
+}
+.item-opt-socket {
+    color: #4d668d !important;
+    padding-top: 10px;
+}
+.item-expiration {
+    color: #ff544f !important;
+    padding-top: 10px;
+}
+
+
+.profile_item0 {
+    position: relative;
+    left: -175px;
+    top: 305px;
+    width: 68px;
+    height: 132px;
+  }
+  .profile_item1 {
+    position: relative;
+    left: 220px;
+    top: 170px;
+    width: 68px;
+    height: 132px;
+  }
+  .profile_item2 {
+    position: relative;
+    left: -110px;
+    top: -215px;
+    width: 68px;
+    height: 100px;
+  }
+  .profile_item3 {
+    position: relative;
+    left: -125px;
+    top: -200px;
+    width: 68px;
+    height: 100px;
+  }
+  .profile_item4 {
+    position: relative;
+    left: -80px;
+    top: -100px;
+    width: 68px;
+    height: 68px;
+  }
+  .profile_item5 {
+    position: relative;
+    left: 160px;
+    top: -335px;
+    width: 68px;
+    height: 68px;
+  }
+  .profile_item6 {
+    position: relative;
+    left: 127px;
+    top: -235px;
+    width: 68px;
+    height: 68px;
+  }
+  .profile_item7 {
+    position: relative;
+    left: 185px;
+    top: -625px;
+    width: 164px;
+    height: 100px;
+  }
+  .profile_item8 {
+    position: relative;
+    left: -215px;
+    top: -700px;
+    width: 68px;
+    height: 68px;
+  }
+  .profile_item9 {
+    position: relative;
+    left: 80px;
+    top: -745px;
+    width: 36px;
+    height: 36px;
+  }
+  .profile_item10 {
+    position: relative;
+    left: -80px;
+    top: -573px;
+    width: 36px;
+    height: 36px;
+  }
+  .profile_item11 {
+    position: relative;
+    left: 127px;
+    top: -610px;
+    width: 36px;
+    height: 36px;
+  }
+
+.deidadbuttonfix { width:150px; border-radius:0px; height:38px}
+.custom-select {
+  position: relative;
+  font-family: Arial; 
+}
+
+.custom-select input {
+	float:right;
+}
+
+.custom-select select {
+  display: none; /*hide original SELECT element:*/
+  width:250px;
+}
+
+.select-selected {
+  background-color: DodgerBlue;
+    width:250px;
+}
+
+/*style the arrow inside the select element:*/
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div,.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+  user-select: none;
+}
+
+/*style items (options):*/
+.select-items {
+  position: absolute;
+  background-color: DodgerBlue;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+:root {
+    --item-color-exc: #2ff387;
+    --item-color-socket-opt: #cc33cc;
+    --item-color-socket: #cc66cc;
+    --item-color-normal: #ffffff;
+    --item-color-life-opt: #8cb0ea;
+    --item-color-improved: #f4cb3f;
+    --item-color-anc: #0066cc;
+    --item-color-anc-setopt: #ffcc66;
+    --item-color-nocolor: #f4cb3f;
+    --item-color-fenrir: #8cb0ea;
+    --item-color-fenrir-gold: #f4cb3f;
+    --item-color-errtel-title: #ffffff;
+    --item-color-errtel-opt: #8CB0EA;
+    --item-color-errtel1: #ff0000;
+    --item-color-errtel2: #8cb0ea;
+    --item-color-errtel3: #e6bf3c;
+    --item-color-errtel4: #26e027;
+    --item-color-errtel5: #5b1659;
+    --item-tooltip-bg: #2c3e50;
 }

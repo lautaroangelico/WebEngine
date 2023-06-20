@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <settings>
 	<active>1</active>
+	<stats>1</stats>
+	<online>1</online>
 </settings>

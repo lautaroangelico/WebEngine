@@ -54,20 +54,3 @@ a.thumbnail:focus,
 a.thumbnail.active {
   border-color: #ff0000;
 }
-
-.btn-primary {
-    color: #ff0000;
-    background-color: transparent;
-	border-color: #ff0000;
-	-moz-transition: all .1s ease-in;
-    -o-transition: all .1s ease-in;
-    -webkit-transition: all .1s ease-in;
-    transition: all .1s ease-in;
-	-moz-border-radius: 0px;
-	border-radius: 0px;
-}
-.btn-primary:active, .btn-primary:focus, .btn-primary:hover {
-    color: #fff !important;
-    background-color: #ff0000 !important;
-	border-color: #ff0000 !important;
-}

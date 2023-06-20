@@ -3,15 +3,15 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
  */
 
-echo '<h1 class="page-header">Website Settings</h1>';
+echo '<h1 class="page-header">Configuracion de Web</h1>';
 
 $allowedSettings = array(
 	'settings_submit', # the submit button
@@ -46,6 +46,9 @@ $allowedSettings = array(
 	'server_info_masterexp',
 	'server_info_drop',
 	'maximum_online',
+	'color_template',
+	'ip_game_server',
+	'port_game_server',
 );
 
 if(check_value($_POST['settings_submit'])) {
@@ -188,7 +191,17 @@ if(check_value($_POST['settings_submit'])) {
 		# maximum online
 		if(check_value($_POST['maximum_online'])) if(!Validator::UnsignedNumber($_POST['maximum_online'])) throw new Exception('Invalid setting (maximum_online)');
 		$setting['maximum_online'] = $_POST['maximum_online'];
-		
+
+		# color template
+		$setting['color_template'] = $_POST['color_template'];
+
+		# ip game server
+		$setting['ip_game_server'] = $_POST['ip_game_server'];
+
+		# port game server
+		$setting['port_game_server'] = $_POST['port_game_server'];
+
+	
 		# webengine configs
 		$webengineConfigurations = webengineConfigs();
 		
@@ -213,56 +226,48 @@ if(check_value($_POST['settings_submit'])) {
 }
 
 echo '<div class="col-md-12">';
+echo '<div class="card">';
+			echo '<div class="card-body">';
 	echo '<form action="" method="post">';
 		echo '<table class="table table-striped table-bordered table-hover" style="table-layout: fixed;">';
 			
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Website Status</strong>';
-					echo '<p class="setting-description">Enables/disables your website. If disabled, visitors will be redirected to the maintenance page.</p>';
+					echo '<strong>Estado de Web</strong>';
+					echo '<p class="setting-description">Activa/Desactiva tu web. Si esta desactivada, los visitantes seran redirigidos a la <b>pagina de mantenimiento</b>.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="system_active" value="1" '.(config('system_active',true) ? 'checked' : null).'>';
-							echo 'Enabled';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="system_active" value="0" '.(!config('system_active',true) ? 'checked' : null).'>';
-							echo 'Disabled';
-						echo '</label>';
+						echo '<input type="radio" class="btn-check" name="system_active" value="1" '.(config('system_active',true) ? 'checked' : null).' id="Op1StatusWeb">';
+						echo '<label class="btn btn-outline-success" for="Op1StatusWeb"> <i class="fas fa-check"></i> Activado </label>';
+						echo '&nbsp;';
+						echo '<input type="radio" class="btn-check" name="system_active" value="0" '.(!config('system_active',true) ? 'checked' : null).' id="Op2StatusWeb">';
+						echo '<label class="btn btn-outline-danger" for="Op2StatusWeb"> <i class="fas fa-times"></i> Desactivado </label>';
 					echo '</div>';
 				echo '</td>';
 			echo '</tr>';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Debug Mode</strong>';
-					echo '<p class="setting-description">Debugging mode, enable this setting only if you want the website to display any errors.</p>';
+					echo '<strong>Modo Debug</strong>';
+					echo '<p class="setting-description">El Modo Debug, solo activalo si quieres ver todos los errores en la web.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="error_reporting" value="1" '.(config('error_reporting',true) ? 'checked' : null).'>';
-							echo 'Enabled';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="error_reporting" value="0" '.(!config('error_reporting',true) ? 'checked' : null).'>';
-							echo 'Disabled';
-						echo '</label>';
+						echo '<input type="radio" class="btn-check" name="error_reporting" value="1" '.(config('error_reporting',true) ? 'checked' : null).' id="Op1ModeDebug">';
+						echo '<label class="btn btn-outline-success" for="Op1ModeDebug"> <i class="fas fa-check"></i> Activado </label>';
+						echo '&nbsp;';
+						echo '<input type="radio" class="btn-check" name="error_reporting" value="0" '.(!config('error_reporting',true) ? 'checked' : null).' id="Op2ModeDebug">';
+						echo '<label class="btn btn-outline-danger" for="Op2ModeDebug"> <i class="fas fa-times"></i> Desactivado </label>';
 					echo '</div>';
 				echo '</td>';
 			echo '</tr>';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Default Template</strong>';
-					echo '<p class="setting-description">Your website\'s default template.</p>';
+					echo '<strong>Template Pretederminado</strong>';
+					echo '<p class="setting-description">El template predeterminado de tu web.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="website_template" value="'.config('website_template',true).'" required>';
@@ -271,8 +276,8 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Maintenance Page Url</strong>';
-					echo '<p class="setting-description">Full URL address to your website\'s maintenance page. Visitors are redirected to your maintenance page when the website is disabled.</p>';
+					echo '<strong>URL Pagina de Mantenimiento</strong>';
+					echo '<p class="setting-description">Cuando tu Web este desactivada. Los visitantes seran redirigidos a esta URL que configures.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="maintenance_page" value="'.config('maintenance_page',true).'" required>';
@@ -281,8 +286,8 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Server Name</strong>';
-					echo '<p class="setting-description">Your Mu Online server name.</p>';
+					echo '<strong>Nombre de Servidor</strong>';
+					echo '<p class="setting-description">El nombre de tu Servidor.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="server_name" value="'.config('server_name',true).'" required>';
@@ -291,8 +296,8 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Website Title</strong>';
-					echo '<p class="setting-description">Your website\'s title.</p>';
+					echo '<strong>Titulo de la Web</strong>';
+					echo '<p class="setting-description">El titulo de tu web.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="website_title" value="'.config('website_title',true).'" required>';
@@ -301,8 +306,8 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Meta Description</strong>';
-					echo '<p class="setting-description">Define a description of your server.</p>';
+					echo '<strong>Meta Descripcion</strong>';
+					echo '<p class="setting-description">Define la descripcion de tu servidor.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="website_meta_description" value="'.config('website_meta_description',true).'" required>';
@@ -312,7 +317,7 @@ echo '<div class="col-md-12">';
 			echo '<tr>';
 				echo '<td>';
 					echo '<strong>Meta Keywords</strong>';
-					echo '<p class="setting-description">Define keywords for search engines.</p>';
+					echo '<p class="setting-description">Define las palabras con la cual buscaran tu web.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="website_meta_keywords" value="'.config('website_meta_keywords',true).'" required>';
@@ -321,8 +326,8 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Forum Link</strong>';
-					echo '<p class="setting-description">Full URL to your forum.</p>';
+					echo '<strong>Enlace de Foro</strong>';
+					echo '<p class="setting-description">URL Completa de tu foro.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="website_forum_link" value="'.config('website_forum_link',true).'" required>';
@@ -331,12 +336,12 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Server Files</strong>';
-					echo '<p class="setting-description">Define your server files for maximum WebEngine compatibility.</p>';
+					echo '<strong>Files del Servidor</strong>';
+					echo '<p class="setting-description">Selecciona los Files que usa tu servidor.</p>';
 				echo '</td>';
 				echo '<td>';
 					
-					echo '<select class="form-control" name="server_files">';
+					echo '<select class="form-select" name="server_files">';
 						$fileCompatibilityList = $webengine['file_compatibility'];
 						if(is_array($fileCompatibilityList)) {
 							foreach($fileCompatibilityList as $value => $fileCompatibilityInfo) {
@@ -350,143 +355,142 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Language Switching</strong>';
-					echo '<p class="setting-description">Enables/disables the language switching system.</p>';
+					echo '<strong>Cambio de Lenguaje</strong>';
+					echo '<p class="setting-description">Activa/Desactiva el sistema para cambiar el lenguaje a tu web.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="language_switch_active" value="1" '.(config('language_switch_active',true) ? 'checked' : null).'>';
-							echo 'Enabled';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="language_switch_active" value="0" '.(!config('language_switch_active',true) ? 'checked' : null).'>';
-							echo 'Disabled';
-						echo '</label>';
+						echo '<input type="radio" class="btn-check" name="language_switch_active" value="1" '.(config('language_switch_active',true) ? 'checked' : null).' id="Op1Lenguaje">';
+						echo '<label class="btn btn-outline-success" for="Op1Lenguaje"> <i class="fas fa-check"></i> Activado </label>';
+						echo '&nbsp;';
+						echo '<input type="radio" class="btn-check" name="language_switch_active" value="0" '.(!config('language_switch_active',true) ? 'checked' : null).' id="Op2Lenguaje">';
+						echo '<label class="btn btn-outline-danger" for="Op2Lenguaje"> <i class="fas fa-times"></i> Desactivado </label>';
 					echo '</div>';
 				echo '</td>';
 			echo '</tr>';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Default Langage</strong>';
-					echo '<p class="setting-description">Default language that WebEngine will use.</p>';
+					echo '<strong>Lenguaje Predeterminado</strong>';
+					echo '<p class="setting-description">El lenguaje predeterminado que usara Webengine.</p>';
 				echo '</td>';
 				echo '<td>';
-					echo '<input type="text" class="form-control" name="language_default" value="'.config('language_default',true).'" required>';
-				echo '</td>';
-			echo '</tr>';
-			
-			echo '<tr>';
-				echo '<td>';
-					echo '<strong>Language Debug</strong>';
-					echo '<p class="setting-description">Enables/disabled language debugging. If enabled, language phrases will be shown in a hover-tip when poiting text with the mouse. Keep disabled in a live website.</p>';
-				echo '</td>';
-				echo '<td>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="language_debug" value="1" '.(config('language_debug',true) ? 'checked' : null).'>';
-							echo 'Enabled';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="language_debug" value="0" '.(!config('language_debug',true) ? 'checked' : null).'>';
-							echo 'Disabled';
-						echo '</label>';
-					echo '</div>';
-				echo '</td>';
-			echo '</tr>';
-			
-			echo '<tr>';
-				echo '<td>';
-					echo '<strong>Plugin System Status</strong>';
-					echo '<p class="setting-description">Enables/disables the plugin system.</p>';
-				echo '</td>';
-				echo '<td>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="plugins_system_enable" value="1" '.(config('plugins_system_enable',true) ? 'checked' : null).'>';
-							echo 'Enabled';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="plugins_system_enable" value="0" '.(!config('plugins_system_enable',true) ? 'checked' : null).'>';
-							echo 'Disabled';
-						echo '</label>';
-					echo '</div>';
+					echo '<select class="form-select" name="language_default">';
+						if(config('language_default',true) == 'es') $Lenguaje = 'Español';
+						if(config('language_default',true) == 'en') $Lenguaje = 'English';
+						if(config('language_default',true) == 'pt') $Lenguaje = 'Portugues';
+						if(config('language_default',true) == 'ph') $Lenguaje = 'Filipino';
+						if(config('language_default',true) == 'lt') $Lenguaje = 'Lithuanian';;
+						if(config('language_default',true) == 'cn') $Lenguaje = 'Chinese';
+						if(config('language_default',true) == 'ro') $Lenguaje = 'Romanian';
+						if(config('language_default',true) == 'ru') $Lenguaje = 'Russian'; 
+
+						$langList = array(
+							'en' => array('English', 'US'),
+							'es' => array('Español', 'ES'),
+							'ph' => array('Filipino', 'PH'),
+							'br' => array('Português', 'BR'),
+							'ro' => array('Romanian', 'RO'),
+							'cn' => array('Simplified Chinese', 'CN'),
+							'ru' => array('Russian', 'RU'),
+							'lt' => array('Lithuanian', 'LT'),
+						);
+					
+						echo '<option value="'.config('language_default',true).'" selected>'.$Lenguaje.'</option>';
+						echo '<option class="bg-dark border-1 border-top border-dark mt-1 mb-1" style="font-size:1px;" disabled></option>';
+						
+						$lang = config('language_default', true);
+						foreach($langList as $language => $languageInfo) {
+							if($language == $lang) continue;
+							echo '<option value="'.strtolower($language).'">'.$languageInfo[0].'</option>';
+						}
+					echo '</select>';
 				echo '</td>';
 			echo '</tr>';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>IP Block System Status</strong>';
-					echo '<p class="setting-description">Enables/disables the IP blocking system.</p>';
+					echo '<strong>Lenguaje Debug</strong>';
+					echo '<p class="setting-description">Activa/Desactiva el sistema debug del lenguaje. Si esta activado, al pasar el mouse por un texto, te dira el nombre de la frase. Mantenerlo desactivado recomendado.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="ip_block_system_enable" value="1" '.(config('ip_block_system_enable',true) ? 'checked' : null).'>';
-							echo 'Enabled';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="ip_block_system_enable" value="0" '.(!config('ip_block_system_enable',true) ? 'checked' : null).'>';
-							echo 'Disabled';
-						echo '</label>';
+						echo '<input type="radio" class="btn-check" name="language_debug" value="1" '.(config('language_debug',true) ? 'checked' : null).' id="Op1LenguajeDeb">';
+						echo '<label class="btn btn-outline-success" for="Op1LenguajeDeb"> <i class="fas fa-check"></i> Activado </label>';
+						echo '&nbsp;';
+						echo '<input type="radio" class="btn-check" name="language_debug" value="0" '.(!config('language_debug',true) ? 'checked' : null).' id="Op2LenguajeDeb">';
+						echo '<label class="btn btn-outline-danger" for="Op2LenguajeDeb"> <i class="fas fa-times"></i> Desactivado </label>';
 					echo '</div>';
 				echo '</td>';
 			echo '</tr>';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Player Profile Links</strong>';
-					echo '<p class="setting-description">If enabled, player names will have a link to their public profile.</p>';
+					echo '<strong>Estado de Sistema de Plugins</strong>';
+					echo '<p class="setting-description">Activar/Desactivar el sistema de plugins.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="player_profiles" value="1" '.(config('player_profiles',true) ? 'checked' : null).'>';
-							echo 'Enabled';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="player_profiles" value="0" '.(!config('player_profiles',true) ? 'checked' : null).'>';
-							echo 'Disabled';
-						echo '</label>';
+						echo '<input type="radio" class="btn-check" name="plugins_system_enable" value="1" '.(config('plugins_system_enable',true) ? 'checked' : null).' id="Op1Plugin">';
+						echo '<label class="btn btn-outline-success" for="Op1Plugin"> <i class="fas fa-check"></i> Activado </label>';
+						echo '&nbsp;';
+						echo '<input type="radio" class="btn-check" name="plugins_system_enable" value="0" '.(!config('plugins_system_enable',true) ? 'checked' : null).' id="Op2Plugin">';
+						echo '<label class="btn btn-outline-danger" for="Op2Plugin"> <i class="fas fa-times"></i> Desactivado </label>';
 					echo '</div>';
 				echo '</td>';
 			echo '</tr>';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Guild Profile Links</strong>';
-					echo '<p class="setting-description">If enabled, guild names will have a link to their public profile.</p>';
+					echo '<strong>Estado de Sistema de Ban de IP</strong>';
+					echo '<p class="setting-description">Activa/Desactiva el sistema de Ban de IP.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="guild_profiles" value="1" '.(config('guild_profiles',true) ? 'checked' : null).'>';
-							echo 'Enabled';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="guild_profiles" value="0" '.(!config('guild_profiles',true) ? 'checked' : null).'>';
-							echo 'Disabled';
-						echo '</label>';
+						echo '<input type="radio" class="btn-check" name="ip_block_system_enable" value="1" '.(config('ip_block_system_enable',true) ? 'checked' : null).' id="Op1BanIP">';
+						echo '<label class="btn btn-outline-success" for="Op1BanIP"> <i class="fas fa-check"></i> Activado </label>';
+						echo '&nbsp;';
+						echo '<input type="radio" class="btn-check" name="ip_block_system_enable" value="0" '.(!config('ip_block_system_enable',true) ? 'checked' : null).' id="Op2BanIP">';
+						echo '<label class="btn btn-outline-danger" for="Op2BanIP"> <i class="fas fa-times"></i> Desactivado </label>';
 					echo '</div>';
 				echo '</td>';
 			echo '</tr>';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Username Minimum Length</strong>';
+					echo '<strong>Enlace de Perfil de Usuario</strong>';
+					echo '<p class="setting-description">Si esta activo, los jugadores tendran un link en su nombre al cual los llevara a su perfil.</p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<div class="radio">';
+						echo '<input type="radio" class="btn-check" name="player_profiles" value="1" '.(config('player_profiles',true) ? 'checked' : null).' id="Op1PerfilJugador">';
+						echo '<label class="btn btn-outline-success" for="Op1PerfilJugador"> <i class="fas fa-check"></i> Activado </label>';
+						echo '&nbsp;';
+						echo '<input type="radio" class="btn-check" name="player_profiles" value="0" '.(!config('player_profiles',true) ? 'checked' : null).' id="Op2PerfilJugador">';
+						echo '<label class="btn btn-outline-danger" for="Op2PerfilJugador"> <i class="fas fa-times"></i> Desactivado </label>';
+					echo '</div>';
+				echo '</td>';
+			echo '</tr>';
+			
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>Enlace de Perfil de Clanes</strong>';
+					echo '<p class="setting-description">Si esta activo, los clanes tendran un link en su nombre al cual los llevara a su perfil.</p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<div class="radio">';
+						echo '<input type="radio" class="btn-check" name="guild_profiles" value="1" '.(config('guild_profiles',true) ? 'checked' : null).' id="Op1PerfilClase">';
+						echo '<label class="btn btn-outline-success" for="Op1PerfilClase"> <i class="fas fa-check"></i> Activado </label>';
+						echo '&nbsp;';
+						echo '<input type="radio" class="btn-check" name="guild_profiles" value="0" '.(!config('guild_profiles',true) ? 'checked' : null).' id="Op2PerfilClase">';
+						echo '<label class="btn btn-outline-danger" for="Op2PerfilClase"> <i class="fas fa-times"></i> Desactivado </label>';
+					echo '</div>';
+				echo '</td>';
+			echo '</tr>';
+			
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>Minimos Caracteres en Usuario</strong>';
 					echo '<p class="setting-description"></p>';
 				echo '</td>';
 				echo '<td>';
@@ -496,7 +500,7 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Username Maximum Length</strong>';
+					echo '<strong>Maximos Caracteres en Usuario</strong>';
 					echo '<p class="setting-description"></p>';
 				echo '</td>';
 				echo '<td>';
@@ -506,7 +510,7 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Password Minimum Length</strong>';
+					echo '<strong>Minimos Caracteres en Password</strong>';
 					echo '<p class="setting-description"></p>';
 				echo '</td>';
 				echo '<td>';
@@ -516,7 +520,7 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Password Maximum Length</strong>';
+					echo '<strong>Maximos Caracteres en Password</strong>';
 					echo '<p class="setting-description"></p>';
 				echo '</td>';
 				echo '<td>';
@@ -527,28 +531,23 @@ echo '<div class="col-md-12">';
 			echo '<tr>';
 				echo '<td>';
 					echo '<strong>Cron API</strong>';
-					echo '<p class="setting-description">Enable/disable the cron api.</p>';
+					echo '<p class="setting-description">Activa/Desactiva el cron api.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="cron_api" value="1" '.(config('cron_api',true) ? 'checked' : null).'>';
-							echo 'Enabled';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="cron_api" value="0" '.(!config('cron_api',true) ? 'checked' : null).'>';
-							echo 'Disabled';
-						echo '</label>';
+						echo '<input type="radio" class="btn-check" name="cron_api" value="1" '.(config('cron_api',true) ? 'checked' : null).' id="Op1CronApi">';
+						echo '<label class="btn btn-outline-success" for="Op1CronApi"> <i class="fas fa-check"></i> Activado </label>';
+						echo '&nbsp;';
+						echo '<input type="radio" class="btn-check" name="cron_api" value="0" '.(!config('cron_api',true) ? 'checked' : null).' id="Op2CronApi">';
+						echo '<label class="btn btn-outline-danger" for="Op2CronApi"> <i class="fas fa-times"></i> Desactivado </label>';
 					echo '</div>';
 				echo '</td>';
 			echo '</tr>';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Cron API Key</strong>';
-					echo '<p class="setting-description"><br />Usage:<br />'.__BASE_URL__.'api/cron.php?key=<span style="color:red;">123456</span></p>';
+					echo '<strong>Cron API Codigo</strong>';
+					echo '<p class="setting-description"><br />Usarlo:<br />'.__BASE_URL__.'api/cron.php?key=<span style="color:red;">'.config('cron_api_key',true).'</span></p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="cron_api_key" value="'.config('cron_api_key',true).'" required>';
@@ -557,8 +556,8 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Facebook Link</strong>';
-					echo '<p class="setting-description">Link to your facebook page.</p>';
+					echo '<strong>Enlace Facebook</strong>';
+					echo '<p class="setting-description">Enlace de tu Pagina de Facebook.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="social_link_facebook" value="'.config('social_link_facebook',true).'">';
@@ -567,8 +566,8 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Instagram Link</strong>';
-					echo '<p class="setting-description">Link to your instagram page.</p>';
+					echo '<strong>Enlace Instagram</strong>';
+					echo '<p class="setting-description">Enlace de tu Pagina de Instagram.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="social_link_instagram" value="'.config('social_link_instagram',true).'">';
@@ -577,8 +576,8 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Discord Link</strong>';
-					echo '<p class="setting-description">Link to your discord invitation.</p>';
+					echo '<strong>Enlace Discord</strong>';
+					echo '<p class="setting-description">Enlace de tu invitacion de discord..</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="social_link_discord" value="'.config('social_link_discord',true).'">';
@@ -587,8 +586,8 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Server Info: Season</strong>';
-					echo '<p class="setting-description">Leave empty to hide this information.</p>';
+					echo '<strong>Info del Servidor: Season</strong>';
+					echo '<p class="setting-description">Dejalo en blanco si no quieres que aparezca nada.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="server_info_season" value="'.config('server_info_season',true).'">';
@@ -597,8 +596,8 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Server Info: Experience</strong>';
-					echo '<p class="setting-description">Leave empty to hide this information.</p>';
+					echo '<strong>Info del Servidor: Experiencia</strong>';
+					echo '<p class="setting-description">Dejalo en blanco si no quieres que aparezca nada.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="server_info_exp" value="'.config('server_info_exp',true).'">';
@@ -607,8 +606,8 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Server Info: Master Experience</strong>';
-					echo '<p class="setting-description">Leave empty to hide this information.</p>';
+					echo '<strong>Info del Servidor: Master Experiencia</strong>';
+					echo '<p class="setting-description">Dejalo en blanco si no quieres que aparezca nada.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="server_info_masterexp" value="'.config('server_info_masterexp',true).'">';
@@ -617,8 +616,8 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Server Info: Drop</strong>';
-					echo '<p class="setting-description">Leave empty to hide this information.</p>';
+					echo '<strong>Info del Servidor: Drop</strong>';
+					echo '<p class="setting-description">Dejalo en blanco si no quieres que aparezca nada.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="server_info_drop" value="'.config('server_info_drop',true).'">';
@@ -627,16 +626,44 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>Maximum Online Players</strong>';
-					echo '<p class="setting-description">Maximum amount of players that your server may allow. Leave empty to hide this information.</p>';
+					echo '<strong>Maximo de Jugadores Conectados</strong>';
+					echo '<p class="setting-description">Maximo de jugadores conectados en su servidor. Dejalo en blanco si no quieres que aparezca nada.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<input type="text" class="form-control" name="maximum_online" value="'.config('maximum_online',true).'">';
 				echo '</td>';
 			echo '</tr>';
+
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>Color Template</strong>';
+					echo '<p class="setting-description">El color padre que tendra el template por defecto es <b><font color=#a70f00>Rojo</font> ( #a70f00 )</b></p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<input type="text" class="form-control" name="color_template" value="'.config('color_template',true).'">';
+				echo '</td>';
+			echo '</tr>';
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>IP Game Server</strong>';
+					echo '<p class="setting-description">Colocar la IP de tu Servidor</p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<input type="text" class="form-control" name="ip_game_server" value="'.config('ip_game_server',true).'">';
+				echo '</td>';
+			echo '</tr>';
+			echo '<tr>';
+				echo '<td>';
+					echo '<strong>PORT Game Server</strong>';
+					echo '<p class="setting-description">Colocar el PORT de tu Game Server (Por defecto es 55901)</p>';
+				echo '</td>';
+				echo '<td>';
+					echo '<input type="text" class="form-control" name="port_game_server" value="'.config('port_game_server',true).'">';
+				echo '</td>';
+			echo '</tr>';
 			
 		echo '</table>';
 		
-		echo '<button type="submit" name="settings_submit" value="ok" class="btn btn-success">Save Settings</button>';
+		echo '<button type="submit" name="settings_submit" value="ok" class="btn btn-info">Guardar Configuracion</button>';
 	echo '</form>';
-echo '</div>';
+	echo '</div>';echo '</div>';echo '</div>';

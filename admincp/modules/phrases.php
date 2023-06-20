@@ -16,7 +16,8 @@ echo '<h1 class="page-header">Language Phrases (current language)</h1>';
 try {
 	
 	if(!is_array($lang)) throw new Exception('Language file is empty.');
-	
+	echo '<div class="card">';
+			echo '<div class="card-body">';
 	echo '<table class="table table-condensed table-bordered table-hover table-striped">';
 	echo '<thead>';
 		echo '<tr>';
@@ -33,6 +34,8 @@ try {
 		}
 	echo '</tbody>';
 	echo '</table>';
+	echo '</div>';
+			echo '</div>';
 	
 	
 } catch(Exception $ex) {

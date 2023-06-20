@@ -34,12 +34,12 @@ if(mconfig('active')) {
 			echo '<div class="profiles_guild_card">';
 				// Guild Information
 				echo '<div class="row">';
-					echo '<div class="col-xs-6 text-center">';
+					echo '<div class="col-6 text-center">';
 						echo '<span class="guild_logo">'.$displayData['glogo'].'</span>';
 					echo '</div>';
-					echo '<div class="col-xs-6 text-center">';
+					echo '<div class="col-6 text-center">';
 						echo '<span class="guild_name">'.$displayData['gname'].'</span>';
-						echo '<table class="table">';
+						echo '<table class="table table-guild">';
 							echo '<tr>';
 								echo '<td class="text-right">'.lang('profiles_txt_3',true).'</td>';
 								echo '<td class="text-left">'.playerProfile($displayData['gmaster']).'</td>';
@@ -58,12 +58,12 @@ if(mconfig('active')) {
 				echo '<hr>';
 				// Guild Members
 				echo '<div class="row">';
-					echo '<div class="col-xs-8 col-xs-offset-2 text-center">';
+					echo '<div class="col-8 mx-auto text-center">';
 						echo '<span class="guild_members">'.lang('profiles_txt_6',true).'</span>';
 						echo '<div class="row guild_members_list">';
 							if(is_array($guildMembers)) {
 								foreach($guildMembers as $memberName) {
-									echo '<div class="col-xs-3">'.playerProfile($memberName).'</div>';
+									echo '<div class="col-3">'.playerProfile($memberName).'</div>';
 								}
 							}
 						echo '</div>';

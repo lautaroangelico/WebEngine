@@ -108,14 +108,6 @@ class Plugins {
 					if(!file_exists($file)) {
 						$error = true;
 					}
-					if($thisFile == 'loader.php') {
-						@$build = $this->_getBuidHash($file);
-						if(check_value($build)) {
-							$validateBuildHash = @$this->_validateBuildHash($build);
-							if(!is_array($validateBuildHash)) return;
-							if($validateBuildHash['status'] != true) return;
-						}
-					}
 				}
 				if($error) {
 					return false;
@@ -125,12 +117,6 @@ class Plugins {
 			} else {
 				$file = $this->pluginPath($plugin_name).$array['file'];
 				if(file_exists($file)) {
-					@$build = $this->_getBuidHash($file);
-					if(check_value($build)) {
-						$validateBuildHash = @$this->_validateBuildHash($build);
-						if(!is_array($validateBuildHash)) return;
-						if($validateBuildHash['status'] != true) return;
-					}
 					return true;
 				} else {
 					return false;
@@ -232,51 +218,6 @@ class Plugins {
 			'version' => urlencode($version),
 			'baseurl' => urlencode(__BASE_URL__),
 			'plugin' => urlencode($plugin),
-		);
-		
-		foreach($fields as $key => $value) {
-			$fieldsArray[] = $key . '=' . $value;
-		}
-		
-		$ch = curl_init();
-		
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_POST, count($fields));
-		curl_setopt($ch, CURLOPT_POSTFIELDS, implode("&", $fieldsArray));
-		curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_USERAGENT, 'WebEngine');
-		curl_setopt($ch, CURLOPT_HEADER, false);
-
-		$result = curl_exec($ch);
-		curl_close($ch);
-		
-		if(!$result) return;
-		$resultArray = json_decode($result, true);
-		if(!is_array($resultArray)) return;
-		return $resultArray;
-	}
-	
-	private function _getBuidHash($filePath) {
-		$fileContents = file_get_contents($filePath);
-		$srch = preg_match("/@build/", $fileContents, $matches, PREG_OFFSET_CAPTURE);
-		if(is_array($matches) && count($matches) > 0) {
-			$build = substr($fileContents, $matches[0][1]+7, 32);
-			if(!check_value($build)) return;
-			if(strlen($build) !=32) return;
-			return $build;
-		}
-		return;
-	}
-	
-	private function _validateBuildHash($hash) {
-		if(!check_value($hash)) return;
-		
-		$url = 'http://version.webenginecms.org/1.0/hash.php';
-		
-		$fields = array(
-			'build' => urlencode($hash),
-			'baseurl' => urlencode(__BASE_URL__),
 		);
 		
 		foreach($fields as $key => $value) {

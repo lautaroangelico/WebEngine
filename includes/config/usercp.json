@@ -4,7 +4,7 @@
         "type": "internal",
         "phrase": "usercp_menu_txt_1",
         "link": "usercp\/myaccount",
-        "icon": "account.png",
+        "icon": "fa-solid fa-user-gear",
         "visibility": "user",
         "newtab": false,
         "order": 10
@@ -14,7 +14,7 @@
         "type": "internal",
         "phrase": "usercp_menu_txt_2",
         "link": "usercp\/reset",
-        "icon": "reset.png",
+        "icon": "fa-solid fa-repeat",
         "visibility": "user",
         "newtab": false,
         "order": 20
@@ -24,7 +24,7 @@
         "type": "internal",
         "phrase": "usercp_menu_txt_6",
         "link": "usercp\/unstick",
-        "icon": "unstick.png",
+        "icon": "fa-solid fa-street-view",
         "visibility": "user",
         "newtab": false,
         "order": 30
@@ -34,7 +34,7 @@
         "type": "internal",
         "phrase": "usercp_menu_txt_3",
         "link": "usercp\/clearpk",
-        "icon": "clearpk.png",
+        "icon": "fa-solid fa-eraser",
         "visibility": "user",
         "newtab": false,
         "order": 40
@@ -44,7 +44,7 @@
         "type": "internal",
         "phrase": "usercp_menu_txt_8",
         "link": "usercp\/resetstats",
-        "icon": "fixstats.png",
+        "icon": "fa-solid fa-chart-simple",
         "visibility": "user",
         "newtab": false,
         "order": 50
@@ -54,7 +54,7 @@
         "type": "internal",
         "phrase": "usercp_menu_txt_10",
         "link": "usercp\/addstats",
-        "icon": "addstats.png",
+        "icon": "fa-regular fa-chart-bar",
         "visibility": "user",
         "newtab": false,
         "order": 60
@@ -64,7 +64,7 @@
         "type": "internal",
         "phrase": "usercp_menu_txt_9",
         "link": "usercp\/clearskilltree",
-        "icon": "clearst.png",
+        "icon": "fa-solid fa-book-skull",
         "visibility": "user",
         "newtab": false,
         "order": 70
@@ -74,7 +74,7 @@
         "type": "internal",
         "phrase": "usercp_menu_txt_4",
         "link": "usercp\/vote",
-        "icon": "vote.png",
+        "icon": "fa-solid fa-check-to-slot",
         "visibility": "user",
         "newtab": false,
         "order": 80
@@ -84,7 +84,7 @@
         "type": "internal",
         "phrase": "usercp_menu_txt_5",
         "link": "donation",
-        "icon": "donate.png",
+        "icon": "fa-solid fa-circle-dollar-to-slot",
         "visibility": "user",
         "newtab": false,
         "order": 90
@@ -94,7 +94,7 @@
         "type": "internal",
         "phrase": "usercp_menu_txt_11",
         "link": "usercp\/buyzen",
-        "icon": "zen.png",
+        "icon": "fa-solid fa-coins",
         "visibility": "user",
         "newtab": false,
         "order": 100

@@ -1,0 +1,324 @@
+/*
+Template Name: Admin Template
+Author: Niravjoshi / Wrappixel
+File: scss
+*/
+
+// This is the extra scss
+// Tooltip for the sparkline charts
+html body {
+  .jqstooltip,
+  .flotTip {
+    width: auto !important;
+    height: auto !important;
+    background: $gray-900 !important;
+    color: $white;
+    padding: 5px 10px;
+  }
+}
+
+body .jqstooltip {
+  border-color: transparent;
+  border-radius: 60px;
+}
+
+// Tooltip for the chartist chart charts
+.chartist-tooltip {
+  position: absolute;
+  display: inline-block;
+  opacity: 0;
+  border-radius: $border-radius;
+  padding: 10px 20px;
+  background: $info;
+  color: $white;
+  ext-align: center;
+  pointer-events: none;
+  z-index: 1;
+  -webkit-transition: opacity 0.2s linear;
+  -moz-transition: opacity 0.2s linear;
+  -o-transition: opacity 0.2s linear;
+  transition: opacity 0.2s linear;
+}
+
+.chartist-tooltip:before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -5px;
+  border: 5px solid transparent;
+  border-top-color: $info;
+}
+
+.chartist-tooltip.tooltip-show {
+  opacity: 1;
+}
+
+.ct-area,
+.ct-line {
+  pointer-events: none;
+}
+
+.c3-chart-arcs-title {
+  fill: $text-muted;
+}
+
+.c3 line,
+.c3 path {
+  stroke: $gray-200;
+}
+.c3-chart-arc path {
+  stroke: transparent;
+}
+.popover-item {
+  margin-left: -15px;
+  &:hover {
+    z-index: 10;
+    position: relative;
+  }
+}
+
+// Custom select
+.custom-select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -o-appearance: none;
+  background-size: auto;
+}
+
+.select2-container--classic .select2-selection--single,
+.select2-container--default .select2-selection--single,
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__rendered,
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow,
+.select2-container--default .select2-selection--multiple {
+  border-color: $border-color;
+  height: 40px;
+  color: $body-color;
+  line-height: 40px;
+}
+
+.select2-container--default .select2-selection--multiple {
+  line-height: 27px;
+}
+
+.select2-container--classic
+  .select2-selection--multiple
+  .select2-selection__choice,
+.select2-container--default
+  .select2-selection--multiple
+  .select2-selection__choice,
+.select2-container--default
+  .select2-selection--multiple
+  .select2-selection__choice__remove {
+  background-color: $info;
+  border-color: $info;
+  color: $white;
+}
+
+//material-icon
+.m-icon {
+  width: 33%;
+  display: inline-block;
+}
+
+@include media-breakpoint-down(sm) {
+  .m-icon {
+    width: 100%;
+  }
+}
+
+//font-awesome icon
+.f-icon,
+.t-icon,
+.m-icon {
+  cursor: pointer;
+  padding: 13px 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  &:hover {
+    background-color: $gray-100;
+  }
+}
+
+.note-editor.note-frame,
+.dropzone {
+  border-color: $border-color;
+}
+
+.dropzone {
+  border-style: dotted;
+}
+
+.note-toolbar {
+  z-index: 1;
+}
+
+// this is for custom pills
+.nav-pills.custom-pills {
+  .nav-link {
+    border-radius: 0;
+    opacity: 0.7;
+    &.active {
+      color: $themecolor;
+      opacity: 1;
+      background-color: transparent;
+      border-bottom: 2px solid $themecolor;
+    }
+  }
+}
+
+// Form row Separator
+label {
+  font-weight: $font-weight-medium;
+}
+
+.r-separator .form-group {
+  border-bottom: 1px solid $border-color;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.striped-rows .row:nth-child(odd) {
+  background-color: $gray-100;
+}
+
+.b-form .row {
+  border-bottom: 1px solid $border-color;
+  margin-bottom: 0;
+  padding: 15px 0;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.b-label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+// Custom validation Classes
+.error {
+  .form-control {
+    border-color: $danger;
+  }
+  .help-block {
+    color: $danger;
+  }
+}
+
+.validate {
+  .form-control {
+    border-color: $success;
+  }
+  .help-block {
+    color: $success;
+  }
+}
+
+@media (min-height: 33.875em) {
+  .picker--opened .picker__frame {
+    top: 30%;
+    bottom: auto;
+  }
+}
+
+.dtp > .dtp-content > .dtp-date-view > header.dtp-header {
+  background: #1d50de;
+}
+
+.dtp div.dtp-date,
+.dtp div.dtp-time,
+.dtp table.dtp-picker-days tr > td > a.selected {
+  background: $info;
+}
+
+.dtp .p10 > a {
+  color: $white;
+}
+
+.datepicker .day,
+.datepicker .dow {
+  padding: 5px 10px;
+}
+
+.docs-buttons .btn,
+.docs-data .input-group {
+  margin-bottom: 5px;
+}
+
+// scrollbar
+.scrollable {
+  position: relative;
+}
+
+.error-box {
+  height: 100%;
+  position: fixed;
+  background: url(../../assets/images/background/error-bg.jpg) no-repeat center
+    center #fff;
+  width: 100%;
+  .error-body {
+    padding-top: 5%;
+  }
+  .error-title {
+    font-size: 210px;
+    font-weight: 900;
+    text-shadow: 4px 4px 0 #fff, 6px 6px 0 $dark;
+    line-height: 210px;
+  }
+}
+
+.price-label {
+  position: absolute;
+  top: -10px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  width: 100px;
+  padding: 5px 10px;
+}
+
+.price-sign {
+  position: absolute;
+  font-size: 15px;
+  top: 5px;
+  margin-left: -10px;
+}
+
+/*******************/
+
+/*Guage chart*/
+
+/*******************/
+
+.gaugejs-box {
+  position: relative;
+  margin: 0 auto;
+}
+
+.gaugejs-box canvas.gaugejs {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/*******************/
+//width
+/*******************/
+.w-30px {
+  width: 30px;
+}
+
+#choices {
+  input {
+    margin-left: 15px;
+  }
+}

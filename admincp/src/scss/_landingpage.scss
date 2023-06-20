@@ -1,0 +1,136 @@
+.btn-custom {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+}
+
+.btn-info,
+.btn-danger {
+  color: $white;
+  &:hover {
+    color: $white;
+  }
+}
+
+.spacer {
+  padding: 80px 0;
+}
+
+.lp-title {
+  font-size: 30px;
+}
+
+.live-box {
+  position: relative;
+  border: 1px solid #e9ecef;
+  .overlay {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    height: 100%;
+    display: none;
+  }
+  .live-btn {
+    position: relative;
+    top: 45%;
+    padding: 10px 20px;
+  }
+  &:hover {
+    .overlay {
+      display: block;
+    }
+  }
+}
+
+.pro-demo {
+  -webkit-box-shadow: 0px 4px 45px rgb(0 0 0 / 9%);
+  box-shadow: 0px 4px 45px rgb(0 0 0 / 9%);
+}
+
+.line-h33 {
+  line-height: 33px;
+}
+
+.listing li {
+  line-height: 37px;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.icon-circle {
+  width: 10px;
+  height: 10px;
+  background-color: $text-muted;
+  border-radius: 50%;
+  display: block;
+  margin-right: 8px;
+  &.info {
+    background-color: $cyan;
+  }
+}
+
+.font-15 {
+  font-size: 15px;
+}
+
+.lp-custom-row {
+  .row {
+    margin-right: -20px;
+    margin-left: -20px;
+  }
+  .row > * {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+.custom-carousel {
+  .carousel-indicators {
+    bottom: 55%;
+    li {
+      height: 10px;
+      width: 10px;
+      border-radius: 100%;
+      background-color: $blue;
+    }
+  }
+  .carousel-control-next {
+    right: -45px;
+  }
+  .carousel-control-prev {
+    left: -45px;
+  }
+  .carousel-control-next,
+  .carousel-control-prev {
+    top: 22%;
+    width: 40px;
+    opacity: 0.7;
+    height: 40px;
+    background: $blue;
+    border-radius: 50%;
+    font-size: 26px;
+  }
+  .carousel-control-next-icon,
+  .carousel-control-prev-icon {
+    margin-top: 10px;
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media (max-width: 767px) {
+  .custom-carousel .carousel-control-next,
+  .custom-carousel .carousel-control-prev {
+    top: 15%;
+  }
+  .custom-carousel .carousel-control-next {
+    right: -19px;
+  }
+  .custom-carousel .carousel-control-prev {
+    left: -19px;
+  }
+}

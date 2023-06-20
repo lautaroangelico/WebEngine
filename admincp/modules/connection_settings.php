@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-echo '<h1 class="page-header">Connection Settings</h1>';
+echo '<h1 class="page-header">Configuracion de Conexion</h1>';
 
 $allowedSettings = array(
 	'settings_submit', # the submit button
@@ -108,11 +108,12 @@ if(check_value($_POST['settings_submit'])) {
 }
 
 echo '<div class="col-md-12">';
+echo '<div class="card">';
+			echo '<div class="card-body">';
 	echo '<form action="" method="post">';
 		echo '<table class="table table-striped table-bordered table-hover" style="table-layout: fixed;">';
 			
-			
-			echo '<tr>';
+		echo '<tr>';
 				echo '<td>';
 					echo '<strong>Host</strong>';
 					echo '<p class="setting-description">Hostname/IP address of your MSSQL server.</p>';
@@ -121,7 +122,6 @@ echo '<div class="col-md-12">';
 					echo '<input type="text" class="form-control" name="SQL_DB_HOST" value="'.config('SQL_DB_HOST',true).'" required>';
 				echo '</td>';
 			echo '</tr>';
-			
 			echo '<tr>';
 				echo '<td>';
 					echo '<strong>Database (1)</strong>';
@@ -170,25 +170,19 @@ echo '<div class="col-md-12">';
 				echo '<td>';
 					echo '<input type="number" class="form-control" name="SQL_DB_PORT" value="'.config('SQL_DB_PORT',true).'" required>';
 				echo '</td>';
-			echo '</tr>';
-			
-			echo '<tr>';
+			echo '</tr>';	
+		echo '<tr>';
 				echo '<td>';
-					echo '<strong>Use 2 Database Structure</strong>';
-					echo '<p class="setting-description">Enables/disables the use of Me_MuOnline database (2 database structure).</p>';
+					echo '<strong>Usar 2 Base de Datos</strong>';
+					echo '<p class="setting-description">Usar/No Usar base de datos Me_MuOnline (2 base de datos).</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="SQL_USE_2_DB" value="1" '.(config('SQL_USE_2_DB',true) ? 'checked' : null).'>';
-							echo 'Enabled';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="SQL_USE_2_DB" value="0" '.(!config('SQL_USE_2_DB',true) ? 'checked' : null).'>';
-							echo 'Disabled';
-						echo '</label>';
+						echo '<input type="radio" class="btn-check" name="SQL_USE_2_DB" value="1" '.(config('SQL_USE_2_DB',true) ? 'checked' : null).' id="use2dbSI">';
+						echo '<label class="btn btn-outline-success" for="use2dbSI"> <i class="fas fa-check"></i> Usar </label>';
+						echo '&nbsp;';
+						echo '<input type="radio" class="btn-check" name="SQL_USE_2_DB" value="0" '.(!config('SQL_USE_2_DB',true) ? 'checked' : null).' id="use2dbNO">';
+						echo '<label class="btn btn-outline-danger" for="use2dbNO"> <i class="fas fa-times"></i> No Usar </label>';
 					echo '</div>';
 				echo '</td>';
 			echo '</tr>';
@@ -196,47 +190,34 @@ echo '<div class="col-md-12">';
 			echo '<tr>';
 				echo '<td>';
 					echo '<strong>PDO Driver</strong>';
-					echo '<p class="setting-description">Choose which driver WebEngine should use to remotely connect to your MSSQL server.</p>';
+					echo '<p class="setting-description">Selecciona el metodo de conexion remoto para conectar <b>WebEngine</b> a tu Servidor <b>MSSQL</b>.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="SQL_PDO_DRIVER" value="1" '.(config('SQL_PDO_DRIVER',true) == 1 ? 'checked' : null).'>';
-							echo 'dblib (linux)';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="SQL_PDO_DRIVER" value="2" '.(config('SQL_PDO_DRIVER',true) == 2 ? 'checked' : null).'>';
-							echo 'sqlsrv';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="SQL_PDO_DRIVER" value="3" '.(config('SQL_PDO_DRIVER',true) == 3 ? 'checked' : null).'>';
-							echo 'odbc';
-						echo '</label>';
+						echo '<input type="radio" class="btn-check" name="SQL_PDO_DRIVER" value="1" '.(config('SQL_PDO_DRIVER',true) == 1 ? 'checked' : null).' id="PDO_Driver_1">';
+						echo '<label class="btn btn-outline-dark" for="PDO_Driver_1"> <i class="fab fa-linux"></i> DBLIB (LINUX) </label>';
+						echo '&nbsp;';
+						echo '<input type="radio" class="btn-check" name="SQL_PDO_DRIVER" value="2" '.(config('SQL_PDO_DRIVER',true) == 2 ? 'checked' : null).' id="PDO_Driver_2">';
+						echo '<label class="btn btn-outline-info" for="PDO_Driver_2"> <i class="fab fa-windows"></i> SQLSRV </label>';
+						echo '&nbsp;';
+						echo '<input type="radio" class="btn-check" name="SQL_PDO_DRIVER" value="3" '.(config('SQL_PDO_DRIVER',true) == 3 ? 'checked' : null).' id="PDO_Driver_3">';
+						echo '<label class="btn btn-outline-primary" for="PDO_Driver_3"> <i class="fas fa-database"></i> ODBC </label>';
 					echo '</div>';
 				echo '</td>';
 			echo '</tr>';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>MD5 Status</strong>';
-					echo '<p class="setting-description">Enables/disables the use of MD5.</p>';
+					echo '<strong>Estado MD5</strong>';
+					echo '<p class="setting-description">Activar/Desactivar el uso de MD5.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="SQL_ENABLE_MD5" value="1" '.(config('SQL_ENABLE_MD5',true) ? 'checked' : null).'>';
-							echo 'Enabled';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="SQL_ENABLE_MD5" value="0" '.(!config('SQL_ENABLE_MD5',true) ? 'checked' : null).'>';
-							echo 'Disabled';
-						echo '</label>';
+						echo '<input type="radio" class="btn-check" name="SQL_ENABLE_MD5" value="1" '.(config('SQL_ENABLE_MD5',true) ? 'checked' : null).' id="UseMD51">';
+						echo '<label class="btn btn-outline-success" for="UseMD51"> <i class="fas fa-check"></i> Usar </label>';
+						echo '&nbsp;';
+						echo '<input type="radio" class="btn-check" name="SQL_ENABLE_MD5" value="0" '.(!config('SQL_ENABLE_MD5',true) ? 'checked' : null).' id="UseMD52">';
+						echo '<label class="btn btn-outline-danger" for="UseMD52"> <i class="fas fa-times"></i> No Usar </label>';
 					echo '</div>';
 				echo '</td>';
 			echo '</tr>';
@@ -244,6 +225,6 @@ echo '<div class="col-md-12">';
 			
 		echo '</table>';
 		
-		echo '<button type="submit" name="settings_submit" value="ok" class="btn btn-success">Save Settings</button>';
+		echo '<button type="submit" name="settings_submit" value="ok" class="btn btn-info">Guardar Configuracion</button>';
 	echo '</form>';
-echo '</div>';
+echo '</div>';echo '</div>';echo '</div>';

@@ -25,6 +25,8 @@ function saveChanges() {
 	$xml = simplexml_load_file($xmlPath);
 	
 	$xml->active = $_POST['setting_1'];
+	$xml->stats = $_POST['setting_2'];
+	$xml->online = $_POST['setting_3'];
 	
 	$save = $xml->asXML($xmlPath);
 	if($save) {
@@ -46,6 +48,18 @@ loadModuleConfigs('profiles');
 			<th>Status<br/><span>Enable/disable the profile modules.</span></th>
 			<td>
 				<? enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
+			</td>
+		</tr>
+		<tr>
+			<th>Stats<br/><span>Show/Hide stats in the profile player.</span></th>
+			<td>
+				<? enabledisableCheckboxes('setting_2',mconfig('stats'),'Show','Hide'); ?>
+			</td>
+		</tr>
+		<tr>
+			<th>Online Status<br/><span>Show/Hide online Status in the profile player.</span></th>
+			<td>
+				<? enabledisableCheckboxes('setting_3',mconfig('online'),'Show','Hide'); ?>
 			</td>
 		</tr>
 		<tr>

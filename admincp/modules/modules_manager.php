@@ -50,22 +50,17 @@ echo '<div class="row">';
 	echo '<div class="col-md-6">';
 		echo '<h4>Global:</h4>';
 		echo '<div class="modulesManager">';
-			echo '<ul>';
-			foreach($webengineModules['_global'] as $moduleList) {
-				echo '<li><a href="'.admincp_base("modules_manager&config=".$moduleList[1]).'">'.$moduleList[0].'</a></li>';
-			}
-			echo '</ul>';
+		foreach($webengineModules['_global'] as $moduleList) {
+			echo '<a href="'.admincp_base("modules_manager&config=".$moduleList[1]).'" class="btn btn-primary m-1" style="width:20%;">'.$moduleList[0].'</a>';
+		}
 		echo '</div>';
 	echo '</div>';
-	
 	echo '<div class="col-md-6">';
 		echo '<h4>User CP:</h4>';
 		echo '<div class="modulesManager">';
-			echo '<ul>';
 			foreach($webengineModules['_usercp'] as $moduleList) {
-				echo '<li><a href="'.admincp_base("modules_manager&config=".$moduleList[1]).'">'.$moduleList[0].'</a></li>';
+				echo '<a href="'.admincp_base("modules_manager&config=".$moduleList[1]).'" class="btn btn-info m-1" style="width:20%;">'.$moduleList[0].'</a>';
 			}
-			echo '</ul>';
 		echo '</div>';
 	echo '</div>';
 

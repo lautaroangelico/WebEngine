@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.4
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -175,6 +175,10 @@ $custom['character_class'] = array(
 	193 => array('Warmage', 'WAM', 'lem.jpg', 'base_stats' => array('str' => 18, 'agi' => 18, 'vit' => 19, 'ene' => 30, 'cmd' => 0), 'class_group' => 192),
 	195 => array('Archmage', 'ARM', 'lem.jpg', 'base_stats' => array('str' => 18, 'agi' => 18, 'vit' => 19, 'ene' => 30, 'cmd' => 0), 'class_group' => 192),
 	199 => array('Mystic Mage', 'MYM', 'lem.jpg', 'base_stats' => array('str' => 18, 'agi' => 18, 'vit' => 19, 'ene' => 30, 'cmd' => 0), 'class_group' => 192),
+	208 => array('Illusion Knight', 'IK', 'ik.jpg', 'base_stats' => array('str' => 25, 'agi' => 28, 'vit' => 15, 'ene' => 15, 'cmd' => 0), 'class_group' => 208),
+	209 => array('Mirage Knight', 'IMK', 'ik.jpg', 'base_stats' => array('str' => 25, 'agi' => 28, 'vit' => 15, 'ene' => 15, 'cmd' => 0), 'class_group' => 208),
+	211 => array('Illusion Master', 'IM', 'ik.jpg', 'base_stats' => array('str' => 25, 'agi' => 28, 'vit' => 15, 'ene' => 15, 'cmd' => 0), 'class_group' => 208),
+	215 => array('Mystic Knight', 'MYK', 'ik.jpg', 'base_stats' => array('str' => 25, 'agi' => 28, 'vit' => 15, 'ene' => 15, 'cmd' => 0), 'class_group' => 208),
 );
 
 /*
@@ -194,6 +198,7 @@ $custom['rankings_classgroup_filter'] = array(
 	160 => 'rankings_filter_12',
 	176 => 'rankings_filter_13',
 	192 => 'rankings_filter_14',
+	208 => 'rankings_filter_15',
 );
 
 /*
@@ -340,6 +345,9 @@ $custom['map_list'] = array(
 	134 => 'Aida Gray',
 	135 => 'Old Kethotum',
 	136 => 'Burning Kethotum',
+	137 => 'Kanturu Undergrounds',
+	138 => 'Volcano Ignis',
+	139 => 'Boss Battle Together',
 );
 
 /*

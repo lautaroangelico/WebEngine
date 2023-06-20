@@ -333,6 +333,23 @@ $lang['rankings_txt_33'] = 'País';
 $lang['rankings_txt_34'] = 'Localización';
 $lang['rankings_txt_35'] = 'Nivel de Pk';
 
+# rankings class filter
+$lang['rankings_filter_1'] = 'Todos';
+$lang['rankings_filter_2'] = 'Dark Wizard';
+$lang['rankings_filter_3'] = 'Dark Knight';
+$lang['rankings_filter_4'] = 'Elf';
+$lang['rankings_filter_5'] = 'Magic Gladiator';
+$lang['rankings_filter_6'] = 'Dark Lord';
+$lang['rankings_filter_7'] = 'Summoner';
+$lang['rankings_filter_8'] = 'Rage Fighter';
+$lang['rankings_filter_9'] = 'Gwow Lancer';
+$lang['rankings_filter_10'] = 'Rune Wizard';
+$lang['rankings_filter_11'] = 'Slayer';
+$lang['rankings_filter_12'] = 'Gun Crusher';
+$lang['rankings_filter_13'] = 'Light Wizard';
+$lang['rankings_filter_14'] = 'Lemuria Mage';
+$lang['rankings_filter_15'] = 'Illusion Knight';
+
 # Limpiar PK
 $lang['clearpk_txt_1'] = 'Personaje';
 $lang['clearpk_txt_2'] = 'Zen';

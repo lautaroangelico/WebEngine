@@ -12,6 +12,8 @@
  */
 ?>
 <h1 class="page-header">Find accounts from IP</h1>
+<div class="card">
+  <div class="card-body">
 <form class="form-inline" role="form" method="post">
 	<div class="form-group">
 		<input type="text" class="form-control" id="input_1" name="ip_address" placeholder="Ip Address"/>
@@ -54,3 +56,5 @@ if(check_value($_POST['ip_address'])) {
 	}
 }
 ?>
+</div>
+</div>

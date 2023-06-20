@@ -11,8 +11,8 @@
  * http://opensource.org/licenses/MIT
  */
 
-echo '<h1 class="page-header">AdminCP Access</h1>';
-echo '<p>To remove an admin set their access level to 0.</p>';
+echo '<h1 class="page-header">AdminCP Acceso</h1>';
+echo '<p>Se remueve el admin cuando tienen un nivel de acceso de 0.</p>';
 
 if(check_value($_POST['settings_submit'])) {
 	try {
@@ -70,12 +70,14 @@ $admins = config('admins',true);
 
 if(is_array($admins)) {
 	echo '<div class="col-sm-12 col-md-6 col-lg-6">';
+		echo '<div class="card">';
+			echo '<div class="card-body">';
 		echo '<form action="" method="post">';
 			echo '<table class="table table-striped table-bordered table-hover" style="table-layout: fixed;">';
-				echo '<thead>';
+				echo '<thead class="table-dark">';
 					echo '<tr>';
-						echo '<th>Admin Account</th>';
-						echo '<th>Access Level</th>';
+						echo '<th class="text-white"><i class="fas fa-user-secret"></i> Cuenta Admin</th>';
+						echo '<th class="text-white"><i class="fas fa-code"></i> Nivel de Acceso</th>';
 					echo '</tr>';
 				echo '</thead>';
 				echo '<tbody>';
@@ -91,7 +93,7 @@ if(is_array($admins)) {
 					}
 					echo '<tr>';
 						echo '<td>';
-							echo '<input type="text" class="form-control" min="0" max="100" name="new_admin" placeholder="username">';
+							echo '<input type="text" class="form-control" min="0" max="100" name="new_admin" placeholder="Usuario">';
 						echo '</td>';
 						echo '<td>';
 							echo '<input type="number" class="form-control" min="0" max="100" name="new_access" placeholder="0">';
@@ -100,8 +102,10 @@ if(is_array($admins)) {
 				echo '</tbody>';
 			echo '</table>';
 			
-			echo '<button type="submit" name="settings_submit" value="ok" class="btn btn-success">Save Settings</button>';
+			echo '<button type="submit" name="settings_submit" value="ok" class="btn btn-info">Guardar Configuracion</button>';
 		echo '</form>';
+	echo '</div>';
+	echo '</div>';
 	echo '</div>';
 } else {
 	message('error', 'Admins list is empty.');

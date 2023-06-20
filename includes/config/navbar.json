@@ -3,6 +3,7 @@
         "active": true,
         "type": "internal",
         "phrase": "menu_txt_1",
+        "icon": "<i class=\"fas fa-home\"><\/i>",
         "link": "",
         "visibility": "always",
         "newtab": false,
@@ -12,6 +13,7 @@
         "active": true,
         "type": "internal",
         "phrase": "menu_txt_11",
+        "icon": "<i class=\"fas fa-exclamation-circle\"><\/i>",
         "link": "info",
         "visibility": "always",
         "newtab": false,
@@ -21,6 +23,7 @@
         "active": true,
         "type": "internal",
         "phrase": "menu_txt_7",
+        "icon": "<i class=\"fas fa-download\"><\/i>",
         "link": "downloads",
         "visibility": "always",
         "newtab": false,
@@ -30,8 +33,9 @@
         "active": true,
         "type": "internal",
         "phrase": "menu_txt_8",
+        "icon": "<i class=\"fa-solid fa-hand-holding-dollar\"><\/i>",
         "link": "donation",
-        "visibility": "always",
+        "visibility": "user",
         "newtab": false,
         "order": 40
     },
@@ -39,9 +43,20 @@
         "active": true,
         "type": "internal",
         "phrase": "menu_txt_10",
+        "icon": "<i class=\"fas fa-medal\"><\/i>",
         "link": "rankings",
         "visibility": "always",
         "newtab": false,
         "order": 50
+    },
+    {
+        "active": true,
+        "type": "internal",
+        "phrase": "menu_txt_3",
+        "icon": "<i class=\"fas fa-address-book\"><\/i>",
+        "link": "register",
+        "visibility": "guest",
+        "newtab": false,
+        "order": 60
     }
 ]

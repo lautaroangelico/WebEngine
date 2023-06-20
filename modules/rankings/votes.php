@@ -13,7 +13,7 @@
 
 try {
 	
-	echo '<div class="page-title"><span>'.lang('module_titles_txt_10',true).'</span></div>';
+	echo '<div class="page-title"><span><i class="fa-solid fa-trophy"></i> Top Votes</span></div>';
 	
 	$Rankings = new Rankings();
 	$Rankings->rankingsMenu();
@@ -34,38 +34,56 @@ try {
 	
 	if(mconfig('rankings_class_filter')) $Rankings->rankingsFilterMenu();
 	
-	echo '<table class="rankings-table">';
-	echo '<tr>';
+	echo '<table class="table dataTableChar dataTable no-footer general-rank text-center mt-2" style="white-space: nowrap;" id="RankingGeneral" role="grid">';
+	echo '<thead class="bg-primary text-white">';
+	echo '<tr role="row">';
 	if(mconfig('rankings_show_place_number')) {
-		echo '<td style="font-weight:bold;"></td>';
+		echo '<th style="font-weight:bold;"><i class="fas fa-list-ol"></i></th>';
 	}
-	if($showPlayerCountry) echo '<td style="font-weight:bold;">'.lang('rankings_txt_33').'</td>';
-	echo '<td style="font-weight:bold;">'.lang('rankings_txt_11',true).'</td>';
-	echo '<td style="font-weight:bold;">'.lang('rankings_txt_10',true).'</td>';
-	echo '<td style="font-weight:bold;">'.lang('rankings_txt_32',true).'</td>';
-	if(mconfig('show_location')) echo '<td style="font-weight:bold;">'.lang('rankings_txt_34',true).'</td>';
+	echo '<td style="font-weight:bold;"><i class="fas fa-user"></i> '.lang('rankings_txt_10',true).'</td>';
+	echo '<td style="font-weight:bold;"><i class="fa-solid fa-check-to-slot"></i> '.lang('rankings_txt_32',true).'</td>';
+	if(mconfig('show_location')) echo '<td style="font-weight:bold;"><i class="fa-solid fa-location-dot"></i> '.lang('rankings_txt_34').'</td>';
+	if($showPlayerCountry) echo '<td style="font-weight:bold;"><i class="fa-solid fa-globe"></i></td>';
 	echo '</tr>';
+	echo '</thead>';
 	$i = 0;
+	echo '<tbody>';
 	foreach($ranking_data as $rdata) {
 		if($i>=1) {
-			$characterIMG = getPlayerClassAvatar($rdata[2], true, true, 'rankings-class-image');
-			$onlineStatus = mconfig('show_online_status') ? in_array($rdata[0], $onlineCharacters) ? '<img src="'.__PATH_ONLINE_STATUS__.'" class="online-status-indicator"/>' : '<img src="'.__PATH_OFFLINE_STATUS__.'" class="online-status-indicator"/>' : '';
-			echo '<tr data-class-id="'.$rdata[2].'">';
+			$onlineStatus = mconfig('show_online_status') ? in_array($rdata[0], $onlineCharacters) ? 'default-char-online' : 'default-char-offline' : '';
+		$characterIMG = getPlayerClassAvatar($rdata[2], true, true, 'rankings-class-image rounded-circle '.$onlineStatus.'');
+		echo '<tr data-class-id="'.$rdata[2].'" class="align-middle">';
 			if(mconfig('rankings_show_place_number')) {
-				echo '<td class="rankings-table-place">'.$i.'</td>';
+				echo '<td class="rankings-table-place align-middle"><i class="fas fa-medal"></i> '.$i.'</td>';
 			}
-			if($showPlayerCountry) echo '<td><img src="'.getCountryFlag($charactersCountry[$rdata[0]]).'" /></td>';
-			echo '<td>'.$characterIMG.'</td>';
-			echo '<td>'.playerProfile($rdata[0]).$onlineStatus.'</td>';
-			echo '<td>'.number_format($rdata[1]).'</td>';
+			echo '<td>';
+				echo '<div class="row">';
+					echo '<div class="col-md-6 text-end">';
+						echo $characterIMG;
+					echo '</div>';
+					echo '<div class="col-md-6 text-start" style="padding:unset;">';
+						echo '<div class="row">';
+							echo '<div class="col-md-12">';
+								echo playerProfile($rdata[0]);
+							echo '</div>';
+							echo '<div class="col-md-12">';
+								echo '<span class="text-muted" style="font-size:12px;">'.getPlayerClass($rdata[1]).'</span>';
+							echo '</div>';
+						echo '</div>';
+					echo '</div>';
+		  		echo '</div>';
+			echo '</td>';
+			echo '<td>'.number_format($rdata[1],0,",",".").'</td>';
 			if(mconfig('show_location')) echo '<td>'.returnMapName($rdata[3]).'</td>';
+			if($showPlayerCountry) echo '<td><img src="'.getCountryFlag($charactersCountry[$rdata[0]]).'" /></td>';
 			echo '</tr>';
 		}
 		$i++;
 	}
+	echo '</tbody>';
 	echo '</table>';
 	if(mconfig('rankings_show_date')) {
-		echo '<div class="rankings-update-time">';
+		echo '<div class="alert alert-primary text-end" role="alert">';
 		echo ''.lang('rankings_txt_20',true).' ' . date("m/d/Y - h:i A",$ranking_data[0][0]);
 		echo '</div>';
 	}

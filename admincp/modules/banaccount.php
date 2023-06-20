@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/MIT
  */
 ?>
-<h1 class="page-header">Ban Account</h1>
+<h1 class="page-header">Banear Cuenta</h1>
 <?php
 	$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
 	
@@ -81,20 +81,27 @@
 ?>
 <div class="row">
 	<div class="col-md-6">
-		<form action="" method="post" role="form">
-			<div class="form-group">
-				<label for="acc">Account</label>
-				<input type="text" name="ban_account" class="form-control" id="acc">
+		<div class="card">
+			<div class="card-body">
+				<form action="" method="post" role="form">
+					<div class="input-group mb-3">
+						<span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+						<span class="input-group-text" id="basic-addon1">Cuenta</span>
+						<input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name="ban_account" id="acc">
+					</div>
+					<div class="input-group mb-3">
+						<span class="input-group-text" id="basic-addon2"><i class="fas fa-calendar"></i></span>
+						<span class="input-group-text" id="basic-addon2">Dias</span>
+						<input type="number" class="form-control" placeholder="Dias (0 para permanente)" aria-label="Dias" aria-describedby="basic-addon2" name="ban_days" id="days">
+					</div>
+					<div class="input-group mb-3">
+						<span class="input-group-text" id="basic-addon3"><i class="fas fa-exclamation-triangle"></i></span>
+						<span class="input-group-text" id="basic-addon3">Razon</span>
+						<input type="text" class="form-control" placeholder="Razon (Opcional)" aria-label="Razon" aria-describedby="basic-addon3" name="ban_reason" id="reason">
+					</div>
+					<input type="submit" name="submit_ban" class="btn btn-primary" value="Banear Cuenta"/>
+				</form>
 			</div>
-			<div class="form-group">
-				<label for="days">Days (0 for permanent ban)</label>
-				<input type="text" name="ban_days" class="form-control" id="days" value="0">
-			</div>
-			<div class="form-group">
-				<label for="reason">Reason (optional)</label>
-				<input type="text" name="ban_reason" class="form-control" id="reason">
-			</div>
-			<input type="submit" name="submit_ban" class="btn btn-primary" value="Ban Account"/>
-		</form>
+		</div>
 	</div>
 </div>

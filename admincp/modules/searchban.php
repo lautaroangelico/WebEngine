@@ -12,6 +12,8 @@
  */
 ?>
 <h1 class="page-header">Search Ban</h1>
+<div class="card">
+  <div class="card-body">
 <form class="form-inline" role="form" method="post">
 	<div class="form-group">
 		<input type="text" class="form-control" id="input_1" name="search_request" placeholder="Account username"/>
@@ -69,4 +71,5 @@
 		}
 	}
 ?>
-
+</div>
+</div>

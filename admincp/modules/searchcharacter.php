@@ -11,6 +11,8 @@
  * http://opensource.org/licenses/MIT
  */
 ?>
+<div class="card">
+  <div class="card-body">
 <h1 class="page-header">Search Character</h1>
 <form class="form-inline" role="form" method="post">
 	<div class="form-group">
@@ -60,3 +62,5 @@
 		}
 	}
 ?>
+</div>
+</div>

@@ -75,28 +75,29 @@ try {
 	
 	echo '<div class="row">';
 		echo '<div class="col-xs-12 col-md-12 col-lg-3">';
-			
+		echo '<div class="card">
+		<div class="card-body">';
 			// New Cron Form
 			$cron_times = $cronManager->getCommonIntervals();
 			echo '<div class="panel panel-primary">';
 				echo '<div class="panel-heading">Add New Cron</div>';
 				echo '<div class="panel-body">';
 					echo '<form action="'.admincp_base('cronmanager').'" method="post">';
-						echo '<div class="form-group">';
-							echo '<label for="input_1">Name:</label>';
-							echo '<input type="text" class="form-control" id="input_1" name="cron_name" autofocus required/>';
+						echo '<div class="input-group mb-3 mt-1">';
+							echo '<span class="input-group-text" id="basic-addon1"><i class="far fa-id-card"></i>&nbsp;Name</span>';
+							echo '<input type="text" class="form-control" placeholder="Name Cron Job" aria-label="Name Cron Job" aria-describedby="basic-addon1" name="cron_name" autofocus required/>';
 						echo '</div>';
 
-						echo '<div class="form-group">';
-							echo '<label for="input_2">File:</label>';
-							echo '<select class="form-control" id="input_2" name="cron_file">';
+						echo '<div class="input-group mb-3">';
+							echo '<label class="input-group-text" for="inputGroupSelect01"><i class="far fa-file"></i>&nbsp;File</label>';
+							echo '<select class="form-select" id="inputGroupSelect01">';
 								echo $cronManager->listCronFiles();
 							echo '</select>';
 						echo '</div>';
-						
-						echo '<div class="form-group">';
-							echo '<label for="input_3">Repeat:</label>';
-							echo '<select class="form-control" id="input_3" name="cron_time">';
+
+						echo '<div class="input-group mb-3">';
+							echo '<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-redo-alt"></i>&nbsp;Repeat</label>';
+							echo '<select class="form-select" id="inputGroupSelect01">';
 								if(is_array($cron_times)) {
 									foreach($cron_times as $seconds => $description) {
 										echo '<option value="'.$seconds.'">'.$description.'</option>';
@@ -112,9 +113,12 @@ try {
 				echo '</div>';
 			echo '</div>';
 			
+			echo '</div></div>';
 			echo '<hr>';
 			
 			// Actions
+			echo '<div class="card">
+		<div class="card-body">';
 			echo '<h4>Actions:</h4>';
 			echo '<p>';
 				echo '<a href="'.admincp_base('cronmanager&action=allenable').'" class="btn btn-xs btn-default">Enable All</a>&nbsp;';
@@ -122,9 +126,12 @@ try {
 				echo '<a href="'.admincp_base('cronmanager&action=allreset').'" class="btn btn-xs btn-default">Reset All</a>';
 			echo '</p>';
 			
+			echo '</div></div>';
 			echo '<hr>';
 			
 			// Cron Info
+			echo '<div class="card">
+		<div class="card-body">';
 			echo '<h4>Setting up the master cron:</h4>';
 			echo '<p>WebEngine CMS\' cron job system is designed to automatically run heavy tasks in the background. This helps to make sure the website always loads as fast as possible to all visitors.</p>';
 			echo '<p>Please refer to the following link if your cron jobs are not being executed automatically:</p>';
@@ -132,19 +139,26 @@ try {
 				echo '<li><a href="https://github.com/lautaroangelico/WebEngine/wiki/Setting-up-the-master-cron-job" target="_blank">WebEngine CMS Github Wiki</a></li>';
 			echo '</ul>';
 			
+			echo '</div></div>';
 			echo '<hr>';
 			
 			// Cron API Info
+			echo '<div class="card">
+		<div class="card-body">';
 			echo '<h4>Cron Jobs API:</h4>';
 			echo '<p>If unable to set-up the master cron on your web server, you may alternatively use the cron job api along with a third-party service such as <a href="https://cron-job.org/" target="_blank">cron-job.org</a> to execute your master cron.</p>';
 			echo '<p>Cron API URL:</p>';
 			echo '<p><input type="text" class="form-control" value="'.$cronManager->getCronApiUrl().'" disabled/></p>';
 			
 		echo '</div>';
+
+		echo '</div></div>';
 		
 		// Cron List
 		echo '<div class="col-xs-12 col-md-12 col-lg-9">';
 		if(is_array($cronList)) {
+			echo '<div class="card">
+	<div class="card-body">';
 			echo '<table class="table table-hover">';
 				echo '<thead>';
 					echo '<tr>';
@@ -177,6 +191,7 @@ try {
 				}
 				echo '</tbody>';
 			echo '</table>';
+			echo '</div></div>';
 		} else {
 			message('warning', lang('error_104'));
 		}

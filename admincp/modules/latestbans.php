@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/MIT
  */
 ?>
-<h1 class="page-header">Last 50 Bans</h1>
+<h1 class="page-header">Ultimos 50 Baneados</h1>
 <?php
 	$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
 	
@@ -43,28 +43,23 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="panel-body">
-			<!-- Nav tabs -->
-			<ul class="nav nav-tabs">
-				<li class="active"><a href="#temp" data-toggle="tab" aria-expanded="true">Temporal</a>
-				</li>
-				<li class=""><a href="#perm" data-toggle="tab" aria-expanded="false">Permanent</a>
-				</li>
-			</ul>
-
-			<!-- Tab panes -->
-			<div class="tab-content">
-				<div class="tab-pane fade active in" id="temp"><br />
+				<div class="tab-pane"><br />
 				<?php
 					$tBans = $database->query_fetch("SELECT TOP 25 * FROM ".WEBENGINE_BAN_LOG." WHERE ban_type = ? ORDER BY id DESC", array("temporal"));
 					if(is_array($tBans)) {
-						echo '<table class="table table-condensed">';
+		echo '<div class="row">';
+			echo '<div class="col-md-12">';
+				echo '<div class="card">';
+					echo '<div class="card-body">';
+						echo '<h3>Lista de Baneados Temporalmente</h3>';
+						echo '<table id="zero_config" class="table table-striped table-bordered">';
 							echo '<thead>';
 							echo '<tr>';
-								echo '<th>Account</th>';
-								echo '<th>Banned By</th>';
-								echo '<th>Date</th>';
-								echo '<th>Days</th>';
-								echo '<th>Reason</th>';
+								echo '<th>Cuenta</th>';
+								echo '<th>Beaneado por</th>';
+								echo '<th>Fecha</th>';
+								echo '<th>Dias</th>';
+								echo '<th>Razon</th>';
 								echo '<th></th>';
 							echo '</tr>';
 							echo '</thead>';
@@ -81,22 +76,32 @@
 							}
 						echo '</tbody>';
 						echo '</table>';
+
+					echo '</div>';
+				echo '</div>';
+			echo '</div>';
+		echo '</div>';			
 					} else {
-						message('warning', 'There are no temporal bans logged.', ' ');
+						message('warning', 'No hay baneados temporalmente en los Logs.', ' ');
 					}
 				?>
 				</div>
-				<div class="tab-pane fade" id="perm"><br />
+				<div class="tab-pane"><br />
 				<?php
 					$pBans = $database->query_fetch("SELECT TOP 25 * FROM ".WEBENGINE_BAN_LOG." WHERE ban_type = ? ORDER BY id DESC", array("permanent"));
 					if(is_array($pBans)) {
-						echo '<table class="table table-condensed">';
+		echo '<div class="row">';
+			echo '<div class="col-md-12">';
+				echo '<div class="card">';
+					echo '<div class="card-body">';
+					echo '<h3>Lista de Baneados Permanentemente</h3>';
+						echo '<table id="zero_config2" class="table table-striped table-bordered">';
 							echo '<thead>';
 							echo '<tr>';
-								echo '<th>Account</th>';
-								echo '<th>Banned By</th>';
-								echo '<th>Date</th>';
-								echo '<th>Reason</th>';
+								echo '<th>Cuenta</th>';
+								echo '<th>Beaneado por</th>';
+								echo '<th>Fecha</th>';
+								echo '<th>Razon</th>';
 								echo '<th></th>';
 							echo '</tr>';
 							echo '</thead>';
@@ -112,12 +117,16 @@
 							}
 						echo '</tbody>';
 						echo '</table>';
+
+					echo '</div>';
+				echo '</div>';
+			echo '</div>';
+		echo '</div>';
 					} else {
-						message('warning', 'There are no permanent bans logged.', ' ');
+						message('warning', 'No hay baneados permanentemente en los Logs.', ' ');
 					}
 				?>
 				</div>
-			</div>
 		</div>
 	</div>
 </div>

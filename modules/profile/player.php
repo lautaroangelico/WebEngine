@@ -55,28 +55,30 @@ if(mconfig('active')) {
 								echo '<td>'.number_format($cData[11]).'</td>';
 							echo '</tr>';
 						}
-						echo '<tr>';
-							echo '<td>'.lang('profiles_txt_10',true).'</td>';
-							echo '<td>'.number_format($cData[5]).'</td>';
-						echo '</tr>';
-						echo '<tr>';
-							echo '<td>'.lang('profiles_txt_11',true).'</td>';
-							echo '<td>'.number_format($cData[6]).'</td>';
-						echo '</tr>';
-						echo '<tr>';
-							echo '<td>'.lang('profiles_txt_12',true).'</td>';
-							echo '<td>'.number_format($cData[7]).'</td>';
-						echo '</tr>';
-						echo '<tr>';
-							echo '<td>'.lang('profiles_txt_13',true).'</td>';
-							echo '<td>'.number_format($cData[8]).'</td>';
-						echo '</tr>';
-						if($custom['character_class'][$cData[2]]['base_stats']['cmd'] > 0) {
+						if(mconfig('stats')){
 							echo '<tr>';
-								echo '<td>'.lang('profiles_txt_14',true).'</td>';
-								echo '<td>'.number_format($cData[9]).'</td>';
+								echo '<td>'.lang('profiles_txt_10',true).'</td>';
+								echo '<td>'.number_format($cData[5]).'</td>';
 							echo '</tr>';
-						}
+							echo '<tr>';
+								echo '<td>'.lang('profiles_txt_11',true).'</td>';
+								echo '<td>'.number_format($cData[6]).'</td>';
+							echo '</tr>';
+							echo '<tr>';
+								echo '<td>'.lang('profiles_txt_12',true).'</td>';
+								echo '<td>'.number_format($cData[7]).'</td>';
+							echo '</tr>';
+							echo '<tr>';
+								echo '<td>'.lang('profiles_txt_13',true).'</td>';
+								echo '<td>'.number_format($cData[8]).'</td>';
+							echo '</tr>';
+							if($custom['character_class'][$cData[2]]['base_stats']['cmd'] > 0) {
+								echo '<tr>';
+									echo '<td>'.lang('profiles_txt_14',true).'</td>';
+									echo '<td>'.number_format($cData[9]).'</td>';
+								echo '</tr>';
+							}
+						}	
 						echo '<tr>';
 							echo '<td>'.lang('profiles_txt_15',true).'</td>';
 							echo '<td>'.number_format($cData[10]).'</td>';
@@ -87,14 +89,16 @@ if(mconfig('active')) {
 								echo '<td>'.guildProfile($cData[12]).'</td>';
 							echo '</tr>';
 						}
-						echo '<tr>';
-							echo '<td>'.lang('profiles_txt_17',true).'</td>';
-							if($cData[13]) {
-								echo '<td class="isonline">'.lang('profiles_txt_18',true).'</td>';
-							} else {
-								echo '<td class="isoffline">'.lang('profiles_txt_19',true).'</td>';
-							}
-						echo '</tr>';
+						if(mconfig('online')){
+							echo '<tr>';
+								echo '<td>'.lang('profiles_txt_17',true).'</td>';
+								if($cData[13]) {
+									echo '<td class="isonline">'.lang('profiles_txt_18',true).'</td>';
+								} else {
+									echo '<td class="isoffline">'.lang('profiles_txt_19',true).'</td>';
+								}
+							echo '</tr>';
+						}
 					echo '</table>';
 				echo '</div>';
 			echo '</div>';

@@ -1,0 +1,20 @@
+[WEBENGINE v1.2.5]
+- Added support for Season 18 Illusion Knight class
+- Edited and fixed rankings class filter
+- Updated default CMS configurations for Season 18
+- Updated default template background to Season 18
+- Updated default template logo to Season 18
+- Updated classes images character
+- Updated classes images profile character
+- Added new template default advanced
+- Added new configurations about Profile Player (Show/Hide Stats and Online Status character)
+- Added new template admincp (Design and style)
+- Added new configurations about template default in admincp web settings
+- Updated Rankings design and styles with Datatable and Bootsrap
+- Added text multi-languaje about Filter Character
+- Added icon options in navbar buttons
+- Delete blacklist system (system based in blocking your site)
+- Fixed import plugins (before it didnt allow you to upload a plugin if you didn't have a license)
+- Fixed small errors in some modules
+- Added system check your server is online our offline
+- Fixed cache system in sidebar of template default

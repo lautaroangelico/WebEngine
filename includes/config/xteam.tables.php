@@ -157,6 +157,23 @@ $custom['character_class'] = array(
 	145 => array('Slayer Royal', 'SLRR', 'sl.jpg', 'base_stats' => array('str' => 28, 'agi' => 30, 'vit' => 15, 'ene' => 10, 'cmd' => 0), 'class_group' => 144),
 	146 => array('Master Slayer', 'MSLR', 'sl.jpg', 'base_stats' => array('str' => 28, 'agi' => 30, 'vit' => 15, 'ene' => 10, 'cmd' => 0), 'class_group' => 144),
 	147 => array('Slaughterer', 'SLTR', 'sl.jpg', 'base_stats' => array('str' => 28, 'agi' => 30, 'vit' => 15, 'ene' => 10, 'cmd' => 0), 'class_group' => 144),
+	151 => array('Slaughterer', 'SLTR', 'sl.jpg', 'base_stats' => array('str' => 28, 'agi' => 30, 'vit' => 15, 'ene' => 10, 'cmd' => 0), 'class_group' => 144),
+	160 => array('Gun Crusher', 'GC', 'gc.jpg', 'base_stats' => array('str' => 28, 'agi' => 30, 'vit' => 15, 'ene' => 10, 'cmd' => 0), 'class_group' => 160),
+	161 => array('Gun Breaker', 'GB', 'gc.jpg', 'base_stats' => array('str' => 28, 'agi' => 30, 'vit' => 15, 'ene' => 10, 'cmd' => 0), 'class_group' => 160),
+	163 => array('Master Gun Breaker', 'MGB', 'gc.jpg', 'base_stats' => array('str' => 28, 'agi' => 30, 'vit' => 15, 'ene' => 10, 'cmd' => 0), 'class_group' => 160),
+	167 => array('Heist Gun Crusher', 'HGC', 'gc.jpg', 'base_stats' => array('str' => 28, 'agi' => 30, 'vit' => 15, 'ene' => 10, 'cmd' => 0), 'class_group' => 160),
+	176 => array('Light Wizard', 'LIW', 'liw.jpg', 'base_stats' => array('str' => 19, 'agi' => 19, 'vit' => 15, 'ene' => 30, 'cmd' => 0), 'class_group' => 176),
+	177 => array('Light Master', 'LIM', 'liw.jpg', 'base_stats' => array('str' => 19, 'agi' => 19, 'vit' => 15, 'ene' => 30, 'cmd' => 0), 'class_group' => 176),
+	179 => array('Shining Wizard', 'SHW', 'liw.jpg', 'base_stats' => array('str' => 19, 'agi' => 19, 'vit' => 15, 'ene' => 30, 'cmd' => 0), 'class_group' => 176),
+	183 => array('Luminous Wizard', 'LUW', 'liw.jpg', 'base_stats' => array('str' => 19, 'agi' => 19, 'vit' => 15, 'ene' => 30, 'cmd' => 0), 'class_group' => 176),
+	192 => array('Lemuria Mage', 'LEM', 'lem.jpg', 'base_stats' => array('str' => 18, 'agi' => 18, 'vit' => 19, 'ene' => 30, 'cmd' => 0), 'class_group' => 192),
+	193 => array('Warmage', 'WAM', 'lem.jpg', 'base_stats' => array('str' => 18, 'agi' => 18, 'vit' => 19, 'ene' => 30, 'cmd' => 0), 'class_group' => 192),
+	195 => array('Archmage', 'ARM', 'lem.jpg', 'base_stats' => array('str' => 18, 'agi' => 18, 'vit' => 19, 'ene' => 30, 'cmd' => 0), 'class_group' => 192),
+	199 => array('Mystic Mage', 'MYM', 'lem.jpg', 'base_stats' => array('str' => 18, 'agi' => 18, 'vit' => 19, 'ene' => 30, 'cmd' => 0), 'class_group' => 192),
+	208 => array('Illusion Knight', 'IK', 'ik.jpg', 'base_stats' => array('str' => 25, 'agi' => 28, 'vit' => 15, 'ene' => 15, 'cmd' => 0), 'class_group' => 208),
+	209 => array('Mirage Knight', 'IMK', 'ik.jpg', 'base_stats' => array('str' => 25, 'agi' => 28, 'vit' => 15, 'ene' => 15, 'cmd' => 0), 'class_group' => 208),
+	211 => array('Illusion Master', 'IM', 'ik.jpg', 'base_stats' => array('str' => 25, 'agi' => 28, 'vit' => 15, 'ene' => 15, 'cmd' => 0), 'class_group' => 208),
+	215 => array('Mystic Knight', 'MYK', 'ik.jpg', 'base_stats' => array('str' => 25, 'agi' => 28, 'vit' => 15, 'ene' => 15, 'cmd' => 0), 'class_group' => 208),
 );
 
 /*
@@ -173,6 +190,10 @@ $custom['rankings_classgroup_filter'] = array(
 	112 => 'rankings_filter_9',
 	128 => 'rankings_filter_10',
 	144 => 'rankings_filter_11',
+	160 => 'rankings_filter_12',
+	176 => 'rankings_filter_13',
+	192 => 'rankings_filter_14',
+	208 => 'rankings_filter_15',
 );
 
 /*
@@ -319,6 +340,9 @@ $custom['map_list'] = array(
 	134 => 'Aida Gray',
 	135 => 'Old Kethotum',
 	136 => 'Burning Kethotum',
+	137 => 'Kanturu Undergrounds',
+	138 => 'Volcano Ignis',
+	139 => 'Boss Battle Together',
 );
 
 /*

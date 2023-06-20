@@ -12,6 +12,8 @@
  */
 ?>
 <h1 class="page-header">Publish News</h1>
+<div class="card">
+  <div class="card-body">
 <?php
 $News = new News();
 loadModuleConfigs('news');
@@ -56,3 +58,6 @@ if($News->isNewsDirWritable()) {
 	message('error','The news cache folder is not writable.');
 }
 ?>
+
+</div>
+</div>

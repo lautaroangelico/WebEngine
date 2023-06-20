@@ -1,0 +1,61 @@
+/*
+Template Name: Admin Template
+Author: Wrappixel
+
+File: scss
+*/
+
+/*******************
+Table Cell
+*******************/
+
+.table-box {
+  display: table;
+  width: 100%;
+}
+
+.cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.table thead th,
+.table th {
+  font-weight: 500;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.lite-padding td {
+  padding: 5px;
+}
+
+.v-middle {
+  td,
+  th {
+    vertical-align: middle;
+  }
+}
+
+/*******************
+Table td vertical middle
+*******************/
+
+.vm.table td,
+.vm.table th {
+  vertical-align: middle;
+}
+
+.no-th-brd.table th {
+  border: 0px;
+}
+
+.table.no-border {
+  tbody {
+    td {
+      border: 0px;
+    }
+  }
+}

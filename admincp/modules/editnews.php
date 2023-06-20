@@ -12,6 +12,8 @@
  */
 ?>
 <h1 class="page-header">Edit News</h1>
+<div class="card">
+  <div class="card-body">
 <?php
 $News = new News();
 loadModuleConfigs('news');
@@ -67,3 +69,5 @@ if($News->isNewsDirWritable()) {
 }
 
 ?>
+</div>
+</div>

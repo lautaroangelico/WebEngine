@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-echo '<h1 class="page-header">Credit Configurations</h1>';
+echo '<h1 class="page-header">Configuraciones de Creditos</h1>';
 
 $creditSystem = new CreditSystem();
 
@@ -83,245 +83,282 @@ if(check_value($_GET['delete'])) {
 
 echo '<div class="row">';
 	echo '<div class="col-md-4">';
-		
+	
 		if(!check_value($_GET['edit'])) {
+			echo '<div class="card">';
+	echo '<div class="card-body">';
 			// ADD NEW CONFIG
 			echo '<div class="panel panel-primary">';
-			echo '<div class="panel-heading">New Configuration</div>';
+			echo '<div class="panel-heading">Nueva Configuracion</div>';
 			echo '<div class="panel-body">';
 
 				echo '<form role="form" action="'.admincp_base("creditsconfigs").'" method="post">';
-					echo '<div class="form-group">';
-						echo '<label for="input_1">Title:</label>';
-						echo '<input type="text" class="form-control" id="input_1" name="new_title"/>';
+
+					echo '<div class="input-group flex-nowrap mb-3 mt-3">';
+						echo '<span class="input-group-text" id="addon-wrapping"><i class="fas fa-align-center"></i>&nbsp;Titulo</span>';
+						echo '<input type="text" class="form-control" placeholder="Ingresa titulo" aria-label="Ingresa titulo" aria-describedby="addon-wrapping" id="input_1" name="new_title">';
+				 	echo '</div>';
+
+					 echo '<div class="input-group flex-nowrap mb-3 mt-3">';
+						echo '<span class="input-group-text" id="addon-wrapping"><i class="fas fa-table"></i>&nbsp;Tabla</span>';
+						echo '<input type="text" class="form-control" placeholder="Ingresa nombre de tabla" aria-label="Ingresa nombre de tabla" aria-describedby="addon-wrapping" id="input_2" name="new_table">';
 					echo '</div>';
 
-					echo '<label>Database:</label>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="new_database" id="databaseRadios1" value="MuOnline" checked> ' . config('SQL_DB_NAME', true);
-						echo '</label>';
+					echo '<div class="input-group flex-nowrap mb-3 mt-3">';
+						echo '<span class="input-group-text" id="addon-wrapping"><i class="fas fa-columns"></i>&nbsp;Columna de Tabla</span>';
+						echo '<input type="text" class="form-control" placeholder="Ingresa nombre de columna" aria-label="Ingresa nombre de columna" aria-describedby="addon-wrapping" id="input_3" name="new_credits_column">';
 					echo '</div>';
+
+					echo '<div class="input-group flex-nowrap mb-3 mt-3">';
+						echo '<span class="input-group-text" id="addon-wrapping"><i class="fas fa-columns"></i>&nbsp;Columna de Usuario</span>';
+						echo '<input type="text" class="form-control" placeholder="Ingresa nombre de columna" aria-label="Ingresa nombre de columna" aria-describedby="addon-wrapping" id="input_4" name="new_user_column">';
+					echo '</div>';
+
+					echo '<label><i class="fas fa-database"></i> Base de datos:</label>';
+					echo '<div class="radio">';
+						echo '<input type="radio" class="btn-check" name="new_database" id="database1" value="MuOnline" checked>';
+						echo '<label class="btn btn-outline-info" for="database1"> <i class="fas fa-database"></i> ' . config('SQL_DB_NAME', true) .' </label>';
 					
 					if(config('SQL_USE_2_DB',true)) {
-						echo '<div class="radio">';
-							echo '<label>';
-								echo '<input type="radio" name="new_database" id="databaseRadios1" value="Me_MuOnline"> ' . config('SQL_DB_2_NAME', true);
-							echo '</label>';
+							echo '<input type="radio" class="btn-check" name="new_database" id="database2" value="Me_MuOnline">';
+							echo '<label class="btn btn-outline-secondary" for="database2"> <i class="fas fa-database"></i> ' . config('SQL_DB_2_NAME', true) .' </label>';
 						echo '</div><br />';
-					}					
-
-					echo '<div class="form-group">';
-						echo '<label for="input_2">Table:</label>';
-						echo '<input type="text" class="form-control" id="input_2" name="new_table"/>';
-					echo '</div>';
-
-					echo '<div class="form-group">';
-						echo '<label for="input_3">Credits Column:</label>';
-						echo '<input type="text" class="form-control" id="input_3" name="new_credits_column"/>';
-					echo '</div>';
-
-					echo '<div class="form-group">';
-						echo '<label for="input_4">User Column:</label>';
-						echo '<input type="text" class="form-control" id="input_4" name="new_user_column"/>';
-					echo '</div>';
+					} else{ echo '</div><br />'; }			
 					
-					echo '<label>User Identifier:</label>';
+					echo '<label><i class="fas fa-id-badge"></i> Identificador de Usuario:</label>';
 					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="new_user_column_id" id="coRadios1" value="userid" checked> User ID';
-						echo '</label>';
-					echo '&nbsp;&nbsp;&nbsp;&nbsp;';
-						echo '<label>';
-							echo '<input type="radio" name="new_user_column_id" id="coRadios1" value="username"> Username';
-						echo '</label>';
-					echo '&nbsp;&nbsp;&nbsp;&nbsp;';
-						echo '<label>';
-							echo '<input type="radio" name="new_user_column_id" id="coRadios1" value="email"> Email';
-						echo '</label>';
-					echo '&nbsp;&nbsp;&nbsp;&nbsp;';
-						echo '<label>';
-							echo '<input type="radio" name="new_user_column_id" id="coRadios1" value="character"> Character Name';
-						echo '</label>';
+						echo '<input type="radio" class="btn-check" name="new_user_column_id" id="userid" value="userid" checked>';
+						echo '<label class="btn btn-outline-primary" for="userid"> <i class="fas fa-id-card"></i> User ID </label>';
+
+						echo '<input type="radio" class="btn-check" name="new_user_column_id" id="username" value="username">';
+						echo '<label class="btn btn-outline-info" for="username"> <i class="fas fa-user"></i> Usuario </label>';
+
+						echo '<input type="radio" class="btn-check" name="new_user_column_id" id="email" value="email">';
+						echo '<label class="btn btn-outline-dark" for="email"> <i class="fas fa-envelope"></i> Email </label>';
+
+						echo '<input type="radio" class="btn-check" name="new_user_column_id" id="character" value="character">';
+						echo '<label class="btn btn-outline-secondary" for="character"> <i class="fas fa-male"></i> Nombre de PJ </label>';
+
 					echo '</div><br />';
 
-					echo '<label>Check Online Status:</label>';
+					echo '<label><i class="fas fa-signal"></i> Chequear si esta conectado:</label>';
 					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="new_checkonline" id="coRadios1" value="1" checked> Yes';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="new_checkonline" id="coRadios1" value="0"> No';
-						echo '</label>';
+						echo '<input type="radio" class="btn-check" name="new_checkonline" id="checkSI" value="1" checked>';
+						echo '<label class="btn btn-outline-success" for="checkSI"> <i class="fas fa-check"></i> Si </label>';
+
+						echo '<input type="radio" class="btn-check" name="new_checkonline" id="checkNO" value="0">';
+						echo '<label class="btn btn-outline-danger" for="checkNO"> <i class="fas fa-times"></i> No </label>';
 					echo '</div><br />';
 
-					echo '<label>Display in My Account:</label>';
+					echo '<label><i class="fas fa-eye"></i> Mostrar en Mi Cuenta:</label>';
 					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="new_display" id="coRadios1" value="1" checked> Yes';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="new_display" id="coRadios1" value="0"> No';
-						echo '</label>';
+
+						echo '<input type="radio" class="btn-check" name="new_display" id="displaySI" value="1" checked>';
+						echo '<label class="btn btn-outline-success" for="displaySI"> <i class="fas fa-check"></i> Si </label>';
+
+						echo '<input type="radio" class="btn-check" name="new_display" id="displayNO" value="0">';
+						echo '<label class="btn btn-outline-danger" for="displayNO"> <i class="fas fa-times"></i> No </label>';
+
 					echo '</div><br />';	
 
-					echo '<button type="submit" name="new_submit" value="1" class="btn btn-default">Save Configuration</button>';
+					
+
+					echo '<button type="submit" name="new_submit" value="1" class="btn btn-default">Agregar Configuracion</button>';
 				echo '</form>';
 
+			echo '</div>';
+			echo '</div>';
 			echo '</div>';
 			echo '</div>';
 		} else {
 			// EDIT
 			$creditSystem->setConfigId($_GET['edit']);
 			$cofigsData = $creditSystem->showConfigs(true);
+			echo '<div class="card">';
+	echo '<div class="card-body">';
 			echo '<div class="panel panel-yellow">';
-			echo '<div class="panel-heading">Edit Configuration</div>';
+			echo '<div class="panel-heading">Editar Configuracion</div>';
 			echo '<div class="panel-body">';
 				echo '<form role="form" action="'.admincp_base("creditsconfigs").'" method="post">';
+
 				echo '<input type="hidden" name="edit_id" value="'.$cofigsData['config_id'].'"/>';
-					echo '<div class="form-group">';
-						echo '<label for="input_1">Title:</label>';
-						echo '<input type="text" class="form-control" id="input_1" name="edit_title" value="'.$cofigsData['config_title'].'"/>';
-					echo '</div>';
 
-					echo '<label>Database:</label>';
+				echo '<div class="input-group flex-nowrap mb-3 mt-3">';
+					echo '<span class="input-group-text" id="addon-wrapping"><i class="fas fa-align-center"></i>&nbsp;Titulo</span>';
+					echo '<input type="text" class="form-control" placeholder="Ingresa titulo" aria-label="Ingresa titulo" aria-describedby="addon-wrapping" id="input_1" name="edit_title" value="'.$cofigsData['config_title'].'">';
+				echo '</div>';
+
+				echo '<div class="input-group flex-nowrap mb-3 mt-3">';
+					echo '<span class="input-group-text" id="addon-wrapping"><i class="fas fa-table"></i>&nbsp;Tabla</span>';
+					echo '<input type="text" class="form-control" placeholder="Ingresa nombre de tabla" aria-label="Ingresa nombre de tabla" aria-describedby="addon-wrapping" id="input_2" name="edit_table" value="'.$cofigsData['config_table'].'">';
+				echo '</div>';
+
+				echo '<div class="input-group flex-nowrap mb-3 mt-3">';
+					echo '<span class="input-group-text" id="addon-wrapping"><i class="fas fa-columns"></i>&nbsp;Columna de Tabla</span>';
+					echo '<input type="text" class="form-control" placeholder="Ingresa nombre de columna" aria-label="Ingresa nombre de columna" aria-describedby="addon-wrapping" id="input_3" name="edit_credits_column" value="'.$cofigsData['config_credits_col'].'">';
+				echo '</div>';
+
+				echo '<div class="input-group flex-nowrap mb-3 mt-3">';
+					echo '<span class="input-group-text" id="addon-wrapping"><i class="fas fa-columns"></i>&nbsp;Columna de Usuario</span>';
+					echo '<input type="text" class="form-control" placeholder="Ingresa nombre de columna" aria-label="Ingresa nombre de columna" aria-describedby="addon-wrapping" id="input_4" name="edit_user_column" value="'.$cofigsData['config_user_col'].'">';
+				echo '</div>';
+
+				echo '<label><i class="fas fa-database"></i> Base de datos:</label>';
 					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="edit_database" id="databaseRadios1" value="MuOnline" '.($cofigsData['config_database'] == "MuOnline" ? 'checked' : null).'> ' . config('SQL_DB_NAME', true);
-						echo '</label>';
-					echo '</div>';
+						echo '<input type="radio" class="btn-check" name="edit_database" id="database1" value="MuOnline" '.($cofigsData['config_database'] == "MuOnline" ? 'checked' : null).'>';
+						echo '<label class="btn btn-outline-info" for="database1"> <i class="fas fa-database"></i> ' . config('SQL_DB_NAME', true) .' </label>';
 					
-					if(config('SQL_USE_2_DB',true)) {
-						echo '<div class="radio">';
-							echo '<label>';
-								echo '<input type="radio" name="edit_database" id="databaseRadios1" value="Me_MuOnline" '.($cofigsData['config_database'] == "Me_MuOnline" ? 'checked' : null).'> ' . config('SQL_DB_2_NAME', true);
-							echo '</label>';
-						echo '</div><br />';
-					}
-
-					echo '<div class="form-group">';
-						echo '<label for="input_2">Table:</label>';
-						echo '<input type="text" class="form-control" id="input_2" name="edit_table" value="'.$cofigsData['config_table'].'"/>';
-					echo '</div>';
-
-					echo '<div class="form-group">';
-						echo '<label for="input_3">Credits Column:</label>';
-						echo '<input type="text" class="form-control" id="input_3" name="edit_credits_column" value="'.$cofigsData['config_credits_col'].'"/>';
-					echo '</div>';
-
-					echo '<div class="form-group">';
-						echo '<label for="input_4">User Column:</label>';
-						echo '<input type="text" class="form-control" id="input_4" name="edit_user_column" value="'.$cofigsData['config_user_col'].'"/>';
-					echo '</div>';
-
-					echo '<label>User Identifier:</label>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="edit_user_column_id" id="coRadios1" value="userid" '.($cofigsData['config_user_col_id'] == "userid" ? 'checked' : null).'> User ID';
-						echo '</label>';
-					echo '&nbsp;&nbsp;&nbsp;&nbsp;';
-						echo '<label>';
-							echo '<input type="radio" name="edit_user_column_id" id="coRadios1" value="username" '.($cofigsData['config_user_col_id'] == "username" ? 'checked' : null).'> Username';
-						echo '</label>';
-					echo '&nbsp;&nbsp;&nbsp;&nbsp;';
-						echo '<label>';
-							echo '<input type="radio" name="edit_user_column_id" id="coRadios1" value="email" '.($cofigsData['config_user_col_id'] == "email" ? 'checked' : null).'> Email';
-						echo '</label>';
-					echo '&nbsp;&nbsp;&nbsp;&nbsp;';
-						echo '<label>';
-							echo '<input type="radio" name="edit_user_column_id" id="coRadios1" value="character" '.($cofigsData['config_user_col_id'] == "character" ? 'checked' : null).'> Character Name';
-						echo '</label>';
+				if(config('SQL_USE_2_DB',true)) {
+						echo '<input type="radio" class="btn-check" name="edit_database" id="database2" value="Me_MuOnline" '.($cofigsData['config_database'] == "Me_MuOnline" ? 'checked' : null).'>';
+						echo '<label class="btn btn-outline-secondary" for="database2"> <i class="fas fa-database"></i> ' . config('SQL_DB_2_NAME', true) .' </label>';
 					echo '</div><br />';
+				} else{ echo '</div><br />'; }	
 
-					echo '<label>Check Online Status:</label>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="edit_checkonline" id="coRadios1" value="1" '.($cofigsData['config_checkonline'] == 1 ? 'checked' : null).'> Yes';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="edit_checkonline" id="coRadios1" value="0" '.($cofigsData['config_checkonline'] == 0 ? 'checked' : null).'> No';
-						echo '</label>';
-					echo '</div><br />';
+				echo '<label><i class="fas fa-id-badge"></i> Identificador de Usuario:</label>';
+				echo '<div class="radio">';
+					echo '<input type="radio" class="btn-check" name="edit_user_column_id" id="userid" value="userid" '.($cofigsData['config_user_col_id'] == "userid" ? 'checked' : null).'>';
+					echo '<label class="btn btn-outline-primary" for="userid"> <i class="fas fa-id-card"></i> User ID </label>';
 
-					echo '<label>Display in My Account:</label>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="edit_display" id="coRadios1" value="1" '.($cofigsData['config_display'] == 1 ? 'checked' : null).'> Yes';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="edit_display" id="coRadios1" value="0" '.($cofigsData['config_display'] == 0 ? 'checked' : null).'> No';
-						echo '</label>';
-					echo '</div><br />';
+					echo '<input type="radio" class="btn-check" name="edit_user_column_id" id="username" value="username" '.($cofigsData['config_user_col_id'] == "username" ? 'checked' : null).'>';
+					echo '<label class="btn btn-outline-info" for="username"> <i class="fas fa-user"></i> Usuario </label>';
 
-					echo '<button type="submit" name="edit_submit" value="1" class="btn btn-warning">Save Configuration</button>';
+					echo '<input type="radio" class="btn-check" name="edit_user_column_id" id="email" value="email" '.($cofigsData['config_user_col_id'] == "email" ? 'checked' : null).'>';
+					echo '<label class="btn btn-outline-dark" for="email"> <i class="fas fa-envelope"></i> Email </label>';
+
+					echo '<input type="radio" class="btn-check" name="edit_user_column_id" id="character" value="character" '.($cofigsData['config_user_col_id'] == "character" ? 'checked' : null).'>';
+					echo '<label class="btn btn-outline-secondary" for="character"> <i class="fas fa-male"></i> Nombre de PJ </label>';
+				echo '</div><br />';
+
+				echo '<label><i class="fas fa-signal"></i> Chequear si esta conectado:</label>';
+				echo '<div class="radio">';
+					echo '<input type="radio" class="btn-check" name="edit_checkonline" id="checkSI" value="1" '.($cofigsData['config_checkonline'] == 1 ? 'checked' : null).'>';
+					echo '<label class="btn btn-outline-success" for="checkSI"> <i class="fas fa-check"></i> Si </label>';
+
+					echo '<input type="radio" class="btn-check" name="edit_checkonline" id="checkNO" value="0" '.($cofigsData['config_checkonline'] == 0 ? 'checked' : null).'>';
+					echo '<label class="btn btn-outline-danger" for="checkNO"> <i class="fas fa-times"></i> No </label>';
+				echo '</div><br />';
+
+				echo '<label><i class="fas fa-eye"></i> Mostrar en Mi Cuenta:</label>';
+				echo '<div class="radio">';
+					echo '<input type="radio" class="btn-check" name="edit_display" id="diplaySi" value="1" '.($cofigsData['config_display'] == 1 ? 'checked' : null).'>';
+					echo '<label class="btn btn-outline-success" for="diplaySi"> <i class="fas fa-check"></i> Si </label>';
+
+					echo '<input type="radio" class="btn-check" name="edit_display" id="displayNo" value="0" '.($cofigsData['config_display'] == 0 ? 'checked' : null).'>';
+					echo '<label class="btn btn-outline-danger" for="displayNo"> <i class="fas fa-times"></i> No </label>';
+				echo '</div><br />';
+
+
+					echo '<button type="submit" name="edit_submit" value="1" class="btn btn-warning">Actualizar Configuracion</button>';
 				echo '</form>';
+			echo '</div>';
+			echo '</div>';
 			echo '</div>';
 			echo '</div>';
 		}
 	
 	echo '</div>';
 	echo '<div class="col-md-8">';
-		
 		$cofigsList = $creditSystem->showConfigs();
 		if(is_array($cofigsList)) {
 			foreach($cofigsList as $data) {
 				
-				$checkOnline = ($data['config_checkonline'] ? '<span class="label label-success">Yes</span>' : '<span class="label label-default">No</span>');
-				$configdisplay = ($data['config_display'] ? '<span class="label label-success">Yes</span>' : '<span class="label label-default">No</span>');
+				$checkOnline = ($data['config_checkonline'] ? 'Si' : 'No');
+				$configdisplay = ($data['config_display'] ? 'Si' : 'No');
 				$databaseDisplay = $data['config_database'] == 'MuOnline' ? config('SQL_DB_NAME', true) : config('SQL_DB_2_NAME', true);
 				
+		echo '<div class="card">';
+			echo '<div class="card-body">';
 				echo '<div class="panel panel-default">';
 					echo '<div class="panel-heading">';
-						echo $data['config_title'];
-						echo '<a href="'.admincp_base("creditsconfigs&delete=".$data['config_id']).'" class="btn btn-danger btn-xs pull-right">Delete</a>';
-						echo '<a href="'.admincp_base("creditsconfigs&edit=".$data['config_id']).'" class="btn btn-default btn-xs pull-right" style="margin-right:5px;">Edit</a>';
+						echo '<button type="button" class="btn btn-outline-primary">'.$data['config_title'].'</button>';
+						echo '<a href="'.admincp_base("creditsconfigs&delete=".$data['config_id']).'" class="btn btn-danger float-end">Borrar</a>';
+						echo '&nbsp;';
+						echo '<a href="'.admincp_base("creditsconfigs&edit=".$data['config_id']).'" class="btn btn-info float-end" style="margin-right:5px;"><i class="fas fa-edit"></i> Editar</a>';
 					echo '</div>';
 					echo '<div class="panel-body">';
-					
-						echo '<table class="table" style="margin-bottom:0px;">';
+					echo '<br>';
+					echo '<div class="row">';
+						echo '<div class="table-responsive">';
+
+						echo '<table class="table table-sm">';
+							echo '<thead>';
+								echo '<tr>';
+									echo '<th class="bg-dark text-white text-center p-1"><i class="fas fa-sliders-h"></i>&nbsp;Configuracion ID</th>';
+									echo '<th class="bg-dark text-white text-center p-1"><i class="fas fa-database"></i>&nbsp;Base de Datos</th>';
+								echo '</tr>';
+							echo '</thead>';
 							echo '<tbody>';
 								echo '<tr>';
-									echo '<th>Config Id</th>';
-									echo '<td>'.$data['config_id'].'</td>';
-									echo '<th>User Column Identifier</th>';
-									echo '<td>'.$data['config_user_col_id'].'</td>';
-								echo '</tr>';
-								echo '<tr>';
-									echo '<th>Database</th>';
-									echo '<td>'.$databaseDisplay.'</td>';
-									echo '<th>Online Check</th>';
-									echo '<td>'.$checkOnline.'</td>';
-								echo '</tr>';
-								echo '<tr>';
-									echo '<th>Table</th>';
-									echo '<td>'.$data['config_table'].'</td>';
-									echo '<th>Display in My Account</th>';
-									echo '<td>'.$configdisplay.'</td>';
-								echo '</tr>';
-								echo '<tr>';
-									echo '<th>Credits Column</th>';
-									echo '<td>'.$data['config_credits_col'].'</td>';
-									echo '<th></th>';
-									echo '<td></td>';
-								echo '</tr>';
-								echo '<tr>';
-									echo '<th>User Column</th>';
-									echo '<td>'.$data['config_user_col'].'</td>';
-									echo '<th></th>';
-									echo '<td></td>';
+									echo '<td class="text-center border border-dark p-1">'.$data['config_id'].'</th>';
+									echo '<td class="text-center border border-dark p-1">'.$databaseDisplay.'</td>';
 								echo '</tr>';
 							echo '</tbody>';
 						echo '</table>';
+
+						echo '<table class="table table-sm">';
+							echo '<thead>';
+								echo '<tr>';
+									echo '<th class="bg-dark text-white text-center p-1"><i class="fas fa-table"></i>&nbsp;Tabla</th>';
+									echo '<th class="bg-dark text-white text-center p-1"><i class="fas fa-columns"></i>&nbsp;Columna de Tabla</th>';
+									echo '<th class="bg-dark text-white text-center p-1"><i class="fas fa-columns"></i>&nbsp;Columna de Usuario</th>';
+								echo '</tr>';
+							echo '</thead>';
+							echo '<tbody>';
+								echo '<tr>';
+									echo '<td class="text-center border border-dark p-1">'.$data['config_table'].'</th>';
+									echo '<td class="text-center border border-dark p-1">'.$data['config_credits_col'].'</td>';
+									echo '<td class="text-center border border-dark p-1">'.$data['config_user_col'].'</td>';
+								echo '</tr>';
+							echo '</tbody>';
+						echo '</table>';
+
+						echo '<table class="table table-sm">';
+							echo '<thead>';
+								echo '<tr>';
+									if($data['config_user_col_id'] == 'userid'){
+										echo '<th class="bg-primary text-white text-center p-1"><i class="fas fa-id-badge"></i>&nbsp;ID Columna de Usuario</th>';
+									}else if($data['config_user_col_id'] == 'username'){
+										echo '<th class="bg-info text-white text-center p-1"><i class="fas fa-id-badge"></i>&nbsp;ID Columna de Usuario</th>';
+									}else if($data['config_user_col_id'] == 'email'){
+										echo '<th class="bg-dark text-white text-center p-1"><i class="fas fa-id-badge"></i>&nbsp;ID Columna de Usuario</th>';
+									}else if($data['config_user_col_id'] == 'character'){
+										echo '<th class="bg-secondary text-white text-center p-1"><i class="fas fa-id-badge"></i>&nbsp;ID Columna de Usuario</th>';
+									}
+									if($data['config_checkonline']){ echo '<th class="bg-success text-white text-center p-1"><i class="fas fa-signal"></i>&nbsp;Chequear si esta Conectado</th>'; } 
+									else { echo '<th class="bg-danger text-white text-center p-1"><i class="fas fa-signal"></i>&nbsp;Chequear si esta Conectado</th>'; }
+									if($data['config_display']){ echo '<th class="bg-success text-white text-center p-1"><i class="fas fa-eye"></i>&nbsp;Mostrar en Mi Cuenta</th>'; }
+									else { echo '<th class="bg-danger text-white text-center p-1"><i class="fas fa-eye"></i>&nbsp;Mostrar en Mi Cuenta</th>'; }
+								echo '</tr>';
+							echo '</thead>';
+							echo '<tbody>';
+								echo '<tr>';
+									if($data['config_user_col_id'] == 'userid'){
+										echo '<td class="text-center border border-primary text-primary p-1">'.$data['config_user_col_id'].'</th>';
+									}else if($data['config_user_col_id'] == 'username'){
+										echo '<td class="text-center border border-info text-info p-1">'.$data['config_user_col_id'].'</th>';
+									}else if($data['config_user_col_id'] == 'email'){
+										echo '<td class="text-center border border-dark text-dark p-1">'.$data['config_user_col_id'].'</th>';
+									}else if($data['config_user_col_id'] == 'character'){
+										echo '<td class="text-center border border-secondary text-secondary p-1">'.$data['config_user_col_id'].'</th>';
+									}
+									if($data['config_checkonline']){ echo '<td class="text-center border border-success text-success p-1"><i class="fas fa-check"></i> '.$checkOnline.'</td>'; }
+									else { echo '<td class="text-center border border-danger text-danger p-1"><i class="fas fa-times"></i> '.$checkOnline.'</td>'; }
+									if($data['config_display']){ echo '<td class="text-center border border-success text-success p-1"><i class="fas fa-check"></i> '.$configdisplay.'</td>'; }
+									else { echo '<td class="text-center border border-danger text-danger p-1"><i class="fas fa-times"></i> '.$configdisplay.'</td>'; }
+								echo '</tr>';
+							echo '</tbody>';
+						echo '</table>';
+
+						echo '</div>';
+					echo '</div>';
+
+
+					
+
 						
 					echo '</div>';
+				echo '</div>';
+				echo '</div>';
 				echo '</div>';
 				
 			}

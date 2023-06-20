@@ -1,4 +1,4 @@
-# WebEngine CMS 1.2.4
+# WebEngine CMS 1.2.5
 
 WebEngine is an Open source Content Management System (CMS) for Mu Online servers. Our main goal is to provide a fast, secure and high quality framework for server owners to create and implement their own features to their websites.
 

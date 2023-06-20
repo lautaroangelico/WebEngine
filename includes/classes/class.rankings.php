@@ -461,15 +461,25 @@ class Rankings {
 		$filterData = $this->_getRankingsFilterData();
 		if(!is_array($filterData)) return;
 		
-		echo '<div class="text-center">';
-			echo '<ul class="rankings-class-filter">';
-				
-				echo '<li><a onclick="rankingsFilterRemove()" class="rankings-class-filter-selection">'.getPlayerClassAvatar(-1, true, false, 'rankings-class-filter-image').'<br />'.lang('rankings_filter_1').'</a></li>';
-				
-				foreach($filterData as $row) {
-					echo '<li><a onclick="rankingsFilterByClass('.$row[1].')" class="rankings-class-filter-selection rankings-class-filter-grayscale">'.getPlayerClassAvatar($row[0], true, false, 'rankings-class-filter-image').'<br />'.$row[2].'</a></li>';
-				}
-			echo '</ul>';
+		echo '<div class="d-grid gap-2 col-6 mx-auto">';
+			echo '<button class="btn btn-primary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">';
+				echo '<i class="fa-solid fa-filter"></i> Filtrar Personaje';
+			echo '</button>';
+		echo '</div>';
+		echo '<div class="collapse mb-3" id="collapseExample">';
+			echo '<div class="card card-body">';
+				echo '<div class="row text-center align-middle justify-content-center">';
+					echo '<div class="col-2">';
+						echo '<a onclick="rankingsFilterRemove()" class="rankings-class-filter-selection">'.getPlayerClassAvatar(-1, true, false, 'rankings-class-filter-image').'<br><span class="text-muted">'.lang('rankings_filter_1').'</span></a>';
+					echo '</div>';
+					foreach($filterData as $row) {
+						echo '<div class="col-2">';
+							echo '<a onclick="rankingsFilterByClass('.$row[1].')" class="dropdown-item rankings-class-filter-selection rankings-class-filter-grayscale">'.getPlayerClassAvatar($row[0], true, false, 'rankings-class-filter-image').'<br> <span class="text-muted">'.$row[2].'</span></a>';
+						echo '</div>';
+					}
+					echo '</div>';
+				echo '</div>';
+			echo '</div>';
 		echo '</div>';
 	}
 

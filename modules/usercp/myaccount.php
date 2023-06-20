@@ -117,7 +117,7 @@ if(is_array($AccountCharacters)) {
 			
 			$characterClassAvatar = getPlayerClassAvatar($characterData[_CLMN_CHR_CLASS_], false);
 			$characterOnlineStatus = in_array($characterName, $onlineCharacters) ? '<img src="'.__PATH_ONLINE_STATUS__.'" class="online-status-indicator"/>' : '<img src="'.__PATH_OFFLINE_STATUS__.'" class="online-status-indicator"/>';
-			echo '<div class="col-xs-3">';
+			echo '<div class="col-xl-3">';
 				echo '<div class="myaccount-character-name">'.playerProfile($characterName).$characterOnlineStatus.'</div>';
 				echo '<div class="myaccount-character-block">';
 					echo '<a href="'.__BASE_URL__.'profile/player/req/'.$characterName.'" target="_blank">';

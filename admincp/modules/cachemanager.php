@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -42,7 +42,8 @@ try {
 			message('error', $ex->getMessage());
 		}
 	}
-	
+	echo '<div class="card">
+	<div class="card-body">';
 	echo '<table class="table table-hover">';
 		echo '<thead>';
 			echo '<tr>';
@@ -65,6 +66,7 @@ try {
 		}
 		echo '</tbody>';
 	echo '</table>';
+	echo '</div></div>';
 	
 	echo '<div class="row">';
 		
@@ -81,6 +83,8 @@ try {
 				$guildProfilesCacheCount = 0;
 			}
 			echo '<h3>Guild Profiles Cache:</h3>';
+			echo '<div class="card">
+	<div class="card-body">';
 			echo '<table class="table table-hover">';
 				echo '<tbody>';
 					echo '<tr>';
@@ -99,6 +103,7 @@ try {
 					}
 				echo '</tbody>';
 			echo '</table>';
+			echo '</div></div>';
 		echo '</div>';
 		
 		// PLAYER PROFILES CACHE
@@ -114,6 +119,8 @@ try {
 				$playerProfilesCacheCount = 0;
 			}
 			echo '<h3>Player Profiles Cache:</h3>';
+			echo '<div class="card">
+	<div class="card-body">';
 			echo '<table class="table table-hover">';
 				echo '<tbody>';
 					echo '<tr>';
@@ -132,6 +139,7 @@ try {
 					}
 				echo '</tbody>';
 			echo '</table>';
+			echo '</div></div>';
 		echo '</div>';
 		
 	echo '</div>';

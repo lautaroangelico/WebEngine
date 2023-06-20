@@ -7,9 +7,9 @@
         "admin": 100
     },
     "server_name": "MuOnline",
-    "website_title": "MuOnline Season 17",
+    "website_title": "MuOnline Season 18",
     "website_meta_description": "Join MU Online! the free-to-play fantasy RPG based on the legendary Continent of MU! Feel the power of forbidden magic! Explore and fight!",
-    "website_meta_keywords": "MU, MU online, Season17, private server, Battle Core, private MU online, free to play, mmorpg, auto play, free rpg, Free2Play, PVP, multi client and jewels, season XVII",
+    "website_meta_keywords": "MU, MU online, Season18, private server, Battle Core, private MU online, free to play, mmorpg, auto play, free rpg, Free2Play, PVP, multi client and jewels, season XVIII",
     "website_forum_link": "https:\/\/webenginecms.org\/",
     "SQL_DB_HOST": "",
     "SQL_DB_NAME": "MuOnline",
@@ -22,7 +22,7 @@
     "SQL_ENABLE_MD5": false,
     "server_files": "igcn",
     "language_switch_active": true,
-    "language_default": "en",
+    "language_default": "es",
     "language_debug": false,
     "plugins_system_enable": false,
     "ip_block_system_enable": false,
@@ -39,10 +39,13 @@
     "social_link_facebook": "https:\/\/facebook.com\/",
     "social_link_instagram": "https:\/\/instagram.com\/",
     "social_link_discord": "https:\/\/discord.com\/",
-    "server_info_season": "Season 17",
+    "server_info_season": "Season 18",
     "server_info_exp": "500x",
     "server_info_masterexp": "250x",
     "server_info_drop": "50%",
     "maximum_online": "500",
-    "season_1_support": false
+    "season_1_support": false,
+    "color_template": "#a70f00",
+    "port_game_server": "55901",
+    "ip_game_server": "192.168.1.2"
 }

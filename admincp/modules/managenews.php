@@ -12,6 +12,7 @@
  */
 ?>
 <h1 class="page-header">Manage News</h1>
+
 <?php
 $News = new News();
 
@@ -60,16 +61,18 @@ if($News->isNewsDirWritable()) {
 			
 			$News->setId($row['news_id']);
 			
+			echo '<div class="card">
+			<div class="card-body">';
 			echo '<div class="panel panel-default">';
 				echo '<div class="panel-heading">';
-					echo '<a href="'.__BASE_URL__.'news/'.$row['news_id'].'/" target="_blank">'.$row['news_title'].'</a>';
-					echo '<a class="btn btn-danger btn-xs pull-right" href="'.admincp_base("managenews&delete=".$row['news_id']).'"><i class="fa fa-trash"></i> delete</a>';
-					echo '<a class="btn btn-warning btn-xs pull-right" style="margin-right:5px;" href="'.admincp_base("editnews&id=".$row['news_id']).'"><i class="fa fa-edit"></i> edit</a>';
-					echo '<a class="btn btn-xs btn-default pull-right" style="margin-right:5px;" href="'.admincp_base("addnewstranslation&id=".$row['news_id']).'"><i class="fa fa-plus"></i> Add Translation</a>';
+					echo '<a class="fs-4 text-uppercase" href="'.__BASE_URL__.'news/'.$row['news_id'].'/" target="_blank">'.$row['news_title'].'</a>';
+					echo '<a class="btn btn-danger btn-xs float-end" href="'.admincp_base("managenews&delete=".$row['news_id']).'"><i class="fa fa-trash"></i> delete</a>';
+					echo '<a class="btn btn-warning btn-xs float-end" style="margin-right:5px;" href="'.admincp_base("editnews&id=".$row['news_id']).'"><i class="fa fa-edit"></i> edit</a>';
+					echo '<a class="btn btn-xs btn-default float-end" style="margin-right:5px;" href="'.admincp_base("addnewstranslation&id=".$row['news_id']).'"><i class="fa fa-plus"></i> Add Translation</a>';
 				echo '</div>';
 				echo '<div class="panel-body">';
 					echo '<div class="row">';
-						echo '<div class="col-xs-6">';
+						echo '<div class="col-xl-6">';
 							echo '<table class="table">';
 								echo '<tr>';
 									echo '<th>News Id:</th>';
@@ -85,7 +88,7 @@ if($News->isNewsDirWritable()) {
 								echo '</tr>';
 							echo '</table>';
 						echo '</div>';
-						echo '<div class="col-xs-6">';
+						echo '<div class="col-xl-6">';
 							echo 'Translations:';
 							
 							$newsTranslations = $News->getNewsTranslationsDataList();
@@ -100,12 +103,15 @@ if($News->isNewsDirWritable()) {
 					echo '</div>';
 				echo '</div>';
 			echo '</div>';
+
+			echo '</div>';
+			echo '</div>';
 			
 		}
 		
 	}
 	
-	echo '<a class="btn btn-success" href="'.admincp_base("managenews&cache=1").'">UPDATE NEWS CACHE</a>';
+	echo '<a class="btn btn-primary" href="'.admincp_base("managenews&cache=1").'">UPDATE NEWS CACHE</a>';
 
 } else {
 	message('error','The news cache folder is not writable.');

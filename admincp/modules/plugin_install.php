@@ -28,11 +28,18 @@ if(check_value($_POST['submit'])) {
 }
 
 ?>
+<div class="card">
+<div class="card-body">
 <form action="" method="post" enctype="multipart/form-data">
-	<div class="form-group">
-		<label>Select file</label>
-		<input type="file" name="file" id="file"/>
+
+	<div class="input-group mb-3">
+		<input type="file" class="form-control" name="file" id="file">
+		<label class="input-group-text" for="inputGroupFile02">Upload</label>
 	</div>
-	<input type="submit" name="submit" class="btn btn-primary span2" value="Install"/>
+	<div class="d-grid gap-2">
+		<input type="submit" name="submit" class="btn btn-primary span2" value="Install"/>
+	</div>
 </form>
-<p>Make sure you upload all the plugin files before importing it.</p>
+<p class="text-center mt-3">Make sure you upload all the plugin files before importing it.</p>
+</div>
+</div>

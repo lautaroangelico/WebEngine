@@ -60,6 +60,7 @@ try {
 				'active' => (bool) ($_POST['navbar_status'] == 1 ? true : false),
 				'type' => $_POST['navbar_type'],
 				'phrase' => $_POST['navbar_phrase'],
+				'icon' => (check_value($_POST['navbar_icon']) ? $_POST['navbar_icon'] : ''),
 				'link' => (check_value($_POST['navbar_link']) ? $_POST['navbar_link'] : ''),
 				'visibility' => $_POST['navbar_visibility'],
 				'newtab' => (bool) ($_POST['navbar_newtab'] == 1 ? true : false),
@@ -106,6 +107,7 @@ try {
 				'active' => (bool) ($_POST['navbar_status'] == 1 ? true : false),
 				'type' => $_POST['navbar_type'],
 				'phrase' => $_POST['navbar_phrase'],
+				'icon' => (check_value($_POST['navbar_icon']) ? $_POST['navbar_icon'] : ''),
 				'link' => (check_value($_POST['navbar_link']) ? $_POST['navbar_link'] : ''),
 				'visibility' => $_POST['navbar_visibility'],
 				'newtab' => (bool) ($_POST['navbar_newtab'] == 1 ? true : false),
@@ -146,6 +148,7 @@ try {
 			echo '<th>Order</th>';
 			echo '<th>Status</th>';
 			echo '<th>Link Type</th>';
+			echo '<th>Icon</th>';
 			echo '<th>Link</th>';
 			echo '<th>Phrase</th>';
 			echo '<th>Visibility</th>';
@@ -174,6 +177,7 @@ try {
 						echo '<option value="external" '.($navbarElement['type'] == 'external' ? 'selected' : '').'>external</option>';
 					echo '</select>';
 				echo '</td>';
+				echo '<td><input type="text" name="navbar_icon" class="form-control" value=\''.$navbarElement['icon'].'\'/></td>';
 				echo '<td><input type="text" name="navbar_link" class="form-control" value="'.$navbarElement['link'].'"/></td>';
 				echo '<td><input type="text" name="navbar_phrase" class="form-control" value="'.$navbarElement['phrase'].'"/></td>';
 				echo '<td>';
@@ -216,6 +220,7 @@ try {
 					echo '<option value="external">external</option>';
 				echo '</select>';
 			echo '</td>';
+			echo '<td><input type="text" name="navbar_icon" class="form-control" placeholder=\'<i class="fas fa-user"></i>\'/></td>';
 			echo '<td><input type="text" name="navbar_link" class="form-control" placeholder="rankings/resets"/></td>';
 			echo '<td><input type="text" name="navbar_phrase" class="form-control" placeholder="lang_phrase_x"/></td>';
 			echo '<td>';

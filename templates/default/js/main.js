@@ -177,10 +177,10 @@ function rankingsFilterByClass() {
 		classList[i] = arguments[i];
 	}
 	
-	if($(".rankings-table").length) {
-		$(".rankings-table").fadeOut().delay(delay).fadeIn();
+	if($(".general-rank").length) {
+		$(".general-rank").fadeOut().delay(delay).fadeIn();
 		setTimeout(function() {
-			$(".rankings-table tr").each(function() {
+			$(".general-rank tr").each(function() {
 				if($(this).attr("data-class-id") == null) { return true; }
 				if(classList.includes(parseInt($(this).attr("data-class-id"))) == false) {
 					$(this).hide();
@@ -195,10 +195,10 @@ function rankingsFilterByClass() {
 function rankingsFilterRemove() {
 	var delay = 500; // milliseconds
 	
-	$(".rankings-table").fadeOut().delay(delay).fadeIn();
+	$(".general-rank").fadeOut().delay(delay).fadeIn();
 	setTimeout(function() {
-		if($(".rankings-table").length) {
-			$(".rankings-table tr").each(function() {
+		if($(".general-rank").length) {
+			$(".general-rank tr").each(function() {
 					$(this).fadeIn();
 				}
 			);

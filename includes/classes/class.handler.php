@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.2
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -28,7 +28,7 @@ class Handler {
 		}
 		$this->_loadLanguagePhrases($config['language_default']);
 		if($config['language_switch_active']) {
-			if(check_value($_SESSION['language_display'])) {
+			if(isset($_SESSION['language_display'])) {
 				if($_SESSION['language_display'] != $config['language_default']) {
 					$this->_loadLanguagePhrases($_SESSION['language_display']);
 				}
@@ -74,17 +74,19 @@ class Handler {
 			$page = $this->cleanRequest($page);
 			$subpage = $this->cleanRequest($subpage);
 			
-			$request = explode("/", $_GET['request']);
-			if(is_array($request)) {
-				for($i = 0; $i < count($request); $i++) {
-					if(check_value($request[$i])) {
-						if(check_value($request[$i+1])) {
-							$_GET[$request[$i]] = filter_var($request[$i+1], FILTER_SANITIZE_STRING);
-						} else {
-							$_GET[$request[$i]] = NULL;
+			if(isset($_GET['request'])) {
+				$request = explode("/", $_GET['request']);
+				if(is_array($request)) {
+					for($i = 0; $i < count($request); $i++) {
+						if(check_value($request[$i])) {
+							if(check_value($request[$i+1])) {
+								$_GET[$request[$i]] = filter_var($request[$i+1], FILTER_SANITIZE_STRING);
+							} else {
+								$_GET[$request[$i]] = NULL;
+							}
 						}
+						$i++;
 					}
-					$i++;
 				}
 			}
 			

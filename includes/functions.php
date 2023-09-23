@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -51,10 +51,10 @@ function redirect($type = 1, $location = null, $delay = 0) {
 }
 
 function isLoggedIn() {
-	if(!$_SESSION['valid']) return;
-	if(!check_value($_SESSION['userid'])) return;
-	if(!check_value($_SESSION['username'])) return;
-	if(!check_value($_SESSION['timeout'])) return;
+	if(!isset($_SESSION['valid'])) return;
+	if(!isset($_SESSION['userid'])) return;
+	if(!isset($_SESSION['username'])) return;
+	if(!isset($_SESSION['timeout'])) return;
 	
 	$loginConfigs = loadConfigurations('login');
 	if(is_array($loginConfigs)) {
@@ -99,8 +99,11 @@ function message($type='info', $message="", $title="") {
 
 function lang($phrase, $return=true) {
 	global $lang;
-	$result = $lang[$phrase];
-	if(!$result) $result = 'ERROR';
+	if(!array_key_exists($phrase, $lang)) {
+		$result = 'ERROR';
+	} else {
+		$result = $lang[$phrase];
+	}
 	
 	if(config('language_debug',true)) {
 		if($return) {
@@ -360,7 +363,7 @@ function getPlayerClassAvatar($code=0, $htmlImageTag=true, $tooltip=true, $cssCl
 	global $custom;
 	$imageFileName = array_key_exists($code, $custom['character_class']) ? $custom['character_class'][$code][2] : 'avatar.jpg';
 	$imageFullPath = __PATH_TEMPLATE_IMG__ . config('character_avatars_dir', true) . '/' . $imageFileName;
-	$className = $custom['character_class'][$code][0];
+	$className = array_key_exists($code, $custom['character_class']) ? $custom['character_class'][$code][0] : '';
 	if(!$htmlImageTag) return $imageFullPath;
 	$result = '<img';
 	if(check_value($cssClass)) $result .= ' class="'.$cssClass.'"';

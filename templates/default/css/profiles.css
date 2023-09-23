@@ -6,7 +6,7 @@
  =========================================================
  
  * Author Lautaro Angelico (https://lautaroangelico.com/)
- * Copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
+ * Copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -89,6 +89,7 @@
 	.GC.profiles_player_card, .GB.profiles_player_card, .MGB.profiles_player_card, .HGC.profiles_player_card { background: url('../img/profiles/gc.jpg') no-repeat; background-size: cover; }
 	.LIW.profiles_player_card, .LIM.profiles_player_card, .SHW.profiles_player_card, .LUW.profiles_player_card { background: url('../img/profiles/liw.jpg') no-repeat; background-size: cover; }
 	.LEM.profiles_player_card, .WAM.profiles_player_card, .ARM.profiles_player_card, .MYM.profiles_player_card { background: url('../img/profiles/lem.jpg') no-repeat; background-size: cover; }
+	.IK.profiles_player_card, .MIK.profiles_player_card, .IM.profiles_player_card, .MYK.profiles_player_card { background: url('../img/profiles/ik.jpg') no-repeat; background-size: cover; }
 
 .profiles_player_content {
 	float: right;

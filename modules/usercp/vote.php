@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -21,7 +21,7 @@ try {
 	
 	$vote = new Vote();
 	
-	if(check_value($_POST['submit'])) {
+	if(isset($_POST['submit'])) {
 		try {
 			$vote->setUserid($_SESSION['userid']);
 			$vote->setIp($_SERVER['REMOTE_ADDR']);

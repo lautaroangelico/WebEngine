@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -29,10 +29,10 @@ if(check_value($_POST['install_step_1_submit'])) {
 
 echo '<div class="list-group">';
 
-	$chk_1 = version_compare(PHP_VERSION, '5.6', '>=');
+	$chk_1 = version_compare(PHP_VERSION, '7.4', '>=');
 	$check_1 = ($chk_1 ? '<span class="label label-success">Ok</span>' : '<span class="label label-danger">Fix</span>');
 	echo '<div class="list-group-item">';
-		echo 'PHP 5.6 or higher';
+		echo 'PHP 7.4 or higher';
 		echo '<span class="pull-right">(PHP '.PHP_VERSION.') '.$check_1.'</span>';
 	echo '</div>';
 
@@ -55,6 +55,20 @@ echo '<div class="list-group">';
 	echo '<div class="list-group-item">';
 		echo 'cURL Extension';
 		echo '<span class="pull-right">'.$check_4.'</span>';
+	echo '</div>';
+	
+	$chk_11 = (extension_loaded('gd') ? true : false);
+	$check_11 = ($chk_11 ? '<span class="label label-success">Ok</span>' : '<span class="label label-danger">Fix</span>');
+	echo '<div class="list-group-item">';
+		echo 'GD Extension';
+		echo '<span class="pull-right">'.$check_11.'</span>';
+	echo '</div>';
+	
+	$chk_12 = (extension_loaded('xml') ? true : false);
+	$check_12 = ($chk_12 ? '<span class="label label-success">Ok</span>' : '<span class="label label-danger">Fix</span>');
+	echo '<div class="list-group-item">';
+		echo 'XML Extension';
+		echo '<span class="pull-right">'.$check_12.'</span>';
 	echo '</div>';
 
 	$chk_5 = (extension_loaded('pdo') ? true : false);

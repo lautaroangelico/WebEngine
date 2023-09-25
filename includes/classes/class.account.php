@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.3
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2021 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -74,10 +74,20 @@ class Account extends common {
 		);
 		
 		# query
-		if($this->_md5Enabled) {
-			$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, [dbo].[fn_md5](:password, :username), :name, :serial, :email, 0, 0)";
-		} else {
-			$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, :password, :name, :serial, :email, 0, 0)";
+		switch($this->_passwordEncryption) {
+			case 'wzmd5':
+				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, [dbo].[fn_md5](:password, :username), :name, :serial, :email, 0, 0)";
+				break;
+			case 'phpmd5':
+				$data['password'] = md5($password);
+				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, :password, :name, :serial, :email, 0, 0)";
+				break;
+			case 'sha256':
+				$data['password'] = '0x' . hash('sha256', $password . $username . $this->_sha256salt);
+				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, CONVERT(binary(32),:password,1), :name, :serial, :email, 0, 0)";
+				break;
+			default:
+				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, :password, :name, :serial, :email, 0, 0)";
 		}
 		
 		# register account
@@ -206,8 +216,8 @@ class Account extends common {
 		if(!check_value($user_id)) throw new Exception(lang('error_24',true));
 		if(!check_value($auth_code)) throw new Exception(lang('error_24',true));
 		
-		$userid = Decode_id($user_id);
-		$authcode = Decode_id($auth_code);
+		$userid = $user_id;
+		$authcode = $auth_code;
 		
 		if(!Validator::UnsignedNumber($userid)) throw new Exception(lang('error_25',true));
 		if(!Validator::UnsignedNumber($authcode)) throw new Exception(lang('error_25',true));
@@ -227,7 +237,7 @@ class Account extends common {
 		# account data
 		$accountData = $this->accountInformation($userid);
 		$username = $accountData[_CLMN_USERNM_];
-		$new_password = Decode($result['new_password']);
+		$new_password = $result['new_password'];
 		
 		# check online status
 		if($this->accountOnline($username)) throw new Exception(lang('error_14',true));
@@ -303,10 +313,10 @@ class Account extends common {
 		if(!check_value($ue)) throw new Exception(lang('error_31',true));
 		if(!check_value($key)) throw new Exception(lang('error_31',true));
 		
-		$user_id = Decode($ui); // decoded user id
+		$user_id = $ui; // user id
 		if(!Validator::UnsignedNumber($user_id)) throw new Exception(lang('error_31',true));
 		
-		$user_email = Decode($ue); // decoded email address
+		$user_email = $ue; // email address
 		if(!$this->emailExists($user_email)) throw new Exception(lang('error_31',true));
 		
 		$accountData = $this->accountInformation($user_id);
@@ -362,7 +372,7 @@ class Account extends common {
 			$userEmail = $accountInfo[_CLMN_EMAIL_];
 			$requestDate = strtotime(date("m/d/Y 23:59"));
 			$key = md5(md5($userName).md5($userEmail).md5($requestDate).md5($newEmail));
-			$verificationLink = __BASE_URL__.'verifyemail/?op='.Encode_id(3).'&uid='.Encode_id($accountId).'&email='.$newEmail.'&key='.$key;
+			$verificationLink = __BASE_URL__.'verifyemail/?op=3&uid='.$accountId.'&email='.$newEmail.'&key='.$key;
 			
 			# send verification email
 			$sendEmail = $this->changeEmailVerificationMail($userName, $userEmail, $newEmail, $verificationLink, $ipAddress);
@@ -374,7 +384,7 @@ class Account extends common {
 	}
 	
 	public function changeEmailVerificationProcess($encodedId, $newEmail, $encryptedKey) {
-		$userId = Decode_id($encodedId);
+		$userId = $encodedId;
 		if(!Validator::UnsignedNumber($userId)) throw new Exception(lang('error_21',true));
 		if(!Validator::Email($newEmail)) throw new Exception(lang('error_21',true));
 		
@@ -404,17 +414,27 @@ class Account extends common {
 		# insert data
 		$data = array(
 			'username' => $verifyKey['registration_account'],
-			'password' => Decode($verifyKey['registration_password']),
+			'password' => $verifyKey['registration_password'],
 			'name' => $verifyKey['registration_account'],
 			'serial' => $this->_defaultAccountSerial,
 			'email' => $verifyKey['registration_email']
 		);
 		
 		# query
-		if($this->_md5Enabled) {
-			$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, [dbo].[fn_md5](:password, :username), :name, :serial, :email, 0, 0)";
-		} else {
-			$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, :password, :name, :serial, :email, 0, 0)";
+		switch($this->_passwordEncryption) {
+			case 'wzmd5':
+				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, [dbo].[fn_md5](:password, :username), :name, :serial, :email, 0, 0)";
+				break;
+			case 'phpmd5':
+				$data['password'] = md5($verifyKey['registration_password']);
+				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, :password, :name, :serial, :email, 0, 0)";
+				break;
+			case 'sha256':
+				$data['password'] = '0x' . hash('sha256', $verifyKey['registration_password'] . $verifyKey['registration_account'] . $this->_sha256salt);
+				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, CONVERT(binary(32),:password,1), :name, :serial, :email, 0, 0)";
+				break;
+			default:
+				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, :password, :name, :serial, :email, 0, 0)";
 		}
 		
 		# create account
@@ -501,7 +521,7 @@ class Account extends common {
 	}
 	
 	private function sendRegistrationVerificationEmail($username, $account_email, $key) {
-		$verificationLink = __BASE_URL__.'verifyemail/?op='.Encode_id(2).'&user='.Encode($username).'&key='.$key;
+		$verificationLink = __BASE_URL__.'verifyemail/?op=2&user='.$username.'&key='.$key;
 		try {
 			$email = new Email();
 			$email->setTemplate('WELCOME_EMAIL_VERIFICATION');
@@ -538,7 +558,7 @@ class Account extends common {
 		$key = uniqid();
 		$data = array(
 			$username,
-			Encode($password),
+			$password,
 			$email,
 			time(),
 			$_SERVER['REMOTE_ADDR'],
@@ -614,9 +634,9 @@ class Account extends common {
 		$build_url = __BASE_URL__;
 		$build_url .= 'forgotpassword/';
 		$build_url .= '?ui=';
-		$build_url .= Encode($userid);
+		$build_url .= $userid;
 		$build_url .= '&ue=';
-		$build_url .= Encode($email);
+		$build_url .= $email;
 		$build_url .= '&key=';
 		$build_url .= $recovery_code;
 		return $build_url;

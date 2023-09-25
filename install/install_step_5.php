@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -46,7 +46,8 @@ if(check_value($_POST['install_step_5_submit'])) {
 		$webengineDefaultConfig['SQL_DB_PORT'] = $_SESSION['install_sql_port'];
 		$webengineDefaultConfig['SQL_USE_2_DB'] = check_value($_SESSION['install_sql_db2']) ? true : false;
 		$webengineDefaultConfig['SQL_PDO_DRIVER'] = $_SESSION['install_sql_dsn'];
-		$webengineDefaultConfig['SQL_ENABLE_MD5'] = $_SESSION['install_sql_md5'];
+		$webengineDefaultConfig['SQL_PASSWORD_ENCRYPTION'] = $_SESSION['install_sql_passwd_encrypt'];
+		$webengineDefaultConfig['SQL_SHA256_SALT'] = $_SESSION['install_sql_sha256_salt'];
 		$webengineDefaultConfig['webengine_cms_installed'] = true;
 		
 		# encode settings

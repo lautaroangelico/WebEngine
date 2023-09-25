@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -13,7 +13,8 @@
 
 class common {
 	
-	protected $_md5Enabled;
+	protected $_passwordEncryption;
+	protected $_sha256salt;
 	protected $_serverFiles = 'igcn';
 	protected $_debug = false;
 	
@@ -27,7 +28,8 @@ class common {
 		
 		// configs
 		$this->_serverFiles = config('server_files',true);
-		$this->_md5Enabled = config('SQL_ENABLE_MD5',true);
+		$this->_passwordEncryption = config('SQL_PASSWORD_ENCRYPTION',true);
+		$this->_sha256salt = config('SQL_SHA256_SALT',true);
 		$this->_debug = config('error_reporting',true);
 	}
 
@@ -56,10 +58,20 @@ class common {
 			'password' => $password
 		);
 		
-		if($this->_md5Enabled) {
-			$query = "SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = :username AND "._CLMN_PASSWD_." = [dbo].[fn_md5](:password, :username)";
-		} else {
-			$query = "SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = :username AND "._CLMN_PASSWD_." = :password";
+		switch($this->_passwordEncryption) {
+			case 'wzmd5':
+				$query = "SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = :username AND "._CLMN_PASSWD_." = [dbo].[fn_md5](:password, :username)";
+				break;
+			case 'phpmd5':
+				$data['password'] = md5($password);
+				$query = "SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = :username AND "._CLMN_PASSWD_." = :password";
+				break;
+			case 'sha256':
+				$data['password'] = $password . $username . $this->_sha256salt;
+				$query = "SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = :username AND "._CLMN_PASSWD_." = HASHBYTES('SHA2_256', :password)";
+				break;
+			default:
+				$query = "SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = :username AND "._CLMN_PASSWD_." = :password";
 		}
 		
 		$result = $this->memuonline->query_fetch_single($query, $data);
@@ -103,12 +115,35 @@ class common {
 		if(!Validator::AlphaNumeric($username)) return;
 		if(!Validator::PasswordLength($new_password)) return;
 		
-		if($this->_md5Enabled) {
-			$data = array('userid' => $id, 'username' => $username, 'password' => $new_password);
-			$query = "UPDATE "._TBL_MI_." SET "._CLMN_PASSWD_." = [dbo].[fn_md5](:password, :username) WHERE "._CLMN_MEMBID_." = :userid";
-		} else {
-			$data = array('userid' => $id, 'password' => $new_password);
-			$query = "UPDATE "._TBL_MI_." SET "._CLMN_PASSWD_." = :password WHERE "._CLMN_MEMBID_." = :userid";
+		switch($this->_passwordEncryption) {
+			case 'wzmd5':
+				$data = array(
+					'userid' => $id,
+					'username' => $username,
+					'password' => $new_password
+				);
+				$query = "UPDATE "._TBL_MI_." SET "._CLMN_PASSWD_." = [dbo].[fn_md5](:password, :username) WHERE "._CLMN_MEMBID_." = :userid";
+				break;
+			case 'phpmd5':
+				$data = array(
+					'userid' => $id,
+					'password' => md5($new_password)
+				);
+				$query = "UPDATE "._TBL_MI_." SET "._CLMN_PASSWD_." = :password WHERE "._CLMN_MEMBID_." = :userid";
+				break;
+			case 'sha256':
+				$data = array(
+					'userid' => $id,
+					'password' => '0x' . hash('sha256', $new_password . $username . $this->_sha256salt)
+				);
+				$query = "UPDATE "._TBL_MI_." SET "._CLMN_PASSWD_." = CONVERT(binary(32),:password,1) WHERE "._CLMN_MEMBID_." = :userid";
+				break;
+			default:
+				$data = array(
+					'userid' => $id,
+					'password' => $new_password
+				);
+				$query = "UPDATE "._TBL_MI_." SET "._CLMN_PASSWD_." = :password WHERE "._CLMN_MEMBID_." = :userid";
 		}
 
 		$result = $this->memuonline->query($query, $data);
@@ -124,7 +159,7 @@ class common {
 		
 		$data = array(
 			$userid,
-			Encode($new_password),
+			$new_password,
 			$auth_code,
 			time()
 		);
@@ -162,11 +197,11 @@ class common {
 		$build_url = __BASE_URL__;
 		$build_url .= 'verifyemail/';
 		$build_url .= '?op='; // operation
-		$build_url .= Encode_id(1);
+		$build_url .= 1;
 		$build_url .= '&uid=';
-		$build_url .= Encode_id($user_id);
+		$build_url .= $user_id;
 		$build_url .= '&ac=';
-		$build_url .= Encode_id($auth_code);
+		$build_url .= $auth_code;
 		return $build_url;
 	}
 

@@ -87,3 +87,10 @@ $install['cron_jobs'] = array(
 	array('Character Country','Scheduled task to cache characters country','character_country.php','300','1','0'),
 	array('Online Characters','Scheduled task to cache online characters','online_characters.php','300','1','0'),
 );
+
+$install['PDO_PWD_ENCRYPT'] = array(
+	'none',
+	'wzmd5',
+	'phpmd5',
+	'sha256',
+);

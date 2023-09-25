@@ -51,7 +51,7 @@ try {
 			# check if credit value is allowed
 			if(!in_array($_POST['credits'], $buyOptions)) throw new Exception(lang('error_24',true));
 			
-			$char = Decode($_POST['character']);
+			$char = $_POST['character'];
 			$zen = $_POST['credits']*$exchangeRatio;
 			
 			# validate form data

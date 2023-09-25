@@ -140,16 +140,6 @@ function langf($phrase, $args=array(), $print=false) {
 	}
 }
 
-# to be removed
-function Encode($txt) {
-	return $txt;
-}
-
-# to be removed
-function Decode($txt) {
-	return $txt;
-}
-
 function debug($value) {
 	echo '<pre>';
 		print_r($value);
@@ -160,16 +150,6 @@ function canAccessAdminCP($username) {
 	if(!check_value($username)) return;
 	if(array_key_exists($username, config('admins',true))) return true;
 	return false;
-}
-
-# to be removed
-function Encode_id($id) {
-	return $id;
-}
-
-# to be removed
-function Decode_id($id) {
-	return $id;
 }
 
 function BuildCacheData($data_array) {

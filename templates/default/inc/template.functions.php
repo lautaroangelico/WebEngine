@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.2
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -81,6 +81,7 @@ function templateCastleSiegeWidget() {
 	if(!$castleSiege->showWidget()) return;
 	$siegeData = $castleSiege->siegeData();
 	if(!is_array($siegeData)) return;
+	if(!is_array($siegeData['castle_data'])) return;
 	
 	if($siegeData['castle_data'][_CLMN_MCD_OCCUPY_] == 1) {
 		$guildOwner = guildProfile($siegeData['castle_data'][_CLMN_MCD_GUILD_OWNER_]);
@@ -140,10 +141,10 @@ function templateLanguageSelector() {
 	}
 	
 	echo '<ul class="webengine-language-switcher">';
-		echo '<li><a href="'.__BASE_URL__.'language/switch/to/'.strtolower($lang).'" title="'.$langList[$lang][0].'"><img src="'.getCountryFlag($langList[$lang][1]).'" /> '.strtoupper($lang).'</a></li>&nbsp;';
+		echo '<li><a href="'.__BASE_URL__.'language/switch/to/'.strtolower($lang).'" title="'.$langList[$lang][0].'"><img src="'.getCountryFlag($langList[$lang][1]).'" /> '.strtoupper($lang).'</a></li> ';
 		foreach($langList as $language => $languageInfo) {
 			if($language == $lang) continue;
-			echo '<li><a href="'.__BASE_URL__.'language/switch/to/'.strtolower($language).'" title="'.$languageInfo[0].'"><img src="'.getCountryFlag($languageInfo[1]).'" /> '.strtoupper($language).'</a></li>&nbsp;';
+			echo '<li><a href="'.__BASE_URL__.'language/switch/to/'.strtolower($language).'" title="'.$languageInfo[0].'"><img src="'.getCountryFlag($languageInfo[1]).'" /> '.strtoupper($language).'</a></li> ';
 		}
 	echo '</ul>';
 }

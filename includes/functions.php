@@ -11,10 +11,14 @@
  * http://opensource.org/licenses/MIT
  */
 
-function check_value($value) {
-	if((@count($value)>0 and !@empty($value) and @isset($value)) || $value=='0') {
-		return true;
-	}
+function check_value($value=array()) {
+	if(@empty($value) and !@isset($value)) return;
+	if(is_array($value)) {
+    	if(count($value)>0) return true;
+    } else {
+    	if(!@empty($value) and @isset($value)) return true;
+    	if($value=='0') return true;
+    }
 }
 
 function redirect($type = 1, $location = null, $delay = 0) {
@@ -191,6 +195,7 @@ function LoadCacheData($file_name) {
 	if(!is_readable($file)) return;
 	
 	$cache_file = file_get_contents($file);
+	if(empty($cache_file)) return;
 	$file_lanes = explode("\n",$cache_file);
 	$nlines = count($file_lanes);
 	for($i=0; $i<$nlines; $i++) {

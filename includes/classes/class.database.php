@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -43,7 +43,13 @@ class dB {
 	}
 	
 	public function query($sql, $array='') {
-		if(!is_array($array)) $array = array($array);
+		if(!is_array($array)) {
+        	if($array == '') {
+            	$array = array();
+            } else {
+        		$array = array($array);
+            }
+        }
 		$query = $this->db->prepare($sql);
 		if (!$query) {
 			$this->error = $this->trow_error();
@@ -61,7 +67,13 @@ class dB {
 	}
 	
 	public function query_fetch($sql, $array='') {
-		if(!is_array($array)) $array = array($array);
+		if(!is_array($array)) {
+        	if($array == '') {
+            	$array = array();
+            } else {
+        		$array = array($array);
+            }
+        }
 		$query = $this->db->prepare($sql);
 		if (!$query) {
 			$this->error = $this->trow_error();

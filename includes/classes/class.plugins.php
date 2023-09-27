@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -226,7 +226,7 @@ class Plugins {
 		if(!check_value($plugin)) return;
 		if(!check_value($version)) return;
 		
-		$url = 'http://version.webenginecms.org/1.0/plugin.php';
+		$url = 'https://version.webenginecms.org/1.0/plugin.php';
 		
 		$fields = array(
 			'version' => urlencode($version),
@@ -272,7 +272,7 @@ class Plugins {
 	private function _validateBuildHash($hash) {
 		if(!check_value($hash)) return;
 		
-		$url = 'http://version.webenginecms.org/1.0/hash.php';
+		$url = 'https://version.webenginecms.org/1.0/hash.php';
 		
 		$fields = array(
 			'build' => urlencode($hash),

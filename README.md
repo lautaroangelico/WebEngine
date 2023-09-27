@@ -12,11 +12,8 @@ Here's what you'll need to run WebEngine CMS in your web server
 
 * Apache mod_rewrite
 * PHP 7.4 or higher (8.1 recommended)
-* PHP PDO dblib/odbc/sqlsrv
-* cURL Extension
-* OpenSSL Extension
-* short_open_tag enabled
-* JSON
+* PHP modules: PDO dblib/odbc/sqlsrv, cURL, OpenSSL, GD
+* PHP short_open_tag enabled
 
 ### Installing
 

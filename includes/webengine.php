@@ -166,8 +166,7 @@ if(!$config['system_active'] && access != 'cron') {
 # Error Reporting
 if($config['error_reporting']) {
 	ini_set('display_errors', true);
-	//error_reporting(E_ALL & ~E_NOTICE);
-	error_reporting(E_ALL);
+	error_reporting(E_ALL & ~E_NOTICE);
 } else {
 	ini_set('display_errors', false);
 	error_reporting(0);

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.4
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -67,7 +67,7 @@ $lang['usercp_menu_txt_2'] = 'Reset Character';
 $lang['usercp_menu_txt_3'] = 'Clear PK';
 $lang['usercp_menu_txt_4'] = 'Vote for Credits';
 $lang['usercp_menu_txt_5'] = 'Buy Credits';
-$lang['usercp_menu_txt_6'] = 'Unstick Character';
+$lang['usercp_menu_txt_6'] = 'Unstuck Character';
 $lang['usercp_menu_txt_7'] = 'V.I.P. Subscription';
 $lang['usercp_menu_txt_8'] = 'Reset Stats';
 $lang['usercp_menu_txt_9'] = 'Clear Skill-Tree';
@@ -343,6 +343,7 @@ $lang['rankings_filter_11'] = 'Slayers';
 $lang['rankings_filter_12'] = 'Gun Crushers';
 $lang['rankings_filter_13'] = 'Light Wizards';
 $lang['rankings_filter_14'] = 'Lemuria Mages';
+$lang['rankings_filter_15'] = 'Illusion Knights';
 
 # clear pk
 $lang['clearpk_txt_1'] = 'Character';

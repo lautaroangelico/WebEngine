@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.4
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -16,7 +16,7 @@ if(!defined('access') or !access or access != 'install') die();
 /**
  * INSTALLER_VERSION
  */
-define('INSTALLER_VERSION', '1.2.4');
+define('INSTALLER_VERSION', '1.2.5');
 
 /**
  * WEBENGINE_CONFIGURATION_FILE
@@ -86,4 +86,11 @@ $install['cron_jobs'] = array(
 	array('Account Country','Scheduled task to detect the accounts country by their ip address','account_country.php','60','1','0'),
 	array('Character Country','Scheduled task to cache characters country','character_country.php','300','1','0'),
 	array('Online Characters','Scheduled task to cache online characters','online_characters.php','300','1','0'),
+);
+
+$install['PDO_PWD_ENCRYPT'] = array(
+	'none',
+	'wzmd5',
+	'phpmd5',
+	'sha256',
 );

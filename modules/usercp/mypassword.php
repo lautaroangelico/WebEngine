@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -26,7 +26,7 @@ try {
 		throw new Exception(lang('error_19',true));
 	}
 	
-	if(check_value($_POST['webenginePassword_submit'])) {
+	if(isset($_POST['webenginePassword_submit'])) {
 		try {
 			$Account = new Account();
 			

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.4
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -48,14 +48,14 @@ try {
 	echo '</tr>';
 	$i = 0;
 	foreach($ranking_data as $rdata) {
-		$characterIMG = getPlayerClassAvatar($rdata[2], true, true, 'rankings-class-image');
-		$onlineStatus = mconfig('show_online_status') ? in_array($rdata[0], $onlineCharacters) ? '<img src="'.__PATH_ONLINE_STATUS__.'" class="online-status-indicator"/>' : '<img src="'.__PATH_OFFLINE_STATUS__.'" class="online-status-indicator"/>' : '';
 		if($i>=1) {
+			$characterIMG = getPlayerClassAvatar($rdata[2], true, true, 'rankings-class-image');
+			$onlineStatus = mconfig('show_online_status') ? in_array($rdata[0], $onlineCharacters) ? '<img src="'.__PATH_ONLINE_STATUS__.'" class="online-status-indicator"/>' : '<img src="'.__PATH_OFFLINE_STATUS__.'" class="online-status-indicator"/>' : '';
 			echo '<tr data-class-id="'.$rdata[2].'">';
 			if(mconfig('rankings_show_place_number')) {
 				echo '<td class="rankings-table-place">'.$i.'</td>';
 			}
-			if($showPlayerCountry) echo '<td><img src="'.getCountryFlag($charactersCountry[$rdata[0]]).'" /></td>';
+			if($showPlayerCountry) echo '<td><img src="'.getCountryFlag(array_key_exists($rdata[0], $charactersCountry) ? $charactersCountry[$rdata[0]] : 'default').'" /></td>';
 			echo '<td>'.$characterIMG.'</td>';
 			echo '<td>'.playerProfile($rdata[0]).$onlineStatus.'</td>';
 			echo '<td>'.number_format($rdata[3]).'</td>';

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.4
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -22,13 +22,12 @@ if(check_value($_GET['action'])) {
 }
 ?>
 <h4>Getting Started:</h4><br />
-<p>Installing WebEngine CMS is very easy. During the setup process, the installer will help you make sure your web server meets the specified requirements to run the CMS. If you are installing the CMS in a shared web hosting account, make sure your hosting provider allows outgoing remote connections to your Microsoft SQL server port (usually port 1433).</p>
+<p>Welcome to WebEngine CMS installer. During the setup process, this installer will help you make sure your web server meets the minimum requirements to run the software. If you are installing the software in a shared web hosting account, please make sure your hosting provider allows outgoing remote connections to your Microsoft SQL Server (MSSQL) port (most commonly port 1433).</p>
 
 <br />
 
 <h4>Support:</h4><br />
-<p>If you are having trouble completing the setup process, feel free to reach out to us in our community support forum and/or discord. If additional help is required, feel free to contact us regarding our WebEngine Premium Support service.</p>
-<a href="https://forum.webenginecms.org/" target="_blank" class="btn btn-sm btn-default">WebEngine Support Forum</a>
+<p>If you are having trouble completing the setup process, feel free to reach out to us in our Discord server, here you will be able to receive support from other server administrators and from the community.</p>
 <a href="https://webenginecms.org/discord" target="_blank" class="btn btn-sm btn-default">Discord</a>
 
 <hr>
@@ -44,7 +43,7 @@ if(check_value($_GET['action'])) {
 	<div class="panel-body" style="font-size:10px;">
 		The MIT License (MIT)<br /><br />
 
-		Copyright (c) 2022 Lautaro Angelico<br /><br />
+		Copyright (c) 2023 Lautaro Angelico<br /><br />
 
 		Permission is hereby granted, free of charge, to any person obtaining a copy of<br />
 		this software and associated documentation files (the "Software"), to deal in<br />
@@ -68,7 +67,7 @@ if(check_value($_GET['action'])) {
 <hr>
 
 <h4>Thank You:</h4><br />
-<p>WebEngine CMS is open-source and we intend to keep it that way! We put a lot of effort and time into making this project possible, and we are very proud of what we have achieved so far. If you like our work, please consider supporting the continued development of the project by acquiring our premium services and/or products. Additionally you may also support this project by spreading the word about WebEngine CMS, giving us feedback and joining us in our support forum and discord.</p>
+<p>WebEngine CMS is open-source and I intend to keep it that way! I put a lot of effort and time into making this project possible, and I am very proud of what has been achieved so far. If you like my work, please consider supporting the continued development of the project by donating. Additionally you may also support this project by spreading the word about WebEngine CMS, giving us feedback and joining us in our social media websites and Discord server.</p>
 <br />
 
 <p>To proceed with the installation process click the "Start Installation" button below.</p>

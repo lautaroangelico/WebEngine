@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -35,11 +35,17 @@ if(check_value($_POST['install_step_2_submit'])) {
 		if(!check_value($_POST['install_step_2_4'])) throw new Exception('You must complete all required fields.');
 		
 		$_SESSION['install_sql_dsn'] = $_POST['install_step_2_8'];
-		if(!check_value($_POST['install_step_2_4'])) throw new Exception('You must complete all required fields.');
+		if(!check_value($_POST['install_step_2_8'])) throw new Exception('You must complete all required fields.');
 		if(!array_key_exists($_POST['install_step_2_8'], $install['PDO_DSN'])) throw new Exception('You must complete all required fields.');
 		
 		$_SESSION['install_sql_db2'] = (check_value($_POST['install_step_2_5']) ? $_POST['install_step_2_5'] : null);
-		$_SESSION['install_sql_md5'] = (check_value($_POST['install_step_2_6']) ? true : false);
+		
+		$_SESSION['install_sql_passwd_encrypt'] = $_POST['install_step_2_6'];
+		if(!check_value($_POST['install_step_2_6'])) throw new Exception('You must complete all required fields.');
+		if(!in_array(strtolower($_POST['install_step_2_6']), $install['PDO_PWD_ENCRYPT'])) throw new Exception('You must complete all required fields.');
+		
+		$_SESSION['install_sql_sha256_salt'] = $_POST['install_step_2_9'];
+		if(!check_value($_POST['install_step_2_9'])) throw new Exception('You must complete all required fields.');
 		
 		# test connection (db1)
 		$db1 = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db1'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass'], $_SESSION['install_sql_dsn']);
@@ -112,19 +118,19 @@ if(check_value($_POST['install_step_2_submit'])) {
 		<div class="col-sm-10">
 			<div class="radio">
 				<label>
-					<input type="radio" name="install_step_2_8" name="optionsRadios" id="input_81" value="1" checked="checked">
+					<input type="radio" name="install_step_2_8" id="input_8" value="1" checked="checked">
 					Dblib (Linux)
 				</label>
 			</div>
 			<div class="radio">
 				<label>
-					<input type="radio" name="install_step_2_8" name="optionsRadios" id="input_82" value="2">
+					<input type="radio" name="install_step_2_8" value="2">
 					SqlSrv (Windows)
 				</label>
 			</div>
 			<div class="radio">
 				<label>
-					<input type="radio" name="install_step_2_8" name="optionsRadios" id="input_83" value="3">
+					<input type="radio" name="install_step_2_8" value="3">
 					ODBC (Windows)
 				</label>
 			</div>
@@ -132,14 +138,43 @@ if(check_value($_POST['install_step_2_submit'])) {
 	</div>
 	
 	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
-			<div class="checkbox">
+		<label for="input_9" class="col-sm-2 control-label">Password Encryption</label>
+		<div class="col-sm-10">
+			<div class="radio">
 				<label>
-					<input type="checkbox" value="1" name="install_step_2_6" <?php if($_SESSION['install_sql_md5'] == 1) echo 'checked'; ?>> Enable MD5
+					<input type="radio" name="install_step_2_6" id="input_9" value="none" checked="checked">
+					None
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" name="install_step_2_6" value="wzmd5">
+					MD5 (WZ)
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" name="install_step_2_6" value="phpmd5">
+					MD5 (PHP)
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" name="install_step_2_6" value="sha256">
+					Sha256
 				</label>
 			</div>
 		</div>
 	</div>
+	
+	<div class="form-group">
+		<label for="input_10" class="col-sm-2 control-label">Sha256 Salt</label>
+		<div class="col-sm-10">
+			<input type="text" name="install_step_2_9" class="form-control" id="input_10" value="<?php echo (check_value($_SESSION['install_sql_sha256_salt']) ? $_SESSION['install_sql_sha256_salt'] : '1234567890'); ?>">
+			<p class="help-block">Required if you selected Sha256 password encryption. The "salt" value must match the configuration on your server.</p>
+		</div>
+	</div>
+
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
 			<button type="submit" name="install_step_2_submit" value="continue" class="btn btn-success">Continue</button>

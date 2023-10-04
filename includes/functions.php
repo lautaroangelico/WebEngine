@@ -3,18 +3,22 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
  */
 
-function check_value($value) {
-	if((@count($value)>0 and !@empty($value) and @isset($value)) || $value=='0') {
-		return true;
-	}
+function check_value($value=array()) {
+	if(@empty($value) and !@isset($value)) return;
+	if(is_array($value)) {
+    	if(count($value)>0) return true;
+    } else {
+    	if(!@empty($value) and @isset($value)) return true;
+    	if($value=='0') return true;
+    }
 }
 
 function redirect($type = 1, $location = null, $delay = 0) {
@@ -51,10 +55,10 @@ function redirect($type = 1, $location = null, $delay = 0) {
 }
 
 function isLoggedIn() {
-	if(!$_SESSION['valid']) return;
-	if(!check_value($_SESSION['userid'])) return;
-	if(!check_value($_SESSION['username'])) return;
-	if(!check_value($_SESSION['timeout'])) return;
+	if(!isset($_SESSION['valid'])) return;
+	if(!isset($_SESSION['userid'])) return;
+	if(!isset($_SESSION['username'])) return;
+	if(!isset($_SESSION['timeout'])) return;
 	
 	$loginConfigs = loadConfigurations('login');
 	if(is_array($loginConfigs)) {
@@ -99,8 +103,11 @@ function message($type='info', $message="", $title="") {
 
 function lang($phrase, $return=true) {
 	global $lang;
-	$result = $lang[$phrase];
-	if(!$result) $result = 'ERROR';
+	if(!array_key_exists($phrase, $lang)) {
+		$result = 'ERROR';
+	} else {
+		$result = $lang[$phrase];
+	}
 	
 	if(config('language_debug',true)) {
 		if($return) {
@@ -137,16 +144,6 @@ function langf($phrase, $args=array(), $print=false) {
 	}
 }
 
-# to be removed
-function Encode($txt) {
-	return $txt;
-}
-
-# to be removed
-function Decode($txt) {
-	return $txt;
-}
-
 function debug($value) {
 	echo '<pre>';
 		print_r($value);
@@ -157,16 +154,6 @@ function canAccessAdminCP($username) {
 	if(!check_value($username)) return;
 	if(array_key_exists($username, config('admins',true))) return true;
 	return false;
-}
-
-# to be removed
-function Encode_id($id) {
-	return $id;
-}
-
-# to be removed
-function Decode_id($id) {
-	return $id;
 }
 
 function BuildCacheData($data_array) {
@@ -208,6 +195,7 @@ function LoadCacheData($file_name) {
 	if(!is_readable($file)) return;
 	
 	$cache_file = file_get_contents($file);
+	if(empty($cache_file)) return;
 	$file_lanes = explode("\n",$cache_file);
 	$nlines = count($file_lanes);
 	for($i=0; $i<$nlines; $i++) {
@@ -360,7 +348,7 @@ function getPlayerClassAvatar($code=0, $htmlImageTag=true, $tooltip=true, $cssCl
 	global $custom;
 	$imageFileName = array_key_exists($code, $custom['character_class']) ? $custom['character_class'][$code][2] : 'avatar.jpg';
 	$imageFullPath = __PATH_TEMPLATE_IMG__ . config('character_avatars_dir', true) . '/' . $imageFileName;
-	$className = $custom['character_class'][$code][0];
+	$className = array_key_exists($code, $custom['character_class']) ? $custom['character_class'][$code][0] : '';
 	if(!$htmlImageTag) return $imageFullPath;
 	$result = '<img';
 	if(check_value($cssClass)) $result .= ' class="'.$cssClass.'"';

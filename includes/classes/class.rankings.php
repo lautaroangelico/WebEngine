@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.4
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -254,8 +254,10 @@ class Rankings {
 	public function rankingsMenu() {
 		echo '<div class="rankings_menu">';
 		foreach($this->_rankingsMenu as $rm_item) {
-			if(is_array($rm_item[3])) {
-				if(!in_array($this->serverFiles, $rm_item[3])) continue;
+			if(array_key_exists(3, $rm_item)) {
+				if(is_array($rm_item[3])) {
+					if(!in_array($this->serverFiles, $rm_item[3])) continue;
+				}
 			}
 			if($rm_item[2]) {
 				if($_REQUEST['subpage'] == $rm_item[1]) {

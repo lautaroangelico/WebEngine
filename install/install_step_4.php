@@ -50,7 +50,7 @@ try {
 	# add crons
 	echo '<div class="list-group">';
 	foreach($install['cron_jobs'] as $cron) {
-		$cronExists = $mudb->query_fetch_single("SELECT * FROM ".WEBENGINE_CRON." WHERE cron_file_run = ?", array($cron[2]));
+		$cronExists = $mudb->query_fetch_single("SELECT * FROM ".WEBENGINE_CRON." WHERE cron_file_run LIKE ?", array($cron[2]));
 		if(!$cronExists) {
 			$addCron = $mudb->query("INSERT INTO ".WEBENGINE_CRON." (cron_name,cron_description,cron_file_run,cron_run_time,cron_status,cron_protected,cron_file_md5) VALUES (?, ?, ?, ?, ?, ?, ?)", $cron);
 			if($addCron) {

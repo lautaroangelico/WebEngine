@@ -26,16 +26,16 @@ class Rankings {
 		
 		// rankings configs
 		loadModuleConfigs('rankings');
-		$this->_results = (isset(mconfig('rankings_results')) ? mconfig('rankings_results') : 25);
+		$this->_results = (check_value(mconfig('rankings_results')) ? mconfig('rankings_results') : 25);
 		
 		// excluded characters
-		if(isset(mconfig('rankings_excluded_characters'))) {
+		if(check_value(mconfig('rankings_excluded_characters'))) {
 			$excludedCharacters = explode(",", mconfig('rankings_excluded_characters'));
 			$this->_excludedCharacters = $excludedCharacters;
 		}
 		
 		// excluded guilds
-		if(isset(mconfig('rankings_excluded_guilds'))) {
+		if(check_value(mconfig('rankings_excluded_guilds'))) {
 			$excludedGuilds = explode(",", mconfig('rankings_excluded_guilds'));
 			$this->_excludedGuilds = $excludedGuilds;
 		}

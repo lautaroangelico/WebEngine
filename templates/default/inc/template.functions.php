@@ -26,7 +26,7 @@ function templateBuildNavbar() {
 		$link = ($element['type'] == 'internal' ? __BASE_URL__ . $element['link'] : $element['link']);
 		
 		# title
-		$title = (isset(lang($element['phrase'], true)) ? lang($element['phrase'], true) : 'Unk_phrase');
+		$title = (check_value(lang($element['phrase'], true)) ? lang($element['phrase'], true) : 'Unk_phrase');
 		
 		# visibility
 		if($element['visibility'] == 'guest') if(isLoggedIn()) continue;
@@ -57,7 +57,7 @@ function templateBuildUsercp() {
 		$link = ($element['type'] == 'internal' ? __BASE_URL__ . $element['link'] : $element['link']);
 		
 		# title
-		$title = (isset(lang($element['phrase'], true)) ? lang($element['phrase'], true) : 'Unk_phrase');
+		$title = (check_value(lang($element['phrase'], true)) ? lang($element['phrase'], true) : 'Unk_phrase');
 		
 		# icon
 		$icon = (isset($element['icon']) ? __PATH_TEMPLATE_IMG__ . 'icons/' . $element['icon'] : __PATH_TEMPLATE_IMG__ . 'icons/usercp_default.png');

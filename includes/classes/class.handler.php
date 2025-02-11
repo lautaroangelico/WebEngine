@@ -177,7 +177,7 @@ class Handler {
 	}
 	
 	public function websiteTitle() {
-		$websiteTitle = (isset(lang('website_title',true)) && lang('website_title',true) != 'ERROR' ? lang('website_title',true) : config('website_title',true));
+		$websiteTitle = (check_value(lang('website_title',true)) && lang('website_title',true) != 'ERROR' ? lang('website_title',true) : config('website_title',true));
 		echo $websiteTitle;
 	}
 	

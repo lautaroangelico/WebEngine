@@ -21,7 +21,7 @@ try {
 	
 	// Check Status
 	if(config('cron_api',true) == false) throw new Exception('Cron api disabled.');
-	if(!isset(config('cron_api_key',true))) throw new Exception('Configured cron api key is not valid.');
+	if(!check_value(config('cron_api_key',true))) throw new Exception('Configured cron api key is not valid.');
 	
 	// Check Key
 	if(!isset($_REQUEST['key'])) throw new Exception('Key is not valid.');

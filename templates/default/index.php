@@ -96,7 +96,7 @@ if(!isset($_REQUEST['subpage'])) {
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="col-xs-12 header-info-block">
-						<?php if(isset(config('maximum_online', true))) { ?>
+						<?php if(check_value(config('maximum_online', true))) { ?>
 						<div class="row">
 							<div class="col-xs-6 text-left">
 								<?php echo lang('sidebar_srvinfo_txt_5'); ?>:

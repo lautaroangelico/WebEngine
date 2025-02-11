@@ -1,4 +1,4 @@
-# WebEngine CMS 1.2.5
+# WebEngine CMS 1.2.6
 
 WebEngine is an Open source Content Management System (CMS) for Mu Online servers. Our main goal is to provide a fast, secure and high quality framework for server owners to create and implement their own features to their websites.
 
@@ -11,7 +11,7 @@ These instructions will help you deploy your own website using WebEngine CMS.
 Here's what you'll need to run WebEngine CMS in your web server
 
 * Apache mod_rewrite
-* PHP 7.4 or higher (8.1 recommended)
+* PHP 8.1 or higher (8.4 recommended)
 * PHP modules: PDO dblib/odbc/sqlsrv, cURL, OpenSSL, GD
 * PHP short_open_tag enabled
 

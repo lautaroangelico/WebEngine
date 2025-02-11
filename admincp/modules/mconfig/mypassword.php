@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -59,7 +59,7 @@ loadModuleConfigs('usercp.mypassword');
 		<tr>
 			<th>Change Password Time Limit<br/><span>If email verification is enabled, set the time that the verification link will stay valid.</span></th>
 			<td>
-				<input class="input-small" type="text" name="setting_3" value="<?=mconfig('change_password_request_timeout')?>"/> hour(s)
+				<input class="input-small" type="text" name="setting_3" value="<?php echo mconfig('change_password_request_timeout'); ?>"/> hour(s)
 			</td>
 		</tr>
 		<tr>

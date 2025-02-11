@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -55,13 +55,13 @@ loadModuleConfigs('news');
 		<tr>
 			<th>Expanded News<br/><span>Amount of news you want to display expanded. If less than the display news limit configuration, then the rest of the news will not display expanded.</span></th>
 			<td>
-				<input class="form-control" type="text" name="setting_2" value="<?=mconfig('news_expanded')?>"/>
+				<input class="form-control" type="text" name="setting_2" value="<?php echo mconfig('news_expanded'); ?>"/>
 			</td>
 		</tr>
 		<tr>
 			<th>Shown News Limit<br/><span>Amount of news to display in the news page.</span></th>
 			<td>
-				<input class="form-control" type="text" name="setting_3" value="<?=mconfig('news_list_limit')?>"/>
+				<input class="form-control" type="text" name="setting_3" value="<?php echo mconfig('news_list_limit'); ?>"/>
 			</td>
 		</tr>
 		<tr>
@@ -73,7 +73,7 @@ loadModuleConfigs('news');
 		<tr>
 			<th>Short News Character Limit<br/><span>Amount of characters to show in the short version of news.</span></th>
 			<td>
-				<input class="form-control" type="text" name="setting_7" value="<?=mconfig('news_short_char_limit')?>"/>
+				<input class="form-control" type="text" name="setting_7" value="<?php echo mconfig('news_short_char_limit'); ?>"/>
 			</td>
 		</tr>
 		<tr>

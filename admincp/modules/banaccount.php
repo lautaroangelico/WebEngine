@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -20,13 +20,13 @@
 	$checkBanCron = $database->query_fetch_single("SELECT * FROM ".WEBENGINE_CRON." WHERE cron_file_run = ?", array("temporal_bans.php"));
 	if(!is_array($checkBanCron)) $database->query($banCron);
 	
-	if(check_value($_POST['submit_ban'])) {
+	if(isset($_POST['submit_ban'])) {
 		try {
-			if(!check_value($_POST['ban_account'])) throw new Exception("Please enter the account username.");
+			if(!isset($_POST['ban_account'])) throw new Exception("Please enter the account username.");
 			if(!$common->userExists($_POST['ban_account'])) throw new Exception("Invalid account username.");
-			if(!check_value($_POST['ban_days'])) throw new Exception("Please enter the amount of days.");
+			if(!isset($_POST['ban_days'])) throw new Exception("Please enter the amount of days.");
 			if(!Validator::UnsignedNumber($_POST['ban_days'])) throw new Exception("Invalid ban days.");
-			if(check_value($_POST['ban_reason'])) {
+			if(isset($_POST['ban_reason'])) {
 				if(!Validator::Length($_POST['ban_reason'], 100, 1)) throw new Exception("Invalid ban reason.");
 			}
 			
@@ -50,7 +50,7 @@
 				'type' => $banType,
 				'date' => time(),
 				'days' => $_POST['ban_days'],
-				'reason' => (check_value($_POST['ban_reason']) ? $_POST['ban_reason'] : "")
+				'reason' => (isset($_POST['ban_reason']) ? $_POST['ban_reason'] : "")
 			);
 			
 			$logBan = $database->query("INSERT INTO ".WEBENGINE_BAN_LOG." (account_id, banned_by, ban_type, ban_date, ban_days, ban_reason) VALUES (:acc, :by, :type, :date, :days, :reason)", $banLogData);
@@ -63,7 +63,7 @@
 					'by' => $_SESSION['username'],
 					'date' => time(),
 					'days' => $_POST['ban_days'],
-					'reason' => (check_value($_POST['ban_reason']) ? $_POST['ban_reason'] : "")
+					'reason' => (isset($_POST['ban_reason']) ? $_POST['ban_reason'] : "")
 				);
 				$tempBan = $database->query("INSERT INTO ".WEBENGINE_BANS." (account_id, banned_by, ban_date, ban_days, ban_reason) VALUES (:acc, :by, :date, :days, :reason)", $tempBanData);
 				if(!$tempBan) throw new Exception("Could not add temporal ban (check tables)[2]. - " . $database->error);

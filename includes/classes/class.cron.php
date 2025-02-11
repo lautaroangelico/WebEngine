@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -83,28 +83,28 @@ class CronManager {
 	}
 	
 	public function resetCronLastRun() {
-		if(!check_value($this->_id)) return;
+		if(!isset($this->_id)) return;
 		$result = $this->memuonline->query("UPDATE ".WEBENGINE_CRON." SET cron_last_run = NULL WHERE cron_id = ?", array($this->_id));
 		if(!$result) throw new Exception($this->memuonline->error);
 		return true;
 	}
 	
 	public function deleteCron() {
-		if(!check_value($this->_id)) return;
+		if(!isset($this->_id)) return;
 		$result = $this->memuonline->query("DELETE FROM ".WEBENGINE_CRON." WHERE cron_id = ?", array($this->_id));
 		if(!$result) throw new Exception($this->memuonline->error);
 		return true;
 	}
 	
 	public function getCronApiUrl($id=null) {
-		if(check_value($id)) return __PATH_API__ . $this->_api . '?key=' . config('cron_api_key',true) . '&id=' . $id;
+		if(isset($id)) return __PATH_API__ . $this->_api . '?key=' . config('cron_api_key',true) . '&id=' . $id;
 		return __PATH_API__ . $this->_api . '?key=' . config('cron_api_key',true);
 	}
 	
 	public function addCron() {
-		if(!check_value($this->_name)) throw new Exception(lang('error_106'));
-		if(!check_value($this->_file)) throw new Exception(lang('error_106'));
-		if(!check_value($this->_interval)) throw new Exception(lang('error_106'));
+		if(!isset($this->_name)) throw new Exception(lang('error_106'));
+		if(!isset($this->_file)) throw new Exception(lang('error_106'));
+		if(!isset($this->_interval)) throw new Exception(lang('error_106'));
 		if($this->_cronAlreadyExists($this->_file)) throw new Exception(lang('error_107'));
 		
 		$data = array(
@@ -147,7 +147,7 @@ class CronManager {
 		while(($file = readdir($dir)) !== false) {
 			if(filetype(__PATH_CRON__ . $file) == "file" && $file != ".htaccess" && $file != "cron.php") {
 				
-				if(check_value($selected) && $selected == $file) {
+				if(isset($selected) && $selected == $file) {
 					$return[] = "<option value=\"$file\" selected=\"selected\">$file</option>";
 				} else {
 					$return[] = "<option value=\"$file\">$file</option>";
@@ -164,7 +164,7 @@ class CronManager {
 	}
 	
 	protected function _setCronStatus($status=1) {
-		if(!check_value($this->_id)) return;
+		if(!isset($this->_id)) return;
 		$result = $this->memuonline->query("UPDATE ".WEBENGINE_CRON." SET cron_status = ? WHERE cron_id = ?", array($status, $this->_id));
 		if(!$result) throw new Exception($this->memuonline->error);
 		return true;

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -16,7 +16,7 @@ echo '<h2>Reset Settings</h2>';
 function saveChanges() {
 	global $_POST;
 	foreach($_POST as $setting) {
-		if(!check_value($setting)) {
+		if(!isset($setting)) {
 			message('error','Missing data (complete all fields).');
 			return;
 		}
@@ -25,27 +25,27 @@ function saveChanges() {
 	$xml = simplexml_load_file($xmlPath);
 	
 	// active
-	if(!check_value($_POST['setting_1'])) throw new Exception('Invalid setting (active)');
+	if(!isset($_POST['setting_1'])) throw new Exception('Invalid setting (active)');
 	if(!in_array($_POST['setting_1'], array(0, 1))) throw new Exception('Invalid setting (active)');
 	$xml->active = $_POST['setting_1'];
 	
 	// maximum_resets
-	if(!check_value($_POST['setting_6'])) throw new Exception('Invalid setting (maximum_resets)');
+	if(!isset($_POST['setting_6'])) throw new Exception('Invalid setting (maximum_resets)');
 	if(!Validator::UnsignedNumber($_POST['setting_6'])) throw new Exception('Invalid setting (maximum_resets)');
 	$xml->maximum_resets = $_POST['setting_6'];
 	
 	// keep_stats
-	if(!check_value($_POST['setting_7'])) throw new Exception('Invalid setting (keep_stats)');
+	if(!isset($_POST['setting_7'])) throw new Exception('Invalid setting (keep_stats)');
 	if(!in_array($_POST['setting_7'], array(0, 1))) throw new Exception('Invalid setting (keep_stats)');
 	$xml->keep_stats = $_POST['setting_7'];
 	
 	// clear_inventory
-	if(!check_value($_POST['setting_10'])) throw new Exception('Invalid setting (clear_inventory)');
+	if(!isset($_POST['setting_10'])) throw new Exception('Invalid setting (clear_inventory)');
 	if(!in_array($_POST['setting_10'], array(0, 1))) throw new Exception('Invalid setting (clear_inventory)');
 	$xml->clear_inventory = $_POST['setting_10'];
 	
 	// revert_class_evolution
-	if(!check_value($_POST['setting_11'])) throw new Exception('Invalid setting (revert_class_evolution)');
+	if(!isset($_POST['setting_11'])) throw new Exception('Invalid setting (revert_class_evolution)');
 	if(!in_array($_POST['setting_11'], array(0, 1))) throw new Exception('Invalid setting (revert_class_evolution)');
 	$xml->revert_class_evolution = $_POST['setting_11'];
 	
@@ -53,22 +53,22 @@ function saveChanges() {
 	////////////
 	
 	// required_level
-	if(!check_value($_POST['setting_5'])) throw new Exception('Invalid setting (required_level)');
+	if(!isset($_POST['setting_5'])) throw new Exception('Invalid setting (required_level)');
 	if(!Validator::UnsignedNumber($_POST['setting_5'])) throw new Exception('Invalid setting (required_level)');
 	$xml->required_level = $_POST['setting_5'];
 	
 	// zen_cost
-	if(!check_value($_POST['setting_2'])) throw new Exception('Invalid setting (zen_cost)');
+	if(!isset($_POST['setting_2'])) throw new Exception('Invalid setting (zen_cost)');
 	if(!Validator::UnsignedNumber($_POST['setting_2'])) throw new Exception('Invalid setting (zen_cost)');
 	$xml->zen_cost = $_POST['setting_2'];
 	
 	// credit_cost
-	if(!check_value($_POST['setting_4'])) throw new Exception('Invalid setting (credit_cost)');
+	if(!isset($_POST['setting_4'])) throw new Exception('Invalid setting (credit_cost)');
 	if(!Validator::UnsignedNumber($_POST['setting_4'])) throw new Exception('Invalid setting (credit_cost)');
 	$xml->credit_cost = $_POST['setting_4'];
 	
 	// credit_config
-	if(!check_value($_POST['setting_3'])) throw new Exception('Invalid setting (credit_config)');
+	if(!isset($_POST['setting_3'])) throw new Exception('Invalid setting (credit_config)');
 	if(!Validator::UnsignedNumber($_POST['setting_3'])) throw new Exception('Invalid setting (credit_config)');
 	$xml->credit_config = $_POST['setting_3'];
 	
@@ -76,22 +76,22 @@ function saveChanges() {
 	////////////
 	
 	// points_reward
-	if(!check_value($_POST['setting_8'])) throw new Exception('Invalid setting (points_reward)');
+	if(!isset($_POST['setting_8'])) throw new Exception('Invalid setting (points_reward)');
 	if(!Validator::UnsignedNumber($_POST['setting_8'])) throw new Exception('Invalid setting (points_reward)');
 	$xml->points_reward = $_POST['setting_8'];
 	
 	// multiply_points_by_resets
-	if(!check_value($_POST['setting_9'])) throw new Exception('Invalid setting (multiply_points_by_resets)');
+	if(!isset($_POST['setting_9'])) throw new Exception('Invalid setting (multiply_points_by_resets)');
 	if(!in_array($_POST['setting_9'], array(0, 1))) throw new Exception('Invalid setting (multiply_points_by_resets)');
 	$xml->multiply_points_by_resets = $_POST['setting_9'];
 	
 	// credit_reward
-	if(!check_value($_POST['setting_12'])) throw new Exception('Invalid setting (credit_reward)');
+	if(!isset($_POST['setting_12'])) throw new Exception('Invalid setting (credit_reward)');
 	if(!Validator::UnsignedNumber($_POST['setting_12'])) throw new Exception('Invalid setting (credit_reward)');
 	$xml->credit_reward = $_POST['setting_12'];
 	
 	// credit_reward_config
-	if(!check_value($_POST['setting_13'])) throw new Exception('Invalid setting (credit_reward_config)');
+	if(!isset($_POST['setting_13'])) throw new Exception('Invalid setting (credit_reward_config)');
 	if(!Validator::UnsignedNumber($_POST['setting_13'])) throw new Exception('Invalid setting (credit_reward_config)');
 	$xml->credit_reward_config = $_POST['setting_13'];
 	
@@ -103,7 +103,7 @@ function saveChanges() {
 	}
 }
 
-if(check_value($_POST['submit_changes'])) {
+if(isset($_POST['submit_changes'])) {
 	saveChanges();
 }
 

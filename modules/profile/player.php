@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -15,7 +15,7 @@ echo '<div class="page-title"><span>'.lang('profiles_txt_2',true).'</span></div>
 
 loadModuleConfigs('profiles');
 if(mconfig('active')) {
-	if(check_value($_GET['req'])) {
+	if(isset($_GET['req'])) {
 		try {
 			$weProfiles = new weProfiles();
 			$weProfiles->setType("player");
@@ -43,13 +43,13 @@ if(mconfig('active')) {
 							echo '<td>'.lang('profiles_txt_20',true).'</td>';
 							echo '<td>'.number_format($cData[14]).'</td>';
 						echo '</tr>';
-						if(check_value($cData[4])) {
+						if(isset($cData[4])) {
 							echo '<tr>';
 								echo '<td>'.lang('profiles_txt_8',true).'</td>';
 								echo '<td>'.number_format($cData[4]).'</td>';
 							echo '</tr>';
 						}
-						if(check_value($cData[11])) {
+						if(isset($cData[11])) {
 							echo '<tr>';
 								echo '<td>'.lang('profiles_txt_9',true).'</td>';
 								echo '<td>'.number_format($cData[11]).'</td>';
@@ -81,7 +81,7 @@ if(mconfig('active')) {
 							echo '<td>'.lang('profiles_txt_15',true).'</td>';
 							echo '<td>'.number_format($cData[10]).'</td>';
 						echo '</tr>';
-						if(check_value($cData[12])) {
+						if(isset($cData[12])) {
 							echo '<tr>';
 								echo '<td>'.lang('profiles_txt_16',true).'</td>';
 								echo '<td>'.guildProfile($cData[12]).'</td>';

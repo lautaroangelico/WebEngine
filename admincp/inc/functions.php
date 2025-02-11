@@ -3,16 +3,16 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
  */
 
 function admincp_base($module="") {
-	if(check_value($module)) return __PATH_ADMINCP_HOME__ . "?module=" . $module;
+	if(isset($module)) return __PATH_ADMINCP_HOME__ . "?module=" . $module;
 	return __PATH_ADMINCP_HOME__;;
 }
 
@@ -83,10 +83,10 @@ function getDownloadsList() {
 
 function addDownload($title, $description='', $link, $size=0, $type=1) {
 	$db = config('SQL_USE_2_DB',true) ? Connection::Database('Me_MuOnline') : Connection::Database('MuOnline');
-	if(!check_value($title)) return;
-	if(!check_value($link)) return;
-	if(!check_value($size)) return;
-	if(!check_value($type)) return;
+	if(!isset($title)) return;
+	if(!isset($link)) return;
+	if(!isset($size)) return;
+	if(!isset($type)) return;
 	if(strlen($title) > 100) return;
 	if(strlen($description) > 100) return;
 	
@@ -99,11 +99,11 @@ function addDownload($title, $description='', $link, $size=0, $type=1) {
 
 function editDownload($id, $title, $description='', $link, $size=0, $type=1) {
 	$db = config('SQL_USE_2_DB',true) ? Connection::Database('Me_MuOnline') : Connection::Database('MuOnline');
-	if(!check_value($id)) return;
-	if(!check_value($title)) return;
-	if(!check_value($link)) return;
-	if(!check_value($size)) return;
-	if(!check_value($type)) return;
+	if(!isset($id)) return;
+	if(!isset($title)) return;
+	if(!isset($link)) return;
+	if(!isset($size)) return;
+	if(!isset($type)) return;
 	if(strlen($title) > 100) return;
 	if(strlen($description) > 100) return;
 	
@@ -116,7 +116,7 @@ function editDownload($id, $title, $description='', $link, $size=0, $type=1) {
 
 function deleteDownload($id) {
 	$db = config('SQL_USE_2_DB',true) ? Connection::Database('Me_MuOnline') : Connection::Database('MuOnline');
-	if(!check_value($id)) return;
+	if(!isset($id)) return;
 	$result = $db->query("DELETE FROM ".WEBENGINE_DOWNLOADS." WHERE download_id = ?", array($id));
 	if(!$result) return;
 	

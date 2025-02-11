@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.5
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -26,16 +26,16 @@ class Rankings {
 		
 		// rankings configs
 		loadModuleConfigs('rankings');
-		$this->_results = (check_value(mconfig('rankings_results')) ? mconfig('rankings_results') : 25);
+		$this->_results = (isset(mconfig('rankings_results')) ? mconfig('rankings_results') : 25);
 		
 		// excluded characters
-		if(check_value(mconfig('rankings_excluded_characters'))) {
+		if(isset(mconfig('rankings_excluded_characters'))) {
 			$excludedCharacters = explode(",", mconfig('rankings_excluded_characters'));
 			$this->_excludedCharacters = $excludedCharacters;
 		}
 		
 		// excluded guilds
-		if(check_value(mconfig('rankings_excluded_guilds'))) {
+		if(isset(mconfig('rankings_excluded_guilds'))) {
 			$excludedGuilds = explode(",", mconfig('rankings_excluded_guilds'));
 			$this->_excludedGuilds = $excludedGuilds;
 		}
@@ -220,7 +220,7 @@ class Rankings {
 			
 			$Character = new Character();
 			$characterName = $Character->AccountCharacterIDC($accountInfo[_CLMN_USERNM_]);
-			if(!check_value($characterName)) continue;
+			if(!isset($characterName)) continue;
 			
 			$characterData = $Character->CharacterData($characterName);
 			if(!is_array($characterData)) continue;
@@ -418,7 +418,7 @@ class Rankings {
 		$Character = new Character();
 		foreach($accounts as $row) {
 			$playerIDC = $Character->AccountCharacterIDC($row[_CLMN_MS_MEMBID_]);
-			if(!check_value($playerIDC)) continue;
+			if(!isset($playerIDC)) continue;
 			$platerData = $Character->CharacterData($playerIDC);
 			if(!is_array($platerData)) continue;
 			$result[] = array(

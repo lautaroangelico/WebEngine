@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -20,13 +20,13 @@ if(!config('plugins_system_enable',true)) {
 define('PLUGIN_ALLOW_UNINSTALL',true);
 $Plugins = new Plugins();
 
-if(check_value($_REQUEST['enable'])) {
+if(isset($_REQUEST['enable'])) {
 	$Plugins->updatePluginStatus($_REQUEST['enable'],1);
 }
-if(check_value($_REQUEST['disable'])) {
+if(isset($_REQUEST['disable'])) {
 	$Plugins->updatePluginStatus($_REQUEST['disable'],0);
 }
-if(check_value($_REQUEST['uninstall'])) {
+if(isset($_REQUEST['uninstall'])) {
 	$uninstall_plugin = $Plugins->uninstallPlugin($_REQUEST['uninstall']);
 	if($uninstall_plugin) {
 		message('success','Plugin successfully uninstalled.');

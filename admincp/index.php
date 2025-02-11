@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -147,12 +147,12 @@ $admincpSidebar = array(
 								}
 								
 								echo '<li'.$active.'>';
-									$itemIcon = (check_value($sidebarItem[2]) ? '<i class="fa '.$sidebarItem[2].' fa-fw"></i>&nbsp;' : '');
+									$itemIcon = (isset($sidebarItem[2]) ? '<i class="fa '.$sidebarItem[2].' fa-fw"></i>&nbsp;' : '');
 									if(is_array($sidebarItem[1])) {
 										echo '<a href="#">'.$itemIcon.$sidebarItem[0].'<span class="fa arrow"></span></a>';
 										echo '<ul class="nav nav-second-level">';
 											foreach($sidebarItem[1] as $sidebarSubItemModule => $sidebarSubItemTitle) {
-												if(check_value($sidebarSubItemTitle)) echo '<li><a href="'.admincp_base($sidebarSubItemModule).'">'.$sidebarSubItemTitle.'</a></li>';
+												if(isset($sidebarSubItemTitle)) echo '<li><a href="'.admincp_base($sidebarSubItemModule).'">'.$sidebarSubItemTitle.'</a></li>';
 											}
 										echo '</ul>';
 									} else {

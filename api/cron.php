@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -21,10 +21,10 @@ try {
 	
 	// Check Status
 	if(config('cron_api',true) == false) throw new Exception('Cron api disabled.');
-	if(!check_value(config('cron_api_key',true))) throw new Exception('Configured cron api key is not valid.');
+	if(!isset(config('cron_api_key',true))) throw new Exception('Configured cron api key is not valid.');
 	
 	// Check Key
-	if(!check_value($_REQUEST['key'])) throw new Exception('Key is not valid.');
+	if(!isset($_REQUEST['key'])) throw new Exception('Key is not valid.');
 	if($_REQUEST['key'] != config('cron_api_key',true)) throw new Exception('Key is not valid.');
 	
 	// Cron Manager
@@ -39,11 +39,11 @@ try {
 		include($path);
 	}
 	
-	if(!check_value($_GET['id'])) {
+	if(!isset($_GET['id'])) {
 		// Execute All Enabled Crons
 		foreach($cronList as $cron) {
 			if($cron['cron_status'] != 1) continue;
-			if(!check_value($cron['cron_last_run'])) {
+			if(!isset($cron['cron_last_run'])) {
 				$lastRun = $cron['cron_run_time'];
 			} else {
 				$lastRun = $cron['cron_last_run']+$cron['cron_run_time'];

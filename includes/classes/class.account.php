@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.5
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -29,10 +29,10 @@ class Account extends common {
 	
 	public function registerAccount($username, $password, $cpassword, $email) {
 		
-		if(!check_value($username)) throw new Exception(lang('error_4',true));
-		if(!check_value($password)) throw new Exception(lang('error_4',true));
-		if(!check_value($cpassword)) throw new Exception(lang('error_4',true));
-		if(!check_value($email)) throw new Exception(lang('error_4',true));
+		if(!isset($username)) throw new Exception(lang('error_4',true));
+		if(!isset($password)) throw new Exception(lang('error_4',true));
+		if(!isset($cpassword)) throw new Exception(lang('error_4',true));
+		if(!isset($email)) throw new Exception(lang('error_4',true));
 
 		// Filters
 		if(!Validator::UsernameLength($username)) throw new Exception(lang('error_5',true));
@@ -56,7 +56,7 @@ class Account extends common {
 			
 			# generate verification key
 			$verificationKey = $this->createRegistrationVerification($username,$password,$email);
-			if(!check_value($verificationKey)) throw new Exception(lang('error_23',true));
+			if(!isset($verificationKey)) throw new Exception(lang('error_23',true));
 			
 			# send verification email
 			$this->sendRegistrationVerificationEmail($username,$email,$verificationKey);
@@ -124,11 +124,11 @@ class Account extends common {
 	}
 	
 	public function changePasswordProcess($userid, $username, $password, $new_password, $confirm_new_password) {
-		if(!check_value($userid)) throw new Exception(lang('error_4',true));
-		if(!check_value($username)) throw new Exception(lang('error_4',true));
-		if(!check_value($password)) throw new Exception(lang('error_4',true));
-		if(!check_value($new_password)) throw new Exception(lang('error_4',true));
-		if(!check_value($confirm_new_password)) throw new Exception(lang('error_4',true));
+		if(!isset($userid)) throw new Exception(lang('error_4',true));
+		if(!isset($username)) throw new Exception(lang('error_4',true));
+		if(!isset($password)) throw new Exception(lang('error_4',true));
+		if(!isset($new_password)) throw new Exception(lang('error_4',true));
+		if(!isset($confirm_new_password)) throw new Exception(lang('error_4',true));
 		if(!Validator::PasswordLength($new_password)) throw new Exception(lang('error_7',true));
 		if($new_password != $confirm_new_password) throw new Exception(lang('error_8',true));
 		
@@ -157,11 +157,11 @@ class Account extends common {
 	}
 	
 	public function changePasswordProcess_verifyEmail($userid, $username, $password, $new_password, $confirm_new_password, $ip_address) {
-		if(!check_value($userid)) throw new Exception(lang('error_4',true));
-		if(!check_value($username)) throw new Exception(lang('error_4',true));
-		if(!check_value($password)) throw new Exception(lang('error_4',true));
-		if(!check_value($new_password)) throw new Exception(lang('error_4',true));
-		if(!check_value($confirm_new_password)) throw new Exception(lang('error_4',true));
+		if(!isset($userid)) throw new Exception(lang('error_4',true));
+		if(!isset($username)) throw new Exception(lang('error_4',true));
+		if(!isset($password)) throw new Exception(lang('error_4',true));
+		if(!isset($new_password)) throw new Exception(lang('error_4',true));
+		if(!isset($confirm_new_password)) throw new Exception(lang('error_4',true));
 		if(!Validator::PasswordLength($new_password)) throw new Exception(lang('error_7',true));
 		if($new_password != $confirm_new_password) throw new Exception(lang('error_8',true));
 		
@@ -213,8 +213,8 @@ class Account extends common {
 	}
 	
 	public function changePasswordVerificationProcess($user_id, $auth_code) {
-		if(!check_value($user_id)) throw new Exception(lang('error_24',true));
-		if(!check_value($auth_code)) throw new Exception(lang('error_24',true));
+		if(!isset($user_id)) throw new Exception(lang('error_24',true));
+		if(!isset($auth_code)) throw new Exception(lang('error_24',true));
 		
 		$userid = $user_id;
 		$authcode = $auth_code;
@@ -268,15 +268,15 @@ class Account extends common {
 	}
 	
 	public function passwordRecoveryProcess($user_email, $ip_address) {
-		if(!check_value($user_email)) throw new Exception(lang('error_30',true));
-		if(!check_value($ip_address)) throw new Exception(lang('error_30',true));
+		if(!isset($user_email)) throw new Exception(lang('error_30',true));
+		if(!isset($ip_address)) throw new Exception(lang('error_30',true));
 		if(!Validator::Email($user_email)) throw new Exception(lang('error_30',true));
 		if(!Validator::Ip($ip_address)) throw new Exception(lang('error_30',true));
 		
 		if(!$this->emailExists($user_email)) throw new Exception(lang('error_30',true));
 		
 		$user_id = $this->retrieveUserIDbyEmail($user_email);
-		if(!check_value($user_id)) throw new Exception(lang('error_23',true));
+		if(!isset($user_id)) throw new Exception(lang('error_23',true));
 		
 		$accountData = $this->accountInformation($user_id);
 		if(!is_array($accountData)) throw new Exception(lang('error_23',true));
@@ -309,9 +309,9 @@ class Account extends common {
 	}
 	
 	public function passwordRecoveryVerificationProcess($ui, $ue, $key) {
-		if(!check_value($ui)) throw new Exception(lang('error_31',true));
-		if(!check_value($ue)) throw new Exception(lang('error_31',true));
-		if(!check_value($key)) throw new Exception(lang('error_31',true));
+		if(!isset($ui)) throw new Exception(lang('error_31',true));
+		if(!isset($ue)) throw new Exception(lang('error_31',true));
+		if(!isset($key)) throw new Exception(lang('error_31',true));
 		
 		$user_id = $ui; // user id
 		if(!Validator::UnsignedNumber($user_id)) throw new Exception(lang('error_31',true));
@@ -352,9 +352,9 @@ class Account extends common {
 	}
 	
 	public function changeEmailAddress($accountId, $newEmail, $ipAddress) {
-		if(!check_value($accountId)) throw new Exception(lang('error_21',true));
-		if(!check_value($newEmail)) throw new Exception(lang('error_21',true));
-		if(!check_value($ipAddress)) throw new Exception(lang('error_21',true));
+		if(!isset($accountId)) throw new Exception(lang('error_21',true));
+		if(!isset($newEmail)) throw new Exception(lang('error_21',true));
+		if(!isset($ipAddress)) throw new Exception(lang('error_21',true));
 		if(!Validator::Ip($ipAddress)) throw new Exception(lang('error_21',true));
 		if(!Validator::Email($newEmail)) throw new Exception(lang('error_21',true));
 		
@@ -462,15 +462,15 @@ class Account extends common {
 	}
 	
 	public function getAccountCountry() {
-		if(!check_value($this->_account)) return;
+		if(!isset($this->_account)) return;
 		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_ACCOUNT_COUNTRY." WHERE account = ?", array($this->_account));
 		if(!is_array($result)) return;
 		return $result;
 	}
 	
 	public function updateAccountCountry() {
-		if(!check_value($this->_account)) return;
-		if(!check_value($this->_country)) return;
+		if(!isset($this->_account)) return;
+		if(!isset($this->_country)) return;
 		
 		$data = $this->getAccountCountry();
 		if(!is_array($data)) return;
@@ -482,8 +482,8 @@ class Account extends common {
 	}
 	
 	public function insertAccountCountry() {
-		if(!check_value($this->_account)) return;
-		if(!check_value($this->_country)) return;
+		if(!isset($this->_account)) return;
+		if(!isset($this->_country)) return;
 		$result = $this->memuonline->query("INSERT INTO ".WEBENGINE_ACCOUNT_COUNTRY." (account, country) VALUES (?, ?)", array($this->_account, $this->_country));
 		if(!$result) return;
 		return true;
@@ -499,7 +499,7 @@ class Account extends common {
 	}
 	
 	public function getOnlineAccountCount($server=null) {
-		if(check_value($server)) {
+		if(isset($server)) {
 			$result = $this->memuonline->query_fetch_single("SELECT COUNT(*) as online FROM "._TBL_MS_." WHERE "._CLMN_CONNSTAT_." = 1 AND "._CLMN_MS_GS_." = ?", array($server));
 			if(!is_array($result)) return 0;
 			return $result['online'];
@@ -510,7 +510,7 @@ class Account extends common {
 	}
 	
 	public function getOnlineAccountList($server=null) {
-		if(check_value($server)) {
+		if(isset($server)) {
 			$result = $this->memuonline->query_fetch("SELECT "._CLMN_MS_MEMBID_.", "._CLMN_MS_GS_.", "._CLMN_MS_IP_." FROM "._TBL_MS_." WHERE "._CLMN_CONNSTAT_." = 1 AND "._CLMN_MS_GS_." = ?", array($server));
 			if(!is_array($result)) return;
 			return $result;
@@ -551,9 +551,9 @@ class Account extends common {
 	}
 	
 	private function createRegistrationVerification($username,$password,$email) {
-		if(!check_value($username)) return;
-		if(!check_value($password)) return;
-		if(!check_value($email)) return;
+		if(!isset($username)) return;
+		if(!isset($password)) return;
+		if(!isset($email)) return;
 		
 		$key = uniqid();
 		$data = array(
@@ -573,14 +573,14 @@ class Account extends common {
 	}
 	
 	private function deleteRegistrationVerification($username) {
-		if(!check_value($username)) return;
+		if(!isset($username)) return;
 		$delete = $this->memuonline->query("DELETE FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_account = ?", array($username));
 		if($delete) return true;
 		return;
 	}
 
 	private function checkUsernameEVS($username) {
-		if(!check_value($username)) return;
+		if(!isset($username)) return;
 		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_account = ?", array($username));
 		
 		$configs = loadConfigurations('register');
@@ -594,7 +594,7 @@ class Account extends common {
 	}
 
 	private function checkEmailEVS($email) {
-		if(!check_value($email)) return;
+		if(!isset($email)) return;
 		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_email = ?", array($email));
 		
 		$configs = loadConfigurations('register');
@@ -628,8 +628,8 @@ class Account extends common {
 	}
 	
 	private function generateAccountRecoveryLink($userid,$email,$recovery_code) {
-		if(!check_value($userid)) return;
-		if(!check_value($recovery_code)) return;
+		if(!isset($userid)) return;
+		if(!isset($recovery_code)) return;
 		
 		$build_url = __BASE_URL__;
 		$build_url .= 'forgotpassword/';

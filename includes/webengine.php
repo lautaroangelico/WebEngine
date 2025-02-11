@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.5
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -19,7 +19,7 @@ if(access != 'cron') {
 }
 
 # Version
-define('__WEBENGINE_VERSION__', '1.2.5');
+define('__WEBENGINE_VERSION__', '1.2.6');
 
 # Set Encoding
 @ini_set('default_charset', 'utf-8');
@@ -138,13 +138,13 @@ if($checkConfigs) {
 	if(!file_exists(__PATH_TEMPLATES__ . $config['website_template'])) throw new Exception('The default template doesn\'t exist.');
 	
 	# required configs
-	if(!check_value($config['SQL_DB_HOST'])) throw new Exception('The database host configuration is required to connect to your database.');
-	if(!check_value($config['SQL_DB_NAME'])) throw new Exception('The database name configuration is required to connect to your database.');
-	if(!check_value($config['SQL_DB_USER'])) throw new Exception('The database user configuration is required to connect to your database.');
-	if(!check_value($config['SQL_DB_PASS'])) throw new Exception('The database password configuration is required to connect to your database.');
-	if(!check_value($config['SQL_DB_PORT'])) throw new Exception('The database port configuration is required to connect to your database.');
-	if($config['SQL_USE_2_DB']) if(!check_value($config['SQL_DB_2_NAME'])) throw new Exception('The additional database name configuration is required to connect to your database.');
-	if(!check_value($config['SQL_PDO_DRIVER'])) throw new Exception('The PDO driver configuration is required to connect to your database.');
+	if(!isset($config['SQL_DB_HOST'])) throw new Exception('The database host configuration is required to connect to your database.');
+	if(!isset($config['SQL_DB_NAME'])) throw new Exception('The database name configuration is required to connect to your database.');
+	if(!isset($config['SQL_DB_USER'])) throw new Exception('The database user configuration is required to connect to your database.');
+	if(!isset($config['SQL_DB_PASS'])) throw new Exception('The database password configuration is required to connect to your database.');
+	if(!isset($config['SQL_DB_PORT'])) throw new Exception('The database port configuration is required to connect to your database.');
+	if($config['SQL_USE_2_DB']) if(!isset($config['SQL_DB_2_NAME'])) throw new Exception('The additional database name configuration is required to connect to your database.');
+	if(!isset($config['SQL_PDO_DRIVER'])) throw new Exception('The PDO driver configuration is required to connect to your database.');
 }
 
 # Load Table Definitions

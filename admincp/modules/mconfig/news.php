@@ -16,7 +16,7 @@
 function saveChanges() {
 	global $_POST;
 	foreach($_POST as $setting) {
-		if(!check_value($setting)) {
+		if(!isset($setting)) {
 			message('error','Missing data (complete all fields).');
 			return;
 		}
@@ -38,7 +38,7 @@ function saveChanges() {
 	}
 }
 
-if(check_value($_POST['submit_changes'])) {
+if(isset($_POST['submit_changes'])) {
 	saveChanges();
 }
 

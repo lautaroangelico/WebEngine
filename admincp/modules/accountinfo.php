@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -16,11 +16,11 @@ $accountInfoConfig['showStatusInfo'] = true;
 $accountInfoConfig['showIpInfo'] = true;
 $accountInfoConfig['showCharacters'] = true;
 
-if(check_value($_GET['u'])) {
+if(isset($_GET['u'])) {
 	try {
 		$Account = new Account();
 		$userId = $Account->retrieveUserID($_GET['u']);
-		if(check_value($userId)) {
+		if(isset($userId)) {
 			redirect(3, admincp_base('accountinfo&id='.$userId));
 		}
 	} catch(Exception $ex) {
@@ -28,23 +28,23 @@ if(check_value($_GET['u'])) {
 	}
 }
 
-if(check_value($_GET['id'])) {
+if(isset($_GET['id'])) {
 	try {
-		if(check_value($_POST['editaccount_submit'])) {
+		if(isset($_POST['editaccount_submit'])) {
 			try {
-				if(!check_value($_POST['action'])) throw new Exception("Invalid request.");
-				$sendEmail = (check_value($_POST['editaccount_sendmail']) && $_POST['editaccount_sendmail'] == 1 ? true : false);
+				if(!isset($_POST['action'])) throw new Exception("Invalid request.");
+				$sendEmail = (isset($_POST['editaccount_sendmail']) && $_POST['editaccount_sendmail'] == 1 ? true : false);
 				$accountInfo = $common->accountInformation($_GET['id']);
 				if(!$accountInfo) throw new Exception("Could not retrieve account information (invalid account).");
 				switch($_POST['action']) {
 					case "changepassword":
-						if(!check_value($_POST['changepassword_newpw'])) throw new Exception("Please enter the new password.");
+						if(!isset($_POST['changepassword_newpw'])) throw new Exception("Please enter the new password.");
 						if(!Validator::PasswordLength($_POST['changepassword_newpw'])) throw new Exception("Invalid password.");
 						if(!$common->changePassword($accountInfo[_CLMN_MEMBID_], $accountInfo[_CLMN_USERNM_], $_POST['changepassword_newpw'])) throw new Exception("Could not change password.");
 						message('success', 'Password updated!');
 						
 						# send new password
-						if(check_value($_POST['editaccount_sendmail'])) {
+						if(isset($_POST['editaccount_sendmail'])) {
 							$email = new Email();
 							$email->setTemplate('ADMIN_CHANGE_PASSWORD');
 							$email->addVariable('{USERNAME}', $accountInfo[_CLMN_USERNM_]);
@@ -54,14 +54,14 @@ if(check_value($_GET['id'])) {
 						}
 						break;
 					case "changeemail":
-						if(!check_value($_POST['changeemail_newemail'])) throw new Exception("Please enter the new email.");
+						if(!isset($_POST['changeemail_newemail'])) throw new Exception("Please enter the new email.");
 						if(!Validator::Email($_POST['changeemail_newemail'])) throw new Exception("Invalid email address.");
 						if($common->emailExists($_POST['changeemail_newemail'])) throw new Exception("Another account with the same email already exists.");
 						if(!$common->updateEmail($accountInfo[_CLMN_MEMBID_], $_POST['changeemail_newemail'])) throw new Exception("Could not update email.");
 						message('success', 'Email address updated!');
 						
 						# send new email to current email
-						if(check_value($_POST['editaccount_sendmail'])) {
+						if(isset($_POST['editaccount_sendmail'])) {
 							$email = new Email();
 							$email->setTemplate('ADMIN_CHANGE_EMAIL');
 							$email->addVariable('{USERNAME}', $accountInfo[_CLMN_USERNM_]);

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -16,16 +16,16 @@ echo '<h1 class="page-header">Credit Configurations</h1>';
 $creditSystem = new CreditSystem();
 
 // NEW CONFIG
-if(check_value($_POST['new_submit'])) {
+if(isset($_POST['new_submit'])) {
 	try {
-		if(!check_value($_POST['new_title'])) throw new Exception("Please fill all the required fields.");
-		if(!check_value($_POST['new_database'])) throw new Exception("Please fill all the required fields.");
-		if(!check_value($_POST['new_table'])) throw new Exception("Please fill all the required fields.");
-		if(!check_value($_POST['new_credits_column'])) throw new Exception("Please fill all the required fields.");
-		if(!check_value($_POST['new_user_column'])) throw new Exception("Please fill all the required fields.");
-		if(!check_value($_POST['new_user_column_id'])) throw new Exception("Please fill all the required fields.");
-		if(!check_value($_POST['new_checkonline'])) throw new Exception("Please fill all the required fields.");
-		if(!check_value($_POST['new_display'])) throw new Exception("Please fill all the required fields.");
+		if(!isset($_POST['new_title'])) throw new Exception("Please fill all the required fields.");
+		if(!isset($_POST['new_database'])) throw new Exception("Please fill all the required fields.");
+		if(!isset($_POST['new_table'])) throw new Exception("Please fill all the required fields.");
+		if(!isset($_POST['new_credits_column'])) throw new Exception("Please fill all the required fields.");
+		if(!isset($_POST['new_user_column'])) throw new Exception("Please fill all the required fields.");
+		if(!isset($_POST['new_user_column_id'])) throw new Exception("Please fill all the required fields.");
+		if(!isset($_POST['new_checkonline'])) throw new Exception("Please fill all the required fields.");
+		if(!isset($_POST['new_display'])) throw new Exception("Please fill all the required fields.");
 		
 		$creditSystem->setConfigTitle($_POST['new_title']);
 		$creditSystem->setConfigDatabase($_POST['new_database']);
@@ -43,17 +43,17 @@ if(check_value($_POST['new_submit'])) {
 }
 
 // EDIT CONFIG
-if(check_value($_POST['edit_submit'])) {
+if(isset($_POST['edit_submit'])) {
 	try {
-		if(!check_value($_POST['edit_id'])) throw new Exception("Please fill all the required fields.");
-		if(!check_value($_POST['edit_title'])) throw new Exception("Please fill all the required fields.");
-		if(!check_value($_POST['edit_database'])) throw new Exception("Please fill all the required fields.");
-		if(!check_value($_POST['edit_table'])) throw new Exception("Please fill all the required fields.");
-		if(!check_value($_POST['edit_credits_column'])) throw new Exception("Please fill all the required fields.");
-		if(!check_value($_POST['edit_user_column'])) throw new Exception("Please fill all the required fields.");
-		if(!check_value($_POST['edit_user_column_id'])) throw new Exception("Please fill all the required fields.");
-		if(!check_value($_POST['edit_checkonline'])) throw new Exception("Please fill all the required fields.");
-		if(!check_value($_POST['edit_display'])) throw new Exception("Please fill all the required fields.");
+		if(!isset($_POST['edit_id'])) throw new Exception("Please fill all the required fields.");
+		if(!isset($_POST['edit_title'])) throw new Exception("Please fill all the required fields.");
+		if(!isset($_POST['edit_database'])) throw new Exception("Please fill all the required fields.");
+		if(!isset($_POST['edit_table'])) throw new Exception("Please fill all the required fields.");
+		if(!isset($_POST['edit_credits_column'])) throw new Exception("Please fill all the required fields.");
+		if(!isset($_POST['edit_user_column'])) throw new Exception("Please fill all the required fields.");
+		if(!isset($_POST['edit_user_column_id'])) throw new Exception("Please fill all the required fields.");
+		if(!isset($_POST['edit_checkonline'])) throw new Exception("Please fill all the required fields.");
+		if(!isset($_POST['edit_display'])) throw new Exception("Please fill all the required fields.");
 		
 		$creditSystem->setConfigId($_POST['edit_id']);
 		$creditSystem->setConfigTitle($_POST['edit_title']);
@@ -72,7 +72,7 @@ if(check_value($_POST['edit_submit'])) {
 }
 
 // DELETE CONFIG
-if(check_value($_GET['delete'])) {
+if(isset($_GET['delete'])) {
 	try {
 		$creditSystem->setConfigId($_GET['delete']);
 		$creditSystem->deleteConfig();
@@ -84,7 +84,7 @@ if(check_value($_GET['delete'])) {
 echo '<div class="row">';
 	echo '<div class="col-md-4">';
 		
-		if(!check_value($_GET['edit'])) {
+		if(!isset($_GET['edit'])) {
 			// ADD NEW CONFIG
 			echo '<div class="panel panel-primary">';
 			echo '<div class="panel-heading">New Configuration</div>';

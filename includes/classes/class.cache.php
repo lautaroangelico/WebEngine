@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -64,7 +64,7 @@ class CacheManager {
 	}
 	
 	public function clearCacheData() {
-		if(!check_value($this->_file)) return;
+		if(!isset($this->_file)) return;
 		if(!in_array($this->_file, $this->_getCacheFileList())) throw new Exception('The requested cache file is not valid.');
 		$filePath = __PATH_CACHE__ . $this->_file;
 		$fileData = '';

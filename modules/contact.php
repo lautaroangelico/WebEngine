@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.8
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -17,10 +17,10 @@ try {
 	
 	if(!mconfig('active')) throw new Exception(lang('error_47',true));
 	
-	if(check_value($_POST['submit'])) {
+	if(isset($_POST['submit'])) {
 		try {
-			if(!check_value($_POST['contact_email'])) throw new Exception(lang('error_41',true));
-			if(!check_value($_POST['contact_message'])) throw new Exception(lang('error_41',true));
+			if(!isset($_POST['contact_email'])) throw new Exception(lang('error_41',true));
+			if(!isset($_POST['contact_message'])) throw new Exception(lang('error_41',true));
 			if(!Validator::Email($_POST['contact_email'])) throw new Exception(lang('error_9',true));
 			if(!Validator::Length($_POST['contact_message'], 300, 10)) throw new Exception(lang('error_57',true));
 			

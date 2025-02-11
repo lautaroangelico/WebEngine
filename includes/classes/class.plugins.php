@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.5
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -54,10 +54,10 @@ class Plugins {
 		&& array_key_exists('compatibility',$array)
 		&& array_key_exists('folder',$array)
 		&& array_key_exists('files',$array)) {
-			if(check_value($array['name'])
-			&& check_value($array['author'])
-			&& check_value($array['version'])
-			&& check_value($array['folder'])) {
+			if(isset($array['name'])
+			&& isset($array['author'])
+			&& isset($array['version'])
+			&& isset($array['folder'])) {
 				if(is_array($array['compatibility']) && is_array($array['files'])) {
 					return true;
 				} else {
@@ -110,7 +110,7 @@ class Plugins {
 					}
 					if($thisFile == 'loader.php') {
 						@$build = $this->_getBuidHash($file);
-						if(check_value($build)) {
+						if(isset($build)) {
 							$validateBuildHash = @$this->_validateBuildHash($build);
 							if(!is_array($validateBuildHash)) return;
 							if($validateBuildHash['status'] != true) return;
@@ -126,7 +126,7 @@ class Plugins {
 				$file = $this->pluginPath($plugin_name).$array['file'];
 				if(file_exists($file)) {
 					@$build = $this->_getBuidHash($file);
-					if(check_value($build)) {
+					if(isset($build)) {
 						$validateBuildHash = @$this->_validateBuildHash($build);
 						if(!is_array($validateBuildHash)) return;
 						if($validateBuildHash['status'] != true) return;
@@ -223,8 +223,8 @@ class Plugins {
 	}
 	
 	private function _getPluginLatestVersion($plugin, $version='1.0.0') {
-		if(!check_value($plugin)) return;
-		if(!check_value($version)) return;
+		if(!isset($plugin)) return;
+		if(!isset($version)) return;
 		
 		$url = 'https://version.webenginecms.org/1.0/plugin.php';
 		
@@ -262,7 +262,7 @@ class Plugins {
 		$srch = preg_match("/@build/", $fileContents, $matches, PREG_OFFSET_CAPTURE);
 		if(is_array($matches) && count($matches) > 0) {
 			$build = substr($fileContents, $matches[0][1]+7, 32);
-			if(!check_value($build)) return;
+			if(!isset($build)) return;
 			if(strlen($build) !=32) return;
 			return $build;
 		}
@@ -270,7 +270,7 @@ class Plugins {
 	}
 	
 	private function _validateBuildHash($hash) {
-		if(!check_value($hash)) return;
+		if(!isset($hash)) return;
 		
 		$url = 'https://version.webenginecms.org/1.0/hash.php';
 		

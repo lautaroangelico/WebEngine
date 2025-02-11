@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -28,14 +28,14 @@ class login {
 	
 	public function validateLogin($username, $password) {
 		
-		if(!check_value($username)) throw new Exception(lang('error_4',true));
-		if(!check_value($password)) throw new Exception(lang('error_4',true));
+		if(!isset($username)) throw new Exception(lang('error_4',true));
+		if(!isset($password)) throw new Exception(lang('error_4',true));
 		if(!$this->canLogin($_SERVER['REMOTE_ADDR'])) throw new Exception(lang('error_3',true));
 		if(!$this->common->userExists($username)) throw new Exception(lang('error_2',true));
 		if($this->common->validateUser($username,$password)) {
 			
 			$userId = $this->common->retrieveUserID($username);
-			if(!check_value($userId)) throw new Exception(lang('error_12',true));
+			if(!isset($userId)) throw new Exception(lang('error_12',true));
 			
 			$accountData = $this->common->accountInformation($userId);
 			if(!is_array($accountData)) throw new Exception(lang('error_12',true));

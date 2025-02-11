@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -20,7 +20,7 @@ loadModuleConfigs('news');
 if($News->isNewsDirWritable()) {
 	
 	// Add news process::
-	if(check_value($_POST['news_submit'])) {
+	if(isset($_POST['news_submit'])) {
 		$News->addNews($_POST['news_title'],$_POST['news_content'],$_POST['news_author'],0);
 		$News->cacheNews();
 		$News->updateNewsCacheIndex();
@@ -44,7 +44,7 @@ if($News->isNewsDirWritable()) {
 		<button type="submit" class="btn btn-large btn-block btn-success" name="news_submit" value="ok">Publish</button>
 	</form>
 
-	<script src="//cdn.ckeditor.com/4.7.3/full/ckeditor.js"></script>
+	<script src="//cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
 	<script type="text/javascript">//<![CDATA[
 		CKEDITOR.replace('news_content', {
 			language: 'en',

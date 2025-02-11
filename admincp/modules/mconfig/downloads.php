@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -21,7 +21,7 @@ $downloadTypes = array (
 
 function downloadTypesSelect($downloadTypes,$selected=null) {
 	foreach($downloadTypes as $key => $typeOPTION) {
-		if(check_value($selected)) {
+		if(isset($selected)) {
 			if($key == $selected) {
 				echo '<option value="'.$key.'" selected="selected">'.$typeOPTION.'</option>';
 			} else {
@@ -36,7 +36,7 @@ function downloadTypesSelect($downloadTypes,$selected=null) {
 function saveChanges() {
 	global $_POST;
 	foreach($_POST as $setting) {
-		if(!check_value($setting)) {
+		if(!isset($setting)) {
 			message('error','Missing data (complete all fields).');
 			return;
 		}
@@ -57,11 +57,11 @@ function saveChanges() {
 	}
 }
 
-if(check_value($_POST['submit_changes'])) {
+if(isset($_POST['submit_changes'])) {
 	saveChanges();
 }
 
-if(check_value($_POST['downloads_add_submit'])) {
+if(isset($_POST['downloads_add_submit'])) {
 	$action = addDownload($_POST['downloads_add_title'], $_POST['downloads_add_desc'], $_POST['downloads_add_link'], $_POST['downloads_add_size'], $_POST['downloads_add_type']);
 	if($action) {
 		message('success','Your download link has been successfully added!');
@@ -70,7 +70,7 @@ if(check_value($_POST['downloads_add_submit'])) {
 	}
 }
 
-if(check_value($_POST['downloads_edit_submit'])) {
+if(isset($_POST['downloads_edit_submit'])) {
 	$action = editDownload($_POST['downloads_edit_id'], $_POST['downloads_edit_title'], $_POST['downloads_edit_desc'], $_POST['downloads_edit_link'], $_POST['downloads_edit_size'], $_POST['downloads_edit_type']);
 	if($action) {
 		message('success','Your download link has been successfully updated!');
@@ -79,7 +79,7 @@ if(check_value($_POST['downloads_edit_submit'])) {
 	}
 }
 
-if(check_value($_REQUEST['deletelink'])) {
+if(isset($_REQUEST['deletelink'])) {
 	$action = deleteDownload($_REQUEST['deletelink']);
 	if($action) {
 		message('success','Your download link has been successfully deleted!');

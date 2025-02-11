@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -60,7 +60,7 @@ class weProfiles {
 	}
 	
 	private function checkCacheDir($path) {
-		if(check_value($path)) {
+		if(isset($path)) {
 			if(!file_exists($path) || !is_dir($path)) {
 				if(config('error_reporting',true)) {
 					throw new Exception("Invalid cache directory ($path)");
@@ -190,10 +190,10 @@ class weProfiles {
 			$playerData[_CLMN_CHR_STAT_ENE_],
 			$playerData[_CLMN_CHR_STAT_CMD_],
 			$playerData[_CLMN_CHR_PK_KILLS_],
-			(check_value($playerData[_CLMN_CHR_GRSTS_]) ? $playerData[_CLMN_CHR_GRSTS_] : 0),
+			(isset($playerData[_CLMN_CHR_GRSTS_]) ? $playerData[_CLMN_CHR_GRSTS_] : 0),
 			$guild,
 			$status,
-			check_value($playerMasterLevel) ? $playerMasterLevel : 0,
+			isset($playerMasterLevel) ? $playerMasterLevel : 0,
 		);
 		
 		// Cache Ready Data
@@ -207,8 +207,8 @@ class weProfiles {
 	}
 	
 	public function data() {
-		if(!check_value($this->_type)) throw new Exception(lang('error_21',true));
-		if(!check_value($this->_request)) throw new Exception(lang('error_21',true));
+		if(!isset($this->_type)) throw new Exception(lang('error_21',true));
+		if(!isset($this->_request)) throw new Exception(lang('error_21',true));
 		$this->checkCache();
 		return(explode("|", $this->_fileData));
 	}

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.5
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -16,7 +16,7 @@ if(!defined('access') or !access or access != 'install') die();
 <h3>Web Server Requirements</h3>
 <br />
 <?php
-if(check_value($_POST['install_step_1_submit'])) {
+if(isset($_POST['install_step_1_submit'])) {
 	try {
 		# move to next step
 		$_SESSION['install_cstep']++;
@@ -29,18 +29,11 @@ if(check_value($_POST['install_step_1_submit'])) {
 
 echo '<div class="list-group">';
 
-	$chk_1 = version_compare(PHP_VERSION, '7.4', '>=');
+	$chk_1 = version_compare(PHP_VERSION, '8.1', '>=');
 	$check_1 = ($chk_1 ? '<span class="label label-success">Ok</span>' : '<span class="label label-danger">Fix</span>');
 	echo '<div class="list-group-item">';
-		echo 'PHP 7.4 or higher';
+		echo 'PHP 8.1 or higher';
 		echo '<span class="pull-right">(PHP '.PHP_VERSION.') '.$check_1.'</span>';
-	echo '</div>';
-
-	$chk_2 = (ini_get('short_open_tag') == 1 ? true : false);
-	$check_2 = ($chk_2 ? '<span class="label label-success">Ok</span>' : '<span class="label label-danger">Fix</span>');
-	echo '<div class="list-group-item">';
-		echo 'short_open_tag';
-		echo '<span class="pull-right">'.$check_2.'</span>';
 	echo '</div>';
 
 	$chk_3 = (extension_loaded('openssl') ? true : false);

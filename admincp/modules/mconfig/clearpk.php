@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -16,7 +16,7 @@ echo '<h2>Clear PK Settings</h2>';
 function saveChanges() {
 	global $_POST;
 	foreach($_POST as $setting) {
-		if(!check_value($setting)) {
+		if(!isset($setting)) {
 			message('error','Missing data (complete all fields).');
 			return;
 		}
@@ -24,19 +24,19 @@ function saveChanges() {
 	$xmlPath = __PATH_MODULE_CONFIGS__.'usercp.clearpk.xml';
 	$xml = simplexml_load_file($xmlPath);
 	
-	if(!check_value($_POST['setting_1'])) throw new Exception('Invalid setting (active)');
+	if(!isset($_POST['setting_1'])) throw new Exception('Invalid setting (active)');
 	if(!in_array($_POST['setting_1'], array(0, 1))) throw new Exception('Invalid setting (active)');
 	$xml->active = $_POST['setting_1'];
 	
-	if(!check_value($_POST['setting_2'])) throw new Exception('Invalid setting (zen_cost)');
+	if(!isset($_POST['setting_2'])) throw new Exception('Invalid setting (zen_cost)');
 	if(!Validator::UnsignedNumber($_POST['setting_2'])) throw new Exception('Invalid setting (zen_cost)');
 	$xml->zen_cost = $_POST['setting_2'];
 	
-	if(!check_value($_POST['setting_3'])) throw new Exception('Invalid setting (credit_config)');
+	if(!isset($_POST['setting_3'])) throw new Exception('Invalid setting (credit_config)');
 	if(!Validator::UnsignedNumber($_POST['setting_3'])) throw new Exception('Invalid setting (credit_config)');
 	$xml->credit_config = $_POST['setting_3'];
 	
-	if(!check_value($_POST['setting_4'])) throw new Exception('Invalid setting (credit_cost)');
+	if(!isset($_POST['setting_4'])) throw new Exception('Invalid setting (credit_cost)');
 	if(!Validator::UnsignedNumber($_POST['setting_4'])) throw new Exception('Invalid setting (credit_cost)');
 	$xml->credit_cost = $_POST['setting_4'];
 	
@@ -48,7 +48,7 @@ function saveChanges() {
 	}
 }
 
-if(check_value($_POST['submit_changes'])) {
+if(isset($_POST['submit_changes'])) {
 	saveChanges();
 }
 

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.2
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -22,7 +22,7 @@ try {
 	if(!$News->isNewsDirWritable()) throw new Exception('The news cache folder is not writable.');
 		
 	// Edit news translation process
-	if(check_value($_POST['news_submit'])) {
+	if(isset($_POST['news_submit'])) {
 		try {
 			$News->setId($_POST['news_id']);
 			$News->setLanguage($_POST['news_language']);
@@ -51,11 +51,11 @@ try {
 		echo '</div>';
 		echo '<div class="form-group">';
 			echo '<label for="input_2">Title:</label>';
-			echo '<input type="text" class="form-control" id="input_2" name="news_title" value="'.(check_value($_POST['news_title']) ? $_POST['news_title'] : base64_decode($newsData['news_title'])).'" />';
+			echo '<input type="text" class="form-control" id="input_2" name="news_title" value="'.(isset($_POST['news_title']) ? $_POST['news_title'] : base64_decode($newsData['news_title'])).'" />';
 		echo '</div>';
 		echo '<div class="form-group">';
 			echo '<label for="news_content"></label>';
-			echo '<textarea name="news_content" id="news_content">'.(check_value($_POST['news_content']) ? $_POST['news_content'] : base64_decode($newsData['news_content'])).'</textarea>';
+			echo '<textarea name="news_content" id="news_content">'.(isset($_POST['news_content']) ? $_POST['news_content'] : base64_decode($newsData['news_content'])).'</textarea>';
 		echo '</div>';
 		echo '<button type="submit" class="btn btn-large btn-block btn-warning" name="news_submit" value="ok">Update News Translation</button>';
 	echo '</form>';

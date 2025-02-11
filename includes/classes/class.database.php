@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.5
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -18,6 +18,8 @@ class dB {
 	public $dead;
 	
 	private $_enableErrorLogs = true;
+	
+	public $db;
 	
 	// what are you doing around here?
 	function __construct($SQLHOST, $SQLPORT, $SQLDB, $SQLUSER, $SQLPWD, $SQLDRIVER) {
@@ -83,7 +85,7 @@ class dB {
 			if($query->execute($array)) {
 				$result = $query->fetchAll(PDO::FETCH_ASSOC);
 				$query->closeCursor();
-				return (check_value($result)) ? $result : NULL;
+				return (isset($result)) ? $result : NULL;
 			} else {
 				$this->error = $this->trow_error($query);
 				return false;
@@ -97,7 +99,7 @@ class dB {
 	}
 	
 	private function trow_error($state='') {
-		if(!check_value($state)) {
+		if(!isset($state)) {
 			$error = $this->db->errorInfo();
 		} else {
 			$error = $state->errorInfo();

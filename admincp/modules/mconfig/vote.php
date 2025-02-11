@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -20,7 +20,7 @@ $vote = new Vote();
 function saveChanges() {
 	global $_POST;
 	foreach($_POST as $setting) {
-		if(!check_value($setting)) {
+		if(!isset($setting)) {
 			message('error','Missing data (complete all fields).');
 			return;
 		}
@@ -41,11 +41,11 @@ function saveChanges() {
 }
 
 
-if(check_value($_POST['submit_changes'])) {
+if(isset($_POST['submit_changes'])) {
 	saveChanges();
 }
 
-if(check_value($_POST['votesite_add_submit'])) {
+if(isset($_POST['votesite_add_submit'])) {
 	$add = $vote->addVotesite($_POST['votesite_add_title'],$_POST['votesite_add_link'],$_POST['votesite_add_reward'],$_POST['votesite_add_time']);
 	if($add) {
 		message('success','Votesite successfully added.');
@@ -54,7 +54,7 @@ if(check_value($_POST['votesite_add_submit'])) {
 	}
 }
 
-if(check_value($_REQUEST['deletesite'])) {
+if(isset($_REQUEST['deletesite'])) {
 	$delete = $vote->deleteVotesite($_REQUEST['deletesite']);
 	if($delete) {
 		message('success','Votesite successfully deleted.');

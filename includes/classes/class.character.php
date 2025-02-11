@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.2
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -32,6 +32,9 @@ class Character {
 	protected $_vitality = 0;
 	protected $_energy = 0;
 	protected $_command = 0;
+	
+	protected $muonline;
+	protected $common;
 	
 	function __construct() {
 		
@@ -89,9 +92,9 @@ class Character {
 	
 	public function CharacterReset() {
 		// filters
-		if(!check_value($this->_username)) throw new Exception(lang('error_21'));
-		if(!check_value($this->_character)) throw new Exception(lang('error_21'));
-		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
+		if(!isset($this->_username)) throw new Exception(lang('error_21'));
+		if(!isset($this->_character)) throw new Exception(lang('error_21'));
+		if(!isset($this->_userid)) throw new Exception(lang('error_21'));
 		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_32'));
 		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_32'));
 		
@@ -234,9 +237,9 @@ class Character {
 	
 	public function CharacterResetStats() {
 		// filters
-		if(!check_value($this->_username)) throw new Exception(lang('error_21'));
-		if(!check_value($this->_character)) throw new Exception(lang('error_21'));
-		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
+		if(!isset($this->_username)) throw new Exception(lang('error_21'));
+		if(!isset($this->_character)) throw new Exception(lang('error_21'));
+		if(!isset($this->_userid)) throw new Exception(lang('error_21'));
 		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_35'));
 		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_35'));
 		
@@ -318,9 +321,9 @@ class Character {
 	
 	public function CharacterClearPK() {
 		// filters
-		if(!check_value($this->_username)) throw new Exception(lang('error_21'));
-		if(!check_value($this->_character)) throw new Exception(lang('error_21'));
-		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
+		if(!isset($this->_username)) throw new Exception(lang('error_21'));
+		if(!isset($this->_character)) throw new Exception(lang('error_21'));
+		if(!isset($this->_userid)) throw new Exception(lang('error_21'));
 		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_36'));
 		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_36'));
 		
@@ -386,9 +389,9 @@ class Character {
 	
 	public function CharacterUnstick() {
 		// filters
-		if(!check_value($this->_username)) throw new Exception(lang('error_21'));
-		if(!check_value($this->_character)) throw new Exception(lang('error_21'));
-		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
+		if(!isset($this->_username)) throw new Exception(lang('error_21'));
+		if(!isset($this->_character)) throw new Exception(lang('error_21'));
+		if(!isset($this->_userid)) throw new Exception(lang('error_21'));
 		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_37'));
 		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_37'));
 		
@@ -449,9 +452,9 @@ class Character {
 	
 	public function CharacterClearSkillTree() {
 		// filters
-		if(!check_value($this->_username)) throw new Exception(lang('error_21'));
-		if(!check_value($this->_character)) throw new Exception(lang('error_21'));
-		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
+		if(!isset($this->_username)) throw new Exception(lang('error_21'));
+		if(!isset($this->_character)) throw new Exception(lang('error_21'));
+		if(!isset($this->_userid)) throw new Exception(lang('error_21'));
 		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_38'));
 		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_38'));
 		
@@ -556,9 +559,9 @@ class Character {
 	
 	public function CharacterAddStats() {
 		// filters
-		if(!check_value($this->_username)) throw new Exception(lang('error_21'));
-		if(!check_value($this->_character)) throw new Exception(lang('error_21'));
-		if(!check_value($this->_userid)) throw new Exception(lang('error_21'));
+		if(!isset($this->_username)) throw new Exception(lang('error_21'));
+		if(!isset($this->_character)) throw new Exception(lang('error_21'));
+		if(!isset($this->_userid)) throw new Exception(lang('error_21'));
 		if(!$this->CharacterExists($this->_character)) throw new Exception(lang('error_64'));
 		if(!$this->CharacterBelongsToAccount($this->_character, $this->_username)) throw new Exception(lang('error_64'));
 		
@@ -671,7 +674,7 @@ class Character {
 	}	
 	
 	public function AccountCharacter($username) {
-		if(!check_value($username)) return;
+		if(!isset($username)) return;
 		if(!Validator::UsernameLength($username)) return;
 		if(!Validator::AlphaNumeric($username)) return;
 		
@@ -679,7 +682,7 @@ class Character {
 		if(!is_array($result)) return;
 		
 		foreach($result as $row) {
-			if(!check_value($row[_CLMN_CHR_NAME_])) continue;
+			if(!isset($row[_CLMN_CHR_NAME_])) continue;
 			$return[] = $row[_CLMN_CHR_NAME_];
 		}
 		
@@ -688,7 +691,7 @@ class Character {
 	}
 	
 	public function CharacterData($character_name) {
-		if(!check_value($character_name)) return;
+		if(!isset($character_name)) return;
 		$result = $this->muonline->query_fetch_single("SELECT * FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." = ?", array($character_name));
 		if(!is_array($result)) return;
 		return $result;
@@ -696,8 +699,8 @@ class Character {
 	}
 	
 	public function CharacterBelongsToAccount($character_name,$username) {
-		if(!check_value($character_name)) return;
-		if(!check_value($username)) return;
+		if(!isset($character_name)) return;
+		if(!isset($username)) return;
 		if(!Validator::UsernameLength($username)) return;
 		if(!Validator::AlphaNumeric($username)) return;
 		$characterData = $this->CharacterData($character_name);
@@ -708,15 +711,15 @@ class Character {
 	}
 	
 	public function CharacterExists($character_name) {
-		if(!check_value($character_name)) return;
+		if(!isset($character_name)) return;
 		$check = $this->muonline->query_fetch_single("SELECT * FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." = ?", array($character_name));
 		if(!is_array($check)) return;
 		return true;
 	}
 	
 	public function DeductZEN($character_name,$zen_amount) {
-		if(!check_value($character_name)) return;
-		if(!check_value($zen_amount)) return;
+		if(!isset($character_name)) return;
+		if(!isset($zen_amount)) return;
 		if(!Validator::UnsignedNumber($zen_amount)) return;
 		if($zen_amount < 1) return;
 		if(!$this->CharacterExists($character_name)) return;
@@ -729,7 +732,7 @@ class Character {
 	}
 	
 	public function AccountCharacterIDC($username) {
-		if(!check_value($username)) return;
+		if(!isset($username)) return;
 		if(!Validator::UsernameLength($username)) return;
 		if(!Validator::AlphaNumeric($username)) return;
 		$data = $this->muonline->query_fetch_single("SELECT * FROM "._TBL_AC_." WHERE "._CLMN_AC_ID_." = ?", array($username));
@@ -743,7 +746,7 @@ class Character {
 	}
 	
 	public function getMasterLevelInfo($character_name) {
-		if(!check_value($character_name)) return;
+		if(!isset($character_name)) return;
 		if(!$this->CharacterExists($character_name)) return;
 		$CharInfo = $this->muonline->query_fetch_single("SELECT * FROM "._TBL_MASTERLVL_." WHERE "._CLMN_ML_NAME_." = ?", array($character_name));
 		if(!is_array($CharInfo)) return;
@@ -751,7 +754,7 @@ class Character {
 	}
 	
 	protected function _moveCharacter($character_name,$map=0,$x=125,$y=125) {
-		if(!check_value($character_name)) return;
+		if(!isset($character_name)) return;
 		$move = $this->muonline->query("UPDATE "._TBL_CHR_." SET "._CLMN_CHR_MAP_." = ?, "._CLMN_CHR_MAP_X_." = ?, "._CLMN_CHR_MAP_Y_." = ? WHERE "._CLMN_CHR_NAME_." = ?", array($map, $x, $y, $character_name));
 		if(!$move) return;
 		return true;

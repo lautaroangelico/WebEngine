@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -19,26 +19,26 @@ try {
 	$cronList = $cronManager->getCronList();
 	
 	// Actions
-	if(check_value($_GET['action'])) {
+	if(isset($_GET['action'])) {
 		try {
 			switch($_GET['action']) {
 				case 'enable':
-					if(!check_value($_GET['id'])) throw new Exception(lang('error_105'));
+					if(!isset($_GET['id'])) throw new Exception(lang('error_105'));
 					$cronManager->setId($_GET['id']);
 					$cronManager->enableCron();
 					break;
 				case 'disable':
-					if(!check_value($_GET['id'])) throw new Exception(lang('error_105'));
+					if(!isset($_GET['id'])) throw new Exception(lang('error_105'));
 					$cronManager->setId($_GET['id']);
 					$cronManager->disableCron();
 					break;
 				case 'delete':
-					if(!check_value($_GET['id'])) throw new Exception(lang('error_105'));
+					if(!isset($_GET['id'])) throw new Exception(lang('error_105'));
 					$cronManager->setId($_GET['id']);
 					$cronManager->deleteCron();
 					break;
 				case 'reset':
-					if(!check_value($_GET['id'])) throw new Exception(lang('error_105'));
+					if(!isset($_GET['id'])) throw new Exception(lang('error_105'));
 					$cronManager->setId($_GET['id']);
 					$cronManager->resetCronLastRun();
 					break;
@@ -61,7 +61,7 @@ try {
 	}
 	
 	// Add Cron
-	if(check_value($_POST['submit'])) {
+	if(isset($_POST['submit'])) {
 		try {
 			$cronManager->setName($_POST['cron_name']);
 			$cronManager->setFile($_POST['cron_file']);
@@ -159,7 +159,7 @@ try {
 				echo '<tbody>';
 				foreach($cronList as $row) {
 					$interval = sec_to_hms($row['cron_run_time']);
-					$lastRun = check_value($row['cron_last_run']) ? date('Y/m/d H:i A', $row['cron_last_run']) : '<i>Never</i>';
+					$lastRun = isset($row['cron_last_run']) ? date('Y/m/d H:i A', $row['cron_last_run']) : '<i>Never</i>';
 					$status = $row['cron_status'] == 1 ? '<a href="'.admincp_base('cronmanager&action=disable&id='.$row['cron_id']).'" class="btn btn-xs btn-success"><i class="fa fa-check"></i></a>' : '<a href="'.admincp_base('cronmanager&action=enable&id='.$row['cron_id']).'" class="btn btn-xs btn-default"><i class="fa fa-check"></i></a>';
 					echo '<tr>';
 						echo '<td>'.$row['cron_id'].'</td>';

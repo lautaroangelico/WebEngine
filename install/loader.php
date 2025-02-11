@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -65,7 +65,7 @@ try {
 	$writablePaths = loadJsonFile(__PATH_CONFIGS__.WEBENGINE_WRITABLE_PATHS_FILE);
 	if(!is_array($writablePaths)) throw new Exception('Could not load WebEngine CMS writable paths list.');
 	
-	if(!check_value($_SESSION['install_cstep'])) {
+	if(!isset($_SESSION['install_cstep'])) {
 		$_SESSION['install_cstep'] = 0;
 	}
 
@@ -87,7 +87,7 @@ try {
 		}
 	}
 
-	if(check_value($_GET['action'])) {
+	if(isset($_GET['action'])) {
 		if($_GET['action'] == 'restart') {
 			# restart install process
 			$_SESSION = array();

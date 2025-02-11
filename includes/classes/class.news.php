@@ -22,6 +22,8 @@ class News {
 	private $_title;
 	private $_content;
 	
+	protected $db;
+	
 	function __construct() {
 		
 		$config = loadConfigurations($this->_configFile);
@@ -36,7 +38,7 @@ class News {
 	}
 	
 	public function setLanguage($language) {
-		if(!isset($language)) return;
+		if(!check_value($language)) return;
 		$languagesList = getInstalledLanguagesList();
 		if(!is_array($languagesList)) return;
 		if(!in_array($language, $languagesList)) return;
@@ -44,18 +46,18 @@ class News {
 	}
 	
 	public function setTitle($title) {
-		if(!isset($title)) return;
+		if(!check_value($title)) return;
 		$this->_title = $title;
 	}
 	
 	public function setContent($content) {
-		if(!isset($content)) return;
+		if(!check_value($content)) return;
 		$this->_content = $content;
 	}
 	
 	function addNews($title,$content,$author='Administrator',$comments=1) {
 		$this->db = Connection::Database('Me_MuOnline');
-		if(isset($title) && isset($content) && isset($author)) {
+		if(check_value($title) && check_value($content) && check_value($author)) {
 			if($this->checkTitle($title)) {
 				if($this->checkContent($content)) {
 					// make sure comments is 1 or 0
@@ -117,7 +119,7 @@ class News {
 	
 	function editNews($id,$title,$content,$author,$comments,$date) {
 		$this->db = Connection::Database('Me_MuOnline');
-		if(isset($id) && isset($title) && isset($content) && isset($author) && isset($comments) && isset($date)) {
+		if(check_value($id) && check_value($title) && check_value($content) && check_value($author) && check_value($comments) && check_value($date)) {
 			if(!$this->newsIdExists($id)) { return false; }
 			if($this->checkTitle($title) && $this->checkContent($content)) {
 				$editData = array(
@@ -139,7 +141,7 @@ class News {
 	}
 	
 	function checkTitle($title) {
-		if(isset($title)) {
+		if(check_value($title)) {
 			if(strlen($title) < 4 || strlen($title) > 80) {
 				return false;
 			} else {
@@ -151,7 +153,7 @@ class News {
 	}
 	
 	function checkContent($content) {
-		if(isset($content)) {
+		if(check_value($content)) {
 			if(strlen($content) < 4) {
 				return false;
 			} else {
@@ -265,11 +267,11 @@ class News {
 	}
 	
 	function LoadCachedNews($shortVersion=false) {
-		if(!isset($this->_id)) return;
+		if(!check_value($this->_id)) return;
 		if(!Validator::UnsignedNumber($this->_id)) return;
 		
 		// Load news translation cache
-		if(isset($this->_language)) {
+		if(check_value($this->_language)) {
 			$newsTranslationFile = __PATH_NEWS_TRANSLATIONS_CACHE__.'news_'.$this->_id.'_'.$this->_language.'.cache';
 			$newsTranslationFileShort = __PATH_NEWS_TRANSLATIONS_CACHE__.'news_'.$this->_id.'_'.$this->_language.'_s.cache';
 			if($shortVersion) {
@@ -310,7 +312,7 @@ class News {
 	
 	function loadNewsData($id) {
 		$this->db = Connection::Database('Me_MuOnline');
-		if(isset($id) && $this->newsIdExists($id)) {
+		if(check_value($id) && $this->newsIdExists($id)) {
 			$query = $this->db->query_fetch_single("SELECT * FROM ".WEBENGINE_NEWS." WHERE news_id = ?", array($id));
 			if($query && is_array($query)) {
 				
@@ -324,7 +326,7 @@ class News {
 	
 	public function getNewsTranslations() {
 		$this->db = Connection::Database('Me_MuOnline');
-		if(!isset($this->_id)) return;
+		if(!check_value($this->_id)) return;
 		$newsTranslations = $this->db->query_fetch("SELECT * FROM ".WEBENGINE_NEWS_TRANSLATIONS." WHERE news_id = ?", array($this->_id));
 		if(!is_array($newsTranslations)) return;
 		foreach($newsTranslations as $translation) {
@@ -337,10 +339,10 @@ class News {
 	public function addNewsTransation() {
 		$this->db = Connection::Database('Me_MuOnline');
 		
-		if(!isset($this->_id)) throw new Exception('The provided news id is not valid.');
-		if(!isset($this->_language)) throw new Exception('The provided news language is not valid.');
-		if(!isset($this->_title)) throw new Exception('The provided news title is not valid.');
-		if(!isset($this->_content)) throw new Exception('The provided news content is not valid.');
+		if(!check_value($this->_id)) throw new Exception('The provided news id is not valid.');
+		if(!check_value($this->_language)) throw new Exception('The provided news language is not valid.');
+		if(!check_value($this->_title)) throw new Exception('The provided news title is not valid.');
+		if(!check_value($this->_content)) throw new Exception('The provided news content is not valid.');
 		
 		$newsTranslations = $this->getNewsTranslations();
 		if(is_array($newsTranslations)) {
@@ -367,10 +369,10 @@ class News {
 	public function updateNewsTransation() {
 		$this->db = Connection::Database('Me_MuOnline');
 		
-		if(!isset($this->_id)) throw new Exception('The provided news id is not valid.');
-		if(!isset($this->_language)) throw new Exception('The provided news language is not valid.');
-		if(!isset($this->_title)) throw new Exception('The provided news title is not valid.');
-		if(!isset($this->_content)) throw new Exception('The provided news content is not valid.');
+		if(!check_value($this->_id)) throw new Exception('The provided news id is not valid.');
+		if(!check_value($this->_language)) throw new Exception('The provided news language is not valid.');
+		if(!check_value($this->_title)) throw new Exception('The provided news title is not valid.');
+		if(!check_value($this->_content)) throw new Exception('The provided news content is not valid.');
 		
 		$result = $this->db->query("UPDATE ".WEBENGINE_NEWS_TRANSLATIONS." SET news_title = ?, news_content = ? WHERE news_id = ? AND news_language = ?", array(base64_encode($this->_title), base64_encode($this->_content), $this->_id, $this->_language));
 		if(!$result) throw new Exception('Could not update the news translation.');
@@ -391,8 +393,8 @@ class News {
 	
 	public function deleteNewsTranslation() {
 		$this->db = Connection::Database('Me_MuOnline');
-		if(!isset($this->_id)) throw new Exception('The provided news id is not valid.');
-		if(!isset($this->_language)) throw new Exception('The provided news language is not valid.');
+		if(!check_value($this->_id)) throw new Exception('The provided news id is not valid.');
+		if(!check_value($this->_language)) throw new Exception('The provided news language is not valid.');
 		
 		$result = $this->db->query("DELETE FROM ".WEBENGINE_NEWS_TRANSLATIONS." WHERE news_id = ? AND news_language = ?", array($this->_id, $this->_language));
 		if(!$result) throw new Exception('Could not delete news translation.');
@@ -411,16 +413,16 @@ class News {
 	
 	public function loadNewsTranslationData() {
 		$this->db = Connection::Database('Me_MuOnline');
-		if(!isset($this->_id)) return;
-		if(!isset($this->_language)) return;
+		if(!check_value($this->_id)) return;
+		if(!check_value($this->_language)) return;
 		$result = $this->db->query_fetch_single("SELECT * FROM ".WEBENGINE_NEWS_TRANSLATIONS." WHERE news_id = ? AND news_language = ?", array($this->_id, $this->_language));
 		if(!is_array($result)) return;
 		return $result;
 	}
 	
 	public function loadNewsTranslationCache() {
-		if(!isset($this->_id)) return;
-		if(!isset($this->_language)) return;
+		if(!check_value($this->_id)) return;
+		if(!check_value($this->_language)) return;
 		
 		$newsTranslationFile = __PATH_NEWS_TRANSLATIONS_CACHE__.'news_'.$this->_id.'_'.$this->_language.'.cache';
 		if(!file_exists($newsTranslationFile)) return;
@@ -433,7 +435,7 @@ class News {
 	
 	public function getNewsTranslationsDataList() {
 		$this->db = Connection::Database('Me_MuOnline');
-		if(!isset($this->_id)) return;
+		if(!check_value($this->_id)) return;
 		$result = $this->db->query_fetch("SELECT * FROM ".WEBENGINE_NEWS_TRANSLATIONS." WHERE news_id = ?", array($this->_id));
 		if(!is_array($result)) return;
 		return $result;
@@ -441,7 +443,7 @@ class News {
 	
 	private function _deleteAllNewsTranslations() {
 		$this->db = Connection::Database('Me_MuOnline');
-		if(!isset($this->_id)) return;
+		if(!check_value($this->_id)) return;
 		
 		$newsTranslations = $this->getNewsTranslations();
 		if(!is_array($newsTranslations)) return;

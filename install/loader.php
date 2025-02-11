@@ -13,7 +13,7 @@
 
 if(!defined('access') or !access or access != 'install') die();
 
-session_name('WebEngineInstaller121'); 
+session_name('WebEngineInstaller126'); 
 session_start();
 ob_start();
 

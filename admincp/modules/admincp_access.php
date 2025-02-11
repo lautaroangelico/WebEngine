@@ -42,7 +42,7 @@ if(isset($_POST['settings_submit'])) {
 			$adminAccounts[$adminUsername] = (int) $accessLevel;
 		}
 		
-		if(isset($newAdminUser)) {
+		if(check_value($newAdminUser)) {
 			if(array_key_exists($newAdminUser, config('admins',true))) throw new Exception('An administrator with the same username is already in the list.');
 			if(!Validator::UnsignedNumber($newAdminLevel)) throw new Exception('Access level must be a number between 1 and 100');
 			if(!Validator::Number($newAdminLevel, 100, 0)) throw new Exception('Access level must be a number between 1 and 100');

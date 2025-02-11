@@ -21,7 +21,7 @@ $downloadTypes = array (
 
 function downloadTypesSelect($downloadTypes,$selected=null) {
 	foreach($downloadTypes as $key => $typeOPTION) {
-		if(isset($selected)) {
+		if(check_value($selected)) {
 			if($key == $selected) {
 				echo '<option value="'.$key.'" selected="selected">'.$typeOPTION.'</option>';
 			} else {
@@ -36,7 +36,7 @@ function downloadTypesSelect($downloadTypes,$selected=null) {
 function saveChanges() {
 	global $_POST;
 	foreach($_POST as $setting) {
-		if(!isset($setting)) {
+		if(!check_value($setting)) {
 			message('error','Missing data (complete all fields).');
 			return;
 		}

@@ -16,7 +16,7 @@ echo '<h2>Clear Skill-Tree Settings</h2>';
 function saveChanges() {
 	global $_POST;
 	foreach($_POST as $setting) {
-		if(!isset($setting)) {
+		if(!check_value($setting)) {
 			message('error','Missing data (complete all fields).');
 			return;
 		}

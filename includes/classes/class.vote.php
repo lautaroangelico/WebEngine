@@ -24,6 +24,11 @@ class Vote {
 	private $_saveLogs = true;
 	private $_creditConfig;
 	
+	protected $common;
+	protected $muonline;
+	protected $memuonline;
+	protected $xml;
+	
 	function __construct() {
 		
 		// common class
@@ -44,7 +49,7 @@ class Vote {
 	}
 	
 	public function setUserid($userid) {
-		if(!isset($userid)) throw new Exception(lang('error_23', true));
+		if(!check_value($userid)) throw new Exception(lang('error_23', true));
 		if(!Validator::UnsignedNumber($userid)) throw new Exception(lang('error_23', true));
 		
 		$accountInfo = $this->common->accountInformation($userid);
@@ -56,7 +61,7 @@ class Vote {
 	}
 	
 	public function setVotesiteId($votesiteid) {
-		if(!isset($votesiteid)) throw new Exception(lang('error_23', true));
+		if(!check_value($votesiteid)) throw new Exception(lang('error_23', true));
 		if(!Validator::UnsignedNumber($votesiteid)) throw new Exception(lang('error_23', true));
 		if(!$this->_siteExists($votesiteid)) throw new Exception(lang('error_23', true));
 		
@@ -64,16 +69,16 @@ class Vote {
 	}
 	
 	public function setIp($ip) {
-		if(!isset($ip)) throw new Exception(lang('error_101'));
+		if(!check_value($ip)) throw new Exception(lang('error_101'));
 		if(!Validator::Ip($ip)) throw new Exception(lang('error_101'));
 		
 		$this->_ip = $ip;
 	}
 	
 	public function vote() {
-		if(!isset($this->_userid)) throw new Exception(lang('error_23', true));
-		if(!isset($this->_ip)) throw new Exception(lang('error_23', true));
-		if(!isset($this->_votesideId)) throw new Exception(lang('error_23', true));
+		if(!check_value($this->_userid)) throw new Exception(lang('error_23', true));
+		if(!check_value($this->_ip)) throw new Exception(lang('error_23', true));
+		if(!check_value($this->_votesideId)) throw new Exception(lang('error_23', true));
 		
 		# check if voting is active
 		if(!$this->_active) throw new Exception(lang('error_47', true));
@@ -123,8 +128,8 @@ class Vote {
 	}
 
 	private function _canUserVote() {
-		if(!isset($this->_userid)) throw new Exception(lang('error_23', true));
-		if(!isset($this->_votesideId)) throw new Exception(lang('error_23', true));
+		if(!check_value($this->_userid)) throw new Exception(lang('error_23', true));
+		if(!check_value($this->_votesideId)) throw new Exception(lang('error_23', true));
 		
 		$query = "SELECT * FROM ".WEBENGINE_VOTES." WHERE user_id = ? AND vote_site_id = ?";
 		$check = $this->memuonline->query_fetch_single($query, array($this->_userid, $this->_votesideId));
@@ -136,8 +141,8 @@ class Vote {
 	}
 	
 	private function _canIPVote() {
-		if(!isset($this->_ip)) throw new Exception(lang('error_23', true));
-		if(!isset($this->_votesideId)) throw new Exception(lang('error_23', true));
+		if(!check_value($this->_ip)) throw new Exception(lang('error_23', true));
+		if(!check_value($this->_votesideId)) throw new Exception(lang('error_23', true));
 		
 		$query = "SELECT * FROM ".WEBENGINE_VOTES." WHERE user_ip = ? AND vote_site_id = ?";
 		$check = $this->memuonline->query_fetch_single($query, array($this->_ip, $this->_votesideId));
@@ -150,9 +155,9 @@ class Vote {
 	
 	
 	private function _addRecord() {
-		if(!isset($this->_userid)) throw new Exception(lang('error_23', true));
-		if(!isset($this->_ip)) throw new Exception(lang('error_23', true));
-		if(!isset($this->_votesideId)) throw new Exception(lang('error_23', true));
+		if(!check_value($this->_userid)) throw new Exception(lang('error_23', true));
+		if(!check_value($this->_ip)) throw new Exception(lang('error_23', true));
+		if(!check_value($this->_votesideId)) throw new Exception(lang('error_23', true));
 		
 		$voteSiteInfo = $this->retrieveVotesites($this->_votesideId);
 		if(!is_array($voteSiteInfo)) throw new Exception(lang('error_23', true));
@@ -181,15 +186,15 @@ class Vote {
 	}
 	
 	private function _siteExists($id) {
-		if(!isset($id)) return;
+		if(!check_value($id)) return;
 		$check = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_VOTE_SITES." WHERE votesite_id = ?", array($id));
 		if(is_array($check)) return true;
 		return false;
 	}
 	
 	private function _logVote() {
-		if(!isset($this->_userid)) throw new Exception(lang('error_23', true));
-		if(!isset($this->_votesideId)) throw new Exception(lang('error_23', true));
+		if(!check_value($this->_userid)) throw new Exception(lang('error_23', true));
+		if(!check_value($this->_votesideId)) throw new Exception(lang('error_23', true));
 		
 		$add_data = array(
 			$this->_userid,
@@ -214,7 +219,7 @@ class Vote {
 	}
 	
 	public function retrieveVotesites($id=null) {
-		if(isset($id)) return $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_VOTE_SITES." WHERE votesite_id = ?", array($id));
+		if(check_value($id)) return $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_VOTE_SITES." WHERE votesite_id = ?", array($id));
 		return $this->memuonline->query_fetch("SELECT * FROM ".WEBENGINE_VOTE_SITES." ORDER BY votesite_id ASC");
 	}
 

@@ -43,13 +43,13 @@ if(mconfig('active')) {
 							echo '<td>'.lang('profiles_txt_20',true).'</td>';
 							echo '<td>'.number_format($cData[14]).'</td>';
 						echo '</tr>';
-						if(isset($cData[4])) {
+						if(check_value($cData[4])) {
 							echo '<tr>';
 								echo '<td>'.lang('profiles_txt_8',true).'</td>';
 								echo '<td>'.number_format($cData[4]).'</td>';
 							echo '</tr>';
 						}
-						if(isset($cData[11])) {
+						if(check_value($cData[11])) {
 							echo '<tr>';
 								echo '<td>'.lang('profiles_txt_9',true).'</td>';
 								echo '<td>'.number_format($cData[11]).'</td>';
@@ -81,7 +81,7 @@ if(mconfig('active')) {
 							echo '<td>'.lang('profiles_txt_15',true).'</td>';
 							echo '<td>'.number_format($cData[10]).'</td>';
 						echo '</tr>';
-						if(isset($cData[12])) {
+						if(check_value($cData[12])) {
 							echo '<tr>';
 								echo '<td>'.lang('profiles_txt_16',true).'</td>';
 								echo '<td>'.guildProfile($cData[12]).'</td>';

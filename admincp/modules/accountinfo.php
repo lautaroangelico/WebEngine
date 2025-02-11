@@ -20,7 +20,7 @@ if(isset($_GET['u'])) {
 	try {
 		$Account = new Account();
 		$userId = $Account->retrieveUserID($_GET['u']);
-		if(isset($userId)) {
+		if(check_value($userId)) {
 			redirect(3, admincp_base('accountinfo&id='.$userId));
 		}
 	} catch(Exception $ex) {

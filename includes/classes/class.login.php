@@ -15,6 +15,9 @@ class login {
 	
 	private $_config;
 	
+	protected $common;
+	protected $me;
+	
 	function __construct() {
 		global $_SESSION;
 		
@@ -28,14 +31,14 @@ class login {
 	
 	public function validateLogin($username, $password) {
 		
-		if(!isset($username)) throw new Exception(lang('error_4',true));
-		if(!isset($password)) throw new Exception(lang('error_4',true));
+		if(!check_value($username)) throw new Exception(lang('error_4',true));
+		if(!check_value($password)) throw new Exception(lang('error_4',true));
 		if(!$this->canLogin($_SERVER['REMOTE_ADDR'])) throw new Exception(lang('error_3',true));
 		if(!$this->common->userExists($username)) throw new Exception(lang('error_2',true));
 		if($this->common->validateUser($username,$password)) {
 			
 			$userId = $this->common->retrieveUserID($username);
-			if(!isset($userId)) throw new Exception(lang('error_12',true));
+			if(!check_value($userId)) throw new Exception(lang('error_12',true));
 			
 			$accountData = $this->common->accountInformation($userId);
 			if(!is_array($accountData)) throw new Exception(lang('error_12',true));

@@ -159,7 +159,7 @@ try {
 				echo '<tbody>';
 				foreach($cronList as $row) {
 					$interval = sec_to_hms($row['cron_run_time']);
-					$lastRun = isset($row['cron_last_run']) ? date('Y/m/d H:i A', $row['cron_last_run']) : '<i>Never</i>';
+					$lastRun = check_value($row['cron_last_run']) ? date('Y/m/d H:i A', $row['cron_last_run']) : '<i>Never</i>';
 					$status = $row['cron_status'] == 1 ? '<a href="'.admincp_base('cronmanager&action=disable&id='.$row['cron_id']).'" class="btn btn-xs btn-success"><i class="fa fa-check"></i></a>' : '<a href="'.admincp_base('cronmanager&action=enable&id='.$row['cron_id']).'" class="btn btn-xs btn-default"><i class="fa fa-check"></i></a>';
 					echo '<tr>';
 						echo '<td>'.$row['cron_id'].'</td>';

@@ -35,6 +35,8 @@ class Email {
 	
 	private $_isCustomTemplate=false;
 	
+	protected $mail;
+	
 	function __construct() {
 		# load configs
 		$configs = gconfig('email',true);

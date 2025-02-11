@@ -13,6 +13,8 @@
 
 class Plugins {
 	
+	protected $db;
+	
 	function __construct() {
 		
 		// load database
@@ -54,10 +56,10 @@ class Plugins {
 		&& array_key_exists('compatibility',$array)
 		&& array_key_exists('folder',$array)
 		&& array_key_exists('files',$array)) {
-			if(isset($array['name'])
-			&& isset($array['author'])
-			&& isset($array['version'])
-			&& isset($array['folder'])) {
+			if(check_value($array['name'])
+			&& check_value($array['author'])
+			&& check_value($array['version'])
+			&& check_value($array['folder'])) {
 				if(is_array($array['compatibility']) && is_array($array['files'])) {
 					return true;
 				} else {
@@ -110,7 +112,7 @@ class Plugins {
 					}
 					if($thisFile == 'loader.php') {
 						@$build = $this->_getBuidHash($file);
-						if(isset($build)) {
+						if(check_value($build)) {
 							$validateBuildHash = @$this->_validateBuildHash($build);
 							if(!is_array($validateBuildHash)) return;
 							if($validateBuildHash['status'] != true) return;
@@ -126,7 +128,7 @@ class Plugins {
 				$file = $this->pluginPath($plugin_name).$array['file'];
 				if(file_exists($file)) {
 					@$build = $this->_getBuidHash($file);
-					if(isset($build)) {
+					if(check_value($build)) {
 						$validateBuildHash = @$this->_validateBuildHash($build);
 						if(!is_array($validateBuildHash)) return;
 						if($validateBuildHash['status'] != true) return;
@@ -223,8 +225,8 @@ class Plugins {
 	}
 	
 	private function _getPluginLatestVersion($plugin, $version='1.0.0') {
-		if(!isset($plugin)) return;
-		if(!isset($version)) return;
+		if(!check_value($plugin)) return;
+		if(!check_value($version)) return;
 		
 		$url = 'https://version.webenginecms.org/1.0/plugin.php';
 		
@@ -262,7 +264,7 @@ class Plugins {
 		$srch = preg_match("/@build/", $fileContents, $matches, PREG_OFFSET_CAPTURE);
 		if(is_array($matches) && count($matches) > 0) {
 			$build = substr($fileContents, $matches[0][1]+7, 32);
-			if(!isset($build)) return;
+			if(!check_value($build)) return;
 			if(strlen($build) !=32) return;
 			return $build;
 		}
@@ -270,7 +272,7 @@ class Plugins {
 	}
 	
 	private function _validateBuildHash($hash) {
-		if(!isset($hash)) return;
+		if(!check_value($hash)) return;
 		
 		$url = 'https://version.webenginecms.org/1.0/hash.php';
 		

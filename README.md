@@ -11,7 +11,7 @@ These instructions will help you deploy your own website using WebEngine CMS.
 Here's what you'll need to run WebEngine CMS in your web server
 
 * Apache mod_rewrite
-* PHP 8.1 or higher (8.4 recommended)
+* PHP 8.1or higher (8.4 recommended)
 * PHP modules: PDO dblib/odbc/sqlsrv, cURL, OpenSSL, GD
 * PHP short_open_tag enabled
 

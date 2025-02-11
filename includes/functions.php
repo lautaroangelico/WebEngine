@@ -18,7 +18,7 @@ function check_value($value) {
 }
 
 function redirect($type = 1, $location = null, $delay = 0) {
-	if(!isset($location)) {
+	if(!check_value($location)) {
 		$to = __BASE_URL__;
 	} else {
 		$to = __BASE_URL__ . $location;
@@ -90,7 +90,7 @@ function message($type='info', $message="", $title="") {
 		break;
 	}
 	
-	if(isset($title)) {
+	if(check_value($title)) {
 		echo '<div class="alert'.$class.'" role="alert"><strong>'.$title.'</strong><br />'.$message.'</div>';
 	} else {
 		echo '<div class="alert'.$class.'" role="alert">'.$message.'</div>';
@@ -147,7 +147,7 @@ function debug($value) {
 }
 
 function canAccessAdminCP($username) {
-	if(!isset($username)) return;
+	if(!check_value($username)) return;
 	if(array_key_exists($username, config('admins',true))) return true;
 	return false;
 }
@@ -195,7 +195,7 @@ function LoadCacheData($file_name) {
 	$file_lanes = explode("\n",$cache_file);
 	$nlines = count($file_lanes);
 	for($i=0; $i<$nlines; $i++) {
-		if(isset($file_lanes[$i])) {
+		if(check_value($file_lanes[$i])) {
 			$line_data[$i] = explode("¦",$file_lanes[$i]);
 		}
 	}
@@ -257,7 +257,7 @@ function webengineConfigs() {
 	if(!file_exists(__PATH_CONFIGS__ . 'webengine.json')) throw new Exception('WebEngine\'s configuration file doesn\'t exist, please reupload the website files.');
 	
 	$webengineConfigs = file_get_contents(__PATH_CONFIGS__ . 'webengine.json');
-	if(!isset($webengineConfigs)) throw new Exception('WebEngine\'s configuration file is empty, please run the installation script.');
+	if(!check_value($webengineConfigs)) throw new Exception('WebEngine\'s configuration file is empty, please run the installation script.');
 	
 	return json_decode($webengineConfigs, true);
 }
@@ -325,7 +325,7 @@ function gconfig($config_file,$return=true) {
 }
 
 function loadConfigurations($file) {
-	if(!isset($file)) return;
+	if(!check_value($file)) return;
 	if(!moduleConfigExists($file)) return;
 	$xml = simplexml_load_file(__PATH_MODULE_CONFIGS__ . $file . '.xml');
 	if($xml) return convertXML($xml->children());
@@ -333,10 +333,10 @@ function loadConfigurations($file) {
 }
 
 function loadConfig($name="webengine") {
-	if(!isset($name)) return;
+	if(!check_value($name)) return;
 	if(!file_exists(__PATH_CONFIGS__ . $name . '.json')) return;
 	$cfg = file_get_contents(__PATH_CONFIGS__ . $name . '.json');
-	if(!isset($cfg)) return;
+	if(!check_value($cfg)) return;
 	return json_decode($cfg, true);
 }
 
@@ -347,7 +347,7 @@ function getPlayerClassAvatar($code=0, $htmlImageTag=true, $tooltip=true, $cssCl
 	$className = array_key_exists($code, $custom['character_class']) ? $custom['character_class'][$code][0] : '';
 	if(!$htmlImageTag) return $imageFullPath;
 	$result = '<img';
-	if(isset($cssClass)) $result .= ' class="'.$cssClass.'"';
+	if(check_value($cssClass)) $result .= ' class="'.$cssClass.'"';
 	if($tooltip) $result .= ' data-toggle="tooltip" data-placement="top" title="'.$className.'" alt="'.$className.'"';
 	$result .= ' src="'.$imageFullPath.'" />';
 	return $result;
@@ -389,7 +389,7 @@ function loadCache($fileName) {
 	if(!is_readable($file)) return;
 	
 	$cacheDataRaw = file_get_contents($file);
-	if(!isset($cacheDataRaw)) return;
+	if(!check_value($cacheDataRaw)) return;
 	
 	$cacheData = decodeCache($cacheDataRaw);
 	if(!is_array($cacheData)) return;
@@ -415,8 +415,8 @@ function getCronList() {
 
 function addRankingMenuLink($phrase, $module, $filesExclusivity=null) {
 	global $rankingMenuLinks;
-	if(!isset($phrase)) return;
-	if(!isset($module)) return;
+	if(!check_value($phrase)) return;
+	if(!check_value($module)) return;
 	
 	if(is_array($filesExclusivity)) {
 		if(!in_array(strtolower(config('server_files',true)), array_map('strtolower', $filesExclusivity))) return;
@@ -452,16 +452,16 @@ function getCountryCodeFromIp($ip) {
     curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
     $json = curl_exec($handle);
     curl_close($handle);
-    if(!isset($json)) return;
+    if(!check_value($json)) return;
     $result = json_decode($json, true);
 	if(!is_array($result)) return;
 	if($result['status'] == 'fail') return;
-	if(!isset($result['countryCode'])) return;
+	if(!check_value($result['countryCode'])) return;
 	return $result['countryCode'];
 }
 
 function getCountryFlag($countryCode='default') {
-	if(!isset($countryCode)) $countryCode = 'default';
+	if(!check_value($countryCode)) $countryCode = 'default';
 	return __PATH_COUNTRY_FLAGS__ . strtolower($countryCode) . '.gif';
 }
 

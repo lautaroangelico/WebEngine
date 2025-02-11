@@ -67,8 +67,8 @@ if(isset($_GET['name'])) {
 				$query = "UPDATE "._TBL_CHR_." SET ";
 					$query .= _CLMN_CHR_CLASS_ . " = :class,";
 					$query .= _CLMN_CHR_LVL_ . " = :level,";
-					if(isset($updateData['resets'])) $query .= _CLMN_CHR_RSTS_ . " = :resets,";
-					if(isset($updateData['gresets'])) $query .= _CLMN_CHR_GRSTS_ . " = :gresets,";
+					if(check_value($updateData['resets'])) $query .= _CLMN_CHR_RSTS_ . " = :resets,";
+					if(check_value($updateData['gresets'])) $query .= _CLMN_CHR_GRSTS_ . " = :gresets,";
 					$query .= _CLMN_CHR_ZEN_ . " = :zen,";
 					$query .= _CLMN_CHR_LVLUP_POINT_ . " = :lvlpoints,";
 					$query .= _CLMN_CHR_PK_LEVEL_ . " = :pklevel,";
@@ -97,7 +97,7 @@ if(isset($_GET['name'])) {
 				$mlQuery = "UPDATE "._TBL_MASTERLVL_." SET ";
 					$mlQuery .= _CLMN_ML_LVL_ . " = :level,";
 					$mlQuery .= _CLMN_ML_EXP_ . " = :exp,";
-					if(isset($updateMlData['nextexp'])) $mlQuery .= _CLMN_ML_NEXP_ . " = :nextexp,";
+					if(check_value($updateMlData['nextexp'])) $mlQuery .= _CLMN_ML_NEXP_ . " = :nextexp,";
 					$mlQuery .= _CLMN_ML_POINT_ . " = :points";
 					$mlQuery .= " WHERE "._CLMN_ML_NAME_." = :name";
 				

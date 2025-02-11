@@ -19,7 +19,7 @@ class dB {
 	
 	private $_enableErrorLogs = true;
 	
-	public $db;
+	protected $db;
 	
 	// what are you doing around here?
 	function __construct($SQLHOST, $SQLPORT, $SQLDB, $SQLUSER, $SQLPWD, $SQLDRIVER) {
@@ -85,7 +85,7 @@ class dB {
 			if($query->execute($array)) {
 				$result = $query->fetchAll(PDO::FETCH_ASSOC);
 				$query->closeCursor();
-				return (isset($result)) ? $result : NULL;
+				return (check_value($result)) ? $result : NULL;
 			} else {
 				$this->error = $this->trow_error($query);
 				return false;
@@ -99,7 +99,7 @@ class dB {
 	}
 	
 	private function trow_error($state='') {
-		if(!isset($state)) {
+		if(!check_value($state)) {
 			$error = $this->db->errorInfo();
 		} else {
 			$error = $state->errorInfo();

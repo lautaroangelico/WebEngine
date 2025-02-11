@@ -42,6 +42,8 @@ class CastleSiege {
 	
 	protected $_cacheSiegeData;
 	
+	protected $db;
+	
 	function __construct() {
 		
 		// load configuration file
@@ -419,7 +421,7 @@ class CastleSiege {
 	}
 	
 	protected function _initDatabase() {
-		if(isset($this->db)) return;
+		if(check_value($this->db)) return;
 		$this->db = Connection::Database($this->_database);
 	}
 	

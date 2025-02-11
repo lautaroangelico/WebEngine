@@ -18,6 +18,11 @@ class Rankings {
 	private $_excludedGuilds = array('');
 	private $_rankingsMenu;
 	
+	protected $config;
+	protected $serverFiles;
+	protected $mu;
+	protected $me;
+	
 	function __construct() {
 		
 		// webengine configs
@@ -220,7 +225,7 @@ class Rankings {
 			
 			$Character = new Character();
 			$characterName = $Character->AccountCharacterIDC($accountInfo[_CLMN_USERNM_]);
-			if(!isset($characterName)) continue;
+			if(!check_value($characterName)) continue;
 			
 			$characterData = $Character->CharacterData($characterName);
 			if(!is_array($characterData)) continue;
@@ -418,7 +423,7 @@ class Rankings {
 		$Character = new Character();
 		foreach($accounts as $row) {
 			$playerIDC = $Character->AccountCharacterIDC($row[_CLMN_MS_MEMBID_]);
-			if(!isset($playerIDC)) continue;
+			if(!check_value($playerIDC)) continue;
 			$platerData = $Character->CharacterData($playerIDC);
 			if(!is_array($platerData)) continue;
 			$result[] = array(

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -24,8 +24,8 @@ if(is_array($serverInfoCache)) {
 }
 
 $maxOnline = config('maximum_online', true);
-$onlinePlayers = isset($srvInfo[3]) ? $srvInfo[3] : 0;
-$onlinePlayersPercent = isset($maxOnline) ? $onlinePlayers*100/$maxOnline : 0;
+$onlinePlayers = check_value($srvInfo[3]) ? $srvInfo[3] : 0;
+$onlinePlayersPercent = check_value($maxOnline) ? $onlinePlayers*100/$maxOnline : 0;
 
 if(!isset($_REQUEST['page'])) {
 	$_REQUEST['page'] = '';

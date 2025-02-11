@@ -30,7 +30,7 @@ try {
 	
 	// Single news
 	$requestedNewsId = $_GET['subpage'];
-	if(isset($requestedNewsId) && $News->newsIdExists($requestedNewsId)) {
+	if(check_value($requestedNewsId) && $News->newsIdExists($requestedNewsId)) {
 		$showSingleNews = true;
 		$newsID = $requestedNewsId;
 	}

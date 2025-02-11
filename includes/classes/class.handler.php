@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.6
+ * @version 1.2.5
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -78,8 +78,8 @@ class Handler {
 				$request = explode("/", $_GET['request']);
 				if(is_array($request)) {
 					for($i = 0; $i < count($request); $i++) {
-						if(isset($request[$i])) {
-							if(isset($request[$i+1])) {
+						if(check_value($request[$i])) {
+							if(check_value($request[$i+1])) {
 								$_GET[$request[$i]] = filter_var($request[$i+1], FILTER_SANITIZE_STRING);
 							} else {
 								$_GET[$request[$i]] = NULL;
@@ -90,9 +90,9 @@ class Handler {
 				}
 			}
 			
-			if(!isset($page)) { $page = 'news'; }
+			if(!check_value($page)) { $page = 'news'; }
 			
-			if(!isset($subpage)) {
+			if(!check_value($subpage)) {
 				if($this->moduleExists($page)) {
 					@loadModuleConfigs($page);
 					include(__PATH_MODULES__ . $page . '.php');
@@ -168,7 +168,7 @@ class Handler {
 		$dB2 = Connection::Database('Me_MuOnline');
 		$common = new common();
 		
-		$module = (isset($module) ? $module : 'home');
+		$module = (check_value($module) ? $module : 'home');
 		if($this->admincpmoduleExists($module)) {
 			include(__PATH_ADMINCP_MODULES__.$module.'.php');
 		} else {
@@ -190,7 +190,7 @@ class Handler {
 	}
 	
 	public function switchLanguage($language) {
-		if(!isset($language)) return;
+		if(!check_value($language)) return;
 		if(!$this->languageExists($language)) return;
 		
 		# set session variable

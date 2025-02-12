@@ -234,7 +234,7 @@ class News {
 	
 	function retrieveNewsDataForCache() {
 		$this->db = Connection::Database('Me_MuOnline');
-		$news = $this->db->query_fetch("SELECT news_id,news_title,news_author,news_date,allow_comments FROM ".WEBENGINE_NEWS." ORDER BY news_id DESC");
+		$news = $this->db->query_fetch("SELECT news_id,news_title,news_author,news_date,allow_comments,news_content FROM ".WEBENGINE_NEWS." ORDER BY news_id DESC");
 		if(is_array($news)) {
 			return $news;
 		} else {

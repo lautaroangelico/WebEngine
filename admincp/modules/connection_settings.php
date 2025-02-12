@@ -23,7 +23,7 @@ $allowedSettings = array(
 	'SQL_DB_PORT',
 	'SQL_USE_2_DB',
 	'SQL_PDO_DRIVER',
-	'SQL_ENABLE_MD5',
+	'SQL_PASSWORD_ENCRYPTION',
 );
 
 if(isset($_POST['settings_submit'])) {
@@ -66,9 +66,9 @@ if(isset($_POST['settings_submit'])) {
 		$setting['SQL_PDO_DRIVER'] = $_POST['SQL_PDO_DRIVER'];
 		
 		# md5
-		if(!isset($_POST['SQL_ENABLE_MD5'])) throw new Exception('Invalid MD5 setting.');
-		if(!in_array($_POST['SQL_ENABLE_MD5'], array(0, 1))) throw new Exception('Invalid MD5 setting.');
-		$setting['SQL_ENABLE_MD5'] = ($_POST['SQL_ENABLE_MD5'] == 1 ? true : false);
+		if(!isset($_POST['SQL_PASSWORD_ENCRYPTION'])) throw new Exception('Invalid password encryption setting.');
+		if(!in_array($_POST['SQL_PASSWORD_ENCRYPTION'], array('none', 'wzmd5', 'phpmd5', 'sha256'))) throw new Exception('Invalid password encryption setting.');
+		$setting['SQL_PASSWORD_ENCRYPTION'] = $_POST['SQL_PASSWORD_ENCRYPTION'];
 		
 		# test connection (1)
 		$testdB = new dB($setting['SQL_DB_HOST'], $setting['SQL_DB_PORT'], $setting['SQL_DB_NAME'], $setting['SQL_DB_USER'], $setting['SQL_DB_PASS'], $setting['SQL_PDO_DRIVER']);
@@ -222,20 +222,30 @@ echo '<div class="col-md-12">';
 			
 			echo '<tr>';
 				echo '<td>';
-					echo '<strong>MD5 Status</strong>';
-					echo '<p class="setting-description">Enables/disables the use of MD5.</p>';
+					echo '<strong>Password Encryption</strong>';
+					echo '<p class="setting-description">Select the type of password encryption you are using for your account\'s table.</p>';
 				echo '</td>';
 				echo '<td>';
 					echo '<div class="radio">';
 						echo '<label>';
-							echo '<input type="radio" name="SQL_ENABLE_MD5" value="1" '.(config('SQL_ENABLE_MD5',true) ? 'checked' : null).'>';
-							echo 'Enabled';
+							echo '<input type="radio" name="SQL_PASSWORD_ENCRYPTION" value="none" '.(config('SQL_PASSWORD_ENCRYPTION',true) == 'none' ? 'checked' : null).'>';
+							echo 'None';
 						echo '</label>';
 					echo '</div>';
 					echo '<div class="radio">';
 						echo '<label>';
-							echo '<input type="radio" name="SQL_ENABLE_MD5" value="0" '.(!config('SQL_ENABLE_MD5',true) ? 'checked' : null).'>';
-							echo 'Disabled';
+							echo '<input type="radio" name="SQL_PASSWORD_ENCRYPTION" value="wzmd5" '.(config('SQL_PASSWORD_ENCRYPTION',true) == 'wzmd5' ? 'checked' : null).'>';
+							echo 'MD5 (WZ)';
+						echo '</label>';
+					echo '<div class="radio">';
+						echo '<label>';
+							echo '<input type="radio" name="SQL_PASSWORD_ENCRYPTION" value="phpmd5" '.(config('SQL_PASSWORD_ENCRYPTION',true) == 'phpmd5' ? 'checked' : null).'>';
+							echo 'MD5 (PHP)';
+						echo '</label>';
+					echo '<div class="radio">';
+						echo '<label>';
+							echo '<input type="radio" name="SQL_PASSWORD_ENCRYPTION" value="sha256" '.(config('SQL_PASSWORD_ENCRYPTION',true) == 'sha256' ? 'checked' : null).'>';
+							echo 'Sha256';
 						echo '</label>';
 					echo '</div>';
 				echo '</td>';

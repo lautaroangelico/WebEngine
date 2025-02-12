@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -48,6 +48,7 @@ class CacheManager {
 				$basePath = __PATH_CACHE__;
 		}
 		if(!is_array($cacheFiles)) return;
+		$result = array();
 		foreach($cacheFiles as $row) {
 			$filePath = $basePath . $row;
 			$fileSize = filesize($filePath);
@@ -95,6 +96,7 @@ class CacheManager {
 	
 	protected function _getCacheFileList() {
 		$dir = opendir(__PATH_CACHE__);
+		$result = array();
 		while(($file = readdir($dir)) !== false) {
 			if(filetype(__PATH_CACHE__.$file) == "file" && !$this->_isProtected($file)) {
 				$result[] = $file;
@@ -106,6 +108,7 @@ class CacheManager {
 	
 	protected function _getGuildProfileCacheFileList() {
 		$dir = opendir(__PATH_GUILD_PROFILES_CACHE__);
+		$result = array();
 		while(($file = readdir($dir)) !== false) {
 			if(filetype(__PATH_GUILD_PROFILES_CACHE__.$file) == "file" && !$this->_isProtected($file)) {
 				$result[] = $file;
@@ -117,6 +120,7 @@ class CacheManager {
 	
 	protected function _getPlayerProfileCacheFileList() {
 		$dir = opendir(__PATH_PLAYER_PROFILES_CACHE__);
+		$result = array();
 		while(($file = readdir($dir)) !== false) {
 			if(filetype(__PATH_PLAYER_PROFILES_CACHE__.$file) == "file" && !$this->_isProtected($file)) {
 				$result[] = $file;

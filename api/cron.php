@@ -29,6 +29,7 @@ try {
 	
 	// Cron Manager
 	$cronManager = new CronManager();
+	$executedCrons = array();
 	
 	// Cron List
 	$cronList = $cronManager->getCronList();

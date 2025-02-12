@@ -6,7 +6,7 @@
  =========================================================
  
  * Author Lautaro Angelico (https://lautaroangelico.com/)
- * Copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
+ * Copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -76,20 +76,21 @@
 	padding: 20px;
 }
 
-	.DK.profiles_player_card, .BK.profiles_player_card, .BM.profiles_player_card, .DGK.profiles_player_card { background: url('../img/profiles/knight.jpg') no-repeat; background-size: cover; }
-	.DW.profiles_player_card, .SM.profiles_player_card, .GM.profiles_player_card, .SW.profiles_player_card { background: url('../img/profiles/wiz.jpg') no-repeat; background-size: cover; }
-	.ELF.profiles_player_card, .ME.profiles_player_card, .HE.profiles_player_card, .NE.profiles_player_card { background: url('../img/profiles/elf.jpg') no-repeat; background-size: cover; }
-	.SUM.profiles_player_card, .BS.profiles_player_card, .DSM.profiles_player_card, .DS.profiles_player_card { background: url('../img/profiles/sum.jpg') no-repeat; background-size: cover; }
-	.DL.profiles_player_card, .LE.profiles_player_card, .EL.profiles_player_card { background: url('../img/profiles/dl.jpg') no-repeat; background-size: cover; }
-	.MG.profiles_player_card, .DM.profiles_player_card, .MK.profiles_player_card { background: url('../img/profiles/mg.jpg') no-repeat; background-size: cover; }
-	.RF.profiles_player_card, .FM.profiles_player_card, .FB.profiles_player_card { background: url('../img/profiles/rf.jpg') no-repeat; background-size: cover; }
-	.GL.profiles_player_card, .ML.profiles_player_card, .SL.profiles_player_card { background: url('../img/profiles/gl.jpg') no-repeat; background-size: cover; }
-	.RW.profiles_player_card, .RSM.profiles_player_card, .GRM.profiles_player_card { background: url('../img/profiles/rw.jpg') no-repeat; background-size: cover; }
-	.SLR.profiles_player_card, .SLRR.profiles_player_card, .MSLR.profiles_player_card, .SLTR.profiles_player_card { background: url('../img/profiles/sl.jpg') no-repeat; background-size: cover; }
-	.GC.profiles_player_card, .GB.profiles_player_card, .MGB.profiles_player_card, .HGC.profiles_player_card { background: url('../img/profiles/gc.jpg') no-repeat; background-size: cover; }
-	.LIW.profiles_player_card, .LIM.profiles_player_card, .SHW.profiles_player_card, .LUW.profiles_player_card { background: url('../img/profiles/liw.jpg') no-repeat; background-size: cover; }
-	.LEM.profiles_player_card, .WAM.profiles_player_card, .ARM.profiles_player_card, .MYM.profiles_player_card { background: url('../img/profiles/lem.jpg') no-repeat; background-size: cover; }
-	.IK.profiles_player_card, .MIK.profiles_player_card, .IM.profiles_player_card, .MYK.profiles_player_card { background: url('../img/profiles/ik.jpg') no-repeat; background-size: cover; }
+	.DW.profiles_player_card, .SM.profiles_player_card, .GM.profiles_player_card, .SW.profiles_player_card, .DSW.profiles_player_card { background: url('../img/profiles/wiz.jpg') no-repeat; background-size: cover; }
+	.DK.profiles_player_card, .BK.profiles_player_card, .BM.profiles_player_card, .DGK.profiles_player_card, .IGK.profiles_player_card { background: url('../img/profiles/knight.jpg') no-repeat; background-size: cover; }
+	.ELF.profiles_player_card, .ME.profiles_player_card, .HE.profiles_player_card, .NE.profiles_player_card, .RYE.profiles_player_card { background: url('../img/profiles/elf.jpg') no-repeat; background-size: cover; }
+	.MG.profiles_player_card, .DM.profiles_player_card, .MK.profiles_player_card, .DPK.profiles_player_card { background: url('../img/profiles/mg.jpg') no-repeat; background-size: cover; }
+	.DL.profiles_player_card, .LE.profiles_player_card, .EL.profiles_player_card, .FCE.profiles_player_card { background: url('../img/profiles/dl.jpg') no-repeat; background-size: cover; }
+	.SUM.profiles_player_card, .BS.profiles_player_card, .DSM.profiles_player_card, .DS.profiles_player_card, .ESUM.profiles_player_card { background: url('../img/profiles/sum.jpg') no-repeat; background-size: cover; }
+	.RF.profiles_player_card, .FM.profiles_player_card, .FB.profiles_player_card, .BF.profiles_player_card { background: url('../img/profiles/rf.jpg') no-repeat; background-size: cover; }
+	.GL.profiles_player_card, .ML.profiles_player_card, .SL.profiles_player_card, .AL.profiles_player_card { background: url('../img/profiles/gl.jpg') no-repeat; background-size: cover; }
+	.RW.profiles_player_card, .RSM.profiles_player_card, .GRM.profiles_player_card, .MRW.profiles_player_card, .IRW.profiles_player_card { background: url('../img/profiles/rw.jpg') no-repeat; background-size: cover; }
+	.SLR.profiles_player_card, .SLRR.profiles_player_card, .MSLR.profiles_player_card, .SLTR.profiles_player_card, .RS.profiles_player_card { background: url('../img/profiles/sl.jpg') no-repeat; background-size: cover; }
+	.GC.profiles_player_card, .GB.profiles_player_card, .MGB.profiles_player_card, .HGC.profiles_player_card, .MGC.profiles_player_card { background: url('../img/profiles/gc.jpg') no-repeat; background-size: cover; }
+	.LIW.profiles_player_card, .LIM.profiles_player_card, .SHW.profiles_player_card, .LUW.profiles_player_card, .GLW.profiles_player_card { background: url('../img/profiles/liw.jpg') no-repeat; background-size: cover; }
+	.LEM.profiles_player_card, .WAM.profiles_player_card, .ARM.profiles_player_card, .MYM.profiles_player_card, .BAM.profiles_player_card { background: url('../img/profiles/lem.jpg') no-repeat; background-size: cover; }
+	.IK.profiles_player_card, .MIK.profiles_player_card, .IM.profiles_player_card, .MYK.profiles_player_card, .PPK.profiles_player_card { background: url('../img/profiles/ik.jpg') no-repeat; background-size: cover; }
+	.ALC.profiles_player_card, .ALMN.profiles_player_card, .ALMTR.profiles_player_card, .ALFC.profiles_player_card, .CRE.profiles_player_card { background: url('../img/profiles/alc.jpg') no-repeat; background-size: cover; }
 
 .profiles_player_content {
 	float: right;

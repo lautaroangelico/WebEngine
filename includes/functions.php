@@ -264,6 +264,7 @@ function webengineConfigs() {
 
 function config($config_name, $return = false) {
 	$config = webengineConfigs();
+	if(!array_key_exists($config_name, $config)) return;
 	if($return) {
 		return $config[$config_name];
 	} else {

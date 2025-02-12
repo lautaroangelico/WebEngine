@@ -45,7 +45,7 @@ loadModuleConfigs('profiles');
 		<tr>
 			<th>Status<br/><span>Enable/disable the profile modules.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>

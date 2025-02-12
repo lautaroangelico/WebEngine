@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.5
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -344,6 +344,7 @@ $lang['rankings_filter_12'] = 'Gun Crushers';
 $lang['rankings_filter_13'] = 'Light Wizards';
 $lang['rankings_filter_14'] = 'Lemuria Mages';
 $lang['rankings_filter_15'] = 'Illusion Knights';
+$lang['rankings_filter_16'] = 'Alchemists';
 
 # clear pk
 $lang['clearpk_txt_1'] = 'Character';

@@ -58,13 +58,13 @@ $creditSystem = new CreditSystem();
 		<tr>
 			<th>Status<br/><span>Enable/disable the paypal donation gateway.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_2',mconfig('active'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_2',mconfig('active'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
 			<th>PayPal Sandbox Mode<br/><span>Enable/disable PayPal's IPN testing mode.<br/><br/>More info:<br/><a href="https://developer.paypal.com/" target="_blank">https://developer.paypal.com/</a></span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_3',mconfig('paypal_enable_sandbox'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_3',mconfig('paypal_enable_sandbox'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>

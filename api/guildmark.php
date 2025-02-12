@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -76,8 +76,8 @@ for($y=1; $y<=8; $y++) {
 		$bit = $Cuadrilla8x8[$y-1][$x-1];
 		for($repiteY=0; $repiteY<$pixelSize; $repiteY++) {
 			for($repite=0; $repite<$pixelSize; $repite++) {
-				$translatedY = ((($y-1)*$pixelSize)+$repiteY);
-				$translatedX = ((($x-1)*$pixelSize)+$repite);
+				$translatedY = (int)((($y-1)*$pixelSize)+$repiteY);
+				$translatedX = (int)((($x-1)*$pixelSize)+$repite);
 				$SuperCuadrilla[$translatedY][$translatedX] = $bit;
 			}
 		}

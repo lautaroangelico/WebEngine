@@ -49,13 +49,13 @@ loadModuleConfigs('login');
 		<tr>
 			<th>Status<br/><span>Enable/disable the login module.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
 			<th>Session Timeout<br/><span>Enable/disable sessions timeout.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_2',mconfig('enable_session_timeout'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_2',mconfig('enable_session_timeout'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>

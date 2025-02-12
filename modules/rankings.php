@@ -11,6 +11,6 @@
  * http://opensource.org/licenses/MIT
  */
 
-if(!isset($_REQUEST['subpage'])) {
+if(!isset($_REQUEST['subpage']) || empty($_REQUEST['subpage'])) {
 	redirect(1,$_REQUEST['page'].'/'.mconfig('rankings_show_default').'/');
 }

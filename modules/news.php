@@ -29,7 +29,8 @@ try {
 	}
 	
 	// Single news
-	$requestedNewsId = $_GET['subpage'];
+	$requestedNewsId = isset($_GET['subpage']) ? $_GET['subpage'] : '';
+	$showSingleNews = false;
 	if(check_value($requestedNewsId) && $News->newsIdExists($requestedNewsId)) {
 		$showSingleNews = true;
 		$newsID = $requestedNewsId;

@@ -45,7 +45,7 @@ loadModuleConfigs('usercp.myaccount');
 		<tr>
 			<th>Status<br/><span>Enable/disable my account's module.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>

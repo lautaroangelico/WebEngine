@@ -47,13 +47,13 @@ loadModuleConfigs('usercp.mypassword');
 		<tr>
 			<th>Status<br/><span>Enable/disable the change password module.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
 			<th>Email Verification<br/><span>If enabled, the account's password will not be changed until the user clicks the verification link sent via email.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_2',mconfig('change_password_email_verification'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_2',mconfig('change_password_email_verification'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>

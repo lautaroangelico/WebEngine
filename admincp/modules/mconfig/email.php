@@ -53,7 +53,7 @@ $emailConfigs = gconfig('email',true);
 		<tr>
 			<th>Email System<br/><span>Enable/disable the email system.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_1',$emailConfigs['active'],'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_1',$emailConfigs['active'],'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
@@ -71,7 +71,7 @@ $emailConfigs = gconfig('email',true);
 		<tr>
 			<th>SMTP Status<br/><span>Enable/disable the SMTP system.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_4',$emailConfigs['smtp_active'],'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_4',$emailConfigs['smtp_active'],'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>

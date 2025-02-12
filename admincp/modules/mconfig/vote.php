@@ -72,13 +72,13 @@ $creditSystem = new CreditSystem();
 		<tr>
 			<th>Status<br/><span>Enable/disable the vote module.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
 			<th>Save Vote Logs<br/><span>If enabled, every vote will be permanently logged in a database table.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_2',mconfig('vote_save_logs'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_2',mconfig('vote_save_logs'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>

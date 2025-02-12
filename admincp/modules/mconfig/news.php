@@ -49,7 +49,7 @@ loadModuleConfigs('news');
 		<tr>
 			<th>Status<br/><span>Enable/disable the news module.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
@@ -67,7 +67,7 @@ loadModuleConfigs('news');
 		<tr>
 			<th>Short News<br/><span>Enable/disable the short news feature.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_6',mconfig('news_short'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_6',mconfig('news_short'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>

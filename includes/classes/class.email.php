@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -29,6 +29,7 @@ class Email {
 	private $_template;
 	private $_message;
 	private $_to = array();
+	private $_replyTo = '';
 	private $_subject;
 	private $_variables = array();
 	private $_values = array();
@@ -151,6 +152,10 @@ class Email {
 			$this->mail->MsgHTML($this->_message);
 		}
 		
+		if(is_array($this->_replyTo)) {
+			$this->mail->addReplyTo($this->_replyTo[0], $this->_replyTo[1]);
+		}
+		
 		if($this->mail->Send()) return true;
 		return false;
 	}
@@ -158,6 +163,14 @@ class Email {
 	public function setCustomTemplate($template) {
 		$this->_template = $template;
 		$this->_isCustomTemplate = true;
+	}
+	
+	public function setReplyTo($email, $name='') {
+		if(!Validator::Email($email)) throw new Exception(lang('error_92'));
+		if($name == '') {
+			$name = $email;
+		}
+		$this->_replyTo = array($email, $name);
 	}
 	
 }

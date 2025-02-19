@@ -78,8 +78,8 @@ class Handler {
 				$request = explode("/", $_GET['request']);
 				if(is_array($request)) {
 					for($i = 0; $i < count($request); $i++) {
-						if(check_value($request[$i])) {
-							if(check_value($request[$i+1])) {
+						if(isset($request[$i]) && !empty($request[$i])) {
+							if(array_key_exists($i+1, $request) && !empty($request[$i+1])) {
 								$_GET[$request[$i]] = htmlspecialchars($request[$i+1]);
 							} else {
 								$_GET[$request[$i]] = NULL;

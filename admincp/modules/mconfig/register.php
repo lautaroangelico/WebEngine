@@ -56,7 +56,7 @@ loadModuleConfigs('register');
 			</td>
 		</tr>
 		<tr>
-			<th>Recaptcha<br/><span>Enable/disable Recaptcha validation. <br/><br/> <a href="http://www.google.com/recaptcha" target="_blank">http://www.google.com/recaptcha</a></span></th>
+			<th>Recaptcha v2<br/><span>Enable/disable Recaptcha validation. <br/><br/> <a href="https://www.google.com/recaptcha/admin" target="_blank">https://www.google.com/recaptcha/admin</a></span></th>
 			<td>
 				<?php enabledisableCheckboxes('setting_2',mconfig('register_enable_recaptcha'),'Enabled','Disabled'); ?>
 			</td>

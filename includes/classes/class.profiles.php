@@ -25,6 +25,7 @@ class weProfiles {
 	
 	protected $common;
 	protected $dB;
+	protected $cfg;
 	
 	function __construct() {
 		
@@ -41,6 +42,11 @@ class weProfiles {
 		$this->checkCacheDir($this->_guildsCachePath);
 		$this->checkCacheDir($this->_playersCachePath);
 		
+		# configs
+		$profileConfig = loadConfigurations('profiles');
+		if(!is_array($profileConfig)) throw new Exception(lang('error_25',true));
+		$this->cfg = $profileConfig;
+		
 	}
 	
 	public function setType($input) {
@@ -56,9 +62,18 @@ class weProfiles {
 	}
 	
 	public function setRequest($input) {
+		if(array_key_exists('encode', $this->cfg) && $this->cfg['encode'] == 1) {
+			if(!Validator::Chars($input, array('a-z', 'A-Z', '0-9', '_', '-'))) throw new Exception(lang('error_25',true));
+			$decodedReq = base64url_decode($input);
+			if($decodedReq == false) throw new Exception(lang('error_25',true));
+			$this->_request = $decodedReq;
+			return true;
+		}
+		
 		if(!Validator::AlphaNumeric($input)) throw new Exception(lang('error_25',true));
 		if(strlen($input) > $this->_reqMaxLen) throw new Exception(lang('error_25',true));
 		if(strlen($input) < 4) throw new Exception(lang('error_25',true));
+		
 		$this->_request = $input;
 	}
 	

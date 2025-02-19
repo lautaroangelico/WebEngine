@@ -354,13 +354,35 @@ function getPlayerClassAvatar($code=0, $htmlImageTag=true, $tooltip=true, $cssCl
 	return $result;
 }
 
-function playerProfile($playerName) {
+function playerProfile($playerName, $returnLinkOnly=false) {
 	if(!config('player_profiles',true)) return $playerName;
+	
+	$profileConfig = loadConfigurations('profiles');
+	if(is_array($profileConfig) && array_key_exists('encode', $profileConfig) && $profileConfig['encode'] == 1) {
+		if($returnLinkOnly) {
+			return __BASE_URL__.'profile/player/req/'.base64url_encode($playerName);
+		}
+		return '<a href="'.__BASE_URL__.'profile/player/req/'.base64url_encode($playerName).'/" target="_blank">'.$playerName.'</a>';
+	}
+	if($returnLinkOnly) {
+		return __BASE_URL__.'profile/player/req/'.urlencode($playerName);
+	}
 	return '<a href="'.__BASE_URL__.'profile/player/req/'.urlencode($playerName).'/" target="_blank">'.$playerName.'</a>';
 }
 
-function guildProfile($guildName) {
+function guildProfile($guildName, $returnLinkOnly=false) {
 	if(!config('guild_profiles',true)) return $guildName;
+	
+	$profileConfig = loadConfigurations('profiles');
+	if(is_array($profileConfig) && array_key_exists('encode', $profileConfig) && $profileConfig['encode'] == 1) {
+		if($returnLinkOnly) {
+			return __BASE_URL__.'profile/guild/req/'.base64url_encode($guildName);
+		}
+		return '<a href="'.__BASE_URL__.'profile/guild/req/'.base64url_encode($guildName).'/" target="_blank">'.$guildName.'</a>';
+	}
+	if($returnLinkOnly) {
+		return __BASE_URL__.'profile/guild/req/'.urlencode($guildName);
+	}
 	return '<a href="'.__BASE_URL__.'profile/guild/req/'.urlencode($guildName).'/" target="_blank">'.$guildName.'</a>';
 }
 
@@ -524,4 +546,20 @@ function custom($index) {
 	if(!is_array($custom)) return;
 	if(!array_key_exists($index, $custom)) return;
 	return $custom[$index];
+}
+
+//https://base64.guru/developers/php/examples/base64url
+function base64url_encode($data) {
+	$b64 = base64_encode($data . '!we');
+	if ($b64 === false) return false;
+	$url = strtr($b64, '+/', '-_');
+	return rtrim($url, '=');
+}
+
+function base64url_decode($data, $strict=false) {
+	$b64 = strtr($data, '-_', '+/');
+	$decoded = base64_decode($b64, $strict);
+	$end = substr($decoded, -3);
+	if($end !== '!we') return;
+	return substr($decoded, 0, -3);
 }

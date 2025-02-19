@@ -369,6 +369,9 @@ $custom['map_list'] = array(
 	138 => 'Volcano Ignis',
 	139 => 'Boss Battle',
 	140 => 'Bloody Tarkan',
+	141 => 'Tormenta Island',
+	142 => 'Twisted Karutan',
+	143 => 'Kardamahal Underground Temple',
 );
 
 /*

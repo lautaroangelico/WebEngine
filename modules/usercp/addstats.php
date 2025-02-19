@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.5
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -30,11 +30,12 @@ try {
 			$Character->setUserid($_SESSION['userid']);
 			$Character->setUsername($_SESSION['username']);
 			$Character->setCharacter($_POST['character']);
-			if(isset($_POST['add_str'])) $Character->setStrength($_POST['add_str']);
-			if(isset($_POST['add_agi'])) $Character->setAgility($_POST['add_agi']);
-			if(isset($_POST['add_vit'])) $Character->setVitality($_POST['add_vit']);
-			if(isset($_POST['add_ene'])) $Character->setEnergy($_POST['add_ene']);
-			if(isset($_POST['add_com'])) $Character->setCommand($_POST['add_com']);
+			if(isset($_POST['add_str']) && $_POST['add_str'] > 0) $Character->setStrength($_POST['add_str']);
+			if(isset($_POST['add_agi']) && $_POST['add_agi'] > 0) $Character->setAgility($_POST['add_agi']);
+			if(isset($_POST['add_vit']) && $_POST['add_vit'] > 0) $Character->setVitality($_POST['add_vit']);
+			if(isset($_POST['add_ene']) && $_POST['add_ene'] > 0) $Character->setEnergy($_POST['add_ene']);
+			if(isset($_POST['add_com']) && $_POST['add_com'] > 0) $Character->setCommand($_POST['add_com']);
+			
 			$Character->CharacterAddStats();
 		} catch(Exception $ex) {
 			message('error', $ex->getMessage());

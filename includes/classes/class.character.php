@@ -594,6 +594,7 @@ class Character {
 		if($ene > mconfig('max_stats')) throw new Exception(langf('error_53', array(number_format(mconfig('max_stats')))));
 		
 		// cmd
+		$cmd = 0;
 		if(array_key_exists(_CLMN_CHR_STAT_CMD_, $characterData) && $this->_command >= 1) {
 			if(!in_array($characterData[_CLMN_CHR_CLASS_], custom('character_cmd'))) throw new Exception(lang('error_52'));
 			$cmd = $characterData[_CLMN_CHR_STAT_CMD_]+$this->_command;

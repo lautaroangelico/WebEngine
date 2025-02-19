@@ -24,9 +24,13 @@ try {
 			if(!Validator::Email($_POST['contact_email'])) throw new Exception(lang('error_9',true));
 			if(!Validator::Length($_POST['contact_message'], 300, 10)) throw new Exception(lang('error_57',true));
 			
+			$emailConfigs = gconfig('email',true);
+			if(!is_array($emailConfigs)) throw new Exception(lang('error_21', true));
+			
 			$email = new Email();
 			$email->setSubject(mconfig('subject'));
-			$email->setFrom($_POST['contact_email'], 'Contact Form');
+			$email->setFrom($emailConfigs['send_from'], $emailConfigs['send_name'] . ' - Contact Form');
+			$email->setReplyTo($_POST['contact_email']);
 			$email->setMessage($_POST['contact_message']);
 			$email->addAddress(mconfig('sendto'));
 			$email->send();

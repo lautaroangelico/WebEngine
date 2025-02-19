@@ -50,7 +50,7 @@ if(isLoggedIn()) {
 echo '<div class="sidebar-banner"><a href="'.__BASE_URL__.'downloads"><img src="'.__PATH_TEMPLATE_IMG__.'sidebar_banner_download.jpg"/></a></div>';
 
 // Server info block
-if(is_array($srvInfo)) {
+if(isset($srvInfo) && is_array($srvInfo)) {
 	echo '<div class="panel panel-sidebar">';
 		echo '<div class="panel-heading">';
 			echo '<h3 class="panel-title">'.lang('sidebar_srvinfo_txt_1').'</h3>';

@@ -71,7 +71,7 @@ class common {
 				break;
 			case 'sha256':
 				$data['password'] = $password . $username . $this->_sha256salt;
-				$query = "SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = :username AND "._CLMN_PASSWD_." = HASHBYTES('SHA2_256', :password)";
+				$query = "SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = :username AND "._CLMN_PASSWD_." = HASHBYTES('SHA2_256', CAST(:password AS VARCHAR(MAX)))";
 				break;
 			default:
 				$query = "SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = :username AND "._CLMN_PASSWD_." = :password";

@@ -14,10 +14,6 @@
 if(!defined('access') or !access) die();
 include('inc/template.functions.php');
 
-$disabledSidebar = array(
-	'rankings',
-);
-
 $serverInfoCache = LoadCacheData('server_info.cache');
 if(is_array($serverInfoCache)) {
 	$srvInfo = explode("|", $serverInfoCache[1][0]);
@@ -71,7 +67,7 @@ if(!isset($_REQUEST['subpage'])) {
 					</div>
 					<div class="col-xs-6 text-right global-top-bar-nopadding">
 					<?php if(isLoggedIn()) { ?>
-						<a href="<?php echo __BASE_URL__; ?>usercp/"><?php echo lang('menu_txt_5'); ?></a>
+						<a href="<?php echo __BASE_URL__; ?>usercp/"><?php echo lang('module_titles_txt_3'); ?></a>
 						<span class="global-top-bar-separator">|</span>
 						<a href="<?php echo __BASE_URL__; ?>logout/" class="logout"><?php echo lang('menu_txt_6'); ?></a>
 					<?php } else { ?>
@@ -136,16 +132,16 @@ if(!isset($_REQUEST['subpage'])) {
 		</div>
 		<div id="container">
 			<div id="content">
-				<?php if(in_array($_REQUEST['page'], $disabledSidebar)) { ?>
-				<div class="col-xs-12">
-					<?php $handler->loadModule($_REQUEST['page'],$_REQUEST['subpage']); ?>
-				</div>
-				<?php } else { ?>
+				<?php if($_REQUEST['page'] == 'usercp' && $_REQUEST['subpage'] != '') { ?>
 				<div class="col-xs-8">
 					<?php $handler->loadModule($_REQUEST['page'],$_REQUEST['subpage']); ?>
 				</div>
 				<div class="col-xs-4">
 					<?php include(__PATH_TEMPLATE_ROOT__ . 'inc/modules/sidebar.php'); ?>
+				</div>
+				<?php } else { ?>
+				<div class="col-xs-12">
+					<?php $handler->loadModule($_REQUEST['page'],$_REQUEST['subpage']); ?>
 				</div>
 				<?php } ?>
 			</div>
@@ -155,6 +151,7 @@ if(!isset($_REQUEST['subpage'])) {
 		</footer>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 		<script src="<?php echo __PATH_TEMPLATE_JS__; ?>main.js"></script>
+		<script src="<?php echo __PATH_TEMPLATE_JS__; ?>events.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	</body>
 </html>

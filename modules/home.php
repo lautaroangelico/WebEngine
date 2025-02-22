@@ -48,7 +48,19 @@
 							
 							echo '<div class="row home-news-block-article">';
 								echo '<div class="col-xs-3">';
-									echo '<span class="home-news-block-article-type">'.lang('news_txt_6').'</span>';
+									echo '<span class="home-news-block-article-type">';
+									if (isset($newsArticle['news_type'])) {
+										if ($newsArticle['news_type'] == 'newsnotice') {
+										echo lang('news_txt_6');
+										} elseif ($newsArticle['news_type'] == 'annonotice') {
+										echo lang('news_txt_7');
+										} elseif ($newsArticle['news_type'] == 'updatenotice') {
+										echo lang('news_txt_8');
+										}
+									} else {
+										echo lang('news_txt_6');
+									}
+								echo '</span>';
 								echo '</div>';
 								echo '<div class="col-xs-6 home-news-block-article-title-container">';
 									echo '<span class="home-news-block-article-title"><a href="'.$news_url.'">'.$newsArticle['news_title'].'</a></span>';

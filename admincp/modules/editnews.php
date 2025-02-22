@@ -21,7 +21,7 @@ if($News->isNewsDirWritable()) {
 	
 	// Edit news process::
 	if(isset($_POST['news_submit'])) {
-		$News->editNews($_REQUEST['id'],$_POST['news_title'],$_POST['news_content'],$_POST['news_author'],0,$_POST['news_date']);
+		$News->editNews($_REQUEST['id'],$_POST['news_title'],$_POST['news_type'],$_POST['news_content'],$_POST['news_author'],0,$_POST['news_date']);
 		$News->cacheNews();
 		$News->updateNewsCacheIndex();
 		redirect(1, 'admincp/?module=managenews');
@@ -35,6 +35,14 @@ if($News->isNewsDirWritable()) {
 			<div class="form-group">
 				<label for="input_1">Title:</label>
 				<input type="text" class="form-control" id="input_1" name="news_title" value="<?php echo $editNews['news_title']; ?>"/>
+			</div>
+			<div class="form-group">
+				<label for="newstype">Type:</label>
+				<select class="form-control" id="newstype" name="news_type">
+					<option value="newsnotice" <?php echo ($editNews['news_type'] == 'newsnotice') ? 'selected="selected"' : ''; ?>>Notice</option>
+					<option value="annonotice" <?php echo ($editNews['news_type'] == 'annonotice') ? 'selected="selected"' : ''; ?>>Announcement</option>
+					<option value="updatenotice" <?php echo ($editNews['news_type'] == 'updatenotice') ? 'selected="selected"' : ''; ?>>Update</option>
+				</select>
 			</div>
 			<div class="form-group">
 				<label for="news_content"></label>

@@ -1,6 +1,7 @@
 CREATE TABLE [dbo].[{TABLE_NAME}](
 	[news_id] [int] IDENTITY(1,1) NOT NULL,
 	[news_title] [varchar](max) NOT NULL,
+	[news_type] [varchar](50) NOT NULL,
 	[news_author] [varchar](50) NOT NULL,
 	[news_date] [varchar](50) NOT NULL,
 	[news_content] [text] NOT NULL,

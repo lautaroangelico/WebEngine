@@ -296,6 +296,8 @@ $lang['news_txt_3'] = 'Read More &rsaquo;';
 $lang['news_txt_4'] = 'Latest News';
 $lang['news_txt_5'] = 'More';
 $lang['news_txt_6'] = 'Notice';
+$lang['news_txt_7'] = 'Announcement';
+$lang['news_txt_8'] = 'Update';
 
 # rankings
 $lang['rankings_txt_1'] = 'Top Level';

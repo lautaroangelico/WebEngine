@@ -76,7 +76,10 @@ if($News->isNewsDirWritable()) {
 									echo '<td>'.$row['news_id'].'</td>';
 								echo '</tr>';
 								echo '<tr>';
-									echo '<th>Author:</th>';
+									echo '<th>Type:</th>';
+									echo '<td>'.$row['news_type'].'</td>';
+								echo '</tr>';
+								echo '<tr>';
 									echo '<td>'.$row['news_author'].'</td>';
 								echo '</tr>';
 								echo '<tr>';

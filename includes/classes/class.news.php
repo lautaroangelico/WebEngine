@@ -50,12 +50,17 @@ class News {
 		$this->_title = $title;
 	}
 	
+		public function setType($type) {
+		if(!check_value($type)) return;
+		$this->_title = $type;
+	}
+	
 	public function setContent($content) {
 		if(!check_value($content)) return;
 		$this->_content = $content;
 	}
 	
-	function addNews($title,$content,$author='Administrator',$comments=1) {
+	function addNews($title,$type,$content,$author='Administrator',$comments=1) {
 		$this->db = Connection::Database('Me_MuOnline');
 		if(check_value($title) && check_value($content) && check_value($author)) {
 			if($this->checkTitle($title)) {
@@ -68,6 +73,7 @@ class News {
 					// collect data
 					$news_data = array(
 						base64_encode($title),
+						$type,
 						$author,
 						time(),
 						base64_encode($content),
@@ -75,7 +81,7 @@ class News {
 					);
 					
 					// add news
-					$add_news = $this->db->query("INSERT INTO ".WEBENGINE_NEWS." (news_title,news_author,news_date,news_content,allow_comments) VALUES (?,?,?,?,?)", $news_data);
+					$add_news = $this->db->query("INSERT INTO ".WEBENGINE_NEWS." (news_title,news_type,news_author,news_date,news_content,allow_comments) VALUES (?,?,?,?,?,?)", $news_data);
 					
 					if($add_news) {
 						// success message
@@ -117,20 +123,21 @@ class News {
 		}
 	}
 	
-	function editNews($id,$title,$content,$author,$comments,$date) {
+	function editNews($id,$title,$type,$content,$author,$comments,$date) {
 		$this->db = Connection::Database('Me_MuOnline');
-		if(check_value($id) && check_value($title) && check_value($content) && check_value($author) && check_value($comments) && check_value($date)) {
+		if(check_value($id) && check_value($title) && check_value($content) && check_value($type) && check_value($author) && check_value($comments) && check_value($date)) {
 			if(!$this->newsIdExists($id)) { return false; }
 			if($this->checkTitle($title) && $this->checkContent($content)) {
 				$editData = array(
 					base64_encode($title),
+					$type,
 					base64_encode($content),
 					$author,
 					strtotime($date),
 					$comments,
 					$id
 				);
-				$query = $this->db->query("UPDATE ".WEBENGINE_NEWS." SET news_title = ?, news_content = ?, news_author = ?, news_date = ?, allow_comments = ? WHERE news_id = ?", $editData);
+				$query = $this->db->query("UPDATE ".WEBENGINE_NEWS." SET news_title = ?, news_type = ?, news_content = ?, news_author = ?, news_date = ?, allow_comments = ? WHERE news_id = ?", $editData);
 				if($query) {
 					message('success', 'News successfully edited.');
 				} else {
@@ -234,7 +241,7 @@ class News {
 	
 	function retrieveNewsDataForCache() {
 		$this->db = Connection::Database('Me_MuOnline');
-		$news = $this->db->query_fetch("SELECT news_id,news_title,news_author,news_date,allow_comments,news_content FROM ".WEBENGINE_NEWS." ORDER BY news_id DESC");
+		$news = $this->db->query_fetch("SELECT news_id,news_title,news_type,news_author,news_date,allow_comments FROM ".WEBENGINE_NEWS." ORDER BY news_id DESC");
 		if(is_array($news)) {
 			return $news;
 		} else {
@@ -252,6 +259,7 @@ class News {
 		foreach($newsList as $key => $row) {
 			$this->setId($row['news_id']);
 			$row['news_title'] = base64_decode($row['news_title']);
+			$row['news_type'];
 			$row['news_content'] = base64_decode($row['news_content']);
 			$newsTranslations = $this->getNewsTranslationsDataList();
 			if(!is_array($newsTranslations)) continue;

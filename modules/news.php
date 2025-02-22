@@ -47,6 +47,7 @@ try {
 		$news_id = $newsArticle['news_id'];
 		$news_title = base64_decode($newsArticle['news_title']);
 		$news_author = $newsArticle['news_author'];
+		$news_type = $newsArticle['news_type'];
 		$news_date = $newsArticle['news_date'];
 		$news_url = __BASE_URL__.'news/'.$news_id.'/';
 		

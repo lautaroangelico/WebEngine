@@ -65,10 +65,7 @@ try {
 }
 ?>
 
-<script src="//cdn.ckeditor.com/4.7.3/full/ckeditor.js"></script>
+<script src="js/plugins/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">//<![CDATA[
-	CKEDITOR.replace('news_content', {
-		language: 'en',
-		uiColor: '#f1f1f1'
-	});
+	CKEDITOR.replace('news_content');
 //]]></script>

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -41,11 +41,11 @@ function saveChanges() {
 }
 
 
-if(check_value($_POST['submit_changes'])) {
+if(isset($_POST['submit_changes'])) {
 	saveChanges();
 }
 
-if(check_value($_POST['votesite_add_submit'])) {
+if(isset($_POST['votesite_add_submit'])) {
 	$add = $vote->addVotesite($_POST['votesite_add_title'],$_POST['votesite_add_link'],$_POST['votesite_add_reward'],$_POST['votesite_add_time']);
 	if($add) {
 		message('success','Votesite successfully added.');
@@ -54,7 +54,7 @@ if(check_value($_POST['votesite_add_submit'])) {
 	}
 }
 
-if(check_value($_REQUEST['deletesite'])) {
+if(isset($_REQUEST['deletesite'])) {
 	$delete = $vote->deleteVotesite($_REQUEST['deletesite']);
 	if($delete) {
 		message('success','Votesite successfully deleted.');
@@ -72,13 +72,13 @@ $creditSystem = new CreditSystem();
 		<tr>
 			<th>Status<br/><span>Enable/disable the vote module.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
 			<th>Save Vote Logs<br/><span>If enabled, every vote will be permanently logged in a database table.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_2',mconfig('vote_save_logs'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_2',mconfig('vote_save_logs'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>

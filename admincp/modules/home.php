@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -47,7 +47,6 @@ echo '<div class="row">';
 			echo '<div class="list-group">';
 				
 				$database = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
-				@$handler->checkWebEngineBlacklist();
 				
 				// Total Accounts
 				$totalAccounts = $database->query_fetch_single("SELECT COUNT(*) as result FROM MEMB_INFO");
@@ -105,8 +104,14 @@ echo '<div class="row">';
 	echo '<div class="col-md-6">';
 		echo '<div class="panel panel-default">';
 		echo '<div class="panel-body">';
-			echo '<div style="margin-bottom:7px;"><a href="https://webenginecms.org/discord/" class="btn btn-default" target="_blank">Discord</a></div>';
-			echo '<iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2FMUE.WebEngine&amp;width=600&amp;height=447&amp;colorscheme=light&amp;show_faces=false&amp;header=false&amp;stream=true&amp;show_border=false&amp;appId=1439010682981422" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100%; height:447px;" allowTransparency="true"></iframe>';
+			echo '<strong>WebEngine CMS Official Website:</strong><br>';
+			echo '<a href="https://webenginecms.org/" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> https://webenginecms.org/</a><br><br>';
+			
+			echo '<strong>Community Discord:</strong><br>';
+			echo '<a href="https://webenginecms.org/discord/" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> https://webenginecms.org/discord/</a><br><br>';
+			
+			echo '<strong>Facebook Page:</strong><br>';
+			echo '<a href="https://webenginecms.org/facebook/" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> https://webenginecms.org/facebook/</a><br><br>';
 		echo '</div>';
 		echo '</div>';
 	echo '</div>';

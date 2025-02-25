@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -19,7 +19,7 @@ try {
 	$cacheFileList = $cacheManager->getCacheFileListAndData();
 	if(!is_array($cacheFileList)) throw new Exception('No cache files found.');
 	
-	if(check_value($_GET['action'])) {
+	if(isset($_GET['action'])) {
 		try {
 			switch($_GET['action']) {
 				case 'clear':

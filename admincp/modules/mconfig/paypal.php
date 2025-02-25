@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -45,7 +45,7 @@ function saveChanges() {
 
 }
 
-if(check_value($_POST['submit_changes'])) {
+if(isset($_POST['submit_changes'])) {
 	saveChanges();
 }
 
@@ -58,49 +58,49 @@ $creditSystem = new CreditSystem();
 		<tr>
 			<th>Status<br/><span>Enable/disable the paypal donation gateway.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_2',mconfig('active'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_2',mconfig('active'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
 			<th>PayPal Sandbox Mode<br/><span>Enable/disable PayPal's IPN testing mode.<br/><br/>More info:<br/><a href="https://developer.paypal.com/" target="_blank">https://developer.paypal.com/</a></span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_3',mconfig('paypal_enable_sandbox'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_3',mconfig('paypal_enable_sandbox'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
 			<th>PayPal Email<br/><span>PayPal email where you will receive the donations.</span></th>
 			<td>
-				<input class="input-xxlarge" type="text" name="setting_4" value="<?=mconfig('paypal_email')?>"/>
+				<input class="input-xxlarge" type="text" name="setting_4" value="<?php echo mconfig('paypal_email'); ?>"/>
 			</td>
 		</tr>
 		<tr>
 			<th>PayPal Donations Title<br/><span>Title of the PayPal donation. Example: "Donation for MU Credits".</span></th>
 			<td>
-				<input class="input-xxlarge" type="text" name="setting_5" value="<?=mconfig('paypal_title')?>"/>
+				<input class="input-xxlarge" type="text" name="setting_5" value="<?php echo mconfig('paypal_title'); ?>"/>
 			</td>
 		</tr>
 		<tr>
 			<th>Currency Code<br/><span>List of available PayPal currencies: <a href="https://cms.paypal.com/uk/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_api_nvp_currency_codes" target="_blank">click here</a>.</span></th>
 			<td>
-				<input class="input-xxlarge" type="text" name="setting_6" value="<?=mconfig('paypal_currency')?>"/>
+				<input class="input-xxlarge" type="text" name="setting_6" value="<?php echo mconfig('paypal_currency'); ?>"/>
 			</td>
 		</tr>
 		<tr>
 			<th>Return/Cancel URL<br/><span>URL where the client will be redirected to if the donation is cancelled or completed.</span></th>
 			<td>
-				<input class="input-xxlarge" type="text" name="setting_7" value="<?=mconfig('paypal_return_url')?>"/>
+				<input class="input-xxlarge" type="text" name="setting_7" value="<?php echo mconfig('paypal_return_url'); ?>"/>
 			</td>
 		</tr>
 		<tr>
 			<th>IPN Notify URL<br/><span>URL of WebEngine's PayPal API.<br/><br/> By default it has to be in: <b>http://YOURWEBSITE.COM/api/paypal.php</b></span></th>
 			<td>
-				<input class="input-xxlarge" type="text" name="setting_8" value="<?=mconfig('paypal_notify_url')?>"/>
+				<input class="input-xxlarge" type="text" name="setting_8" value="<?php echo mconfig('paypal_notify_url'); ?>"/>
 			</td>
 		</tr>
 		<tr>
 			<th>Credits Conversion Rate<br/><span>How many game credits is equivalent to 1 of real money currency.<br/><br/>Example:<br/>1 USD = 100 Credits, in this example you would type in the box 100.</span></th>
 			<td>
-				<input class="input-mini" type="text" name="setting_9" value="<?=mconfig('paypal_conversion_rate')?>"/>
+				<input class="input-mini" type="text" name="setting_9" value="<?php echo mconfig('paypal_conversion_rate'); ?>"/>
 			</td>
 		</tr>
 		<tr>

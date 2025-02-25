@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -18,7 +18,7 @@ $file_name = basename(__FILE__);
 $db = Connection::Database('Me_MuOnline');
 
 // add country to accounts with no country
-$accountList = $db->query_fetch("SELECT TOP 50 * FROM "._TBL_MS_." WHERE "._CLMN_MS_MEMBID_." NOT IN(SELECT account FROM ".WEBENGINE_ACCOUNT_COUNTRY.") AND "._CLMN_MS_IP_." IS NOT NULL");
+$accountList = $db->query_fetch("SELECT TOP 40 * FROM "._TBL_MS_." WHERE "._CLMN_MS_MEMBID_." NOT IN(SELECT account FROM ".WEBENGINE_ACCOUNT_COUNTRY.") AND "._CLMN_MS_IP_." IS NOT NULL");
 if(is_array($accountList)) {
 	$Account = new Account();
 	foreach($accountList as $row) {

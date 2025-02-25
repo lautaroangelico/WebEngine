@@ -3,15 +3,15 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.5
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
  */
 
-//session_name('WebEngine125'); # session name (change to your server name and uncomment)
+session_name('WebEngine126'); # session name (change to your server name and uncomment)
 //session_set_cookie_params(0, '/', 'muonline.com'); # same session with and without www protocol (edit with your domain and uncomment)
 if(access != 'cron') {
 	@ob_start();
@@ -19,7 +19,7 @@ if(access != 'cron') {
 }
 
 # Version
-define('__WEBENGINE_VERSION__', '1.2.5');
+define('__WEBENGINE_VERSION__', '1.2.6');
 
 # Set Encoding
 @ini_set('default_charset', 'utf-8');
@@ -166,7 +166,7 @@ if(!$config['system_active'] && access != 'cron') {
 # Error Reporting
 if($config['error_reporting']) {
 	ini_set('display_errors', true);
-	error_reporting(E_ALL & ~E_NOTICE);
+	error_reporting(E_ALL);
 } else {
 	ini_set('display_errors', false);
 	error_reporting(0);

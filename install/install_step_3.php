@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -17,8 +17,8 @@ if(!defined('access') or !access or access != 'install') die();
 <br />
 <?php
 try {
-	if(check_value($_POST['install_step_3_submit'])) {
-		if(!check_value($_POST['install_step_3_error'])) {
+	if(isset($_POST['install_step_3_submit'])) {
+		if(!isset($_POST['install_step_3_error'])) {
 			# move to next step
 			$_SESSION['install_cstep']++;
 			header('Location: install.php');
@@ -28,7 +28,7 @@ try {
 		}
 	}
 	
-	if(check_value($_SESSION['install_sql_db2'])) {
+	if(isset($_SESSION['install_sql_db2'])) {
 		$mudb = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db2'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass'], $_SESSION['install_sql_dsn']);
 	} else {
 		$mudb = new dB($_SESSION['install_sql_host'], $_SESSION['install_sql_port'], $_SESSION['install_sql_db1'], $_SESSION['install_sql_user'], $_SESSION['install_sql_pass'], $_SESSION['install_sql_dsn']);

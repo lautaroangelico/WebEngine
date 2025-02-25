@@ -3,28 +3,28 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
  */
 
-if(check_value($_GET['name'])) {
+if(isset($_GET['name'])) {
 	try {
 		if(!Validator::AlphaNumeric($_GET['name'])) throw new Exception("Invalid character name.");
 		$Character = new Character();
 		if(!$Character->CharacterExists($_GET['name'])) throw new Exception("Character does not exist.");
 		
-		if(check_value($_POST['characteredit_submit'])) {
+		if(isset($_POST['characteredit_submit'])) {
 			try {
 				if($_POST['characteredit_name'] != $_GET['name']) throw new Exception("Invalid character name.");				
-				if(!check_value($_POST['characteredit_account'])) throw new Exception("Invalid account name.");
+				if(!isset($_POST['characteredit_account'])) throw new Exception("Invalid account name.");
 				if(!Validator::UnsignedNumber($_POST['characteredit_class'])) throw new Exception("All the entered values must be numeric.");
 				if(!Validator::UnsignedNumber($_POST['characteredit_level'])) throw new Exception("All the entered values must be numeric.");
-				if(check_value($_POST['characteredit_resets'])) if(!Validator::UnsignedNumber($_POST['characteredit_resets'])) throw new Exception("All the entered values must be numeric.");
-				if(check_value($_POST['characteredit_gresets'])) if(!Validator::UnsignedNumber($_POST['characteredit_gresets'])) throw new Exception("All the entered values must be numeric.");
+				if(isset($_POST['characteredit_resets'])) if(!Validator::UnsignedNumber($_POST['characteredit_resets'])) throw new Exception("All the entered values must be numeric.");
+				if(isset($_POST['characteredit_gresets'])) if(!Validator::UnsignedNumber($_POST['characteredit_gresets'])) throw new Exception("All the entered values must be numeric.");
 				if(!Validator::UnsignedNumber($_POST['characteredit_zen'])) throw new Exception("All the entered values must be numeric.");
 				if(!Validator::UnsignedNumber($_POST['characteredit_lvlpoints'])) throw new Exception("All the entered values must be numeric.");
 				if(!Validator::UnsignedNumber($_POST['characteredit_pklevel'])) throw new Exception("All the entered values must be numeric.");
@@ -35,7 +35,7 @@ if(check_value($_GET['name'])) {
 				if(!Validator::UnsignedNumber($_POST['characteredit_cmd'])) throw new Exception("All the entered values must be numeric.");
 				if(!Validator::UnsignedNumber($_POST['characteredit_mlevel'])) throw new Exception("All the entered values must be numeric.");
 				if(!Validator::UnsignedNumber($_POST['characteredit_mlexp'])) throw new Exception("All the entered values must be numeric.");
-				if(check_value($_POST['characteredit_mlnextexp'])) if(!Validator::UnsignedNumber($_POST['characteredit_mlnextexp'])) throw new Exception("All the entered values must be numeric.");
+				if(isset($_POST['characteredit_mlnextexp'])) if(!Validator::UnsignedNumber($_POST['characteredit_mlnextexp'])) throw new Exception("All the entered values must be numeric.");
 				if(!Validator::UnsignedNumber($_POST['characteredit_mlpoint'])) throw new Exception("All the entered values must be numeric.");
 				
 				// check online
@@ -56,11 +56,11 @@ if(check_value($_GET['name'])) {
 					'cmd' => $_POST['characteredit_cmd']
 				);
 				
-				if(check_value($_POST['characteredit_resets'])) {
+				if(isset($_POST['characteredit_resets'])) {
 					$updateData['resets'] = $_POST['characteredit_resets'];
 				}
 				
-				if(check_value($_POST['characteredit_gresets'])) {
+				if(isset($_POST['characteredit_gresets'])) {
 					$updateData['gresets'] = $_POST['characteredit_gresets'];
 				}
 				
@@ -90,7 +90,7 @@ if(check_value($_GET['name'])) {
 					'points' => $_POST['characteredit_mlpoint']
 				);
 				
-				if(check_value($_POST['characteredit_mlnextexp'])) {
+				if(isset($_POST['characteredit_mlnextexp'])) {
 					$updateMlData['nextexp'] = $_POST['characteredit_mlnextexp'];
 				}
 				

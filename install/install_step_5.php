@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.5
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -16,21 +16,21 @@ if(!defined('access') or !access or access != 'install') die();
 <h3>Website Configuration</h3>
 <br />
 <?php
-if(check_value($_POST['install_step_5_submit'])) {
+if(isset($_POST['install_step_5_submit'])) {
 	try {
 		# check for empty values
-		if(!check_value($_POST['install_step_5_1'])) throw new Exception('You must complete all required fields.');
-		if(!check_value($_POST['install_step_5_7'])) throw new Exception('You must complete all required fields.');
+		if(!isset($_POST['install_step_5_1'])) throw new Exception('You must complete all required fields.');
+		if(!isset($_POST['install_step_5_7'])) throw new Exception('You must complete all required fields.');
 		
 		# check admin user
 		if(!Validator::AlphaNumeric($_POST['install_step_5_1'])) throw new Exception('The admin account username can only contain alpha-numeric characters.');
 		
 		# check database connection data
-		if(!check_value($_SESSION['install_sql_host'])) throw new Exception('Database connection info missing, restart installation process.');
-		if(!check_value($_SESSION['install_sql_db1'])) throw new Exception('Database connection info missing, restart installation process.');
-		if(!check_value($_SESSION['install_sql_user'])) throw new Exception('Database connection info missing, restart installation process.');
-		if(!check_value($_SESSION['install_sql_pass'])) throw new Exception('Database connection info missing, restart installation process.');
-		if(!check_value($_SESSION['install_sql_dsn'])) throw new Exception('Database connection info missing, restart installation process.');
+		if(!isset($_SESSION['install_sql_host'])) throw new Exception('Database connection info missing, restart installation process.');
+		if(!isset($_SESSION['install_sql_db1'])) throw new Exception('Database connection info missing, restart installation process.');
+		if(!isset($_SESSION['install_sql_user'])) throw new Exception('Database connection info missing, restart installation process.');
+		if(!isset($_SESSION['install_sql_pass'])) throw new Exception('Database connection info missing, restart installation process.');
+		if(!isset($_SESSION['install_sql_dsn'])) throw new Exception('Database connection info missing, restart installation process.');
 		
 		# check for valid server files
 		if(!array_key_exists($_POST['install_step_5_7'], $webengine['file_compatibility'])) throw new Exception('The selected server files are not compatible with WebEngine CMS.');
@@ -44,7 +44,7 @@ if(check_value($_POST['install_step_5_submit'])) {
 		$webengineDefaultConfig['SQL_DB_USER'] = $_SESSION['install_sql_user'];
 		$webengineDefaultConfig['SQL_DB_PASS'] = $_SESSION['install_sql_pass'];
 		$webengineDefaultConfig['SQL_DB_PORT'] = $_SESSION['install_sql_port'];
-		$webengineDefaultConfig['SQL_USE_2_DB'] = check_value($_SESSION['install_sql_db2']) ? true : false;
+		$webengineDefaultConfig['SQL_USE_2_DB'] = isset($_SESSION['install_sql_db2']) ? true : false;
 		$webengineDefaultConfig['SQL_PDO_DRIVER'] = $_SESSION['install_sql_dsn'];
 		$webengineDefaultConfig['SQL_PASSWORD_ENCRYPTION'] = $_SESSION['install_sql_passwd_encrypt'];
 		$webengineDefaultConfig['SQL_SHA256_SALT'] = $_SESSION['install_sql_sha256_salt'];

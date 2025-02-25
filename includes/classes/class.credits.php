@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -31,6 +31,11 @@ class CreditSystem {
 		'email',
 		'character'
 	);
+	
+	protected $muonline;
+	protected $memuonline;
+	protected $common;
+	protected $character;
 	
 	function __construct() {
 		
@@ -502,7 +507,7 @@ class CreditSystem {
 		} else {
 			$module = $_GET['page'] . '/' . $_GET['subpage'];
 		}
-		$ip = (check_value($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0');
+		$ip = (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0');
 		
 		$data = array(
 			'config' => $configTitle,

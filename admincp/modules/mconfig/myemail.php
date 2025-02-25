@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -35,7 +35,7 @@ function saveChanges() {
 	}
 }
 
-if(check_value($_POST['submit_changes'])) {
+if(isset($_POST['submit_changes'])) {
 	saveChanges();
 }
 
@@ -46,13 +46,13 @@ loadModuleConfigs('usercp.myemail');
 		<tr>
 			<th>Status<br/><span>Enable/disable the change email module.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
 			<th>Email Verification<br/><span>If enabled, the account's email will not be changed until the user clicks the verification link sent to their current email.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_2',mconfig('require_verification'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_2',mconfig('require_verification'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.2
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -21,6 +21,8 @@ class News {
 	private $_language;
 	private $_title;
 	private $_content;
+	
+	protected $db;
 	
 	function __construct() {
 		
@@ -232,7 +234,7 @@ class News {
 	
 	function retrieveNewsDataForCache() {
 		$this->db = Connection::Database('Me_MuOnline');
-		$news = $this->db->query_fetch("SELECT news_id,news_title,news_author,news_date,allow_comments FROM ".WEBENGINE_NEWS." ORDER BY news_id DESC");
+		$news = $this->db->query_fetch("SELECT news_id,news_title,news_author,news_date,allow_comments,news_content FROM ".WEBENGINE_NEWS." ORDER BY news_id DESC");
 		if(is_array($news)) {
 			return $news;
 		} else {

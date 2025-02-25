@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -13,7 +13,7 @@
 
 function admincp_base($module="") {
 	if(check_value($module)) return __PATH_ADMINCP_HOME__ . "?module=" . $module;
-	return __PATH_ADMINCP_HOME__;;
+	return __PATH_ADMINCP_HOME__;
 }
 
 function enabledisableCheckboxes($name,$checked,$e_txt,$d_txt) {
@@ -44,7 +44,7 @@ function tableExists($table_name, $db) {
 }
 
 function checkVersion() {
-	$url = 'http://version.webenginecms.org/1.0/index.php';
+	$url = 'https://version.webenginecms.org/1.0/index.php';
 	
 	$fields = array(
 		'version' => urlencode(__WEBENGINE_VERSION__),
@@ -70,6 +70,7 @@ function checkVersion() {
 	
 	if(!$result) return;
 	$resultArray = json_decode($result, true);
+	if($resultArray == null) return;
 	if($resultArray['update']) return true;
 	return;
 }
@@ -134,6 +135,7 @@ function updateDownloadsCache() {
 
 function weekDaySelectOptions($selected='Monday') {
 	$days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+	$result = '';
 	foreach($days as $row) {
 		if($selected == $row) {
 			$result .= '<option value="'.$row.'" selected>'.$row.'</option>';

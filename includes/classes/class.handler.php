@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.5
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -78,9 +78,9 @@ class Handler {
 				$request = explode("/", $_GET['request']);
 				if(is_array($request)) {
 					for($i = 0; $i < count($request); $i++) {
-						if(check_value($request[$i])) {
-							if(check_value($request[$i+1])) {
-								$_GET[$request[$i]] = filter_var($request[$i+1], FILTER_SANITIZE_STRING);
+						if(isset($request[$i]) && !empty($request[$i])) {
+							if(array_key_exists($i+1, $request) && !empty($request[$i+1])) {
+								$_GET[$request[$i]] = htmlspecialchars($request[$i+1]);
 							} else {
 								$_GET[$request[$i]] = NULL;
 							}
@@ -90,7 +90,7 @@ class Handler {
 				}
 			}
 			
-			if(!check_value($page)) { $page = 'news'; }
+			if(!check_value($page)) { $page = 'home'; }
 			
 			if(!check_value($subpage)) {
 				if($this->moduleExists($page)) {
@@ -204,43 +204,4 @@ class Handler {
 		if(!@include_once(__PATH_LANGUAGES__ . $language . '/language.php')) throw new Exception('Language phrases could not be loaded ('.$language.').');
 	}
 	
-	public function checkWebEngineBlacklist() {
-		$url = 'http://version.webenginecms.org/1.0/blacklist.php';
-		$fields = array(
-			'baseurl' => urlencode(__BASE_URL__),
-		);
-		foreach($fields as $key => $value) {
-			$fieldsArray[] = $key . '=' . $value;
-		}
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_POST, count($fields));
-		curl_setopt($ch, CURLOPT_POSTFIELDS, implode("&", $fieldsArray));
-		curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_USERAGENT, 'WebEngine');
-		curl_setopt($ch, CURLOPT_HEADER, false);
-		$result = curl_exec($ch);
-		curl_close($ch);
-		if(!$result) return;
-		$resultArray = json_decode($result, true);
-		if(!is_array($resultArray)) return;
-		if(!array_key_exists('blacklisted', $resultArray)) return;
-		if($resultArray['blacklisted'] === 1) {
-			$webengineConfigurations = webengineConfigs();
-			$webengineConfigurations['blacklisted'] = true;
-			$newWebEngineConfig = json_encode($webengineConfigurations, JSON_PRETTY_PRINT);
-			$cfgFile = fopen(__PATH_CONFIGS__.'webengine.json', 'w');
-			if(!$cfgFile) return;
-			if(!fwrite($cfgFile, $newWebEngineConfig)) return;
-			fclose($cfgFile);
-		}
-		return;
-	}
-	
-	public function versionApiListener() {
-		if(!array_key_exists('HTTP_USER_AGENT', $_SERVER)) return;
-		if($_SERVER['HTTP_USER_AGENT'] != "WebEngine") return;
-		$this->checkWebEngineBlacklist();
-	}
 }

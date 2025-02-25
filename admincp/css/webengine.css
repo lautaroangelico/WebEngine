@@ -116,3 +116,7 @@ h1.page-header {
 .nav-second-level > li > a {
 	color: #aaa;
 }
+
+.sidebar ul li a.active {
+    background-color: #565656;
+}

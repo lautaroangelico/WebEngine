@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.8
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -20,7 +20,7 @@
 </form>
 <br />
 <?php
-if(check_value($_POST['ip_address'])) {
+if(isset($_POST['ip_address'])) {
 	try {
 		if(!Validator::Ip($_POST['ip_address'])) throw new Exception("You have entered an invalid IP address.");
 		

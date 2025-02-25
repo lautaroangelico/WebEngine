@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.2
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -18,7 +18,7 @@ $News = new News();
 if($News->isNewsDirWritable()) {
 
 	# News detele
-	if(check_value($_REQUEST['delete'])) {
+	if(isset($_REQUEST['delete'])) {
 		$deleteNews = $News->removeNews($_REQUEST['delete']);
 		$News->cacheNews();
 		$News->updateNewsCacheIndex();
@@ -30,7 +30,7 @@ if($News->isNewsDirWritable()) {
 	}
 	
 	# News translation delete
-	if(check_value($_GET['deletetranslation']) && check_value($_GET['language'])) {
+	if(isset($_GET['deletetranslation']) && isset($_GET['language'])) {
 		try {
 			$News->setId($_GET['deletetranslation']);
 			$News->setLanguage($_GET['language']);
@@ -43,7 +43,7 @@ if($News->isNewsDirWritable()) {
 	}
 	
 	# News cache
-	if(check_value($_REQUEST['cache']) && $_REQUEST['cache'] == 1) {
+	if(isset($_REQUEST['cache']) && $_REQUEST['cache'] == 1) {
 		$cacheNews = $News->cacheNews();
 		$News->updateNewsCacheIndex();
 		if($cacheNews) {

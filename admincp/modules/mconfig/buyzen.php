@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -37,7 +37,7 @@ function saveChanges() {
 	}
 }
 
-if(check_value($_POST['submit_changes'])) {
+if(isset($_POST['submit_changes'])) {
 	saveChanges();
 }
 
@@ -50,25 +50,25 @@ $creditSystem = new CreditSystem();
 		<tr>
 			<th>Status<br/><span>Enable/disable the buy zen module.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
 			<th>Max Zen<br/><span>Maximum zen a character can have</span></th>
 			<td>
-				<input class="input-small" type="text" name="setting_2" value="<?=mconfig('max_zen')?>"/>
+				<input class="input-small" type="text" name="setting_2" value="<?php echo mconfig('max_zen'); ?>"/>
 			</td>
 		</tr>
 		<tr>
 			<th>Exchange Rate<br/><span>How much zen does 1 CREDIT equals to.</span></th>
 			<td>
-				<input class="input-small" type="text" name="setting_3" value="<?=mconfig('exchange_ratio')?>"/>
+				<input class="input-small" type="text" name="setting_3" value="<?php echo mconfig('exchange_ratio'); ?>"/>
 			</td>
 		</tr>
 		<tr>
 			<th>Increment Rate<br/><span>The larger the value, the less options there will be in the dropdown menu.</span></th>
 			<td>
-				<input class="input-small" type="text" name="setting_5" value="<?=mconfig('increment_rate')?>"/>
+				<input class="input-small" type="text" name="setting_5" value="<?php echo mconfig('increment_rate'); ?>"/>
 			</td>
 		</tr>
 		<tr>

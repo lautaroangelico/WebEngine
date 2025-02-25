@@ -162,7 +162,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 }
 
 .page-title {
-	color: #ff0000;
+	color: #3f6588;
 	font-family: 'PT Sans', sans-serif;
 	font-size: 32px;
 	margin-bottom: 10px;
@@ -231,8 +231,8 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 	text-align: center;
 }
 .rankings-table tr:first-child td {
-	color: #ff0000;
-	border-bottom: 3px solid #ff0000;
+	color: #3f6588;
+	border-bottom: 3px solid #3f6588;
 }
 .rankings-update-time {
 	text-align: right;
@@ -317,7 +317,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 	vertical-align: middle !important;
 }
 .general-table-ui tr:first-child td {
-	color: #ff0000;
+	color: #3f6588;
 }
 .general-table-ui tr:nth-child(2n+2) td {
 	background: #fafafa;
@@ -440,12 +440,12 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 
 .panel-sidebar > .panel-heading {
 	background: #fff;
-	color: #ff0000;
+	color: #3f6588;
 	font-family: 'PT Sans', sans-serif;
 	border: 0px;
 	-moz-border-radius: 0px;
 	border-radius: 0px;
-	border-bottom: 3px solid #ff0000;
+	border-bottom: 3px solid #3f6588;
 }
 
 .panel-usercp {
@@ -471,13 +471,15 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 	font-weight: bold;
 }
 .panel-usercp ul li a:active, .panel-usercp ul li a:hover {
-	color: #ff0000 !important;
+	color: #3f6588 !important;
 }
 
 .panel-usercp ul li img {
 	position: relative;
 	top: -2px;
-	padding-right: 10px;
+	width: 25px;
+	height: 25px;
+	margin-right: 5px;
 }
 
 .sidebar-banner {
@@ -836,4 +838,61 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 .rankings-class-filter-grayscale {
 	-webkit-filter: grayscale(100%);
 	filter: grayscale(100%);
+}
+
+/* Home - News List */
+
+.home-news-block {
+	
+}
+
+.home-news-block .home-news-block-header h2 {
+	padding: 0px !important;
+	margin: 0px 0px 20px 0px !important;
+	font-style: italic;
+}
+
+.home-news-block .home-news-block-header a {
+	display: inline-block;
+	padding-top: 5px;
+	font-style: italic;
+	font-size: 16px;
+}
+
+.home-news-block-article {
+	margin-top: 10px;
+}
+
+.home-news-block-article .home-news-block-article-type {
+	display: block;
+	border: 1px solid #3f6588;
+	padding: 5px;
+	text-align: center;
+	color: #3f6588;
+}
+
+.home-news-block-article .home-news-block-article-title-container {
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.home-news-block-article .home-news-block-article-title, .home-news-block-article .home-news-block-article-date {
+	line-height: 30px;
+}
+
+/* Event Timer Block */
+
+.event-schedule-open {
+	color: green;
+}
+
+.event-schedule-inprogress {
+	color: orange;
+}
+
+.panel-sidebar-events .smalltext {
+	font-size: 11px;
+	position: relative;
+	top: -5px;
 }

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.5
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -53,7 +53,7 @@ try {
 			$characterClass = getPlayerClassAvatar($rdata[5], true, true, 'rankings-class-image');
 			$gensType = $rdata[1] == 1 ? '<img class="rankings-gens-img" src="'.__PATH_TEMPLATE_IMG__.'gens_1.png" title="'.lang('rankings_txt_26',true).'" alt="'.lang('rankings_txt_26',true).'"/>' : '<img class="rankings-gens-img" src="'.__PATH_TEMPLATE_IMG__.'gens_2.png" title="'.lang('rankings_txt_27',true).'" alt="'.lang('rankings_txt_27',true).'"/>';
 			$onlineStatus = mconfig('show_online_status') ? in_array($rdata[0], $onlineCharacters) ? '<img src="'.__PATH_ONLINE_STATUS__.'" class="online-status-indicator"/>' : '<img src="'.__PATH_OFFLINE_STATUS__.'" class="online-status-indicator"/>' : '';
-			echo '<tr data-class-id="'.$rdata[5].'>';
+			echo '<tr data-class-id="'.$rdata[5].'">';
 			if(mconfig('rankings_show_place_number')) {
 				echo '<td class="rankings-table-place">'.$i.'</td>';
 			}

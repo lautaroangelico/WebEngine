@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -14,7 +14,7 @@
 echo '<h1 class="page-header">AdminCP Access</h1>';
 echo '<p>To remove an admin set their access level to 0.</p>';
 
-if(check_value($_POST['settings_submit'])) {
+if(isset($_POST['settings_submit'])) {
 	try {
 		# webengine configs
 		$webengineConfigurations = webengineConfigs();

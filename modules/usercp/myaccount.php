@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.4
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2022 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -120,7 +120,7 @@ if(is_array($AccountCharacters)) {
 			echo '<div class="col-xs-3">';
 				echo '<div class="myaccount-character-name">'.playerProfile($characterName).$characterOnlineStatus.'</div>';
 				echo '<div class="myaccount-character-block">';
-					echo '<a href="'.__BASE_URL__.'profile/player/req/'.$characterName.'" target="_blank">';
+					echo '<a href="'.playerProfile($characterName, true).'" target="_blank">';
 						echo '<img src="'.$characterClassAvatar.'" />';
 					echo '</a>';
 				echo '</div>';

@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -20,7 +20,7 @@
 </form>
 <br />
 <?php
-if(check_value($_POST['submit_block'], $_POST['ip_address'])) {
+if(isset($_POST['submit_block'], $_POST['ip_address'])) {
 	if($common->blockIpAddress($_POST['ip_address'],$_SESSION['username'])) {
 		message('success','IP address blocked.');
 	} else {
@@ -28,7 +28,7 @@ if(check_value($_POST['submit_block'], $_POST['ip_address'])) {
 	}
 }
 
-if(check_value($_GET['unblock'])) {
+if(isset($_GET['unblock'])) {
 	if($common->unblockIpAddress($_REQUEST['unblock'])) {
 		message('success','IP address unblocked.');
 	} else {

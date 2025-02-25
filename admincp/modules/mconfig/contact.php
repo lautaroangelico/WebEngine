@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -37,7 +37,7 @@ function saveChanges() {
 	}
 }
 
-if(check_value($_POST['submit_changes'])) {
+if(isset($_POST['submit_changes'])) {
 	saveChanges();
 }
 
@@ -48,19 +48,19 @@ loadModuleConfigs('contact');
 		<tr>
 			<th>Status<br/><span>Enable/disable the contact module.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
 			<th>Email Subject<br/><span></span></th>
 			<td>
-				<input type="text" name="setting_2" value="<?=mconfig('subject')?>"/>
+				<input type="text" name="setting_2" value="<?php echo mconfig('subject'); ?>"/>
 			</td>
 		</tr>
 		<tr>
 			<th>Send Emails To<br/><span></span></th>
 			<td>
-				<input type="text" name="setting_3" value="<?=mconfig('sendto')?>"/>
+				<input type="text" name="setting_3" value="<?php echo mconfig('sendto'); ?>"/>
 			</td>
 		</tr>
 		<tr>

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.5
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -19,6 +19,9 @@ class common {
 	protected $_debug = false;
 	
 	protected $_blockedIpCache = 'blocked_ip.cache';
+	
+	protected $muonline;
+	protected $memuonline;
 	
 	function __construct() {
 		
@@ -68,7 +71,7 @@ class common {
 				break;
 			case 'sha256':
 				$data['password'] = $password . $username . $this->_sha256salt;
-				$query = "SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = :username AND "._CLMN_PASSWD_." = HASHBYTES('SHA2_256', :password)";
+				$query = "SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = :username AND "._CLMN_PASSWD_." = HASHBYTES('SHA2_256', CAST(:password AS VARCHAR(MAX)))";
 				break;
 			default:
 				$query = "SELECT * FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." = :username AND "._CLMN_PASSWD_." = :password";

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.5
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -15,6 +15,8 @@
 $lang['server_time'] = 'Server Time';
 $lang['user_time'] = 'Your Time';
 $lang['switch_lang'] = 'Switch Language';
+$lang['event_schedule'] = 'Events Schedule';
+$lang['event_schedule_start'] = 'Starts In';
 
 # menu and navbar
 $lang['menu_txt_1'] = 'Home';
@@ -246,6 +248,7 @@ $lang['login_txt_2'] = 'Password:';
 $lang['login_txt_3'] = 'Sign In';
 $lang['login_txt_4'] = 'forgot your password?';
 $lang['login_txt_5'] = 'You have used %s out of %s login attempts. After all %s have been used, you will be unable to login for 15 minutes.';
+$lang['login_txt_6'] = 'Log Out';
 
 # account
 $lang['myaccount_txt_1'] = 'Account Status:';
@@ -290,6 +293,9 @@ $lang['downloads_txt_8'] = 'Tool Downloads';
 $lang['news_txt_1'] = 'Published by %s, %s';
 $lang['news_txt_2'] = 'show comments';
 $lang['news_txt_3'] = 'Read More &rsaquo;';
+$lang['news_txt_4'] = 'Latest News';
+$lang['news_txt_5'] = 'More';
+$lang['news_txt_6'] = 'Notice';
 
 # rankings
 $lang['rankings_txt_1'] = 'Top Level';
@@ -344,6 +350,7 @@ $lang['rankings_filter_12'] = 'Gun Crushers';
 $lang['rankings_filter_13'] = 'Light Wizards';
 $lang['rankings_filter_14'] = 'Lemuria Mages';
 $lang['rankings_filter_15'] = 'Illusion Knights';
+$lang['rankings_filter_16'] = 'Alchemists';
 
 # clear pk
 $lang['clearpk_txt_1'] = 'Character';

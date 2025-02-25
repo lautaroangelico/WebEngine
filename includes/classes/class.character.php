@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.2
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -32,6 +32,9 @@ class Character {
 	protected $_vitality = 0;
 	protected $_energy = 0;
 	protected $_command = 0;
+	
+	protected $muonline;
+	protected $common;
 	
 	function __construct() {
 		
@@ -591,6 +594,7 @@ class Character {
 		if($ene > mconfig('max_stats')) throw new Exception(langf('error_53', array(number_format(mconfig('max_stats')))));
 		
 		// cmd
+		$cmd = 0;
 		if(array_key_exists(_CLMN_CHR_STAT_CMD_, $characterData) && $this->_command >= 1) {
 			if(!in_array($characterData[_CLMN_CHR_CLASS_], custom('character_cmd'))) throw new Exception(lang('error_52'));
 			$cmd = $characterData[_CLMN_CHR_STAT_CMD_]+$this->_command;

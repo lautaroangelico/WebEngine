@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -36,7 +36,7 @@ function saveChanges() {
 	}
 }
 
-if(check_value($_POST['submit_changes'])) {
+if(isset($_POST['submit_changes'])) {
 	saveChanges();
 }
 
@@ -47,19 +47,19 @@ loadModuleConfigs('usercp.mypassword');
 		<tr>
 			<th>Status<br/><span>Enable/disable the change password module.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
 			<th>Email Verification<br/><span>If enabled, the account's password will not be changed until the user clicks the verification link sent via email.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_2',mconfig('change_password_email_verification'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_2',mconfig('change_password_email_verification'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
 			<th>Change Password Time Limit<br/><span>If email verification is enabled, set the time that the verification link will stay valid.</span></th>
 			<td>
-				<input class="input-small" type="text" name="setting_3" value="<?=mconfig('change_password_request_timeout')?>"/> hour(s)
+				<input class="input-small" type="text" name="setting_3" value="<?php echo mconfig('change_password_request_timeout'); ?>"/> hour(s)
 			</td>
 		</tr>
 		<tr>

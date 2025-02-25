@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -38,7 +38,7 @@ if(!isLoggedIn()) {
 if(isLoggedIn()) {
 	echo '<div class="panel panel-sidebar panel-usercp">';
 		echo '<div class="panel-heading">';
-			echo '<h3 class="panel-title">'.lang('usercp_menu_title').' <a href="'.__BASE_URL__.'logout" class="btn btn-primary btn-xs pull-right">logout</a></h3>';
+			echo '<h3 class="panel-title">'.lang('usercp_menu_title').' <a href="'.__BASE_URL__.'logout" class="btn btn-primary btn-xs pull-right">'.lang('login_txt_6').'</a></h3>';
 		echo '</div>';
 		echo '<div class="panel-body">';
 				templateBuildUsercp();
@@ -50,7 +50,7 @@ if(isLoggedIn()) {
 echo '<div class="sidebar-banner"><a href="'.__BASE_URL__.'downloads"><img src="'.__PATH_TEMPLATE_IMG__.'sidebar_banner_download.jpg"/></a></div>';
 
 // Server info block
-if(is_array($srvInfo)) {
+if(isset($srvInfo) && is_array($srvInfo)) {
 	echo '<div class="panel panel-sidebar">';
 		echo '<div class="panel-heading">';
 			echo '<h3 class="panel-title">'.lang('sidebar_srvinfo_txt_1').'</h3>';
@@ -72,36 +72,3 @@ if(is_array($srvInfo)) {
 
 // Castle Siege Block
 templateCastleSiegeWidget();
-
-// Top Level
-$levelRankingData = LoadCacheData('rankings_level.cache');
-$topLevelLimit = 5;
-if(is_array($levelRankingData)) {
-    $topLevel = array_slice($levelRankingData, 0, $topLevelLimit+1);
-    echo '<div class="panel panel-sidebar">';
-        echo '<div class="panel-heading">';
-            echo '<h3 class="panel-title">'.lang('rankings_txt_1').'<a href="'.__BASE_URL__.'rankings/level" class="btn btn-primary btn-xs pull-right" style="text-align:center;width:22px;">+</a></h3>';
-        echo '</div>';
-        echo '<div class="panel-body">';
-            echo '<table class="table table-condensed">';
-                echo '<thead>';
-					echo '<tr>';
-						echo '<th class="text-center">'.lang('rankings_txt_10').'</th>'; // Character
-						echo '<th class="text-center">'.lang('rankings_txt_11').'</th>'; // Class
-						echo '<th class="text-center">'.lang('rankings_txt_12').'</th>'; // Level
-					echo '</tr>';
-                echo '</thead>';
-                echo '<tbody>';
-                foreach($topLevel as $key => $row) {
-                    if($key == 0) continue;
-                    echo '<tr>';
-                        echo '<td class="text-center">'.playerProfile($row[0]).'</td>';
-                        echo '<td class="text-center">'.getPlayerClass($row[1]).'</td>';
-                        echo '<td class="text-center">'.number_format($row[2]).'</td>';
-                    echo '</tr>';
-                }
-            echo '</tbody>';
-            echo '</table>';
-        echo '</div>';
-    echo '</div>';
-}

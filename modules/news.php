@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.2
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -23,13 +23,14 @@ try {
 	
 	// Set news language
 	if(config('language_switch_active',true)) {
-		if(check_value($_SESSION['language_display'])) {
+		if(isset($_SESSION['language_display'])) {
 			$News->setLanguage($_SESSION['language_display']);
 		}
 	}
 	
 	// Single news
-	$requestedNewsId = $_GET['subpage'];
+	$requestedNewsId = isset($_GET['subpage']) ? $_GET['subpage'] : '';
+	$showSingleNews = false;
 	if(check_value($requestedNewsId) && $News->newsIdExists($requestedNewsId)) {
 		$showSingleNews = true;
 		$newsID = $requestedNewsId;
@@ -51,7 +52,7 @@ try {
 		
 		// translated news title
 		if(config('language_switch_active',true)) {
-			if(check_value($_SESSION['language_display']) && is_array($newsArticle['translations'])) {
+			if(isset($_SESSION['language_display']) && is_array($newsArticle['translations'])) {
 				if(array_key_exists($_SESSION['language_display'], $newsArticle['translations'])) {
 					$news_title = base64_decode($newsArticle['translations'][$_SESSION['language_display']]);
 				}

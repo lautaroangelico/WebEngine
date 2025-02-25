@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -86,7 +86,7 @@ function saveChanges() {
 	$csConfig['show_schedule'] = $_POST['setting_12'];
 	
 	// schedule_date_format
-	if(!check_value($_POST['setting_13'])) throw new Exception('Submitted setting is not valid (schedule_date_format)');
+	if(!isset($_POST['setting_13'])) throw new Exception('Submitted setting is not valid (schedule_date_format)');
 	$csConfig['schedule_date_format'] = $_POST['setting_13'];
 	
 	// show_widget
@@ -125,7 +125,7 @@ function saveChanges() {
 	fclose($fp);
 }
 
-if(check_value($_POST['submit_changes'])) {
+if(isset($_POST['submit_changes'])) {
 	try {
 		saveChanges();
 		message('success', 'Settings successfully saved.');

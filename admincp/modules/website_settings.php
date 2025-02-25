@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -48,129 +48,129 @@ $allowedSettings = array(
 	'maximum_online',
 );
 
-if(check_value($_POST['settings_submit'])) {
+if(isset($_POST['settings_submit'])) {
 	try {
 		
 		# website status
-		if(!check_value($_POST['system_active'])) throw new Exception('Invalid Website Status setting.');
+		if(!isset($_POST['system_active'])) throw new Exception('Invalid Website Status setting.');
 		if(!in_array($_POST['system_active'], array(0, 1))) throw new Exception('Invalid Website Status setting.');
 		$setting['system_active'] = ($_POST['system_active'] == 1 ? true : false);
 		
 		# error reporting
-		if(!check_value($_POST['error_reporting'])) throw new Exception('Invalid Error Reporting setting.');
+		if(!isset($_POST['error_reporting'])) throw new Exception('Invalid Error Reporting setting.');
 		if(!in_array($_POST['error_reporting'], array(0, 1))) throw new Exception('Invalid Error Reporting setting.');
 		$setting['error_reporting'] = ($_POST['error_reporting'] == 1 ? true : false);
 		
 		# default template
-		if(!check_value($_POST['website_template'])) throw new Exception('Invalid Default Template setting.');
+		if(!isset($_POST['website_template'])) throw new Exception('Invalid Default Template setting.');
 		if(!file_exists(__PATH_TEMPLATES__.$_POST['website_template'].'/index.php')) throw new Exception('The selected template doesn\'t exist.');
 		$setting['website_template'] = $_POST['website_template'];
 		
 		# maintenance page
-		if(!check_value($_POST['maintenance_page'])) throw new Exception('Invalid Maintenance Page setting.');
+		if(!isset($_POST['maintenance_page'])) throw new Exception('Invalid Maintenance Page setting.');
 		if(!Validator::Url($_POST['maintenance_page'])) throw new Exception('The maintenance page setting is not a valid URL.');
 		$setting['maintenance_page'] = $_POST['maintenance_page'];
 		
 		# server name
-		if(!check_value($_POST['server_name'])) throw new Exception('Invalid Server Name setting.');
+		if(!isset($_POST['server_name'])) throw new Exception('Invalid Server Name setting.');
 		$setting['server_name'] = $_POST['server_name'];
 		
 		# website title
-		if(!check_value($_POST['website_title'])) throw new Exception('Invalid Website Title setting.');
+		if(!isset($_POST['website_title'])) throw new Exception('Invalid Website Title setting.');
 		$setting['website_title'] = $_POST['website_title'];
 		
 		# meta description
-		if(!check_value($_POST['website_meta_description'])) throw new Exception('Invalid Meta Description setting.');
+		if(!isset($_POST['website_meta_description'])) throw new Exception('Invalid Meta Description setting.');
 		$setting['website_meta_description'] = $_POST['website_meta_description'];
 		
 		# meta keywords
-		if(!check_value($_POST['website_meta_keywords'])) throw new Exception('Invalid Meta Keywords setting.');
+		if(!isset($_POST['website_meta_keywords'])) throw new Exception('Invalid Meta Keywords setting.');
 		$setting['website_meta_keywords'] = $_POST['website_meta_keywords'];
 		
 		# forum link
-		if(!check_value($_POST['website_forum_link'])) throw new Exception('Invalid Forum Link setting.');
+		if(!isset($_POST['website_forum_link'])) throw new Exception('Invalid Forum Link setting.');
 		if(!Validator::Url($_POST['website_forum_link'])) throw new Exception('The forum link setting is not a valid URL.');
 		$setting['website_forum_link'] = $_POST['website_forum_link'];
 		
 		# server files
-		if(!check_value($_POST['server_files'])) throw new Exception('Invalid Server Files setting.');
+		if(!isset($_POST['server_files'])) throw new Exception('Invalid Server Files setting.');
 		if(!array_key_exists($_POST['server_files'], $webengine['file_compatibility'])) throw new Exception('Invalid Server Files setting.');
 		$setting['server_files'] = $_POST['server_files'];
 		
 		# language switch
-		if(!check_value($_POST['language_switch_active'])) throw new Exception('Invalid Language Switch setting.');
+		if(!isset($_POST['language_switch_active'])) throw new Exception('Invalid Language Switch setting.');
 		if(!in_array($_POST['language_switch_active'], array(0, 1))) throw new Exception('Invalid Language Switch setting.');
 		$setting['language_switch_active'] = ($_POST['language_switch_active'] == 1 ? true : false);
 		
 		# language default
-		if(!check_value($_POST['language_default'])) throw new Exception('Invalid Default Language setting.');
+		if(!isset($_POST['language_default'])) throw new Exception('Invalid Default Language setting.');
 		if(!file_exists(__PATH_LANGUAGES__.$_POST['language_default'].'/language.php')) throw new Exception('The default language doesn\'t exist.');
 		$setting['language_default'] = $_POST['language_default'];
 		
 		# language debug
-		if(!check_value($_POST['language_debug'])) throw new Exception('Invalid Language Debug setting.');
+		if(!isset($_POST['language_debug'])) throw new Exception('Invalid Language Debug setting.');
 		if(!in_array($_POST['language_debug'], array(0, 1))) throw new Exception('Invalid Language Debug setting.');
 		$setting['language_debug'] = ($_POST['language_debug'] == 1 ? true : false);
 		
 		# plugin system
-		if(!check_value($_POST['plugins_system_enable'])) throw new Exception('Invalid Plugin System setting.');
+		if(!isset($_POST['plugins_system_enable'])) throw new Exception('Invalid Plugin System setting.');
 		if(!in_array($_POST['plugins_system_enable'], array(0, 1))) throw new Exception('Invalid Plugin System setting.');
 		$setting['plugins_system_enable'] = ($_POST['plugins_system_enable'] == 1 ? true : false);
 		
 		# ip block system
-		if(!check_value($_POST['ip_block_system_enable'])) throw new Exception('Invalid IP Block System setting.');
+		if(!isset($_POST['ip_block_system_enable'])) throw new Exception('Invalid IP Block System setting.');
 		if(!in_array($_POST['ip_block_system_enable'], array(0, 1))) throw new Exception('Invalid IP Block System setting.');
 		$setting['ip_block_system_enable'] = ($_POST['ip_block_system_enable'] == 1 ? true : false);
 		
 		# player_profiles
-		if(!check_value($_POST['player_profiles'])) throw new Exception('Invalid setting (player_profiles)');
+		if(!isset($_POST['player_profiles'])) throw new Exception('Invalid setting (player_profiles)');
 		if(!in_array($_POST['player_profiles'], array(0, 1))) throw new Exception('Invalid setting (player_profiles)');
 		$setting['player_profiles'] = ($_POST['player_profiles'] == 1 ? true : false);
 		
 		# guild_profiles
-		if(!check_value($_POST['guild_profiles'])) throw new Exception('Invalid setting (guild_profiles)');
+		if(!isset($_POST['guild_profiles'])) throw new Exception('Invalid setting (guild_profiles)');
 		if(!in_array($_POST['guild_profiles'], array(0, 1))) throw new Exception('Invalid setting (guild_profiles)');
 		$setting['guild_profiles'] = ($_POST['guild_profiles'] == 1 ? true : false);
 		
 		# username_min_len
-		if(!check_value($_POST['username_min_len'])) throw new Exception('Invalid setting (username_min_len)');
+		if(!isset($_POST['username_min_len'])) throw new Exception('Invalid setting (username_min_len)');
 		if(!Validator::UnsignedNumber($_POST['username_min_len'])) throw new Exception('Invalid setting (username_min_len)');
 		$setting['username_min_len'] = $_POST['username_min_len'];
 		
 		# username_max_len
-		if(!check_value($_POST['username_max_len'])) throw new Exception('Invalid setting (username_max_len)');
+		if(!isset($_POST['username_max_len'])) throw new Exception('Invalid setting (username_max_len)');
 		if(!Validator::UnsignedNumber($_POST['username_max_len'])) throw new Exception('Invalid setting (username_max_len)');
 		$setting['username_max_len'] = $_POST['username_max_len'];
 		
 		# password_min_len
-		if(!check_value($_POST['password_min_len'])) throw new Exception('Invalid setting (password_min_len)');
+		if(!isset($_POST['password_min_len'])) throw new Exception('Invalid setting (password_min_len)');
 		if(!Validator::UnsignedNumber($_POST['password_min_len'])) throw new Exception('Invalid setting (password_min_len)');
 		$setting['password_min_len'] = $_POST['password_min_len'];
 		
 		# password_max_len
-		if(!check_value($_POST['password_max_len'])) throw new Exception('Invalid setting (password_max_len)');
+		if(!isset($_POST['password_max_len'])) throw new Exception('Invalid setting (password_max_len)');
 		if(!Validator::UnsignedNumber($_POST['password_max_len'])) throw new Exception('Invalid setting (password_max_len)');
 		$setting['password_max_len'] = $_POST['password_max_len'];
 		
 		# cron_api
-		if(!check_value($_POST['cron_api'])) throw new Exception('Invalid setting (cron_api)');
+		if(!isset($_POST['cron_api'])) throw new Exception('Invalid setting (cron_api)');
 		if(!in_array($_POST['cron_api'], array(0, 1))) throw new Exception('Invalid setting (cron_api)');
 		$setting['cron_api'] = ($_POST['cron_api'] == 1 ? true : false);
 		
 		# cron_api_key
-		if(!check_value($_POST['cron_api_key'])) throw new Exception('Invalid setting (cron_api_key)');
+		if(!isset($_POST['cron_api_key'])) throw new Exception('Invalid setting (cron_api_key)');
 		$setting['cron_api_key'] = $_POST['cron_api_key'];
 		
 		# social link facebook
-		if(check_value($_POST['social_link_facebook'])) if(!Validator::Url($_POST['social_link_facebook'])) throw new Exception('The facebook link setting is not a valid URL.');
+		if(isset($_POST['social_link_facebook'])) if(!Validator::Url($_POST['social_link_facebook'])) throw new Exception('The facebook link setting is not a valid URL.');
 		$setting['social_link_facebook'] = $_POST['social_link_facebook'];
 		
 		# social link instagram
-		if(check_value($_POST['social_link_instagram'])) if(!Validator::Url($_POST['social_link_instagram'])) throw new Exception('The instagram link setting is not a valid URL.');
+		if(isset($_POST['social_link_instagram'])) if(!Validator::Url($_POST['social_link_instagram'])) throw new Exception('The instagram link setting is not a valid URL.');
 		$setting['social_link_instagram'] = $_POST['social_link_instagram'];
 		
 		# social link discord
-		if(check_value($_POST['social_link_discord'])) if(!Validator::Url($_POST['social_link_discord'])) throw new Exception('The discord link setting is not a valid URL.');
+		if(isset($_POST['social_link_discord'])) if(!Validator::Url($_POST['social_link_discord'])) throw new Exception('The discord link setting is not a valid URL.');
 		$setting['social_link_discord'] = $_POST['social_link_discord'];
 		
 		# server info season
@@ -186,7 +186,7 @@ if(check_value($_POST['settings_submit'])) {
 		$setting['server_info_drop'] = $_POST['server_info_drop'];
 		
 		# maximum online
-		if(check_value($_POST['maximum_online'])) if(!Validator::UnsignedNumber($_POST['maximum_online'])) throw new Exception('Invalid setting (maximum_online)');
+		if(isset($_POST['maximum_online'])) if(!Validator::UnsignedNumber($_POST['maximum_online'])) throw new Exception('Invalid setting (maximum_online)');
 		$setting['maximum_online'] = $_POST['maximum_online'];
 		
 		# webengine configs

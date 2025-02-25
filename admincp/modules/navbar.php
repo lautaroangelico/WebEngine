@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.0.9.7
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -15,13 +15,13 @@ echo '<h1 class="page-header">Navigation Menu</h1>';
 
 try {
 	
-	if(check_value($_GET['delete'])) {
+	if(isset($_GET['delete'])) {
 		try {
 			# cfg
 			$newCfg = loadConfig('navbar');
 			if(!is_array($newCfg)) throw new Exception('Navbar configs empty.');
 			
-			if(!check_value($_GET['delete'])) throw new Exception('Invalid id.');
+			if(!isset($_GET['delete'])) throw new Exception('Invalid id.');
 			if(!array_key_exists($_GET['delete'], $newCfg)) throw new Exception('Invalid id.');
 			
 			unset($newCfg[$_GET['delete']]);
@@ -41,15 +41,15 @@ try {
 		}
 	}
 	
-	if(check_value($_POST['navbar_submit'])) {
+	if(isset($_POST['navbar_submit'])) {
 		try {
 			# cfg
 			$newCfg = loadConfig('navbar');
 			if(!is_array($newCfg)) throw new Exception('Navbar configs empty.');
 			
-			if(!check_value($_POST['navbar_id'])) throw new Exception('Please fill all the form fields.');
-			if(!check_value($_POST['navbar_type'])) throw new Exception('Please fill all the form fields.');
-			if(!check_value($_POST['navbar_phrase'])) throw new Exception('Please fill all the form fields.');
+			if(!isset($_POST['navbar_id'])) throw new Exception('Please fill all the form fields.');
+			if(!isset($_POST['navbar_type'])) throw new Exception('Please fill all the form fields.');
+			if(!isset($_POST['navbar_phrase'])) throw new Exception('Please fill all the form fields.');
 			if(!in_array($_POST['navbar_type'], array('internal','external'))) throw new Exception('Link type is not valid.');
 			if(!in_array($_POST['navbar_visibility'], array('user','guest','always'))) throw new Exception('Link visibility is not a valid option.');
 			
@@ -60,7 +60,7 @@ try {
 				'active' => (bool) ($_POST['navbar_status'] == 1 ? true : false),
 				'type' => $_POST['navbar_type'],
 				'phrase' => $_POST['navbar_phrase'],
-				'link' => (check_value($_POST['navbar_link']) ? $_POST['navbar_link'] : ''),
+				'link' => (isset($_POST['navbar_link']) ? $_POST['navbar_link'] : ''),
 				'visibility' => $_POST['navbar_visibility'],
 				'newtab' => (bool) ($_POST['navbar_newtab'] == 1 ? true : false),
 				'order' => (int) $_POST['navbar_order']
@@ -90,14 +90,14 @@ try {
 		}
 	}
 	
-	if(check_value($_POST['new_submit'])) {
+	if(isset($_POST['new_submit'])) {
 		try {
 			# cfg
 			$newCfg = loadConfig('navbar');
 			if(!is_array($newCfg)) throw new Exception('Navbar configs empty.');
 			
-			if(!check_value($_POST['navbar_type'])) throw new Exception('Please fill all the form fields.');
-			if(!check_value($_POST['navbar_phrase'])) throw new Exception('Please fill all the form fields.');
+			if(!isset($_POST['navbar_type'])) throw new Exception('Please fill all the form fields.');
+			if(!isset($_POST['navbar_phrase'])) throw new Exception('Please fill all the form fields.');
 			if(!in_array($_POST['navbar_type'], array('internal','external'))) throw new Exception('Link type is not valid.');
 			if(!in_array($_POST['navbar_visibility'], array('user','guest','always'))) throw new Exception('Link visibility is not a valid option.');
 			
@@ -106,7 +106,7 @@ try {
 				'active' => (bool) ($_POST['navbar_status'] == 1 ? true : false),
 				'type' => $_POST['navbar_type'],
 				'phrase' => $_POST['navbar_phrase'],
-				'link' => (check_value($_POST['navbar_link']) ? $_POST['navbar_link'] : ''),
+				'link' => (isset($_POST['navbar_link']) ? $_POST['navbar_link'] : ''),
 				'visibility' => $_POST['navbar_visibility'],
 				'newtab' => (bool) ($_POST['navbar_newtab'] == 1 ? true : false),
 				'order' => (int) $_POST['navbar_order']

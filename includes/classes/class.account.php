@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.5
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -582,6 +582,7 @@ class Account extends common {
 	private function checkUsernameEVS($username) {
 		if(!check_value($username)) return;
 		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_account = ?", array($username));
+		if(!is_array($result)) return;
 		
 		$configs = loadConfigurations('register');
 		if(!is_array($configs)) return;
@@ -596,6 +597,7 @@ class Account extends common {
 	private function checkEmailEVS($email) {
 		if(!check_value($email)) return;
 		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_email = ?", array($email));
+		if(!is_array($result)) return;
 		
 		$configs = loadConfigurations('register');
 		if(!is_array($configs)) return;

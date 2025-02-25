@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -23,6 +23,10 @@ class weProfiles {
 	
 	private $_fileData;
 	
+	protected $common;
+	protected $dB;
+	protected $cfg;
+	
 	function __construct() {
 		
 		# database
@@ -37,6 +41,11 @@ class weProfiles {
 		# check cache directories
 		$this->checkCacheDir($this->_guildsCachePath);
 		$this->checkCacheDir($this->_playersCachePath);
+		
+		# configs
+		$profileConfig = loadConfigurations('profiles');
+		if(!is_array($profileConfig)) throw new Exception(lang('error_25',true));
+		$this->cfg = $profileConfig;
 		
 	}
 	
@@ -53,9 +62,18 @@ class weProfiles {
 	}
 	
 	public function setRequest($input) {
+		if(array_key_exists('encode', $this->cfg) && $this->cfg['encode'] == 1) {
+			if(!Validator::Chars($input, array('a-z', 'A-Z', '0-9', '_', '-'))) throw new Exception(lang('error_25',true));
+			$decodedReq = base64url_decode($input);
+			if($decodedReq == false) throw new Exception(lang('error_25',true));
+			$this->_request = $decodedReq;
+			return true;
+		}
+		
 		if(!Validator::AlphaNumeric($input)) throw new Exception(lang('error_25',true));
 		if(strlen($input) > $this->_reqMaxLen) throw new Exception(lang('error_25',true));
 		if(strlen($input) < 4) throw new Exception(lang('error_25',true));
+		
 		$this->_request = $input;
 	}
 	

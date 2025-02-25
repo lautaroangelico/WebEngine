@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -38,7 +38,7 @@ function saveChanges() {
 	}
 }
 
-if(check_value($_POST['submit_changes'])) {
+if(isset($_POST['submit_changes'])) {
 	saveChanges();
 }
 
@@ -49,31 +49,31 @@ loadModuleConfigs('login');
 		<tr>
 			<th>Status<br/><span>Enable/disable the login module.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
 			<th>Session Timeout<br/><span>Enable/disable sessions timeout.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_2',mconfig('enable_session_timeout'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_2',mconfig('enable_session_timeout'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
 			<th>Session Timeout Limit<br/><span>If session timeout is enabled, define the time (in seconds) after which the inactive session should be logged out automatically.</span></th>
 			<td>
-				<input class="input-mini" type="text" name="setting_3" value="<?=mconfig('session_timeout')?>"/> seconds
+				<input class="input-mini" type="text" name="setting_3" value="<?php echo mconfig('session_timeout'); ?>"/> seconds
 			</td>
 		</tr>
 		<tr>
 			<th>Maximum Failed Login Attempts<br/><span>Define the maximum failed login attempts before the client's IP address should be temporarily blocked.</span></th>
 			<td>
-				<input class="input-mini" type="text" name="setting_4" value="<?=mconfig('max_login_attempts')?>"/>
+				<input class="input-mini" type="text" name="setting_4" value="<?php echo mconfig('max_login_attempts'); ?>"/>
 			</td>
 		</tr>
 		<tr>
 			<th>Failed Login Attempts IP Block Duration<br/><span>Time in minutes of failed login attempts IP block duration.</span></th>
 			<td>
-				<input class="input-mini" type="text" name="setting_5" value="<?=mconfig('failed_login_timeout')?>"/> minutes
+				<input class="input-mini" type="text" name="setting_5" value="<?php echo mconfig('failed_login_timeout'); ?>"/> minutes
 			</td>
 		</tr>
 		<tr>

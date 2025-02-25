@@ -1,11 +1,11 @@
 <?php
 /**
- * WebEngine
- * http://muengine.net/
+ * WebEngine CMS
+ * https://webenginecms.org/
  * 
- * @version 1.0.9
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2017 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -41,7 +41,7 @@ function saveChanges() {
 	}
 }
 
-if(check_value($_POST['submit_changes'])) {
+if(isset($_POST['submit_changes'])) {
 	saveChanges();
 }
 
@@ -53,7 +53,7 @@ $emailConfigs = gconfig('email',true);
 		<tr>
 			<th>Email System<br/><span>Enable/disable the email system.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_1',$emailConfigs['active'],'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_1',$emailConfigs['active'],'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
@@ -71,7 +71,7 @@ $emailConfigs = gconfig('email',true);
 		<tr>
 			<th>SMTP Status<br/><span>Enable/disable the SMTP system.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_4',$emailConfigs['smtp_active'],'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_4',$emailConfigs['smtp_active'],'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>

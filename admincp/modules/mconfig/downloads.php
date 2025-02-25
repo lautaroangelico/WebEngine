@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.0
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2019 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -57,11 +57,11 @@ function saveChanges() {
 	}
 }
 
-if(check_value($_POST['submit_changes'])) {
+if(isset($_POST['submit_changes'])) {
 	saveChanges();
 }
 
-if(check_value($_POST['downloads_add_submit'])) {
+if(isset($_POST['downloads_add_submit'])) {
 	$action = addDownload($_POST['downloads_add_title'], $_POST['downloads_add_desc'], $_POST['downloads_add_link'], $_POST['downloads_add_size'], $_POST['downloads_add_type']);
 	if($action) {
 		message('success','Your download link has been successfully added!');
@@ -70,7 +70,7 @@ if(check_value($_POST['downloads_add_submit'])) {
 	}
 }
 
-if(check_value($_POST['downloads_edit_submit'])) {
+if(isset($_POST['downloads_edit_submit'])) {
 	$action = editDownload($_POST['downloads_edit_id'], $_POST['downloads_edit_title'], $_POST['downloads_edit_desc'], $_POST['downloads_edit_link'], $_POST['downloads_edit_size'], $_POST['downloads_edit_type']);
 	if($action) {
 		message('success','Your download link has been successfully updated!');
@@ -79,7 +79,7 @@ if(check_value($_POST['downloads_edit_submit'])) {
 	}
 }
 
-if(check_value($_REQUEST['deletelink'])) {
+if(isset($_REQUEST['deletelink'])) {
 	$action = deleteDownload($_REQUEST['deletelink']);
 	if($action) {
 		message('success','Your download link has been successfully deleted!');
@@ -95,25 +95,25 @@ loadModuleConfigs('downloads');
 		<tr>
 			<th>Status<br/><span>Enable/disable the downloads module.</span></th>
 			<td>
-				<? enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
+				<?php enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>
 			<th>Show Client Downloads<br/></th>
 			<td>
-				<? enabledisableCheckboxes('setting_2',mconfig('show_client_downloads'),'Yes','No'); ?>
+				<?php enabledisableCheckboxes('setting_2',mconfig('show_client_downloads'),'Yes','No'); ?>
 			</td>
 		</tr>
 		<tr>
 			<th>Show Patches Downloads<br/></th>
 			<td>
-				<? enabledisableCheckboxes('setting_3',mconfig('show_patch_downloads'),'Yes','No'); ?>
+				<?php enabledisableCheckboxes('setting_3',mconfig('show_patch_downloads'),'Yes','No'); ?>
 			</td>
 		</tr>
 		<tr>
 			<th>Show Tools Downloads<br/></th>
 			<td>
-				<? enabledisableCheckboxes('setting_4',mconfig('show_tool_downloads'),'Yes','No'); ?>
+				<?php enabledisableCheckboxes('setting_4',mconfig('show_tool_downloads'),'Yes','No'); ?>
 			</td>
 		</tr>
 		<tr>
@@ -185,7 +185,7 @@ echo '</table>';
 		<td><input type="text" name="downloads_add_size" class="form-control"/></td>
 		<td>
 			<select name="downloads_add_type" class="form-control">
-				<? downloadTypesSelect($downloadTypes); ?>
+				<?php downloadTypesSelect($downloadTypes); ?>
 			</select>
 		</td>
 	</tr>

@@ -3,22 +3,18 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.5
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2023 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
  */
 
-function check_value($value=array()) {
-	if(@empty($value) and !@isset($value)) return;
-	if(is_array($value)) {
-    	if(count($value)>0) return true;
-    } else {
-    	if(!@empty($value) and @isset($value)) return true;
-    	if($value=='0') return true;
-    }
+function check_value($value) {
+	if((@count((array)$value)>0 and !@empty($value) and @isset($value)) || $value=='0') {
+		return true;
+	}
 }
 
 function redirect($type = 1, $location = null, $delay = 0) {
@@ -29,7 +25,7 @@ function redirect($type = 1, $location = null, $delay = 0) {
 		
 		if($location == 'login') {
 			$_SESSION['login_last_location'] = $_REQUEST['page'].'/';
-			if(check_value($_REQUEST['subpage'])) {
+			if(isset($_REQUEST['subpage'])) {
 				$_SESSION['login_last_location'] .= $_REQUEST['subpage'].'/';
 			}
 		}
@@ -268,6 +264,7 @@ function webengineConfigs() {
 
 function config($config_name, $return = false) {
 	$config = webengineConfigs();
+	if(!array_key_exists($config_name, $config)) return;
 	if($return) {
 		return $config[$config_name];
 	} else {
@@ -357,13 +354,35 @@ function getPlayerClassAvatar($code=0, $htmlImageTag=true, $tooltip=true, $cssCl
 	return $result;
 }
 
-function playerProfile($playerName) {
+function playerProfile($playerName, $returnLinkOnly=false) {
 	if(!config('player_profiles',true)) return $playerName;
+	
+	$profileConfig = loadConfigurations('profiles');
+	if(is_array($profileConfig) && array_key_exists('encode', $profileConfig) && $profileConfig['encode'] == 1) {
+		if($returnLinkOnly) {
+			return __BASE_URL__.'profile/player/req/'.base64url_encode($playerName);
+		}
+		return '<a href="'.__BASE_URL__.'profile/player/req/'.base64url_encode($playerName).'/" target="_blank">'.$playerName.'</a>';
+	}
+	if($returnLinkOnly) {
+		return __BASE_URL__.'profile/player/req/'.urlencode($playerName);
+	}
 	return '<a href="'.__BASE_URL__.'profile/player/req/'.urlencode($playerName).'/" target="_blank">'.$playerName.'</a>';
 }
 
-function guildProfile($guildName) {
+function guildProfile($guildName, $returnLinkOnly=false) {
 	if(!config('guild_profiles',true)) return $guildName;
+	
+	$profileConfig = loadConfigurations('profiles');
+	if(is_array($profileConfig) && array_key_exists('encode', $profileConfig) && $profileConfig['encode'] == 1) {
+		if($returnLinkOnly) {
+			return __BASE_URL__.'profile/guild/req/'.base64url_encode($guildName);
+		}
+		return '<a href="'.__BASE_URL__.'profile/guild/req/'.base64url_encode($guildName).'/" target="_blank">'.$guildName.'</a>';
+	}
+	if($returnLinkOnly) {
+		return __BASE_URL__.'profile/guild/req/'.urlencode($guildName);
+	}
 	return '<a href="'.__BASE_URL__.'profile/guild/req/'.urlencode($guildName).'/" target="_blank">'.$guildName.'</a>';
 }
 
@@ -403,7 +422,7 @@ function loadCache($fileName) {
 
 function checkBlockedIp() {
 	if(in_array(access, array('cron'))) return;
-	if(!check_value($_SERVER['REMOTE_ADDR'])) return true;
+	if(!isset($_SERVER['REMOTE_ADDR'])) return true;
 	if(!Validator::Ip($_SERVER['REMOTE_ADDR'])) return true;
 	$blockedIpCache = loadCache('blocked_ip.cache');
 	if(!is_array($blockedIpCache)) return;
@@ -527,4 +546,20 @@ function custom($index) {
 	if(!is_array($custom)) return;
 	if(!array_key_exists($index, $custom)) return;
 	return $custom[$index];
+}
+
+//https://base64.guru/developers/php/examples/base64url
+function base64url_encode($data) {
+	$b64 = base64_encode($data . '!we');
+	if ($b64 === false) return false;
+	$url = strtr($b64, '+/', '-_');
+	return rtrim($url, '=');
+}
+
+function base64url_decode($data, $strict=false) {
+	$b64 = strtr($data, '-_', '+/');
+	$decoded = base64_decode($b64, $strict);
+	$end = substr($decoded, -3);
+	if($end !== '!we') return;
+	return substr($decoded, 0, -3);
 }

@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.3
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2021 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -41,7 +41,7 @@ function saveChanges() {
 	}
 }
 
-if(check_value($_POST['submit_changes'])) {
+if(isset($_POST['submit_changes'])) {
 	saveChanges();
 }
 
@@ -56,7 +56,7 @@ loadModuleConfigs('register');
 			</td>
 		</tr>
 		<tr>
-			<th>Recaptcha<br/><span>Enable/disable Recaptcha validation. <br/><br/> <a href="http://www.google.com/recaptcha" target="_blank">http://www.google.com/recaptcha</a></span></th>
+			<th>Recaptcha v2<br/><span>Enable/disable Recaptcha validation. <br/><br/> <a href="https://www.google.com/recaptcha/admin" target="_blank">https://www.google.com/recaptcha/admin</a></span></th>
 			<td>
 				<?php enabledisableCheckboxes('setting_2',mconfig('register_enable_recaptcha'),'Enabled','Disabled'); ?>
 			</td>

@@ -4,13 +4,8 @@
  * WebEngine CMS
  * https://webenginecms.org/
  =========================================================
- 
- * Author Lautaro Angelico (https://lautaroangelico.com/)
- * Copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
- 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
- 
  =========================================================
  
 */
@@ -56,9 +51,9 @@ a.thumbnail.active {
 }
 
 .btn-primary {
-    color: #ff0000;
+    color: #3f6588;
     background-color: transparent;
-	border-color: #ff0000;
+	border-color: #3f6588;
 	-moz-transition: all .1s ease-in;
     -o-transition: all .1s ease-in;
     -webkit-transition: all .1s ease-in;
@@ -68,6 +63,10 @@ a.thumbnail.active {
 }
 .btn-primary:active, .btn-primary:focus, .btn-primary:hover {
     color: #fff !important;
-    background-color: #ff0000 !important;
-	border-color: #ff0000 !important;
+    background-color: #3f6588 !important;
+	border-color: #3f6588 !important;
+}
+
+.form-horizontal .control-label {
+	text-align: left !important;
 }

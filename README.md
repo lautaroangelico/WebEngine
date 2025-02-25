@@ -23,12 +23,17 @@ Here's what you'll need to run WebEngine CMS in your web server
 
 ## Other Software
 
-WebEngine CMS wouldn't be possible without the following awesome projects.
+WebEngineCMS is possible thanks to the following open source projects.
 
 * [PHPMailer](https://github.com/PHPMailer/PHPMailer/)
 * [Bootstrap](https://getbootstrap.com/)
 * [jQuery](http://jquery.com/)
 * [reCAPTCHA](https://github.com/google/recaptcha)
+* [DataTables](https://datatables.net/)
+* [SB Admin 2](https://github.com/StartBootstrap/startbootstrap-sb-admin-2)
+* [Font-Awesome](https://github.com/FortAwesome/Font-Awesome)
+* [MetisMenu](https://github.com/onokumus/metismenu)
+* [TinyMCE](https://github.com/tinymce/tinymce)
 
 ## Author
 

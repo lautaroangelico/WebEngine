@@ -13,7 +13,7 @@
 
 function admincp_base($module="") {
 	if(check_value($module)) return __PATH_ADMINCP_HOME__ . "?module=" . $module;
-	return __PATH_ADMINCP_HOME__;;
+	return __PATH_ADMINCP_HOME__;
 }
 
 function enabledisableCheckboxes($name,$checked,$e_txt,$d_txt) {

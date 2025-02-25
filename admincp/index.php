@@ -3,9 +3,9 @@
  * WebEngine CMS
  * https://webenginecms.org/
  * 
- * @version 1.2.1
+ * @version 1.2.6
  * @author Lautaro Angelico <http://lautaroangelico.com/>
- * @copyright (c) 2013-2020 Lautaro Angelico, All Rights Reserved
+ * @copyright (c) 2013-2025 Lautaro Angelico, All Rights Reserved
  * 
  * Licensed under the MIT license
  * http://opensource.org/licenses/MIT
@@ -90,27 +90,17 @@ $admincpSidebar = array(
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="WebEngine AdminCP 2.0">
     <meta name="author" content="Lautaro Angelico">
-
     <title>WebEngine AdminCP</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
-    <link href="css/sb-admin-2.css" rel="stylesheet">
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-	<script src="css/plugins/dataTables.bootstrap.css"></script>
-    <link href="css/webengine.css" rel="stylesheet">
-	
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="<?php echo __PATH_ADMINCP_HOME__; ?>css/metisMenu.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/startbootstrap-sb-admin-2@3.3.7/dist/css/sb-admin-2.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tinymce@7.7.0/skins/ui/oxide/content.min.css">
+    <link rel="stylesheet" href="css/webengine.css">
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
@@ -201,13 +191,14 @@ $admincpSidebar = array(
         </div>
 
     </div>
-    <script src="js/jquery-1.11.0.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/plugins/metisMenu/metisMenu.min.js"></script>
-    <script src="js/sb-admin-2.js"></script>
-	<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
-    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
-	<script type="text/javascript" language="javascript" class="init">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <script src="<?php echo __PATH_ADMINCP_HOME__; ?>js/metisMenu.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/startbootstrap-sb-admin-2@3.3.7/dist/js/sb-admin-2.min.js"></script>
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/tinymce@7.7.0/tinymce.min.js"></script>
+	<script>
 		$(document).ready(function() {
 			$('#new_registrations').DataTable({
 				"searching":		false,

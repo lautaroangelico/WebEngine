@@ -22,7 +22,6 @@
 <?php
 	if(isset($_POST['search_character']) && isset($_POST['search_request'])) {
 		try {
-			if(!Validator::AlphaNumeric($_POST['search_request'])) throw new Exception("The name entered must contain alpha-numeric characters only.");
 			if(!Validator::Length($_POST['search_request'], 11, 2)) throw new Exception("The name can be 3 to 10 characters long.");
 			$searchdb = $dB;
 			

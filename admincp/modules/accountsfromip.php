@@ -28,7 +28,7 @@ if(isset($_POST['ip_address'])) {
 		echo '<div class="row">';
 			echo '<div class="col-md-6">';
 				echo '<div class="panel panel-primary">';
-				echo '<div class="panel-heading">MEMB_STAT</div>';
+				echo '<div class="panel-heading">Results:</div>';
 				echo '<div class="panel-body">';
 					
 					$searchdb = (config('SQL_USE_2_DB', true) == true ? $dB2 : $dB);

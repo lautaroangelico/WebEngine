@@ -22,7 +22,6 @@
 <?php
 	if(isset($_POST['search_account']) && isset($_POST['search_request'])) {
 		try {
-			if(!Validator::AlphaNumeric($_POST['search_request'])) throw new Exception("The username entered must contain alpha-numeric characters only.");
 			if(!Validator::Length($_POST['search_request'], 11, 2)) throw new Exception("The username can be 3 to 10 characters long.");
 			$searchdb = (config('SQL_USE_2_DB', true) == true ? $dB2 : $dB);
 			

@@ -17,7 +17,7 @@ $file_name = basename(__FILE__);
 // load database
 $me = Connection::Database('Me_MuOnline');
 $charactersDB = config('SQL_DB_NAME', true);
-$accountsDB = config('SQL_USE_2_DB', true) == true ? config('SQL_DB_2_NAME', true) : $CharactersDB;
+$accountsDB = config('SQL_USE_2_DB', true) == true ? config('SQL_DB_2_NAME', true) : $charactersDB;
 
 $result = array();
 

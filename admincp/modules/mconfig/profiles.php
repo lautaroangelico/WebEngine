@@ -25,6 +25,7 @@ function saveChanges() {
 	$xml = simplexml_load_file($xmlPath);
 	
 	$xml->active = $_POST['setting_1'];
+	$xml->encode = $_POST['setting_2'];
 	
 	$save = $xml->asXML($xmlPath);
 	if($save) {
@@ -46,6 +47,12 @@ loadModuleConfigs('profiles');
 			<th>Status<br/><span>Enable/disable the profile modules.</span></th>
 			<td>
 				<?php enabledisableCheckboxes('setting_1',mconfig('active'),'Enabled','Disabled'); ?>
+			</td>
+		</tr>
+		<tr>
+			<th>Base64 Encoding<br/><span>Enable/disable the usage of Base64 encoding in profiles URLs.<br>If you are having issues with players or guilds with special characters in their names, enabling this option might help.</span></th>
+			<td>
+				<?php enabledisableCheckboxes('setting_2',mconfig('encode'),'Enabled','Disabled'); ?>
 			</td>
 		</tr>
 		<tr>

@@ -25,7 +25,7 @@
 			<div class="col-xs-12">
 				<?php
 					$News = new News();
-					$newsList = $News->retrieveNews();
+					$newsList = loadCache('news.cache');
 					if(is_array($newsList)) {
 						foreach($newsList as $key => $newsArticle) {
 							
@@ -38,7 +38,7 @@
 									$News->setLanguage($_SESSION['language_display']);
 									$newsTranslationData = $News->getNewsTranlationDataById();
 									if(is_array($newsTranslationData)) {
-										$newsArticle['news_title'] = $newsTranslationData['news_title'];
+										$newsArticle['news_title'] = base64_decode($newsTranslationData['news_title']);
 										$newsArticle['news_content'] = $newsTranslationData['news_content'];
 									}
 								}
@@ -51,7 +51,7 @@
 									echo '<span class="home-news-block-article-type">'.lang('news_txt_6').'</span>';
 								echo '</div>';
 								echo '<div class="col-xs-6 home-news-block-article-title-container">';
-									echo '<span class="home-news-block-article-title"><a href="'.$news_url.'">'.$newsArticle['news_title'].'</a></span>';
+									echo '<span class="home-news-block-article-title"><a href="'.$news_url.'">'.base64_decode($newsArticle['news_title']).'</a></span>';
 								echo '</div>';
 								echo '<div class="col-xs-3 text-right">';
 									echo '<span class="home-news-block-article-date">'.date("Y/m/d", $newsArticle['news_date']).'</span>';

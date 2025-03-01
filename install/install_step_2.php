@@ -38,7 +38,7 @@ if(isset($_POST['install_step_2_submit'])) {
 		if(!isset($_POST['install_step_2_8'])) throw new Exception('You must complete all required fields.');
 		if(!array_key_exists($_POST['install_step_2_8'], $install['PDO_DSN'])) throw new Exception('You must complete all required fields.');
 		
-		$_SESSION['install_sql_db2'] = (isset($_POST['install_step_2_5']) ? $_POST['install_step_2_5'] : null);
+		$_SESSION['install_sql_db2'] = ((isset($_POST['install_step_2_5']) && !empty($_POST['install_step_2_5'])) ? $_POST['install_step_2_5'] : null);
 		
 		$_SESSION['install_sql_passwd_encrypt'] = $_POST['install_step_2_6'];
 		if(!isset($_POST['install_step_2_6'])) throw new Exception('You must complete all required fields.');

@@ -1,4 +1,4 @@
-$(function() {
+document.addEventListener('DOMContentLoaded', function() {
 	// Initiate Server Time
 	serverTime.init("tServerTime", "tLocalTime", "tServerDate", "tLocalDate");
 	
@@ -6,35 +6,69 @@ $(function() {
 	csTime.init();
 	
 	// Initiate bootstrap tooltips
-	$('[data-toggle="tooltip"]').tooltip();
+	const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+	if(tooltips.length){
+		tooltips.forEach(tooltip => {
+			new bootstrap.Tooltip(tooltip);
+		});
+	}
 	
 	// PayPal Buy Credits
-	if($('#paypal_conversion_rate_value').length) {
-		var paypal_cr = parseInt($('#paypal_conversion_rate_value').html());
-		if($('#amount').length) {
-			document.getElementById('amount').onkeyup = function(ev) {
-				var num = 0;
-				var c = 0;
-				var event = window.event || ev;
-				var code = (event.keyCode) ? event.keyCode : event.charCode;
-				for(num=0;num<this.value.length;num++) {
+	const paypalConversionRate = document.getElementById('paypal_conversion_rate_value');
+	if(paypalConversionRate) {
+		const paypal_cr = parseInt(paypalConversionRate.textContent);
+		const amountInput = document.getElementById('amount');
+		if(amountInput) {
+			amountInput.addEventListener('keyup', function(ev) {
+				let num = 0;
+				let c = 0;
+				const result = document.getElementById('result');
+				
+				for(num = 0; num < this.value.length; num++) {
 					c = this.value.charCodeAt(num);
-					if(c<48 || c>57) {
-						document.getElementById('result').innerHTML = '0';
-						document.getElementById('amount').value = '';
+					if(c < 48 || c > 57) {
+						result.textContent = '0';
+						this.value = '';
 						return false;
 					}
 				}
+				
 				num = parseInt(this.value);
 				if(isNaN(num)) {
-					document.getElementById('result').innerHTML = '0';
+					result.textContent = '0';
 				} else {
-					var result = (paypal_cr*num).toString();
-					document.getElementById('result').innerHTML = result;
+					result.textContent = (paypal_cr * num).toString();
 				}
-			}
+			});
 		}
 	}
+	
+	// Rankings icon update
+	const filterSelections = document.querySelectorAll(".rankings-class-filter-selection");
+	
+	if(filterSelections.length) {
+		filterSelections.forEach(selection => {
+			selection.addEventListener('click', function() {
+				filterSelections.forEach(s => s.classList.add("rankings-class-filter-grayscale"));
+				this.classList.remove("rankings-class-filter-grayscale");
+			});
+		});
+	}
+	
+	// Language selector for mobile
+	const languageSelector = document.querySelector('.webengine-language-switcher a');
+	let autoClose;
+	
+	languageSelector.addEventListener('touchstart', () => {
+		languageSelector.closest('.webengine-language-switcher').style.cssText = "width: 250px;overflow: visible;";
+		
+		clearTimeout(autoClose);
+		
+		autoClose = setTimeout(() => {
+            languageSelector.closest('.webengine-language-switcher').style.cssText = "width: 46px;overflow: hidden;";
+        }, 5000);
+    });
+
 });
 
 var csTime = {
@@ -48,18 +82,28 @@ var csTime = {
 	days_module: null,
 	hours_module: null,
 	minutes_module: null,
+	cscountdown: null,
+	siegeTimer: null,
 	init: function() {
-		var a = this;
-		$.getJSON(baseUrl + "api/castlesiege.php", function(c) {
-			a.csTimeLeft = c.TimeLeft;
-			a.csNextStageTimeLeft = c.NextStageTimeLeft;
-			setInterval(function() {
+		this.cscountdown = document.getElementById("cscountdown");
+		this.siegeTimer = document.getElementById("siegeTimer");
+		
+		if(this.siegeTimer || this.cscountdown) { //request api only if required html element found
+			const a = this;
+			
+			fetch(`${baseUrl}api/castlesiege.php`).then(response => response.json()).then(c => {
+				a.csTimeLeft = c.TimeLeft;
+				a.csNextStageTimeLeft = c.NextStageTimeLeft;
+				setInterval(function() {
+					a.update();
+				}, 1000);
 				a.update();
-			}, 1000)
-		})
+			});
+		}
 	},
 	update: function() {
-		var b = this;
+		const b = this;
+		
 		b.csTimeLeft = b.csTimeLeft-1;
 		b.csNextStageTimeLeft = b.csNextStageTimeLeft-1;
 		
@@ -80,25 +124,24 @@ var csTime = {
 		}
 		
 		if(b.battleMode == true) {
-			if($('#cscountdown').length) {
-				document.getElementById("cscountdown").innerHTML = 'Battle';
+			if(b.cscountdown) {
+				b.cscountdown.textContent = 'Battle';
 			}
-			if($('#siegeTimer').length) {
-				document.getElementById("siegeTimer").innerHTML = 'Battle';
+			if(b.siegeTimer) {
+				b.siegeTimer.textContent = 'Battle';
 			}
 		} else {
-			
 			var countdown = '';
 			if(b.csTimeLeft > 86400) countdown += b.csDays + "<span>d</span> ";
 			if(b.csTimeLeft > 3600) countdown += b.csHours + "<span>h</span> ";
 			if(b.csTimeLeft > 60) countdown += b.csMinutes + "<span>m</span> ";
 			countdown += b.csSeconds + "<span>s</span>";
 			
-			if($('#cscountdown').length) {
-				document.getElementById("cscountdown").innerHTML = countdown;
+			if(b.cscountdown) {
+				b.cscountdown.innerHTML = countdown;
 			}
-			if($('#siegeTimer').length) {
-				document.getElementById("siegeTimer").innerHTML = countdown;
+			if(b.siegeTimer) {
+				b.siegeTimer.innerHTML = countdown;
 			}
 		}
 	}
@@ -116,31 +159,32 @@ var serverTime = {
 	eleServerDate: null,
 	eleLocalDate: null,
 	init: function(e, c, s, l) {
-		var f = this;
+		const f = this;
 		f.eleServer = e;
 		f.eleLocal = c;
 		f.eleServerDate = s;
 		f.eleLocalDate = l;
-		$.getJSON(baseUrl + "api/servertime.php", function(a) {
+		
+		fetch(`${baseUrl}api/servertime.php`).then(response => response.json()).then(a => {
 			f.serverDate = new Date(a.ServerTime);
 			f.localDate = new Date();
 			f.dateOffset = f.serverDate - f.localDate;
-			document.getElementById(f.eleServer).innerHTML = f.dateTimeFormat(f.serverDate);
-			document.getElementById(f.eleLocal).innerHTML = f.dateTimeFormat(f.localDate);
-			document.getElementById(f.eleServerDate).innerHTML = f.dateFormat(f.serverDate);
-			document.getElementById(f.eleLocalDate).innerHTML = f.dateFormat(f.localDate);
+			document.getElementById(f.eleServer).textContent = f.dateTimeFormat(f.serverDate);
+			document.getElementById(f.eleLocal).textContent = f.dateTimeFormat(f.localDate);
+			document.getElementById(f.eleServerDate).textContent = f.dateFormat(f.serverDate);
+			document.getElementById(f.eleLocalDate).textContent = f.dateFormat(f.localDate);
 			
 			setInterval(function() {
-				f.update()
-			}, 1000)
-		})
+				f.update();
+			}, 1000);
+		});
 	},
 	update: function() {
 		var b = this;
 		b.nowDate = new Date();
-		document.getElementById(b.eleLocal).innerHTML = b.dateTimeFormat(b.nowDate);
+		document.getElementById(b.eleLocal).textContent = b.dateTimeFormat(b.nowDate);
 		b.nowDate.setTime(b.nowDate.getTime() + b.dateOffset);
-		document.getElementById(b.eleServer).innerHTML = b.dateTimeFormat(b.nowDate);
+		document.getElementById(b.eleServer).textContent = b.dateTimeFormat(b.nowDate);
 	},
 	dateTimeFormat: function(e) {
 		var c = this;
@@ -170,47 +214,86 @@ var serverTime = {
 };
 
 function rankingsFilterByClass() {
-	var delay = 500; // milliseconds
-	var classList = new Array();
+  const delay = 500;  // milliseconds
+  const classList = Array.from(arguments);
+
+  const rankingsTable = document.querySelector(".rankings-table");
+  if (rankingsTable) {
+    fadeOut(rankingsTable, delay);
+
+    setTimeout(() => {
+      const rows = rankingsTable.querySelectorAll("tr");
+      rows.forEach(row => {
+        const classId = row.getAttribute("data-class-id");
+        if (classId === null) return;
+        if (!classList.includes(parseInt(classId))) {
+          row.style.display = 'none';
+        } else {
+          row.style.display = '';
+        }
+      });
+
+      fadeIn(rankingsTable, delay);
+    }, delay);
+  }
+}
+
+function rankingsFilterRemove() {
+	const delay = 500; // milliseconds
+	const rankingsTable = document.querySelector(".rankings-table");
 	
-	for(var i = 0; i < arguments.length; i++) {
-		classList[i] = arguments[i];
-	}
-	
-	if($(".rankings-table").length) {
-		$(".rankings-table").fadeOut().delay(delay).fadeIn();
-		setTimeout(function() {
-			$(".rankings-table tr").each(function() {
-				if($(this).attr("data-class-id") == null) { return true; }
-				if(classList.includes(parseInt($(this).attr("data-class-id"))) == false) {
-					$(this).hide();
-				} else {
-					$(this).show();
-				}
+	if(rankingsTable) {
+		fadeOut(rankingsTable, delay);
+
+		setTimeout(() => {
+			const rows = rankingsTable.querySelectorAll("tr");
+			rows.forEach(row => {
+				row.style.display = '';
 			});
+
+		  fadeIn(rankingsTable, delay);
 		}, delay);
 	}
 }
 
-function rankingsFilterRemove() {
-	var delay = 500; // milliseconds
-	
-	$(".rankings-table").fadeOut().delay(delay).fadeIn();
-	setTimeout(function() {
-		if($(".rankings-table").length) {
-			$(".rankings-table tr").each(function() {
-					$(this).fadeIn();
-				}
-			);
-		}
-	}, delay);
+function fadeOut(element, duration) {
+  let startTime = null;
+  const initialOpacity = 1;
+
+  function updateOpacity(time) {
+    if (!startTime) startTime = time;
+    const progress = (time - startTime) / duration;
+    const opacity = initialOpacity - progress;
+
+    element.style.opacity = Math.max(opacity, 0);
+
+    if (progress < 1) {
+      requestAnimationFrame(updateOpacity);
+    } else {
+      element.style.opacity = 0;
+    }
+  }
+
+  requestAnimationFrame(updateOpacity);
 }
 
-$(function() {
-	if($(".rankings-class-filter-selection").length) {
-		$('a.rankings-class-filter-selection').click(function(){
-			$('a.rankings-class-filter-selection').addClass("rankings-class-filter-grayscale");
-			$(this).removeClass("rankings-class-filter-grayscale");
-		});
-	}
-});
+function fadeIn(element, duration) {
+  let startTime = null;
+  const initialOpacity = 0;
+
+  function updateOpacity(time) {
+    if (!startTime) startTime = time;
+    const progress = (time - startTime) / duration;
+    const opacity = initialOpacity + progress;
+
+    element.style.opacity = Math.min(opacity, 1);
+
+    if (progress < 1) {
+      requestAnimationFrame(updateOpacity);
+    } else {
+      element.style.opacity = 1;
+    }
+  }
+
+  requestAnimationFrame(updateOpacity);
+}

@@ -33,15 +33,15 @@
 							
 							$News->setId($newsArticle['news_id']);
 							
+
 							if(config('language_switch_active',true)) {
-								if(isset($_SESSION['language_display'])) {
-									$News->setLanguage($_SESSION['language_display']);
-									$newsTranslationData = $News->getNewsTranlationDataById();
-									if(is_array($newsTranslationData)) {
-										$newsArticle['news_title'] = base64_decode($newsTranslationData['news_title']);
-										$newsArticle['news_content'] = $newsTranslationData['news_content'];
+								if(isset($_SESSION['language_display']) && is_array($newsArticle['translations'])) {
+									if(array_key_exists($_SESSION['language_display'], $newsArticle['translations'])) {
+										$news_title = base64_decode($newsArticle['translations'][$_SESSION['language_display']]);
 									}
 								}
+							} else {
+								$news_title = base64_decode($newsArticle['news_title']);
 							}
 							
 							$news_url = __BASE_URL__.'news/'.$newsArticle['news_id'].'/';
@@ -51,7 +51,7 @@
 									echo '<span class="home-news-block-article-type">'.lang('news_txt_6').'</span>';
 								echo '</div>';
 								echo '<div class="col-xs-6 home-news-block-article-title-container">';
-									echo '<span class="home-news-block-article-title"><a href="'.$news_url.'">'.base64_decode($newsArticle['news_title']).'</a></span>';
+									echo '<span class="home-news-block-article-title"><a href="'.$news_url.'">'.$news_title.'</a></span>';
 								echo '</div>';
 								echo '<div class="col-xs-3 text-right">';
 									echo '<span class="home-news-block-article-date">'.date("Y/m/d", $newsArticle['news_date']).'</span>';

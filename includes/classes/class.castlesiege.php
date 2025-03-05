@@ -366,7 +366,7 @@ class CastleSiege {
 	}
 	
 	protected function _getAlliedGuilds($guild) {
-		$alliedGuilds = $this->db->query_fetch("SELECT * FROM "._TBL_MUCASTLE_SGL_." WHERE "._CLMN_MCSGL_GID_." = (SELECT "._CLMN_MCSGL_GID_." FROM "._TBL_MUCASTLE_SGL_." WHERE "._CLMN_MCSGL_GNAME_." = :guild) AND "._CLMN_MCSGL_GNAME_." != :guild", array('guild' => $guild));
+		$alliedGuilds = $this->db->query_fetch("SELECT * FROM "._TBL_MUCASTLE_SGL_." WHERE "._CLMN_MCSGL_GID_." = (SELECT "._CLMN_MCSGL_GID_." FROM "._TBL_MUCASTLE_SGL_." WHERE "._CLMN_MCSGL_GNAME_." = ?) AND "._CLMN_MCSGL_GNAME_." != ?", array($guild, $guild));
 		if(!is_array($alliedGuilds)) return;
 		foreach($alliedGuilds as $alliedGuild) {
 			$alliedGuildData = $this->_getGuildData($alliedGuild[_CLMN_MCSGL_GNAME_]);

@@ -34,12 +34,8 @@
 							$News->setId($newsArticle['news_id']);
 							
 
-							if(config('language_switch_active',true)) {
-								if(isset($_SESSION['language_display']) && is_array($newsArticle['translations'])) {
-									if(array_key_exists($_SESSION['language_display'], $newsArticle['translations'])) {
-										$news_title = base64_decode($newsArticle['translations'][$_SESSION['language_display']]);
-									}
-								}
+							if(config('language_switch_active',true) && isset($_SESSION['language_display']) && is_array($newsArticle['translations']) && isset($newsArticle['translations'][$_SESSION['language_display']])) {
+								$news_title = base64_decode($newsArticle['translations'][$_SESSION['language_display']]);
 							} else {
 								$news_title = base64_decode($newsArticle['news_title']);
 							}

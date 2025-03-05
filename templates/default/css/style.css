@@ -15,7 +15,6 @@
  
 */
 html {
-	min-width: 1040px;
 	height: 100%;
 }
 
@@ -70,7 +69,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 
 #container {
 	background: #ffffff;
-	width: 1040px;
+	max-width: 1040px;
 	height: auto;
 	margin: 0px auto;
 	padding: 20px 0px;
@@ -81,8 +80,8 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 }
 
 #content {
-	width: 100%;
-	overflow: auto;
+	/*width: 100%;
+	overflow: auto;*/
 	min-height: 500px;
 	padding: 10px 20px 0px 20px;
 }
@@ -90,7 +89,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 .footer {
 	background: #efefef;
 	font-family: 'Segoe UI', 'Lucida Sans Unicode', 'Lucida Grande', 'Tahoma', 'Arial', 'sans-serif';
-	width: 1040px;
+	max-width: 1040px;
 	font-size: 12px;
 	color: #666666;
 	padding: 40px;
@@ -448,6 +447,28 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 	border-bottom: 3px solid #3f6588;
 }
 
+.panel-title {
+	margin-top: 0;
+	margin-bottom: 0;
+	font-size: 16px;
+	color: inherit;
+}
+
+.btn-xs {
+	padding: 1px 5px;
+	font-size: 12px;
+	line-height: 1.5;
+	border-radius: 3px;
+}
+.table td{
+	background-color: transparent;
+}
+.text-white{
+	color: #fff;
+}
+label {
+	font-weight: 700;
+}
 .panel-usercp {
 	background: url('../img/usercp_bg.jpg') no-repeat top center;
 	background-size: cover;
@@ -579,7 +600,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 	font-size: 12px;
 }
 	.global-top-bar .global-top-bar-content {
-		width: 1040px;
+		max-width: 1040px;
 		margin: 0px auto;
 	}
 		.global-top-bar .global-top-bar-content .row {
@@ -649,9 +670,13 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 
 /* HEADER INFO */
 .header-info-container {
-	width: 1040px;
+	max-width: 1040px;
 	margin: 0px auto;
-	text-align: right;
+	margin-bottom: 5px;
+	/*text-align: right;*/
+	display: flex;
+	align-items: revert;
+	justify-content: flex-end;
 }
 	.header-info-container .header-info {
 		display: inline-block;

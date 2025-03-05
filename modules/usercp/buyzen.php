@@ -96,22 +96,22 @@ try {
 		}
 	}
 	
-	echo '<form class="form-horizontal" action="" method="post">';
-		echo '<div class="panel panel-general">';
-			echo '<div class="panel-body">';
+	echo '<form action="" method="post">';
+		echo '<div class="card panel-general">';
+			echo '<div class="card-body">';
 				echo '<div class="row">';
-					echo '<div class="col-xs-4 text-center">'.lang('buyzen_txt_3',true).'</div>';
-					echo '<div class="col-xs-4 text-center">'.lang('buyzen_txt_4',true).'</div>';
+					echo '<div class="col-4 text-center">'.lang('buyzen_txt_3',true).'</div>';
+					echo '<div class="col-4 text-center">'.lang('buyzen_txt_4',true).'</div>';
 				echo '</div>';
 				echo '<div class="row">';
-					echo '<div class="col-xs-4 text-center">';
+					echo '<div class="col-4 text-center">';
 						echo '<select name="character" class="form-control">';
 							foreach($AccountCharacters as $char) {
 								echo '<option value="'.$char.'">'.$char.'</option>';
 							}
 						echo '<select>';
 					echo '</div>';
-					echo '<div class="col-xs-4 text-center">';
+					echo '<div class="col-4 text-center">';
 						echo '<select name="credits" class="form-control">';
 							foreach($buyOptions as $creditValue) {
 								$zenValue = $creditValue*$exchangeRatio;
@@ -122,7 +122,7 @@ try {
 							
 						echo '</select>';
 					echo '</div>';
-					echo '<div class="col-xs-4 text-center">';
+					echo '<div class="col-4 text-center">';
 						echo '<button name="submit" value="submit" class="btn btn-primary">'.lang('buyzen_txt_5',true).'</button>';
 					echo '</div>';
 				echo '</div>';

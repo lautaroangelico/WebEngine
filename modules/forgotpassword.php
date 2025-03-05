@@ -41,16 +41,16 @@ try {
 			}
 		}
 		
-		echo '<div class="col-xs-8 col-xs-offset-2" style="margin-top:30px;">';
-			echo '<form class="form-horizontal" action="" method="post">';
-				echo '<div class="form-group">';
-					echo '<label for="webengineEmail" class="col-sm-4 control-label">'.lang('forgotpass_txt_1',true).'</label>';
-					echo '<div class="col-sm-8">';
+		echo '<div class="col-12" style="margin-top:30px;">';
+			echo '<form action="" method="post">';
+				echo '<div class="row mb-3 align-items-center">';
+					echo '<label for="webengineEmail" class="col-sm-3 col-form-label">'.lang('forgotpass_txt_1',true).'</label>';
+					echo '<div class="col-sm-9">';
 						echo '<input type="text" class="form-control" id="webengineEmail" name="webengineEmail_current" required>';
 					echo '</div>';
 				echo '</div>';
-				echo '<div class="form-group">';
-					echo '<div class="col-sm-offset-4 col-sm-8">';
+				echo '<div class="row mb-3 align-items-center">';
+					echo '<div class="offset-sm-3 col-sm-9">';
 						echo '<button type="submit" name="webengineEmail_submit" value="submit" class="btn btn-primary">'.lang('forgotpass_txt_2',true).'</button>';
 					echo '</div>';
 				echo '</div>';

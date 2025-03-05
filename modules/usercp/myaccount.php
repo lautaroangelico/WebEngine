@@ -49,12 +49,12 @@ echo '<table class="table myaccount-table">';
 	
 	echo '<tr>';
 		echo '<td>'.lang('myaccount_txt_3').'</td>';
-		echo '<td>'.$accountInfo[_CLMN_EMAIL_].' <a href="'.__BASE_URL__.'usercp/myemail/" class="btn btn-xs btn-primary pull-right">'.lang('myaccount_txt_6').'</a></td>';
+		echo '<td>'.$accountInfo[_CLMN_EMAIL_].' <a href="'.__BASE_URL__.'usercp/myemail/" class="btn btn-xs btn-primary float-end">'.lang('myaccount_txt_6').'</a></td>';
 	echo '</tr>';
 	
 	echo '<tr>';
 		echo '<td>'.lang('myaccount_txt_4').'</td>';
-		echo '<td>&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226; <a href="'.__BASE_URL__.'usercp/mypassword/" class="btn btn-xs btn-primary pull-right">'.lang('myaccount_txt_6').'</a></td>';
+		echo '<td>&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226; <a href="'.__BASE_URL__.'usercp/mypassword/" class="btn btn-xs btn-primary float-end">'.lang('myaccount_txt_6').'</a></td>';
 	echo '</tr>';
 	
 	echo '<tr>';
@@ -117,7 +117,7 @@ if(is_array($AccountCharacters)) {
 			
 			$characterClassAvatar = getPlayerClassAvatar($characterData[_CLMN_CHR_CLASS_], false);
 			$characterOnlineStatus = in_array($characterName, $onlineCharacters) ? '<img src="'.__PATH_ONLINE_STATUS__.'" class="online-status-indicator"/>' : '<img src="'.__PATH_OFFLINE_STATUS__.'" class="online-status-indicator"/>';
-			echo '<div class="col-xs-3">';
+			echo '<div class="col-3">';
 				echo '<div class="myaccount-character-name">'.playerProfile($characterName).$characterOnlineStatus.'</div>';
 				echo '<div class="myaccount-character-block">';
 					echo '<a href="'.playerProfile($characterName, true).'" target="_blank">';

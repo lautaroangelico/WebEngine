@@ -11,18 +11,18 @@
  * http://opensource.org/licenses/MIT
  */
 ?>
-<div class="row">
-	<div class="col-xs-8 home-news-block">
+<div class="row d-flex flex-column flex-md-row mb-2 mb-md-0">
+	<div class="col-md-8 home-news-block mb-2 mb-md-0">
 		<div class="row home-news-block-header">
-			<div class="col-xs-8">
+			<div class="col-8">
 				<h2><?php echo lang('news_txt_4'); ?></h2>
 			</div>
-			<div class="col-xs-4 text-right">
+			<div class="col-4 text-end">
 				<a href="<?php echo __BASE_URL__ . 'news/'; ?>"><?php echo lang('news_txt_5'); ?></a>
 			</div>
 		</div>
 		<div class="row home-news-block-body">
-			<div class="col-xs-12">
+			<div class="col-12">
 				<?php
 					$News = new News();
 					$newsList = loadCache('news.cache');
@@ -33,23 +33,22 @@
 							
 							$News->setId($newsArticle['news_id']);
 							
-
 							if(config('language_switch_active',true) && isset($_SESSION['language_display']) && is_array($newsArticle['translations']) && isset($newsArticle['translations'][$_SESSION['language_display']])) {
 								$news_title = base64_decode($newsArticle['translations'][$_SESSION['language_display']]);
 							} else {
 								$news_title = base64_decode($newsArticle['news_title']);
 							}
-							
+
 							$news_url = __BASE_URL__.'news/'.$newsArticle['news_id'].'/';
 							
 							echo '<div class="row home-news-block-article">';
-								echo '<div class="col-xs-3">';
+								echo '<div class="col-3">';
 									echo '<span class="home-news-block-article-type">'.lang('news_txt_6').'</span>';
 								echo '</div>';
-								echo '<div class="col-xs-6 home-news-block-article-title-container">';
+								echo '<div class="col-6 home-news-block-article-title-container">';
 									echo '<span class="home-news-block-article-title"><a href="'.$news_url.'">'.$news_title.'</a></span>';
 								echo '</div>';
-								echo '<div class="col-xs-3 text-right">';
+								echo '<div class="col-3 text-end">';
 									echo '<span class="home-news-block-article-date">'.date("Y/m/d", $newsArticle['news_date']).'</span>';
 								echo '</div>';
 							echo '</div>';
@@ -60,19 +59,19 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-xs-4">
+	<div class="col-md-4 mb-2">
 		<?php
 		if(!isLoggedIn()) {
-			echo '<div class="panel panel-sidebar">';
-				echo '<div class="panel-heading">';
-					echo '<h3 class="panel-title">'.lang('module_titles_txt_2').' <a href="'.__BASE_URL__.'forgotpassword" class="btn btn-primary btn-xs pull-right">'.lang('login_txt_4').'</a></h3>';
+			echo '<div class="card panel-sidebar">';
+				echo '<div class="card-header panel-heading">';
+					echo '<h3 class="card-title panel-title">'.lang('module_titles_txt_2').' <a href="'.__BASE_URL__.'forgotpassword" class="btn btn-primary btn-xs float-end">'.lang('login_txt_4').'</a></h3>';
 				echo '</div>';
-				echo '<div class="panel-body">';
+				echo '<div class="card-body">';
 					echo '<form action="'.__BASE_URL__.'login" method="post">';
-						echo '<div class="form-group">';
+						echo '<div class="form-group mb-2">';
 							echo '<input type="text" class="form-control" id="loginBox1" name="webengineLogin_user" required>';
 						echo '</div>';
-						echo '<div class="form-group">';
+						echo '<div class="form-group mb-2">';
 							echo '<input type="password" class="form-control" id="loginBox2" name="webengineLogin_pwd" required>';
 						echo '</div>';
 						echo '<button type="submit" name="webengineLogin_submit" value="submit" class="btn btn-primary">'.lang('login_txt_3').'</button>';
@@ -82,11 +81,11 @@
 			
 			echo '<div class="sidebar-banner"><a href="'.__BASE_URL__.'register"><img src="'.__PATH_TEMPLATE_IMG__.'sidebar_banner_join.jpg"/></a></div>';
 		} else {
-			echo '<div class="panel panel-sidebar panel-usercp">';
-				echo '<div class="panel-heading">';
-					echo '<h3 class="panel-title">'.lang('usercp_menu_title').' <a href="'.__BASE_URL__.'logout" class="btn btn-primary btn-xs pull-right">'.lang('login_txt_6').'</a></h3>';
+			echo '<div class="card panel-sidebar panel-usercp">';
+				echo '<div class="card-header panel-heading">';
+					echo '<h3 class="card-title panel-title">'.lang('usercp_menu_title').' <a href="'.__BASE_URL__.'logout" class="btn btn-primary btn-xs float-end">'.lang('login_txt_6').'</a></h3>';
 				echo '</div>';
-				echo '<div class="panel-body">';
+				echo '<div class="card-body">';
 						templateBuildUsercp();
 				echo '</div>';
 			echo '</div>';
@@ -94,20 +93,19 @@
 		?>
 	</div>
 </div>
-
-<div class="row" style="margin-top: 20px;">
-	<div class="col-xs-4">
+<div class="row d-flex flex-column flex-md-row">
+	<div class="col-md-4 mb-2 mb-md-0">
 		<?php
 		// Top Level
 		$levelRankingData = LoadCacheData('rankings_level.cache');
 		$topLevelLimit = 10;
 		if(is_array($levelRankingData)) {
 			$topLevel = array_slice($levelRankingData, 0, $topLevelLimit+1);
-			echo '<div class="panel panel-sidebar">';
-				echo '<div class="panel-heading">';
-					echo '<h3 class="panel-title">'.lang('rankings_txt_1').'<a href="'.__BASE_URL__.'rankings/level" class="btn btn-primary btn-xs pull-right" style="text-align:center;width:22px;">+</a></h3>';
+			echo '<div class="card panel-sidebar">';
+				echo '<div class="card-header panel-heading">';
+					echo '<h3 class="card-title panel-title">'.lang('rankings_txt_1').'<a href="'.__BASE_URL__.'rankings/level" class="btn btn-primary btn-xs float-end" style="text-align:center;width:22px;">+</a></h3>';
 				echo '</div>';
-				echo '<div class="panel-body" style="min-height:400px;">';
+				echo '<div class="card-body" style="min-height:400px;">';
 					echo '<table class="table table-condensed">';
 						echo '<thead>';
 							echo '<tr>';
@@ -132,7 +130,7 @@
 		}
 		?>
 	</div>
-	<div class="col-xs-4">
+	<div class="col-md-4 mb-2 mb-md-0">
 		<?php
 		// Top Guilds
 		$guildRankingData = LoadCacheData('rankings_guilds.cache');
@@ -140,11 +138,11 @@
 		if(is_array($guildRankingData)) {
 			$rankingsConfig = loadConfigurations('rankings');
 			$topGuild = array_slice($guildRankingData, 0, $topGuildLimit+1);
-			echo '<div class="panel panel-sidebar">';
-				echo '<div class="panel-heading">';
-					echo '<h3 class="panel-title">'.lang('rankings_txt_4').'<a href="'.__BASE_URL__.'rankings/guilds" class="btn btn-primary btn-xs pull-right" style="text-align:center;width:22px;">+</a></h3>';
+			echo '<div class="card panel-sidebar">';
+				echo '<div class="card-header panel-heading">';
+					echo '<h3 class="card-title panel-title">'.lang('rankings_txt_4').'<a href="'.__BASE_URL__.'rankings/guilds" class="btn btn-primary btn-xs float-end" style="text-align:center;width:22px;">+</a></h3>';
 				echo '</div>';
-				echo '<div class="panel-body" style="min-height:400px;">';
+				echo '<div class="card-body" style="min-height:400px;">';
 					echo '<table class="table table-condensed">';
 						echo '<thead>';
 							echo '<tr>';
@@ -170,38 +168,38 @@
 		}
 		?>
 	</div>
-	<div class="col-xs-4">
+	<div class="col-md-4">
 		<?php
 		// Event Timers
-		echo '<div class="panel panel-sidebar panel-sidebar-events">';
-			echo '<div class="panel-heading">';
-				echo '<h3 class="panel-title">'.lang('event_schedule').'</h3>';
+		echo '<div class="card panel-sidebar panel-sidebar-events">';
+			echo '<div class="card-header panel-heading">';
+				echo '<h3 class="card-title panel-title">'.lang('event_schedule').'</h3>';
 			echo '</div>';
-			echo '<div class="panel-body" style="min-height:400px;">';
+			echo '<div class="card-body" style="min-height:400px;">';
 				echo '<table class="table table-condensed">';
 					echo '<tr>';
 						echo '<td><span id="bloodcastle_name"></span><br /><span class="smalltext">'.lang('event_schedule_start').'</span></td>';
-						echo '<td class="text-right"><span id="bloodcastle_next"></span><br /><span class="smalltext" id="bloodcastle"></span></td>';
+						echo '<td class="text-end"><span id="bloodcastle_next"></span><br /><span class="smalltext" id="bloodcastle"></span></td>';
 					echo '</tr>';
 					echo '<tr>';
 						echo '<td><span id="devilsquare_name"></span><br /><span class="smalltext">'.lang('event_schedule_start').'</span></td>';
-						echo '<td class="text-right"><span id="devilsquare_next"></span><br /><span class="smalltext" id="devilsquare"></span></td>';
+						echo '<td class="text-end"><span id="devilsquare_next"></span><br /><span class="smalltext" id="devilsquare"></span></td>';
 					echo '</tr>';
 					echo '<tr>';
 						echo '<td><span id="chaoscastle_name"></span><br /><span class="smalltext">'.lang('event_schedule_start').'</span></td>';
-						echo '<td class="text-right"><span id="chaoscastle_next"></span><br /><span class="smalltext" id="chaoscastle"></span></td>';
+						echo '<td class="text-end"><span id="chaoscastle_next"></span><br /><span class="smalltext" id="chaoscastle"></span></td>';
 					echo '</tr>';
 					echo '<tr>';
 						echo '<td><span id="dragoninvasion_name"></span><br /><span class="smalltext">'.lang('event_schedule_start').'</span></td>';
-						echo '<td class="text-right"><span id="dragoninvasion_next"></span><br /><span class="smalltext" id="dragoninvasion"></span></td>';
+						echo '<td class="text-end"><span id="dragoninvasion_next"></span><br /><span class="smalltext" id="dragoninvasion"></span></td>';
 					echo '</tr>';
 					echo '<tr>';
 						echo '<td><span id="goldeninvasion_name"></span><br /><span class="smalltext">'.lang('event_schedule_start').'</span></td>';
-						echo '<td class="text-right"><span id="goldeninvasion_next"></span><br /><span class="smalltext" id="goldeninvasion"></span></td>';
+						echo '<td class="text-end"><span id="goldeninvasion_next"></span><br /><span class="smalltext" id="goldeninvasion"></span></td>';
 					echo '</tr>';
 					echo '<tr>';
 						echo '<td><span id="castlesiege_name"></span><br /><span class="smalltext">'.lang('event_schedule_start').'</span></td>';
-						echo '<td class="text-right"><span id="castlesiege_next"></span><br /><span class="smalltext" id="castlesiege"></span></td>';
+						echo '<td class="text-end"><span id="castlesiege_next"></span><br /><span class="smalltext" id="castlesiege"></span></td>';
 					echo '</tr>';
 				echo '</table>';
 			echo '</div>';

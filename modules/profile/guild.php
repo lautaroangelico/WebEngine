@@ -34,23 +34,23 @@ if(mconfig('active')) {
 			echo '<div class="profiles_guild_card">';
 				// Guild Information
 				echo '<div class="row">';
-					echo '<div class="col-xs-6 text-center">';
+					echo '<div class="col-6 text-center">';
 						echo '<span class="guild_logo">'.$displayData['glogo'].'</span>';
 					echo '</div>';
-					echo '<div class="col-xs-6 text-center">';
-						echo '<span class="guild_name">'.$displayData['gname'].'</span>';
-						echo '<table class="table">';
+					echo '<div class="col-6 text-center">';
+						echo '<span class="guild_name ">'.$displayData['gname'].'</span>';
+						echo '<table class="table table-borderless">';
 							echo '<tr>';
-								echo '<td class="text-right">'.lang('profiles_txt_3',true).'</td>';
-								echo '<td class="text-left">'.playerProfile($displayData['gmaster']).'</td>';
+								echo '<td class="text-end text-white">'.lang('profiles_txt_3',true).'</td>';
+								echo '<td class="text-start">'.playerProfile($displayData['gmaster']).'</td>';
 							echo '</tr>';
 							echo '<tr>';
-								echo '<td class="text-right">'.lang('profiles_txt_4',true).'</td>';
-								echo '<td class="text-left">'.number_format($displayData['gscore']).'</td>';
+								echo '<td class="text-end text-white">'.lang('profiles_txt_4',true).'</td>';
+								echo '<td class="text-start text-white">'.number_format($displayData['gscore']).'</td>';
 							echo '</tr>';
 							echo '<tr>';
-								echo '<td class="text-right">'.lang('profiles_txt_5',true).'</td>';
-								echo '<td class="text-left">'.number_format($displayData['gmembers']).'</td>';
+								echo '<td class="text-end text-white">'.lang('profiles_txt_5',true).'</td>';
+								echo '<td class="text-start text-white">'.number_format($displayData['gmembers']).'</td>';
 							echo '</tr>';
 						echo '</table>';
 					echo '</div>';
@@ -58,12 +58,12 @@ if(mconfig('active')) {
 				echo '<hr>';
 				// Guild Members
 				echo '<div class="row">';
-					echo '<div class="col-xs-8 col-xs-offset-2 text-center">';
+					echo '<div class="col-12 text-center">';
 						echo '<span class="guild_members">'.lang('profiles_txt_6',true).'</span>';
 						echo '<div class="row guild_members_list">';
 							if(is_array($guildMembers)) {
 								foreach($guildMembers as $memberName) {
-									echo '<div class="col-xs-3">'.playerProfile($memberName).'</div>';
+									echo '<div class="col-6 col-sm-4 col-md-3">'.playerProfile($memberName).'</div>';
 								}
 							}
 						echo '</div>';

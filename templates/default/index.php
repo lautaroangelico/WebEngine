@@ -35,6 +35,7 @@ if(!isset($_REQUEST['subpage'])) {
 <html>
 	<head>
 		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title><?php $handler->websiteTitle(); ?></title>
 		<meta name="generator" content="WebEngine <?php echo __WEBENGINE_VERSION__; ?>"/>
 		<meta name="author" content="Lautaro Angelico"/>
@@ -47,7 +48,7 @@ if(!isset($_REQUEST['subpage'])) {
 		<meta property="og:url" content="<?php echo __BASE_URL__; ?>" />
 		<meta property="og:site_name" content="<?php $handler->websiteTitle(); ?>" />
 		<link rel="shortcut icon" href="<?php echo __PATH_TEMPLATE__; ?>favicon.ico"/>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 		<link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
 		<link href="<?php echo __PATH_TEMPLATE_CSS__; ?>style.css" rel="stylesheet" media="screen">
@@ -62,10 +63,10 @@ if(!isset($_REQUEST['subpage'])) {
 		<div class="global-top-bar">
 			<div class="global-top-bar-content">
 				<div class="row">
-					<div class="col-xs-6 text-left global-top-bar-nopadding">
+					<div class="col-6 text-start global-top-bar-nopadding">
 					<?php if(config('language_switch_active',true)) templateLanguageSelector(); ?>
 					</div>
-					<div class="col-xs-6 text-right global-top-bar-nopadding">
+					<div class="col-6 text-end global-top-bar-nopadding">
 					<?php if(isLoggedIn()) { ?>
 						<a href="<?php echo __BASE_URL__; ?>usercp/"><?php echo lang('module_titles_txt_3'); ?></a>
 						<span class="global-top-bar-separator">|</span>
@@ -90,19 +91,19 @@ if(!isset($_REQUEST['subpage'])) {
 		<div class="header-info-container">
 		<div class="header-info">
 			<div class="row">
-				<div class="col-xs-12">
-					<div class="col-xs-12 header-info-block">
+				<div class="col-12">
+					<div class="col-12 header-info-block">
 						<?php if(check_value(config('maximum_online', true))) { ?>
 						<div class="row">
-							<div class="col-xs-6 text-left">
+							<div class="col-6 text-start">
 								<?php echo lang('sidebar_srvinfo_txt_5'); ?>:
 							</div>
-							<div class="col-xs-6 text-right online-count">
+							<div class="col-6 text-end online-count">
 								<?php echo number_format($onlinePlayers); ?>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-xs-12">
+							<div class="col-12">
 								<div class="webengine-online-bar">
 									<div class="webengine-online-bar-progress" style="width:<?php echo $onlinePlayersPercent; ?>%;"></div>
 								</div>
@@ -110,17 +111,17 @@ if(!isset($_REQUEST['subpage'])) {
 						</div>
 						<?php } ?>
 						<div class="row">
-							<div class="col-xs-6 text-left">
+							<div class="col-6 text-start">
 								<?php echo lang('server_time'); ?>:
 							</div>
-							<div class="col-xs-6 text-right">
+							<div class="col-6 text-end">
 								<time id="tServerTime">&nbsp;</time> <span id="tServerDate">&nbsp;</span>
 							</div>
 							
-							<div class="col-xs-6 text-left">
+							<div class="col-6 text-start">
 								<?php echo lang('user_time'); ?>:
 							</div>
-							<div class="col-xs-6 text-right">
+							<div class="col-6 text-end">
 								<time id="tLocalTime">&nbsp;</time> <span id="tLocalDate">&nbsp;</span>
 							</div>
 						</div>
@@ -131,16 +132,16 @@ if(!isset($_REQUEST['subpage'])) {
 		</div>
 		</div>
 		<div id="container">
-			<div id="content">
+			<div id="content" class="row d-flex flex-column flex-md-row">
 				<?php if($_REQUEST['page'] == 'usercp' && $_REQUEST['subpage'] != '') { ?>
-				<div class="col-xs-8">
+				<div class="col-md-8">
 					<?php $handler->loadModule($_REQUEST['page'],$_REQUEST['subpage']); ?>
 				</div>
-				<div class="col-xs-4">
+				<div class="col-md-4">
 					<?php include(__PATH_TEMPLATE_ROOT__ . 'inc/modules/sidebar.php'); ?>
 				</div>
 				<?php } else { ?>
-				<div class="col-xs-12">
+				<div class="col-12">
 					<?php $handler->loadModule($_REQUEST['page'],$_REQUEST['subpage']); ?>
 				</div>
 				<?php } ?>
@@ -152,6 +153,7 @@ if(!isset($_REQUEST['subpage'])) {
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 		<script src="<?php echo __PATH_TEMPLATE_JS__; ?>main.js"></script>
 		<script src="<?php echo __PATH_TEMPLATE_JS__; ?>events.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 	</body>
 </html>

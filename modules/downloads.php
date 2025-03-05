@@ -40,9 +40,9 @@ try {
 	
 	if(mconfig('show_client_downloads')) {
 		if(is_array($downloadCLIENTS)) {
-			echo '<div class="panel panel-downloads">';
-				echo '<div class="panel-body">';
-					echo '<div class="panel-title">'.lang('downloads_txt_6',true).'</div>';
+			echo '<div class="card panel-downloads">';
+				echo '<div class="card-header">'.lang('downloads_txt_6',true).'</div>';
+				echo '<div class="card-body">';
 					echo '<table class="table">';
 					foreach($downloadCLIENTS as $download) {
 						echo '<tr>';
@@ -59,9 +59,9 @@ try {
 	
 	if(mconfig('show_patch_downloads')) {
 		if(is_array($downloadPATCHES)) {
-			echo '<div class="panel panel-downloads">';
-				echo '<div class="panel-body">';
-					echo '<div class="panel-title">'.lang('downloads_txt_7',true).'</div>';
+			echo '<div class="card panel-downloads">';
+				echo '<div class="card-header">'.lang('downloads_txt_7',true).'</div>';
+				echo '<div class="card-body">';
 					echo '<table class="table">';
 					foreach($downloadPATCHES as $download) {
 						echo '<tr>';
@@ -78,9 +78,9 @@ try {
 	
 	if(mconfig('show_tool_downloads')) {
 		if(is_array($downloadTOOLS)) {
-			echo '<div class="panel panel-downloads">';
-				echo '<div class="panel-body">';
-					echo '<div class="panel-title">'.lang('downloads_txt_8',true).'</div>';
+			echo '<div class="card panel-downloads">';
+				echo '<div class="card-header">'.lang('downloads_txt_8',true).'</div>';
+				echo '<div class="card-body">';
 					echo '<table class="table">';
 					foreach($downloadTOOLS as $download) {
 						echo '<tr>';

@@ -46,62 +46,61 @@ try {
 		$characterData = $Character->CharacterData($thisCharacter);
 		$characterIMG = $Character->GenerateCharacterClassAvatar($characterData[_CLMN_CHR_CLASS_]);
 		
-		echo '<div class="panel panel-addstats">';
-			echo '<div class="panel-body">';
-				echo '<div class="col-xs-3 nopadding text-center character-avatar">';
+		echo '<div class="card panel-addstats">';
+			echo '<div class="card-body d-flex">';
+				echo '<div class="col-3 nopadding text-center character-avatar">';
 					echo $characterIMG;
 				echo '</div>';
-				echo '<div class="col-xs-9 nopadding">';
-					echo '<div class="col-xs-12 nopadding character-name">';
+				echo '<div class="col-9 nopadding">';
+					echo '<div class="col-12 nopadding character-name">';
 						echo $characterData[_CLMN_CHR_NAME_];
 					echo '</div>';
 					echo '<div class="col-sm-10">';
-						echo '<form class="form-horizontal" action="" method="post">';
-							
+						echo '<form action="" method="post">';
 							echo '<input type="hidden" name="character" value="'.$characterData[_CLMN_CHR_NAME_].'"/>';
 							
-							echo '<div class="form-group">';
-								echo '<label for="inputStat" class="col-sm-5 control-label"></label>';
+							echo '<div class="row mb-3 align-items-center">';
+								echo '<label for="inputStat" class="col-sm-5 col-form-label"></label>';
 								echo '<div class="col-sm-7">';
 									echo langf('addstats_txt_2', array(number_format($characterData[_CLMN_CHR_LVLUP_POINT_])));
 								echo '</div>';
 							echo '</div>';
-							echo '<div class="form-group">';
-								echo '<label for="inputStat1" class="col-sm-5 control-label">'.lang('addstats_txt_3',true).' ('.$characterData[_CLMN_CHR_STAT_STR_].')</label>';
+							echo '<div class="row mb-3 align-items-center">';
+								echo '<label for="inputStat1" class="col-sm-5 col-form-label">'.lang('addstats_txt_3',true).' ('.$characterData[_CLMN_CHR_STAT_STR_].')</label>';
 								echo '<div class="col-sm-7">';
 									echo '<input type="number" class="form-control" id="inputStat1" min="1" step="1" max="'.$maxStats.'" name="add_str" placeholder="0">';
 								echo '</div>';
 							echo '</div>';
-							echo '<div class="form-group">';
-								echo '<label for="inputStat2" class="col-sm-5 control-label">'.lang('addstats_txt_4',true).' ('.$characterData[_CLMN_CHR_STAT_AGI_].')</label>';
+							echo '<div class="row mb-3 align-items-center">';
+								echo '<label for="inputStat2" class="col-sm-5 col-form-label">'.lang('addstats_txt_4',true).' ('.$characterData[_CLMN_CHR_STAT_AGI_].')</label>';
 								echo '<div class="col-sm-7">';
 									echo '<input type="number" class="form-control" id="inputStat2" min="1" step="1" max="'.$maxStats.'" name="add_agi" placeholder="0">';
 								echo '</div>';
 							echo '</div>';
-							echo '<div class="form-group">';
-								echo '<label for="inputStat3" class="col-sm-5 control-label">'.lang('addstats_txt_5',true).' ('.$characterData[_CLMN_CHR_STAT_VIT_].')</label>';
+							echo '<div class="row mb-3 align-items-center">';
+								echo '<label for="inputStat3" class="col-sm-5 col-form-label">'.lang('addstats_txt_5',true).' ('.$characterData[_CLMN_CHR_STAT_VIT_].')</label>';
 								echo '<div class="col-sm-7">';
 									echo '<input type="number" class="form-control" id="inputStat3" min="1" step="1" max="'.$maxStats.'" name="add_vit" placeholder="0">';
 								echo '</div>';
 							echo '</div>';
-							echo '<div class="form-group">';
-								echo '<label for="inputStat4" class="col-sm-5 control-label">'.lang('addstats_txt_6',true).' ('.$characterData[_CLMN_CHR_STAT_ENE_].')</label>';
+							echo '<div class="row mb-3 align-items-center">';
+								echo '<label for="inputStat4" class="col-sm-5 col-form-label">'.lang('addstats_txt_6',true).' ('.$characterData[_CLMN_CHR_STAT_ENE_].')</label>';
 								echo '<div class="col-sm-7">';
 									echo '<input type="number" class="form-control" id="inputStat4" min="1" step="1" max="'.$maxStats.'" name="add_ene" placeholder="0">';
 								echo '</div>';
 							echo '</div>';
 							
 							if(in_array($characterData[_CLMN_CHR_CLASS_], $custom['character_cmd'])) {
-								echo '<div class="form-group">';
-									echo '<label for="inputStat5" class="col-sm-5 control-label">'.lang('addstats_txt_7',true).' ('.$characterData[_CLMN_CHR_STAT_CMD_].')</label>';
+								echo '<div class="row mb-3 align-items-center">';
+									echo '<label for="inputStat5" class="col-sm-5 col-form-label">'.lang('addstats_txt_7',true).' ('.$characterData[_CLMN_CHR_STAT_CMD_].')</label>';
 									echo '<div class="col-sm-7">';
 										echo '<input type="number" class="form-control" id="inputStat5" min="1" step="1" max="'.$maxStats.'" name="add_com" placeholder="0">';
 									echo '</div>';
 								echo '</div>';
 							}
 							
-							echo '<div class="form-group">';
-								echo '<div class="col-sm-12 text-right">';
+							echo '<div class="row mb-3 align-items-center">';
+								echo '<div class="col-sm-12 text-end">';
 									echo '<button name="submit" value="submit" class="btn btn-primary">'.lang('addstats_txt_8',true).'</button>';
 								echo '</div>';
 							echo '</div>';

@@ -20,51 +20,51 @@ if(!$castleSiege->moduleEnabled()) throw new Exception(lang('error_47'));
 echo '<div class="page-title"><span>'.lang('module_titles_txt_29',true).'</span></div>';
 
 echo '<div class="row">';
-	echo '<div class="col-xs-12 castle-siege-block">';
+	echo '<div class="col-12 castle-siege-block">';
 
 	//
 	// CASTLE SIEGE GUILD OWNER AND ALLIANCE
 	//
 	if($castleSiege->showCastleOwner() && $siegeData['castle_data'][_CLMN_MCD_OCCUPY_] == 1) {
 		echo '<h2>'.lang('castlesiege_txt_2').'</h2>';
-		echo '<div class="panel castle-owner-panel">';
-			echo '<div class="panel-body">';
+		echo '<div class="card castle-owner-panel">';
+			echo '<div class="card-body">';
 				echo '<div class="row">';
-					echo '<div class="col-xs-4 text-center">';
+					echo '<div class="col-4 text-center">';
 						echo '<span class="castle-owner-name">'.guildProfile($siegeData['castle_owner_alliance'][0]['G_Name']).'</span>';
 						echo returnGuildLogo($siegeData['castle_owner_alliance'][0]['G_Mark'], 100);
 						echo '<h4>'.lang('castlesiege_txt_12').'</h4>';
 						echo '<p>'.playerProfile($siegeData['castle_owner_alliance'][0]['G_Master']).'</p>';
 					echo '</div>';
-					echo '<div class="col-xs-8">';
+					echo '<div class="col-8">';
 						
 						// Castle Owner Alliance
 						if($castleSiege->showCastleOwnerAlliance()) {
 							if(is_array($siegeData['castle_owner_alliance']) && count($siegeData['castle_owner_alliance']) > 1) {
 								echo '<div class="row">';
-									echo '<div class="col-xs-12 text-center">';
+									echo '<div class="col-12 text-center">';
 										echo '<h4>'.lang('castlesiege_txt_13').'</h4>';
 										echo '<div class="row castle-owner-ally-title">';
-											echo '<div class="col-xs-4">';
+											echo '<div class="col-4">';
 												echo '<strong>'.lang('castlesiege_txt_16').'</strong>';
 											echo '</div>';
-											echo '<div class="col-xs-4">';
+											echo '<div class="col-4">';
 												echo '<strong>'.lang('castlesiege_txt_14').'</strong>';
 											echo '</div>';
-											echo '<div class="col-xs-4">';
+											echo '<div class="col-4">';
 												echo '<strong>'.lang('castlesiege_txt_15').'</strong>';
 											echo '</div>';
 										echo '</div>';
 										foreach($siegeData['castle_owner_alliance'] as $key => $alliedGuild) {
 											if($key == 0) continue;
 											echo '<div class="row castle-owner-ally">';
-												echo '<div class="col-xs-4">';
+												echo '<div class="col-4">';
 													echo returnGuildLogo($alliedGuild['G_Mark'], 25);
 												echo '</div>';
-												echo '<div class="col-xs-4">';
+												echo '<div class="col-4">';
 													echo guildProfile($alliedGuild['G_Name']);
 												echo '</div>';
-												echo '<div class="col-xs-4">';
+												echo '<div class="col-4">';
 													echo playerProfile($alliedGuild['G_Master']);
 												echo '</div>';
 											echo '</div>';

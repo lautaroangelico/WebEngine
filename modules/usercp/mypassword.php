@@ -42,28 +42,28 @@ try {
 		}
 	}
 	
-	echo '<div class="col-xs-8 col-xs-offset-2" style="margin-top:30px;">';
+	echo '<div class="col-12" style="margin-top:30px;">';
 		echo '<form class="form-horizontal" action="" method="post">';
-			echo '<div class="form-group">';
-				echo '<label for="webenginePassword" class="col-sm-4 control-label">'.lang('changepassword_txt_1',true).'</label>';
-				echo '<div class="col-sm-8">';
+			echo '<div class="row mb-3 align-items-center">';
+				echo '<label for="webenginePassword" class="col-sm-3 col-form-label">'.lang('changepassword_txt_1',true).'</label>';
+				echo '<div class="col-sm-9">';
 					echo '<input type="password" class="form-control" id="webenginePassword" name="webenginePassword_current">';
 				echo '</div>';
 			echo '</div>';
-			echo '<div class="form-group">';
-				echo '<label for="webenginePassword" class="col-sm-4 control-label">'.lang('changepassword_txt_2',true).'</label>';
-				echo '<div class="col-sm-8">';
+			echo '<div class="row mb-3 align-items-center">';
+				echo '<label for="webenginePassword" class="col-sm-3 col-form-label">'.lang('changepassword_txt_2',true).'</label>';
+				echo '<div class="col-sm-9">';
 					echo '<input type="password" class="form-control" id="webenginePassword" name="webenginePassword_new">';
 				echo '</div>';
 			echo '</div>';
-			echo '<div class="form-group">';
-				echo '<label for="webenginePassword" class="col-sm-4 control-label">'.lang('changepassword_txt_3',true).'</label>';
-				echo '<div class="col-sm-8">';
+			echo '<div class="row mb-3 align-items-center">';
+				echo '<label for="webenginePassword" class="col-sm-3 col-form-label">'.lang('changepassword_txt_3',true).'</label>';
+				echo '<div class="col-sm-9">';
 					echo '<input type="password" class="form-control" id="webenginePassword" name="webenginePassword_newconfirm">';
 				echo '</div>';
 			echo '</div>';
-			echo '<div class="form-group">';
-				echo '<div class="col-sm-offset-4 col-sm-8">';
+			echo '<div class="row mb-3 align-items-center">';
+				echo '<div class="offset-sm-3 col-sm-9">';
 					echo '<button type="submit" name="webenginePassword_submit" value="submit" class="btn btn-primary">'.lang('changepassword_txt_4',true).'</button>';
 				echo '</div>';
 			echo '</div>';

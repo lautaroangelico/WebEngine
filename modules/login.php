@@ -29,23 +29,23 @@ try {
 		}
 	}
 	
-	echo '<div class="col-xs-8 col-xs-offset-2" style="margin-top:30px;">';
-		echo '<form class="form-horizontal" action="" method="post">';
-			echo '<div class="form-group">';
-				echo '<label for="webengineLogin1" class="col-sm-4 control-label">'.lang('login_txt_1',true).'</label>';
-				echo '<div class="col-sm-8">';
+	echo '<div class="col-12" style="margin-top:30px;">';
+		echo '<form action="" method="post">';
+			echo '<div class="row mb-3 align-items-center">';
+				echo '<label for="webengineLogin1" class="col-sm-3 col-form-label">'.lang('login_txt_1',true).'</label>';
+				echo '<div class="col-sm-9">';
 					echo '<input type="text" class="form-control" id="webengineLogin1" name="webengineLogin_user" required>';
 				echo '</div>';
 			echo '</div>';
-			echo '<div class="form-group">';
-				echo '<label for="webengineLogin2" class="col-sm-4 control-label">'.lang('login_txt_2',true).'</label>';
-				echo '<div class="col-sm-8">';
+			echo '<div class="row mb-3 align-items-center">';
+				echo '<label for="webengineLogin2" class="col-sm-3 col-form-label">'.lang('login_txt_2',true).'</label>';
+				echo '<div class="col-sm-9">';
 					echo '<input type="password" class="form-control" id="webengineLogin2" name="webengineLogin_pwd" required>';
 					echo '<span id="helpBlock" class="help-block"><a href="'.__BASE_URL__.'forgotpassword/">'.lang('login_txt_4',true).'</a></span>';
 				echo '</div>';
 			echo '</div>';
-			echo '<div class="form-group">';
-				echo '<div class="col-sm-offset-4 col-sm-8">';
+			echo '<div class="row mb-3 align-items-center">';
+				echo '<div class="offset-sm-3 col-sm-9">';
 					echo '<button type="submit" name="webengineLogin_submit" value="submit" class="btn btn-primary">'.lang('login_txt_3',true).'</button>';
 				echo '</div>';
 			echo '</div>';

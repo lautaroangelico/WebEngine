@@ -349,7 +349,7 @@ function getPlayerClassAvatar($code=0, $htmlImageTag=true, $tooltip=true, $cssCl
 	if(!$htmlImageTag) return $imageFullPath;
 	$result = '<img';
 	if(check_value($cssClass)) $result .= ' class="'.$cssClass.'"';
-	if($tooltip) $result .= ' data-toggle="tooltip" data-placement="top" title="'.$className.'" alt="'.$className.'"';
+	if($tooltip) $result .= ' data-bs-toggle="tooltip" data-bs-placement="top" title="'.$className.'" alt="'.$className.'"';
 	$result .= ' src="'.$imageFullPath.'" />';
 	return $result;
 }

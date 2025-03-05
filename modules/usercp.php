@@ -18,7 +18,7 @@ echo '<div class="page-title"><span>'.lang('module_titles_txt_3').'</span></div>
 $cfg = loadConfig('usercp');
 if(!is_array($cfg)) throw new Exception('Could not load usercp, please contact support.');
 
-echo '<div class="row" style="margin-top: 30px;margin-bottom: 30px;">';
+echo '<div class="row d-flex flex-column flex-sm-row justify-content-center align-items-center" style="margin-top: 30px;margin-bottom: 30px;">';
 	foreach($cfg as $element) {
 		if(!is_array($element)) continue;
 		if(!$element['active']) continue;
@@ -26,7 +26,7 @@ echo '<div class="row" style="margin-top: 30px;margin-bottom: 30px;">';
 		$title = check_value(lang($element['phrase'], true)) ? lang($element['phrase']) : 'ERROR';
 		$icon = check_value($element['icon']) ? __PATH_TEMPLATE_IMG__ . 'icons/' . $element['icon'] : __PATH_TEMPLATE_IMG__ . 'icons/usercp_default.png';
 		
-		echo '<div class="col-xs-3 text-center" style="margin-bottom: 20px;">';
+		echo '<div class="col-3 text-center" style="margin-bottom: 20px;">';
 			echo $element['newtab'] ? '<a href="'.$link.'" target="_blank">' : '<a href="'.$link.'">';
 				echo '<img src="'.$icon.'" width="100px" height="auto"/><br />';
 				echo $title;

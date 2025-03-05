@@ -93,11 +93,11 @@ function templateCastleSiegeWidget() {
 		$guildMaster = '-';
 	}
 	
-	echo '<div class="panel castle-owner-widget">';
-		echo '<div class="panel-heading">';
-			echo '<h3 class="panel-title">'.lang('castlesiege_widget_title').'</h3>';
+	echo '<div class="card castle-owner-widget mt-3">';
+		echo '<div class="card-header panel-heading">';
+			echo '<h3 class="card-title panel-title">'.lang('castlesiege_widget_title').'</h3>';
 		echo '</div>';
-		echo '<div class="panel-body">';
+		echo '<div class="card-body panel-body">';
 			echo '<div class="row">';
 				echo '<div class="col-sm-6 text-center">';
 					echo returnGuildLogo($guildOwnerMark, 100);
@@ -141,7 +141,7 @@ function templateLanguageSelector() {
 	}
 	
 	echo '<ul class="webengine-language-switcher">';
-		echo '<li><a href="'.__BASE_URL__.'language/switch/to/'.strtolower($lang).'" title="'.$langList[$lang][0].'"><img src="'.getCountryFlag($langList[$lang][1]).'" /> '.strtoupper($lang).'</a></li> ';
+		echo '<li><a href="#" title="'.$langList[$lang][0].'"><img src="'.getCountryFlag($langList[$lang][1]).'" /> '.strtoupper($lang).'</a></li> ';
 		foreach($langList as $language => $languageInfo) {
 			if($language == $lang) continue;
 			echo '<li><a href="'.__BASE_URL__.'language/switch/to/'.strtolower($language).'" title="'.$languageInfo[0].'"><img src="'.getCountryFlag($languageInfo[1]).'" /> '.strtoupper($language).'</a></li> ';

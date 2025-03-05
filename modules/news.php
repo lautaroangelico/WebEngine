@@ -70,18 +70,16 @@ try {
 			$loadNewsCache = $News->LoadCachedNews();
 		}
 		
-		echo '<div class="panel panel-news">';
-			echo '<div class="panel-heading">';
-				echo '<h3 class="panel-title"><a href="'.$news_url.'">'.$news_title.'</a></h3>';
+		echo '<div class="card panel-news">';
+			echo '<div class="card-header panel-heading">';
+				echo '<h3 class="card-title panel-title"><a href="'.$news_url.'">'.$news_title.'</a></h3>';
 			echo '</div>';
 			if(mconfig('news_expanded') > $i) {
-				echo '<div class="panel-body">';
+				echo '<div class="card-body">';
 					echo $loadNewsCache;
 				echo '</div>';
-				echo '<div class="panel-footer">';
-					echo '<div class="col-xs-6 nopadding">';
-					echo '</div>';
-					echo '<div class="col-xs-6 nopadding text-right">';
+				echo '<div class="card-footer">';
+					echo '<div class="col-12 nopadding text-end">';
 						echo date("l, F jS Y",$news_date);
 					echo '</div>';
 				echo '</div>';

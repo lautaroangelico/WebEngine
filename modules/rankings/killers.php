@@ -34,7 +34,7 @@ try {
 	
 	if(mconfig('rankings_class_filter')) $Rankings->rankingsFilterMenu();
 	
-	echo '<table class="rankings-table">';
+	echo '<div class="table-responsive-sm"><table class="rankings-table">';
 	echo '<tr>';
 	if(mconfig('rankings_show_place_number')) {
 		echo '<td style="font-weight:bold;"></td>';
@@ -67,7 +67,7 @@ try {
 		}
 		$i++;
 	}
-	echo '</table>';
+	echo '</table></div>';
 	if(mconfig('rankings_show_date')) {
 		echo '<div class="rankings-update-time">';
 		echo ''.lang('rankings_txt_20',true).' ' . date("m/d/Y - h:i A",$ranking_data[0][0]);

@@ -41,14 +41,14 @@ try {
 		}
 	}
 
-	echo '<div class="panel panel-general">';
-		echo '<div class="panel-body">';
+	echo '<div class="card panel-general">';
+		echo '<div class="card-body">';
 			echo '<form action="" method="post">';
 				echo '<div class="form-group">';
 					echo '<label for="contactInput1">'.lang('contactus_txt_1',true).'</label>';
 					echo '<input type="email" class="form-control" id="contactInput1" name="contact_email">';
 				echo '</div>';
-				echo '<div class="form-group">';
+				echo '<div class="form-group mb-2">';
 					echo '<label for="contactInput2">'.lang('contactus_txt_2',true).'</label>';
 					echo '<textarea class="form-control" id="contactInput2" style="height:250px;" name="contact_message"></textarea>';
 				echo '</div>';

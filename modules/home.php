@@ -176,7 +176,7 @@
 				echo '<h3 class="card-title panel-title">'.lang('event_schedule').'</h3>';
 			echo '</div>';
 			echo '<div class="card-body" style="min-height:400px;">';
-				echo '<table class="table table-condensed">';
+				echo '<table class="table table-condensed" id="WebEngineEventTimers">';
 					echo '<tr>';
 						echo '<td><span id="bloodcastle_name"></span><br /><span class="smalltext">'.lang('event_schedule_start').'</span></td>';
 						echo '<td class="text-end"><span id="bloodcastle_next"></span><br /><span class="smalltext" id="bloodcastle"></span></td>';

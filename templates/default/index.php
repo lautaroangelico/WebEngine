@@ -57,6 +57,7 @@ if(!isset($_REQUEST['subpage'])) {
 		<link href="<?php echo __PATH_TEMPLATE_CSS__; ?>override.css" rel="stylesheet" media="screen">
 		<script>
 			var baseUrl = '<?php echo __BASE_URL__; ?>';
+			var serverPHPTime = '<?php echo date("Y/m/d H:i:s");?>';
 		</script>
 	</head>
 	<body>

@@ -164,20 +164,17 @@ var serverTime = {
 		f.eleLocal = c;
 		f.eleServerDate = s;
 		f.eleLocalDate = l;
+		f.serverDate = new Date(serverPHPTime);
+		f.localDate = new Date();
+		f.dateOffset = f.serverDate - f.localDate;
+		document.getElementById(f.eleServer).textContent = f.dateTimeFormat(f.serverDate);
+		document.getElementById(f.eleLocal).textContent = f.dateTimeFormat(f.localDate);
+		document.getElementById(f.eleServerDate).textContent = f.dateFormat(f.serverDate);
+		document.getElementById(f.eleLocalDate).textContent = f.dateFormat(f.localDate);
 		
-		fetch(`${baseUrl}api/servertime.php`).then(response => response.json()).then(a => {
-			f.serverDate = new Date(a.ServerTime);
-			f.localDate = new Date();
-			f.dateOffset = f.serverDate - f.localDate;
-			document.getElementById(f.eleServer).textContent = f.dateTimeFormat(f.serverDate);
-			document.getElementById(f.eleLocal).textContent = f.dateTimeFormat(f.localDate);
-			document.getElementById(f.eleServerDate).textContent = f.dateFormat(f.serverDate);
-			document.getElementById(f.eleLocalDate).textContent = f.dateFormat(f.localDate);
-			
-			setInterval(function() {
-				f.update();
-			}, 1000);
-		});
+		setInterval(function() {
+			f.update();
+		}, 1000);
 	},
 	update: function() {
 		var b = this;

@@ -62,7 +62,7 @@ if(isset($_POST['settings_submit'])) {
 		# pdo dsn
 		if(!isset($_POST['SQL_PDO_DRIVER'])) throw new Exception('Invalid PDO Driver setting.');
 		if(!Validator::UnsignedNumber($_POST['SQL_PDO_DRIVER'])) throw new Exception('Invalid PDO Driver setting.');
-		if(!in_array($_POST['SQL_PDO_DRIVER'], array(1, 2, 3))) throw new Exception('Invalid PDO Driver setting.');
+		if(!in_array($_POST['SQL_PDO_DRIVER'], array(1, 2))) throw new Exception('Invalid PDO Driver setting.');
 		$setting['SQL_PDO_DRIVER'] = $_POST['SQL_PDO_DRIVER'];
 		
 		# md5
@@ -209,12 +209,6 @@ echo '<div class="col-md-12">';
 						echo '<label>';
 							echo '<input type="radio" name="SQL_PDO_DRIVER" value="2" '.(config('SQL_PDO_DRIVER',true) == 2 ? 'checked' : null).'>';
 							echo 'sqlsrv';
-						echo '</label>';
-					echo '</div>';
-					echo '<div class="radio">';
-						echo '<label>';
-							echo '<input type="radio" name="SQL_PDO_DRIVER" value="3" '.(config('SQL_PDO_DRIVER',true) == 3 ? 'checked' : null).'>';
-							echo 'odbc';
 						echo '</label>';
 					echo '</div>';
 				echo '</td>';

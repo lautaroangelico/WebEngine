@@ -189,12 +189,6 @@ class weProfiles {
 		$guildData = $this->dB->query_fetch_single("SELECT * FROM "._TBL_GUILDMEMB_." WHERE "._CLMN_GUILDMEMB_CHAR_." = ?", array($this->_request));
 		if($guildData) $guild = $guildData[_CLMN_GUILDMEMB_NAME_];
 		
-		// online status
-		$status = 0;
-		if($this->common->accountOnline($playerData[_CLMN_CHR_ACCID_])) {
-			$status = 1;
-		}
-		
 		// Cache
 		$data = array(
 			time(),
@@ -210,7 +204,7 @@ class weProfiles {
 			$playerData[_CLMN_CHR_PK_KILLS_],
 			(check_value($playerData[_CLMN_CHR_GRSTS_]) ? $playerData[_CLMN_CHR_GRSTS_] : 0),
 			$guild,
-			$status,
+			0,
 			check_value($playerMasterLevel) ? $playerMasterLevel : 0,
 		);
 		

@@ -32,16 +32,12 @@
 							if($key >= 7) break;
 							
 							$News->setId($newsArticle['news_id']);
-							
+							$news_title = base64_decode($newsArticle['news_title']);
 
 							if(config('language_switch_active',true)) {
-								if(isset($_SESSION['language_display']) && is_array($newsArticle['translations'])) {
-									if(array_key_exists($_SESSION['language_display'], $newsArticle['translations'])) {
-										$news_title = base64_decode($newsArticle['translations'][$_SESSION['language_display']]);
-									}
+								if(isset($_SESSION['language_display']) && isset($newsArticle['translations']) && is_array($newsArticle['translations']) && array_key_exists($_SESSION['language_display'], $newsArticle['translations'])) {
+									$news_title = base64_decode($newsArticle['translations'][$_SESSION['language_display']]);
 								}
-							} else {
-								$news_title = base64_decode($newsArticle['news_title']);
 							}
 							
 							$news_url = __BASE_URL__.'news/'.$newsArticle['news_id'].'/';

@@ -25,17 +25,15 @@ class dB {
 	function __construct($SQLHOST, $SQLPORT, $SQLDB, $SQLUSER, $SQLPWD, $SQLDRIVER) {
 		try {
 			
-			if($SQLDRIVER == 3) {
-				$this->db = new PDO("odbc:Driver={SQL Server};Server=".$SQLHOST.";Database=".$SQLDB."; Uid=".$SQLUSER.";Pwd=".$SQLPWD.";");
-			} else {
-				if($SQLDRIVER == 2) {
-					$pdo_connect = "sqlsrv:Server=".$SQLHOST.",".$SQLPORT.";Database=".$SQLDB."";
-				} else {
-					$pdo_connect = 'dblib:host='.$SQLHOST.':'.$SQLPORT.';dbname='.$SQLDB;
-				}
-				$this->db = new PDO($pdo_connect, $SQLUSER, $SQLPWD);
+			$pdo_connect = 'dblib:host='.$SQLHOST.':'.$SQLPORT.';dbname='.$SQLDB;
+			if($SQLDRIVER == 2) {
+				$pdo_connect = "sqlsrv:Server=".$SQLHOST.",".$SQLPORT.";Database=".$SQLDB."";
 			}
-
+			$this->db = new PDO($pdo_connect, $SQLUSER, $SQLPWD);
+			
+			if($this->db->getAttribute(PDO::ATTR_EMULATE_PREPARES) == false) {
+				$this->db->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
+			}
 			
 		} catch (PDOException $e) {
 			$this->dead = true;

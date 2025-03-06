@@ -22,6 +22,12 @@ if(mconfig('active')) {
 			$weProfiles->setRequest($_GET['req']);
 			$cData = $weProfiles->data();
 			
+			$onlineStatus = 0;
+			$onlineCharactersCache = loadCache('online_characters.cache');
+			if(is_array($onlineCharactersCache) && in_array($cData[1], $onlineCharactersCache)) {
+				$onlineStatus = 1;
+			}
+			
 			echo '<div class="profiles_player_card '.$custom['character_class'][$cData[2]][1].'">';
 				echo '<div class="profiles_player_content">';
 					echo '<table class="profiles_player_table">';
@@ -89,7 +95,7 @@ if(mconfig('active')) {
 						}
 						echo '<tr>';
 							echo '<td>'.lang('profiles_txt_17',true).'</td>';
-							if($cData[13]) {
+							if($onlineStatus) {
 								echo '<td class="isonline">'.lang('profiles_txt_18',true).'</td>';
 							} else {
 								echo '<td class="isoffline">'.lang('profiles_txt_19',true).'</td>';

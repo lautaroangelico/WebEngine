@@ -128,12 +128,6 @@ if(isset($_POST['install_step_2_submit'])) {
 					SqlSrv (Windows)
 				</label>
 			</div>
-			<div class="radio">
-				<label>
-					<input type="radio" name="install_step_2_8" value="3">
-					ODBC (Windows)
-				</label>
-			</div>
 		</div>
 	</div>
 	

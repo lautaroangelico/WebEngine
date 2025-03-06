@@ -142,7 +142,7 @@ class News {
 	
 	function checkTitle($title) {
 		if(check_value($title)) {
-			if(strlen($title) < 4 || strlen($title) > 80) {
+			if(strlen($title) < 4 || strlen($title) > 255) {
 				return false;
 			} else {
 				return true;

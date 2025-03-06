@@ -73,17 +73,10 @@ echo '<div class="list-group">';
 	
 	if($chk_5) {
 		$chk_6 = (extension_loaded('pdo_dblib') ? true : false);
-		$check_6 = ($chk_6 ? '<span class="label label-success">Ok</span>' : '<span class="label label-danger">Fix</span>');
+		$check_6 = ($chk_6 ? '<span class="label label-success">Ok</span>' : '<span class="label label-warning">Optional Fix</span>');
 		echo '<div class="list-group-item">';
 			echo 'PDO dblib (linux)';
 			echo '<span class="pull-right">'.$check_6.'</span>';
-		echo '</div>';
-
-		$chk_7 = (extension_loaded('pdo_odbc') ? true : false);
-		$check_7 = ($chk_7 ? '<span class="label label-success">Ok</span>' : '<span class="label label-warning">Optional Fix</span>');
-		echo '<div class="list-group-item">';
-			echo 'PDO odbc (linux/windows)';
-			echo '<span class="pull-right">'.$check_7.'</span>';
 		echo '</div>';
 
 		$chk_8 = (extension_loaded('pdo_sqlsrv') ? true : false);

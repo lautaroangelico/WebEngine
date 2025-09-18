@@ -83,13 +83,13 @@ if($verified) {
 				$configSettings = $creditSystem->showConfigs(true);
 				switch($configSettings['config_user_col_id']) {
 					case 'userid':
-						$creditSystem->setIdentifier($accountInfo[_CLMN_MEMBID_]);
+						$creditSystem->setIdentifier($accountInfo['memb_guid']);
 						break;
 					case 'username':
-						$creditSystem->setIdentifier($accountInfo[_CLMN_USERNM_]);
+						$creditSystem->setIdentifier($accountInfo['memb___id']);
 						break;
 					case 'email':
-						$creditSystem->setIdentifier($accountInfo[_CLMN_EMAIL_]);
+						$creditSystem->setIdentifier($accountInfo['mail_addr']);
 						break;
 					default:
 						throw new Exception("invalid identifier");

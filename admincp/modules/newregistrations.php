@@ -14,7 +14,7 @@
 echo '<h1 class="page-header">New Registrations</h1>';
 
 	$db = (config('SQL_USE_2_DB',true) ? $dB2 : $dB);
-	$newRegs = $db->query_fetch("SELECT TOP 200 "._CLMN_MEMBID_.", "._CLMN_USERNM_.", "._CLMN_EMAIL_." FROM "._TBL_MI_." ORDER BY "._CLMN_MEMBID_." DESC");
+	$newRegs = $db->query_fetch("SELECT TOP 200 memb_guid, memb___id, mail_addr FROM MEMB_INFO ORDER BY memb_guid DESC");
 	
 	if(is_array($newRegs)) {
 		echo '<table id="new_registrations" class="table display">';
@@ -29,10 +29,10 @@ echo '<h1 class="page-header">New Registrations</h1>';
 			echo '<tbody>';
 			foreach($newRegs as $thisReg) {
 				echo '<tr>';
-					echo '<td>'.$thisReg[_CLMN_MEMBID_].'</td>';
-					echo '<td>'.$thisReg[_CLMN_USERNM_].'</td>';
-					echo '<td>'.$thisReg[_CLMN_EMAIL_].'</td>';
-					echo '<td style="text-align:right;"><a href="'.admincp_base("accountinfo&id=".$thisReg[_CLMN_MEMBID_]).'" class="btn btn-xs btn-default">Account Information</a></td>';
+					echo '<td>'.$thisReg['memb_guid'].'</td>';
+					echo '<td>'.$thisReg['memb___id'].'</td>';
+					echo '<td>'.$thisReg['mail_addr'].'</td>';
+					echo '<td style="text-align:right;"><a href="'.admincp_base("accountinfo&id=".$thisReg['memb_guid']).'" class="btn btn-xs btn-default">Account Information</a></td>';
 				echo '</tr>';
 			}
 			echo '</tbody>';

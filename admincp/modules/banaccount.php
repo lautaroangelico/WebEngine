@@ -38,7 +38,7 @@
 			$accountData = $common->accountInformation($userID);
 			
 			// Check if aready banned
-			if($accountData[_CLMN_BLOCCODE_] == 1) throw new Exception("This account is already banned.");
+			if($accountData['bloc_code'] == 1) throw new Exception("This account is already banned.");
 			
 			// Ban Type
 			$banType = ($_POST['ban_days'] >= 1 ? "temporal" : "permanent");
@@ -70,7 +70,7 @@
 			}
 			
 			// Ban Account
-			$banAccount = $database->query("UPDATE "._TBL_MI_." SET "._CLMN_BLOCCODE_." = ? WHERE "._CLMN_USERNM_." = ?", array(1, $_POST['ban_account']));
+			$banAccount = $database->query("UPDATE MEMB_INFO SET bloc_code = ? WHERE memb___id = ?", array(1, $_POST['ban_account']));
 			if(!$banAccount) throw new Exception("Could not ban account.");
 			
 			message('success', 'Account Banned');

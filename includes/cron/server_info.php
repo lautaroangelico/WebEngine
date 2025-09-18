@@ -20,25 +20,25 @@ $me = Connection::Database('Me_MuOnline');
 
 # total accounts
 $totalAccounts = 0;
-$countAccounts = $me->query_fetch_single("SELECT COUNT(*) as totalAccounts FROM "._TBL_MI_);
+$countAccounts = $me->query_fetch_single("SELECT COUNT(*) as totalAccounts FROM MEMB_INFO");
 if(is_array($countAccounts)) $totalAccounts = $countAccounts['totalAccounts'];
 $serverInfo[] = $totalAccounts;
 
 # total characters
 $totalCharacters = 0;
-$countCharacters = $mu->query_fetch_single("SELECT COUNT(*) as totalCharacters FROM "._TBL_CHR_);
+$countCharacters = $mu->query_fetch_single("SELECT COUNT(*) as totalCharacters FROM Character");
 if(is_array($countCharacters)) $totalCharacters = $countCharacters['totalCharacters'];
 $serverInfo[] = $totalCharacters;
 
 # total guilds
 $totalGuilds = 0;
-$countGuilds = $mu->query_fetch_single("SELECT COUNT(*) as totalGuilds FROM "._TBL_GUILD_);
+$countGuilds = $mu->query_fetch_single("SELECT COUNT(*) as totalGuilds FROM Guild");
 if(is_array($countGuilds)) $totalGuilds = $countGuilds['totalGuilds'];
 $serverInfo[] = $totalGuilds;
 
 # total online
 $totalOnline = 0;
-$countOnline = $me->query_fetch_single("SELECT COUNT(*) as totalOnline FROM "._TBL_MS_." WHERE "._CLMN_CONNSTAT_." = 1");
+$countOnline = $me->query_fetch_single("SELECT COUNT(*) as totalOnline FROM MEMB_STAT WHERE ConnectStat = 1");
 if(is_array($countOnline)) $totalOnline = $countOnline['totalOnline'];
 $serverInfo[] = $totalOnline;
 	

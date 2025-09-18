@@ -40,16 +40,16 @@ if(isset($_GET['id'])) {
 					case "changepassword":
 						if(!isset($_POST['changepassword_newpw'])) throw new Exception("Please enter the new password.");
 						if(!Validator::PasswordLength($_POST['changepassword_newpw'])) throw new Exception("Invalid password.");
-						if(!$common->changePassword($accountInfo[_CLMN_MEMBID_], $accountInfo[_CLMN_USERNM_], $_POST['changepassword_newpw'])) throw new Exception("Could not change password.");
+						if(!$common->changePassword($accountInfo['memb_guid'], $accountInfo['memb___id'], $_POST['changepassword_newpw'])) throw new Exception("Could not change password.");
 						message('success', 'Password updated!');
 						
 						# send new password
 						if(isset($_POST['editaccount_sendmail'])) {
 							$email = new Email();
 							$email->setTemplate('ADMIN_CHANGE_PASSWORD');
-							$email->addVariable('{USERNAME}', $accountInfo[_CLMN_USERNM_]);
+							$email->addVariable('{USERNAME}', $accountInfo['memb___id']);
 							$email->addVariable('{NEW_PASSWORD}', $_POST['changepassword_newpw']);
-							$email->addAddress($accountInfo[_CLMN_EMAIL_]);
+							$email->addAddress($accountInfo['mail_addr']);
 							$email->send();
 						}
 						break;
@@ -57,16 +57,16 @@ if(isset($_GET['id'])) {
 						if(!isset($_POST['changeemail_newemail'])) throw new Exception("Please enter the new email.");
 						if(!Validator::Email($_POST['changeemail_newemail'])) throw new Exception("Invalid email address.");
 						if($common->emailExists($_POST['changeemail_newemail'])) throw new Exception("Another account with the same email already exists.");
-						if(!$common->updateEmail($accountInfo[_CLMN_MEMBID_], $_POST['changeemail_newemail'])) throw new Exception("Could not update email.");
+						if(!$common->updateEmail($accountInfo['memb_guid'], $_POST['changeemail_newemail'])) throw new Exception("Could not update email.");
 						message('success', 'Email address updated!');
 						
 						# send new email to current email
 						if(isset($_POST['editaccount_sendmail'])) {
 							$email = new Email();
 							$email->setTemplate('ADMIN_CHANGE_EMAIL');
-							$email->addVariable('{USERNAME}', $accountInfo[_CLMN_USERNM_]);
+							$email->addVariable('{USERNAME}', $accountInfo['memb___id']);
 							$email->addVariable('{NEW_EMAIL}', $_POST['changeemail_newemail']);
-							$email->addAddress($accountInfo[_CLMN_EMAIL_]);
+							$email->addAddress($accountInfo['mail_addr']);
 							$email->send();
 						}
 						break;
@@ -81,7 +81,7 @@ if(isset($_GET['id'])) {
 		$accountInfo = $common->accountInformation($_GET['id']);
 		if(!$accountInfo) throw new Exception("Could not retrieve account information (invalid account).");
 		
-		echo '<h1 class="page-header">Account Information: <small>'.$accountInfo[_CLMN_USERNM_].'</small></h1>';
+		echo '<h1 class="page-header">Account Information: <small>'.$accountInfo['memb___id'].'</small></h1>';
 		
 		echo '<div class="row">';
 			echo '<div class="col-md-6">';
@@ -92,33 +92,33 @@ if(isset($_GET['id'])) {
 					echo '<div class="panel-heading">General Information</div>';
 					echo '<div class="panel-body">';
 					
-						$isBanned = ($accountInfo[_CLMN_BLOCCODE_] == 0 ? '<span class="label label-success">Active</span>' : '<span class="label label-danger">Banned</span>');
+						$isBanned = ($accountInfo['bloc_code'] == 0 ? '<span class="label label-success">Active</span>' : '<span class="label label-danger">Banned</span>');
 						echo '<table class="table table-no-border table-hover">';
 							echo '<tr>';
 								echo '<th>ID:</th>';
-								echo '<td>'.$accountInfo[_CLMN_MEMBID_].'</td>';
+								echo '<td>'.$accountInfo['memb_guid'].'</td>';
 							echo '</tr>';
 							echo '<tr>';
 								echo '<th>Username:</th>';
-								echo '<td>'.$accountInfo[_CLMN_USERNM_].'</td>';
+								echo '<td>'.$accountInfo['memb___id'].'</td>';
 							echo '</tr>';
 							echo '<tr>';
 								echo '<th>Email:</th>';
-								echo '<td>'.$accountInfo[_CLMN_EMAIL_].'</td>';
+								echo '<td>'.$accountInfo['mail_addr'].'</td>';
 							echo '</tr>';
 							
 							if(strtolower(config('server_files',true)) == 'mue') {
 								echo '<tr>';
 									echo '<th>Credits:</th>';
-									echo '<td>'.$accountInfo[_CLMN_CREDITS_].'</td>';
+									echo '<td>'.$accountInfo['credits'].'</td>';
 								echo '</tr>';
 								echo '<tr>';
 									echo '<th>TempCredits:</th>';
-									echo '<td>'.$accountInfo[_CLMN_CREDITS_TEMP_].'</td>';
+									echo '<td>'.$accountInfo['credits_temp'].'</td>';
 								echo '</tr>';
 								echo '<tr>';
 									echo '<th>Master Key:</th>';
-									echo '<td>'.$accountInfo[_CLMN_MASTER_KEY_].'</td>';
+									echo '<td>'.$accountInfo['master_key'].'</td>';
 								echo '</tr>';
 							}
 							
@@ -134,12 +134,12 @@ if(isset($_GET['id'])) {
 				if($accountInfoConfig['showStatusInfo']) {
 					// ACCOUNT STATUS
 					$statusdb = (config('SQL_USE_2_DB', true) == true ? $dB2 : $dB);
-					$statusData = $statusdb->query_fetch_single("SELECT * FROM "._TBL_MS_." WHERE "._CLMN_MS_MEMBID_." = ?", array($accountInfo[_CLMN_USERNM_]));
+					$statusData = $statusdb->query_fetch_single("SELECT * FROM MEMB_STAT WHERE memb___id = ?", array($accountInfo['memb___id']));
 					echo '<div class="panel panel-info">';
 					echo '<div class="panel-heading">Status Information</div>';
 					echo '<div class="panel-body">';
 						if(is_array($statusData)) {
-							$onlineStatus = ($statusData[_CLMN_CONNSTAT_] == 1 ? '<span class="label label-success">Online</span>' : '<span class="label label-danger">Offline</span>');
+							$onlineStatus = ($statusData['ConnectStat'] == 1 ? '<span class="label label-success">Online</span>' : '<span class="label label-danger">Offline</span>');
 							echo '<table class="table table-no-border table-hover">';
 								echo '<tr>';
 									echo '<td>Status:</td>';
@@ -147,11 +147,11 @@ if(isset($_GET['id'])) {
 								echo '</tr>';
 								echo '<tr>';
 									echo '<td>Server:</td>';
-									echo '<td>'.$statusData[_CLMN_MS_GS_].'</td>';
+									echo '<td>'.$statusData['ServerName'].'</td>';
 								echo '</tr>';
 							echo '</table>';
 						} else {
-							message('warning', 'No data found in <strong>'._TBL_MS_.'</strong> for this account.', ' ');
+							message('warning', 'No data found in <strong>'.'MEMB_STAT'.'</strong> for this account.', ' ');
 						}
 					echo '</div>';
 					echo '</div>';
@@ -160,7 +160,7 @@ if(isset($_GET['id'])) {
 				if($accountInfoConfig['showCharacters']) {
 					// ACCOUNT CHARACTERS
 					$Character = new Character();
-					$accountCharacters = $Character->AccountCharacter($accountInfo[_CLMN_USERNM_]);
+					$accountCharacters = $Character->AccountCharacter($accountInfo['memb___id']);
 					echo '<div class="panel panel-default">';
 					echo '<div class="panel-heading">Characters</div>';
 					echo '<div class="panel-body">';
@@ -222,17 +222,17 @@ if(isset($_GET['id'])) {
 					
 					if(defined('_TBL_LOGEX_')) {
 						// ACCOUNTS IP ADDRESS (MuEngine - MuLogEx tbl)
-						$checkMuLogEx = $dB2->query_fetch_single("SELECT * FROM sysobjects WHERE xtype = 'U' AND name = ?", array(_TBL_LOGEX_));
+						$checkMuLogEx = $dB2->query_fetch_single("SELECT * FROM sysobjects WHERE xtype = 'U' AND name = ?", array('LOGEX'));
 						echo '<div class="panel panel-default">';
 						echo '<div class="panel-heading">Account\'s IP Address (MuEngine)</div>';
 						echo '<div class="panel-body">';
 							if($checkMuLogEx) {
-								$accountIpAddress = $common->retrieveAccountIPs($accountInfo[_CLMN_USERNM_]);
+								$accountIpAddress = $common->retrieveAccountIPs($accountInfo['memb___id']);
 								if(is_array($accountIpAddress)) {
 									echo '<table class="table table-no-border table-hover">';
 										foreach($accountIpAddress as $accountIp) {
 											echo '<tr>';
-												echo '<td><a href="http://whatismyipaddress.com/ip/'.urlencode($accountIp[_CLMN_LOGEX_IP_]).'" target="_blank">'.$accountIp[_CLMN_LOGEX_IP_].'</a></td>';
+												echo '<td><a href="http://whatismyipaddress.com/ip/'.urlencode($accountIp['IP']).'" target="_blank">'.$accountIp['IP'].'</a></td>';
 											echo '</tr>';
 										}
 									echo '</table>';
@@ -240,7 +240,7 @@ if(isset($_GET['id'])) {
 									message('warning', 'No IP address found.');
 								}
 							} else {
-								message('warning', 'Could not find table <strong>'._TBL_LOGEX_.'</strong> in the database.');
+								message('warning', 'Could not find table <strong>LOGEX</strong> in the database.');
 							}
 						echo '</div>';
 						echo '</div>';
@@ -254,12 +254,12 @@ if(isset($_GET['id'])) {
 						echo '<div class="panel-heading">Account\'s IP Address</div>';
 						echo '<div class="panel-body">';
 							
-							$accountIpHistory = $accountDB->query_fetch("SELECT DISTINCT("._CLMN_CH_IP_.") FROM "._TBL_CH_." WHERE "._CLMN_CH_ACCID_." = ?", array($accountInfo[_CLMN_USERNM_]));
+							$accountIpHistory = $accountDB->query_fetch("SELECT DISTINCT(IP) FROM Character WHERE AccountID = ?", array($accountInfo['memb___id']));
 							if(is_array($accountIpHistory)) {
 								echo '<table class="table table-no-border table-hover">';
 									foreach($accountIpHistory as $accountIp) {
 										echo '<tr>';
-											echo '<td><a href="http://whatismyipaddress.com/ip/'.urlencode($accountIp[_CLMN_CH_IP_]).'" target="_blank">'.$accountIp[_CLMN_CH_IP_].'</a></td>';
+											echo '<td><a href="http://whatismyipaddress.com/ip/'.urlencode($accountIp['IP']).'" target="_blank">'.$accountIp['IP'].'</a></td>';
 										echo '</tr>';
 									}
 								echo '</table>';
@@ -275,7 +275,7 @@ if(isset($_GET['id'])) {
 						echo '<div class="panel-heading">Account Connection History (last 25)</div>';
 						echo '<div class="panel-body">';
 							
-							$accountConHistory = $accountDB->query_fetch("SELECT TOP 25 * FROM "._TBL_CH_." WHERE "._CLMN_CH_ACCID_." = ? AND "._CLMN_CH_STATE_." = ? ORDER BY "._CLMN_CH_ID_." DESC", array($accountInfo[_CLMN_USERNM_], 'Connect'));
+							$accountConHistory = $accountDB->query_fetch("SELECT TOP 25 * FROM Character WHERE AccountID = ? AND State = ? ORDER BY ID DESC", array($accountInfo['memb___id'], 'Connect'));
 							if(is_array($accountConHistory)) {
 								echo '<table class="table table-no-border table-hover">';
 									echo '<tr>';
@@ -286,10 +286,10 @@ if(isset($_GET['id'])) {
 									echo '</tr>';
 									foreach($accountConHistory as $connection) {
 										echo '<tr>';
-											echo '<td>'.$connection[_CLMN_CH_DATE_].'</td>';
-											echo '<td class="hidden-xs">'.$connection[_CLMN_CH_SRVNM_].'</td>';
-											echo '<td>'.$connection[_CLMN_CH_IP_].'</td>';
-											echo '<td>'.$connection[_CLMN_CH_HWID_].'</td>';
+											echo '<td>'.$connection['Date'].'</td>';
+											echo '<td class="hidden-xs">'.$connection['ServerName'].'</td>';
+											echo '<td>'.$connection['IP'].'</td>';
+											echo '<td>'.$connection['HWID'].'</td>';
 										echo '</tr>';
 									}
 								echo '</table>';

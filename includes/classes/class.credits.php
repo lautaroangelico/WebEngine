@@ -304,7 +304,7 @@ class CreditSystem {
 	 * @return boolean
 	 */
 	private function _configurationExists($input) {
-		$check = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_CREDITS_CONFIG." WHERE config_id = ?", array($input));
+		$check = $this->memuonline->query_fetch_single("SELECT * FROM WEBENGINE_CREDITS_CONFIG WHERE config_id = ?", array($input));
 		if($check) return true;
 		return false;
 	}
@@ -333,7 +333,7 @@ class CreditSystem {
 			'display' => $this->_configDisplay
 		);
 		
-		$query = "INSERT INTO ".WEBENGINE_CREDITS_CONFIG." "
+		$query = "INSERT INTO WEBENGINE_CREDITS_CONFIG "
 			. "(config_title, config_database, config_table, config_credits_col, config_user_col, config_user_col_id, config_checkonline, config_display) "
 			. "VALUES "
 			. "(:title, :database, :table, :creditscol, :usercol, :usercolid, :checkonline, :display)";
@@ -368,7 +368,7 @@ class CreditSystem {
 			'display' => $this->_configDisplay
 		);
 		
-		$query = "UPDATE ".WEBENGINE_CREDITS_CONFIG." SET "
+		$query = "UPDATE WEBENGINE_CREDITS_CONFIG SET "
 			. "config_title = :title, "
 			. "config_database = :database, "
 			. "config_table = :table, "
@@ -390,7 +390,7 @@ class CreditSystem {
 	 */
 	public function deleteConfig() {
 		if(!$this->_configId) throw new Exception(lang('error_66'));
-		if(!$this->memuonline->query("DELETE FROM ".WEBENGINE_CREDITS_CONFIG." WHERE config_id = ?", array($this->_configId))) {
+		if(!$this->memuonline->query("DELETE FROM WEBENGINE_CREDITS_CONFIG WHERE config_id = ?", array($this->_configId))) {
 			throw new Exception(lang('error_87'));
 		}
 	}
@@ -405,9 +405,9 @@ class CreditSystem {
 	public function showConfigs($singleConfig = false) {
 		if($singleConfig) {
 			if(!$this->_configId) throw new Exception(lang('error_66'));
-			return $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_CREDITS_CONFIG." WHERE config_id = ?", array($this->_configId));
+			return $this->memuonline->query_fetch_single("SELECT * FROM WEBENGINE_CREDITS_CONFIG WHERE config_id = ?", array($this->_configId));
 		} else {
-			$result = $this->memuonline->query_fetch("SELECT * FROM ".WEBENGINE_CREDITS_CONFIG." ORDER BY config_id ASC");
+			$result = $this->memuonline->query_fetch("SELECT * FROM WEBENGINE_CREDITS_CONFIG ORDER BY config_id ASC");
 			if($result) return $result;
 			return false;
 		}
@@ -446,7 +446,7 @@ class CreditSystem {
 		return $return;
 	}
 	
-	/**
+	/**	
 	 * _isOnline
 	 * checks if the account is online
 	 * @param string $input
@@ -462,7 +462,7 @@ class CreditSystem {
 				if(!$accountInfo) throw new Exception(lang('error_12'));
 				
 				// check online status
-				return $this->common->accountOnline($accountInfo[_CLMN_USERNM_]);
+				return $this->common->accountOnline($accountInfo["memb___id"]);
 				break;
 			case 'username':
 				// check online status
@@ -478,15 +478,15 @@ class CreditSystem {
 				if(!$accountInfo) throw new Exception(lang('error_12'));
 				
 				// check online status
-				return $this->common->accountOnline($accountInfo[_CLMN_USERNM_]);
+				return $this->common->accountOnline($accountInfo["memb___id"]);
 				break;
-			case 'character':
+			case 'character':	
 				// get account username from character data
 				$characterData = $this->character->CharacterData($this->_identifier);
 				if(!$characterData) throw new Exception(lang('error_12'));
 				
 				// check online status
-				return $this->common->accountOnline($characterData[_CLMN_CHR_ACCID_]);
+				return $this->common->accountOnline($characterData["AccountID"]);
 				break;
 			default:
 				throw new Exception(lang('error_88'));
@@ -520,7 +520,7 @@ class CreditSystem {
 			'ip' => $ip
 		);
 		
-		$query = "INSERT INTO ".WEBENGINE_CREDITS_LOGS." "
+		$query = "INSERT INTO WEBENGINE_CREDITS_LOGS "
 			. "(log_config, log_identifier, log_credits, log_transaction, log_date, log_inadmincp, log_module, log_ip) "
 			. "VALUES "
 			. "(:config, :identifier, :credits, :transaction, :timestamp, :inadmincp, :module, :ip)";
@@ -535,7 +535,7 @@ class CreditSystem {
 	 * @return array
 	 */
 	public function getLogs($limit=50) {
-		$query = str_replace(array('{LIMIT}'), array($limit), "SELECT TOP {LIMIT} * FROM ".WEBENGINE_CREDITS_LOGS." ORDER BY log_id DESC");
+		$query = str_replace(array('{LIMIT}'), array($limit), "SELECT TOP {LIMIT} * FROM WEBENGINE_CREDITS_LOGS ORDER BY log_id DESC");
 		$result = $this->memuonline->query_fetch($query);
 		if(is_array($result)) return $result;
 	}

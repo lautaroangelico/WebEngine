@@ -106,11 +106,11 @@ class Character {
 		$characterData = $this->CharacterData($this->_character);
 		
 		// next reset
-		$resetNumber = $characterData[_CLMN_CHR_RSTS_]+1;
+		$resetNumber = $characterData["ResetCount"]+1;
 		
 		// level requirement
 		if(mconfig('required_level') >= 1) {
-			if($characterData[_CLMN_CHR_LVL_] < mconfig('required_level')) throw new Exception(lang('error_33'));
+			if($characterData["cLevel"] < mconfig('required_level')) throw new Exception(lang('error_33'));
 		}
 		
 		// maximum resets
@@ -130,20 +130,20 @@ class Character {
 		
 		// existing lvl up points (only when keeping stats)
 		if(!$clearStats) {
-			$newLevelUpPoints += $characterData[_CLMN_CHR_LVLUP_POINT_];
+			$newLevelUpPoints += $characterData["LevelUpPoint"];
 		}
 		
 		// class
 		$revertClass = mconfig('revert_class_evolution') == 1 ? true : false;
 		if($revertClass) {
-			if(!array_key_exists('class_group', $this->_classData[$characterData[_CLMN_CHR_CLASS_]])) throw new Exception(lang('error_128'));
-			$classGroup = $this->_classData[$characterData[_CLMN_CHR_CLASS_]]['class_group'];
+			if(!array_key_exists('class_group', $this->_classData[$characterData["Class"]])) throw new Exception(lang('error_128'));
+			$classGroup = $this->_classData[$characterData["Class"]]['class_group'];
 		}
 		
 		// zen requirement
 		$zenRequirement = mconfig('zen_cost');
-		if($zenRequirement > 0) if($characterData[_CLMN_CHR_ZEN_] < $zenRequirement) throw new Exception(lang('error_34'));
-		$newZen = $characterData[_CLMN_CHR_ZEN_]-$zenRequirement;
+		if($zenRequirement > 0) if($characterData["Money"] < $zenRequirement) throw new Exception(lang('error_34'));
+		$newZen = $characterData["Money"]-$zenRequirement;
 		
 		// credit requirement
 		$creditConfig = mconfig('credit_config');
@@ -169,7 +169,7 @@ class Character {
 		}
 		
 		// base stats
-		$base_stats = $this->_getClassBaseStats($characterData[_CLMN_CHR_CLASS_]);
+		$base_stats = $this->_getClassBaseStats($characterData["Class"]);
 		
 		// inventory
 		$clearInventory = mconfig('clear_inventory') == 1 ? true : false;
@@ -183,23 +183,23 @@ class Character {
 		if($clearStats) $data['cmd'] = $base_stats['cmd'];
 		$data['points'] = $newLevelUpPoints;
 		if($zenRequirement > 0) $data['zen'] = $newZen;
-		$data['name'] = $characterData[_CLMN_CHR_NAME_];
+		$data['name'] = $characterData["Name"];
 		
 		// query
 		$query = "UPDATE Character SET ";
-		$query .= _CLMN_CHR_LVL_ . " = 1, ";
-		if($revertClass) $query .= _CLMN_CHR_CLASS_ . " = :class, ";
-		if($revertClass) $query .= _CLMN_CHR_QUEST_ . " = NULL, ";
-		if($clearStats) $query .= _CLMN_CHR_STAT_STR_ . " = :str, ";
-		if($clearStats) $query .= _CLMN_CHR_STAT_AGI_ . " = :agi, ";
-		if($clearStats) $query .= _CLMN_CHR_STAT_VIT_ . " = :vit, ";
-		if($clearStats) $query .= _CLMN_CHR_STAT_ENE_ . " = :ene, ";
-		if($clearStats) $query .= _CLMN_CHR_STAT_CMD_ . " = :cmd, ";
-		if($zenRequirement > 0) $query .= _CLMN_CHR_ZEN_ . " = :zen, ";
-		if($clearInventory) $query .= _CLMN_CHR_INV_ . " = NULL, ";
-		$query .= _CLMN_CHR_LVLUP_POINT_ . " = :points, ";
-		$query .= _CLMN_CHR_RSTS_ . " = "._CLMN_CHR_RSTS_."+1 ";
-		$query .= "WHERE "._CLMN_CHR_NAME_." = :name";
+		$query .= "cLevel = 1, ";
+		if($revertClass) $query .= "Class = :class, ";
+		if($revertClass) $query .= "Quest = NULL, ";
+		if($clearStats) $query .= "Strength = :str, ";
+		if($clearStats) $query .= "Dexterity = :agi, ";
+		if($clearStats) $query .= "Vitality = :vit, ";
+		if($clearStats) $query .= "Energy = :ene, ";
+		if($clearStats) $query .= "Leadership = :cmd, ";
+		if($zenRequirement > 0) $query .= "Money = :zen, ";
+		if($clearInventory) $query .= "Inventory = NULL, ";
+		$query .= "LevelUpPoint = :points, ";
+		$query .= "ResetCount = ResetCount+1 ";
+		$query .= "WHERE Name = :name";
 		
 		// reset
 		$result = $this->muonline->query($query, $data);
@@ -277,16 +277,16 @@ class Character {
 		}
 		
 		// check zen
-		if($zenRequirement > 0) if($characterData[_CLMN_CHR_ZEN_] < $zenRequirement) throw new Exception(lang('error_34'));
+		if($zenRequirement > 0) if($characterData["Money"] < $zenRequirement) throw new Exception(lang('error_34'));
 		
 		// base stats
-		$base_stats = $this->_getClassBaseStats($characterData[_CLMN_CHR_CLASS_]);
+		$base_stats = $this->_getClassBaseStats($characterData["Class"]);
 		$base_stats_points = array_sum($base_stats);
 		
 		// calculate new level up points
-		$levelUpPoints = $characterData[_CLMN_CHR_STAT_STR_]+$characterData[_CLMN_CHR_STAT_AGI_]+$characterData[_CLMN_CHR_STAT_VIT_]+$characterData[_CLMN_CHR_STAT_ENE_];
-		if(array_key_exists(_CLMN_CHR_STAT_CMD_, $characterData)) {
-			$levelUpPoints += $characterData[_CLMN_CHR_STAT_CMD_];
+		$levelUpPoints = $characterData["Strength"]+$characterData["Dexterity"]+$characterData["Vitality"]+$characterData["Energy"];
+		if(array_key_exists("Leadership", $characterData)) {
+			$levelUpPoints += $characterData['Leadership'];
 		}
 		if($base_stats_points > 0) {
 			$levelUpPoints -= $base_stats_points;
@@ -295,7 +295,7 @@ class Character {
 		// query data
 		$data = array_merge(
 			array(
-				'player' => $characterData[_CLMN_CHR_NAME_],
+				'player' => $characterData["Name"],
 				'points' => $levelUpPoints,
 				'zen' => $zenRequirement,
 			),
@@ -303,10 +303,10 @@ class Character {
 		);
 		
 		// query
-		$query = "UPDATE "._TBL_CHR_." SET "._CLMN_CHR_STAT_STR_." = :str, "._CLMN_CHR_STAT_AGI_." = :agi, "._CLMN_CHR_STAT_VIT_." = :vit, "._CLMN_CHR_STAT_ENE_." = :ene";
-		if(array_key_exists(_CLMN_CHR_STAT_CMD_, $characterData)) $query .= ", "._CLMN_CHR_STAT_CMD_." = :cmd";
-		$query .= ", "._CLMN_CHR_ZEN_." = "._CLMN_CHR_ZEN_." - :zen";
-		$query .= ", "._CLMN_CHR_LVLUP_POINT_." = "._CLMN_CHR_LVLUP_POINT_." + :points WHERE "._CLMN_CHR_NAME_." = :player";
+		$query = "UPDATE Character SET Strength = :str, Dexterity = :agi, Vitality = :vit, Energy = :ene";
+		if(array_key_exists("Leadership", $characterData)) $query .= ", Leadership = :cmd";
+		$query .= ", Money = Money - :zen";
+		$query .= ", LevelUpPoint = LevelUpPoint + :points WHERE Name = :player";
 		
 		// reset stats
 		$result = $this->muonline->query($query, $data);
@@ -335,7 +335,7 @@ class Character {
 		$characterData = $this->CharacterData($this->_character);
 		
 		// check pk status
-		if($characterData[_CLMN_CHR_PK_LEVEL_] == $this->_clearPkLevel) throw new Exception(lang('error_117'));
+		if($characterData["PkLevel"] == $this->_clearPkLevel) throw new Exception(lang('error_117'));
 		
 		// zen requirement
 		$zenRequirement = mconfig('zen_cost');
@@ -364,17 +364,17 @@ class Character {
 		}
 		
 		// check zen
-		if($zenRequirement > 0) if($characterData[_CLMN_CHR_ZEN_] < $zenRequirement) throw new Exception(lang('error_34'));
+		if($zenRequirement > 0) if($characterData["Money"] < $zenRequirement) throw new Exception(lang('error_34'));
 		
 		// query data
 		$data = array(
-			'player' => $characterData[_CLMN_CHR_NAME_],
+			'player' => $characterData["Name"],
 			'pklevel' => $this->_clearPkLevel,
 			'zen' => $zenRequirement,
 		);
 		
 		// query
-		$query = "UPDATE "._TBL_CHR_." SET "._CLMN_CHR_PK_LEVEL_." = :pklevel, "._CLMN_CHR_PK_TIME_." = 0, "._CLMN_CHR_ZEN_." = "._CLMN_CHR_ZEN_." - :zen WHERE "._CLMN_CHR_NAME_." = :player";
+		$query = "UPDATE Character SET PkLevel = :pklevel, PkTime = 0, Money = Money - :zen WHERE Name = :player";
 		
 		// clear pk
 		$result = $this->muonline->query($query, $data);
@@ -403,8 +403,8 @@ class Character {
 		$characterData = $this->CharacterData($this->_character);
 		
 		// check position
-		if($characterData[_CLMN_CHR_MAP_] == $this->_unstickMap) {
-			if($characterData[_CLMN_CHR_MAP_X_] == $this->_unstickCoordX && $characterData[_CLMN_CHR_MAP_Y_] == $this->_unstickCoordY) throw new Exception(lang('error_115'));
+		if($characterData["MapNumber"] == $this->_unstickMap) {
+			if($characterData['MapPosX'] == $this->_unstickCoordX && $characterData['MapPosY'] == $this->_unstickCoordY) throw new Exception(lang('error_115'));
 		}
 		
 		// zen requirement
@@ -434,7 +434,7 @@ class Character {
 		}
 		
 		// check zen
-		if($zenRequirement > 0) if($characterData[_CLMN_CHR_ZEN_] < $zenRequirement) throw new Exception(lang('error_34'));
+		if($zenRequirement > 0) if($characterData["Money"] < $zenRequirement) throw new Exception(lang('error_34'));
 		
 		// deduct zen
 		if($zenRequirement > 0) if(!$this->DeductZEN($this->_character, $zenRequirement)) throw new Exception(lang('error_34'));
@@ -466,24 +466,24 @@ class Character {
 		$characterData = $this->CharacterData($this->_character);
 		
 		// check required level (regular)
-		if($characterData[_CLMN_CHR_LVL_] < mconfig('required_level')) throw new Exception(lang('error_120'));
+		if($characterData["cLevel"] < mconfig('required_level')) throw new Exception(lang('error_120'));
 		
 		// character master level data
-		$characterMasterLvlData = _TBL_CHR_ != _TBL_MASTERLVL_ ? $this->getMasterLevelInfo($this->_character) : $characterData;
+		$characterMasterLvlData = $this->getMasterLevelInfo($this->_character);
 		if(!is_array($characterMasterLvlData)) throw new Exception(lang('error_119'));
 		
 		// check required level (master)
-		if($characterMasterLvlData[_CLMN_ML_LVL_] < mconfig('required_master_level')) throw new Exception(lang('error_121'));
+		if($characterMasterLvlData["MasterLevel"] < mconfig('required_master_level')) throw new Exception(lang('error_121'));
 		
 		// combined character level
-		$characterLevel = $characterData[_CLMN_CHR_LVL_]+$characterMasterLvlData[_CLMN_ML_LVL_];
+		$characterLevel = $characterData["cLevel"]+$characterMasterLvlData["MasterLevel"];
 		
 		// skill enhancement tree points
 		$skillEnhancementPoints = 0;
 		
 		// skill enhancement support
-		if(defined('_CLMN_ML_I4SP_')) {
-			$skillEnhancementTreeEnabled = array_key_exists(_CLMN_ML_I4SP_, $characterMasterLvlData) ? true : false;
+		if(defined('MasterSkillTreeExt')) {
+			$skillEnhancementTreeEnabled = array_key_exists("MasterSkillTreeExt", $characterMasterLvlData) ? true : false;
 		}
 		
 		// skill enhancement points
@@ -520,12 +520,12 @@ class Character {
 		}
 		
 		// check zen
-		if($zenRequirement > 0) if($characterData[_CLMN_CHR_ZEN_] < $zenRequirement) throw new Exception(lang('error_34'));
+		if($zenRequirement > 0) if($characterData["Money"] < $zenRequirement) throw new Exception(lang('error_34'));
 		
 		// data
 		$data = array(
 			'player' => $this->_character,
-			'masterpoints' => $characterMasterLvlData[_CLMN_ML_LVL_]-$skillEnhancementPoints,
+			'masterpoints' => $characterMasterLvlData["MasterLevel"]-$skillEnhancementPoints,
 		);
 		
 		if($skillEnhancementTreeEnabled && $skillEnhancementPoints > 0) {
@@ -533,11 +533,11 @@ class Character {
 		}
 		
 		// query
-		$query = "UPDATE "._TBL_MASTERLVL_." SET "._CLMN_ML_POINT_." = :masterpoints";
-		if(defined('_CLMN_ML_EXP_')) if(array_key_exists(_CLMN_ML_EXP_, $characterMasterLvlData)) $query .= ", "._CLMN_ML_EXP_." = 0";
-		if(defined('_CLMN_ML_NEXP_')) if(array_key_exists(_CLMN_ML_NEXP_, $characterMasterLvlData)) $query .= ", "._CLMN_ML_NEXP_." = 0";
-		if($skillEnhancementTreeEnabled && $skillEnhancementPoints > 0) $query .= ", "._CLMN_ML_I4SP_." = :skillenhancementpoints";
-		$query .= " WHERE "._CLMN_ML_NAME_." = :player";
+		$query = "UPDATE ".'MasterSkillTree'." SET MasterPoint = :masterpoints";
+		if(defined('MasterSkillTreeExt')) if(array_key_exists("MasterSkillTreeExt", $characterMasterLvlData)) $query .= ", MasterSkillTreeExt = 0";
+		if(defined('MasterSkillTreeExt')) if(array_key_exists("MasterSkillTreeExt", $characterMasterLvlData)) $query .= ", MasterSkillTreeExt = 0";
+		if($skillEnhancementTreeEnabled && $skillEnhancementPoints > 0) $query .= ", MasterSkillTreeExt = :skillenhancementpoints";
+		$query .= " WHERE Name = :player";
 		
 		// clear magic list (skills)
 		$resetMagicList = $this->_resetMagicList($this->_character);
@@ -579,13 +579,13 @@ class Character {
 		$characterData = $this->CharacterData($this->_character);
 		
 		// check level up points
-		if($characterData[_CLMN_CHR_LVLUP_POINT_] < $pointsTotal) throw new Exception(lang('error_51'));
+		if($characterData["LevelUpPoint"] < $pointsTotal) throw new Exception(lang('error_51'));
 		
 		// new stats
-		$str = $characterData[_CLMN_CHR_STAT_STR_]+$this->_strength;
-		$agi = $characterData[_CLMN_CHR_STAT_AGI_]+$this->_agility;
-		$vit = $characterData[_CLMN_CHR_STAT_VIT_]+$this->_vitality;
-		$ene = $characterData[_CLMN_CHR_STAT_ENE_]+$this->_energy;
+		$str = $characterData["Strength"]+$this->_strength;
+		$agi = $characterData["Dexterity"]+$this->_agility;
+		$vit = $characterData["Vitality"]+$this->_vitality;
+		$ene = $characterData["Energy"]+$this->_energy;
 		
 		// check stat limits
 		if($str > mconfig('max_stats')) throw new Exception(langf('error_53', array(number_format(mconfig('max_stats')))));
@@ -595,29 +595,29 @@ class Character {
 		
 		// cmd
 		$cmd = 0;
-		if(array_key_exists(_CLMN_CHR_STAT_CMD_, $characterData) && $this->_command >= 1) {
-			if(!in_array($characterData[_CLMN_CHR_CLASS_], custom('character_cmd'))) throw new Exception(lang('error_52'));
-			$cmd = $characterData[_CLMN_CHR_STAT_CMD_]+$this->_command;
+		if(array_key_exists("Leadership", $characterData) && $this->_command >= 1) {
+			if(!in_array($characterData["Class"], custom('character_cmd'))) throw new Exception(lang('error_52'));
+			$cmd = $characterData["Leadership"]+$this->_command;
 			if($cmd > mconfig('max_stats')) throw new Exception(langf('error_53', array(number_format(mconfig('max_stats')))));
 		}
 		
 		// check required level (regular)
-		if($characterData[_CLMN_CHR_LVL_] < mconfig('required_level')) throw new Exception(lang('error_123'));
+		if($characterData["cLevel"] < mconfig('required_level')) throw new Exception(lang('error_123'));
 		
 		if(mconfig('required_master_level') >= 1) {
 			// character master level data
-			$characterMasterLvlData = _TBL_CHR_ != _TBL_MASTERLVL_ ? $this->getMasterLevelInfo($this->_character) : $characterData;
+			$characterMasterLvlData = $this->getMasterLevelInfo($this->_character);
 			if(!is_array($characterMasterLvlData)) throw new Exception(lang('error_119'));
 			
 			// check required level (master)
-			if($characterMasterLvlData[_CLMN_ML_LVL_] < mconfig('required_master_level')) throw new Exception(lang('error_124'));
+			if($characterMasterLvlData["MasterLevel"] < mconfig('required_master_level')) throw new Exception(lang('error_124'));
 		}
 		
 		// zen requirement
 		$zenRequirement = mconfig('zen_cost');
 		
 		// check zen
-		if($zenRequirement > 0) if($characterData[_CLMN_CHR_ZEN_] < $zenRequirement) throw new Exception(lang('error_34'));
+		if($zenRequirement > 0) if($characterData["Money"] < $zenRequirement) throw new Exception(lang('error_34'));
 		
 		// credit requirement
 		$creditConfig = mconfig('credit_config');
@@ -652,17 +652,17 @@ class Character {
 			'vit' => $vit,
 			'ene' => $ene,
 			'total' => $pointsTotal,
-			'player' => $characterData[_CLMN_CHR_NAME_],
+			'player' => $characterData["Name"],
 		);
 		if($cmd >= 1) $data['cmd'] = $cmd;
 		
-		$query = "UPDATE "._TBL_CHR_." SET "._CLMN_CHR_LVLUP_POINT_." = "._CLMN_CHR_LVLUP_POINT_." - :total, ";
-		if($cmd >= 1) $query .= _CLMN_CHR_STAT_CMD_ . " = :cmd, ";
-		$query .= _CLMN_CHR_STAT_STR_ . " = :str, ";
-		$query .= _CLMN_CHR_STAT_AGI_ . " = :agi, ";
-		$query .= _CLMN_CHR_STAT_VIT_ . " = :vit, ";
-		$query .= _CLMN_CHR_STAT_ENE_ . " = :ene";
-		$query .= " WHERE "._CLMN_CHR_NAME_." = :player";
+		$query = "UPDATE Character SET LevelUpPoint = LevelUpPoint - :total, ";
+		if($cmd >= 1) $query .= "Leadership" . " = :cmd, ";
+		$query .= "Strength" . " = :str, ";
+		$query .= "Dexterity" . " = :agi, ";
+		$query .= "Vitality" . " = :vit, ";
+		$query .= "Energy" . " = :ene";
+		$query .= " WHERE Name = :player";
 		
 		$result = $this->muonline->query($query, $data);
 		if(!$result) throw new Exception(lang('error_21'));
@@ -679,12 +679,12 @@ class Character {
 		if(!Validator::UsernameLength($username)) return;
 		if(!Validator::AlphaNumeric($username)) return;
 		
-		$result = $this->muonline->query_fetch("SELECT "._CLMN_CHR_NAME_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_ACCID_." = ?", array($username));
+		$result = $this->muonline->query_fetch("SELECT Name FROM Character WHERE AccountID = ?", array($username));
 		if(!is_array($result)) return;
 		
 		foreach($result as $row) {
-			if(!check_value($row[_CLMN_CHR_NAME_])) continue;
-			$return[] = $row[_CLMN_CHR_NAME_];
+			if(!check_value($row["Name"])) continue;
+			$return[] = $row["Name"];
 		}
 		
 		if(!is_array($return)) return;
@@ -693,7 +693,7 @@ class Character {
 	
 	public function CharacterData($character_name) {
 		if(!check_value($character_name)) return;
-		$result = $this->muonline->query_fetch_single("SELECT * FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." = ?", array($character_name));
+		$result = $this->muonline->query_fetch_single("SELECT * FROM Character WHERE Name = ?", array($character_name));
 		if(!is_array($result)) return;
 		return $result;
 		
@@ -706,14 +706,14 @@ class Character {
 		if(!Validator::AlphaNumeric($username)) return;
 		$characterData = $this->CharacterData($character_name);
 		if(!is_array($characterData)) return;
-		if(strtolower($characterData[_CLMN_CHR_ACCID_]) != strtolower($username)) return;
+		if(strtolower($characterData["AccountID"]) != strtolower($username)) return;
 		return true;
 		
 	}
 	
 	public function CharacterExists($character_name) {
 		if(!check_value($character_name)) return;
-		$check = $this->muonline->query_fetch_single("SELECT * FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." = ?", array($character_name));
+		$check = $this->muonline->query_fetch_single("SELECT * FROM Character WHERE Name = ?", array($character_name));
 		if(!is_array($check)) return;
 		return true;
 	}
@@ -726,8 +726,8 @@ class Character {
 		if(!$this->CharacterExists($character_name)) return;
 		$characterData = $this->CharacterData($character_name);
 		if(!is_array($characterData)) return;
-		if($characterData[_CLMN_CHR_ZEN_] < $zen_amount) return;
-		$deduct = $this->muonline->query("UPDATE "._TBL_CHR_." SET "._CLMN_CHR_ZEN_." = "._CLMN_CHR_ZEN_." - ? WHERE "._CLMN_CHR_NAME_." = ?", array($zen_amount, $character_name));
+		if($characterData["Money"] < $zen_amount) return;
+		$deduct = $this->muonline->query("UPDATE Character SET Money = Money - ? WHERE Name = ?", array($zen_amount, $character_name));
 		if(!$deduct) return;
 		return true;
 	}
@@ -736,9 +736,9 @@ class Character {
 		if(!check_value($username)) return;
 		if(!Validator::UsernameLength($username)) return;
 		if(!Validator::AlphaNumeric($username)) return;
-		$data = $this->muonline->query_fetch_single("SELECT * FROM "._TBL_AC_." WHERE "._CLMN_AC_ID_." = ?", array($username));
+		$data = $this->muonline->query_fetch_single("SELECT * FROM Account WHERE ID = ?", array($username));
 		if(!is_array($data)) return;
-		return $data[_CLMN_GAMEIDC_];
+		return $data["GameIDC"];
 	}
 	
 	// To be removed (backwards compatibility)
@@ -749,20 +749,20 @@ class Character {
 	public function getMasterLevelInfo($character_name) {
 		if(!check_value($character_name)) return;
 		if(!$this->CharacterExists($character_name)) return;
-		$CharInfo = $this->muonline->query_fetch_single("SELECT * FROM "._TBL_MASTERLVL_." WHERE "._CLMN_ML_NAME_." = ?", array($character_name));
+		$CharInfo = $this->muonline->query_fetch_single("SELECT * FROM MasterSkillTree WHERE Name = ?", array($character_name));
 		if(!is_array($CharInfo)) return;
 		return $CharInfo;
 	}
 	
 	protected function _moveCharacter($character_name,$map=0,$x=125,$y=125) {
 		if(!check_value($character_name)) return;
-		$move = $this->muonline->query("UPDATE "._TBL_CHR_." SET "._CLMN_CHR_MAP_." = ?, "._CLMN_CHR_MAP_X_." = ?, "._CLMN_CHR_MAP_Y_." = ? WHERE "._CLMN_CHR_NAME_." = ?", array($map, $x, $y, $character_name));
+		$move = $this->muonline->query("UPDATE Character SET MapNumber = ?, MapPosX = ?, MapPosY = ? WHERE Name = ?", array($map, $x, $y, $character_name));
 		if(!$move) return;
 		return true;
 	}
 	
 	protected function _resetMagicList($character) {
-		$result = $this->muonline->query("UPDATE "._TBL_CHR_." SET "._CLMN_CHR_MAGIC_L_." = null WHERE "._CLMN_CHR_NAME_." = ?", array($character));
+		$result = $this->muonline->query("UPDATE Character SET MagicList = null WHERE Name = ?", array($character));
 		if(!$result) return;
 		return true;
 	}

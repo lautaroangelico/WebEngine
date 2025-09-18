@@ -27,7 +27,7 @@
 			//if($common->accountOnline($banInfo['account_id'])) throw new Exception("The account is online.");
 			
 			// Unban Account
-			$unban = $database->query("UPDATE "._TBL_MI_." SET "._CLMN_BLOCCODE_." = 0 WHERE "._CLMN_USERNM_." = ?", array($banInfo['account_id']));
+			$unban = $database->query("UPDATE MEMB_INFO SET bloc_code = 0 WHERE memb___id = ?", array($banInfo['account_id']));
 			if(!$unban) throw new Exception("Could not update account information (unban).");
 			
 			// Remove Ban log

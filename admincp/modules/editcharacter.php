@@ -64,20 +64,20 @@ if(isset($_GET['name'])) {
 					$updateData['gresets'] = $_POST['characteredit_gresets'];
 				}
 				
-				$query = "UPDATE "._TBL_CHR_." SET ";
-					$query .= _CLMN_CHR_CLASS_ . " = :class,";
-					$query .= _CLMN_CHR_LVL_ . " = :level,";
-					if(check_value($updateData['resets'])) $query .= _CLMN_CHR_RSTS_ . " = :resets,";
-					if(check_value($updateData['gresets'])) $query .= _CLMN_CHR_GRSTS_ . " = :gresets,";
-					$query .= _CLMN_CHR_ZEN_ . " = :zen,";
-					$query .= _CLMN_CHR_LVLUP_POINT_ . " = :lvlpoints,";
-					$query .= _CLMN_CHR_PK_LEVEL_ . " = :pklevel,";
-					$query .= _CLMN_CHR_STAT_STR_ . " = :str,";
-					$query .= _CLMN_CHR_STAT_AGI_ . " = :agi,";
-					$query .= _CLMN_CHR_STAT_VIT_ . " = :vit,";
-					$query .= _CLMN_CHR_STAT_ENE_ . " = :ene,";
-					$query .= _CLMN_CHR_STAT_CMD_ . " = :cmd";
-					$query .= " WHERE "._CLMN_CHR_NAME_." = :name";
+				$query = "UPDATE Character SET ";
+					$query .= "Class" . " = :class,";
+					$query .= "cLevel" . " = :level,";
+					if(check_value($updateData['resets'])) $query .= "ResetCount" . " = :resets,";
+					if(check_value($updateData['gresets'])) $query .= "MasterResetCount" . " = :gresets,";
+					$query .= "Money" . " = :zen,";
+					$query .= "LevelUpPoint" . " = :lvlpoints,";
+					$query .= "PkLevel" . " = :pklevel,";
+					$query .= "Strength" . " = :str,";
+					$query .= "Dexterity" . " = :agi,";
+					$query .= "Vitality" . " = :vit,";
+					$query .= "Energy" . " = :ene,";
+					$query .= "Leadership" . " = :cmd";
+					$query .= " WHERE Name" . " = :name";
 				
 				$updateCharacter = $dB->query($query, $updateData);
 				if(!$updateCharacter) throw new Exception("Could not update character data.");
@@ -94,12 +94,12 @@ if(isset($_GET['name'])) {
 					$updateMlData['nextexp'] = $_POST['characteredit_mlnextexp'];
 				}
 				
-				$mlQuery = "UPDATE "._TBL_MASTERLVL_." SET ";
-					$mlQuery .= _CLMN_ML_LVL_ . " = :level,";
-					$mlQuery .= _CLMN_ML_EXP_ . " = :exp,";
-					if(check_value($updateMlData['nextexp'])) $mlQuery .= _CLMN_ML_NEXP_ . " = :nextexp,";
-					$mlQuery .= _CLMN_ML_POINT_ . " = :points";
-					$mlQuery .= " WHERE "._CLMN_ML_NAME_." = :name";
+				$mlQuery = "UPDATE MasterSkillTree SET ";
+					$mlQuery .= "MasterLevel" . " = :level,";
+					$mlQuery .= "MasterExperience" . " = :exp,";
+					if(check_value($updateMlData['nextexp'])) $mlQuery .= "NextExperience = :nextexp,";
+					$mlQuery .= "MasterPoint" . " = :points";
+					$mlQuery .= " WHERE Name" . " = :name";
 				
 				$updateMlCharacter = $dB->query($mlQuery, $updateMlData);
 				if(!$updateCharacter) throw new Exception("Master level data could not be updated.");
@@ -112,11 +112,11 @@ if(isset($_GET['name'])) {
 		$charData = $Character->CharacterData($_GET['name']);
 		if(!$charData) throw new Exception("Could not retrieve character information (invalid character).");
 		
-		echo '<h1 class="page-header">Edit Character: <small>'.$charData[_CLMN_CHR_NAME_].'</small></h1>';
+		echo '<h1 class="page-header">Edit Character: <small>'.$charData['Name'].'</small></h1>';
 		
 		echo '<form role="form" method="post">';
-		echo '<input type="hidden" name="characteredit_name" value="'.$charData[_CLMN_CHR_NAME_].'"/>';
-		echo '<input type="hidden" name="characteredit_account" value="'.$charData[_CLMN_CHR_ACCID_].'"/>';
+		echo '<input type="hidden" name="characteredit_name" value="'.$charData['Name'].'"/>';
+		echo '<input type="hidden" name="characteredit_account" value="'.$charData['AccountID'].'"/>';
 		
 		echo '<div class="row">';
 			echo '<div class="col-md-6">';
@@ -128,14 +128,14 @@ if(isset($_GET['name'])) {
 					echo '<table class="table table-no-border table-hover">';
 						echo '<tr>';
 							echo '<th>Account:</th>';
-							echo '<td><a href="'.admincp_base("accountinfo&id=".$common->retrieveUserID($charData[_CLMN_CHR_ACCID_])).'">'.$charData[_CLMN_CHR_ACCID_].'</a></td>';
+							echo '<td><a href="'.admincp_base("accountinfo&id=".$common->retrieveUserID($charData['AccountID'])).'">'.$charData['AccountID'].'</a></td>';
 						echo '</tr>';
 						echo '<tr>';
 							echo '<th>Class:</th>';
 							echo '<td>';
 								echo '<select class="form-control" name="characteredit_class">';
 									foreach($custom['character_class'] as $classID => $thisClass) {
-										if($classID == $charData[_CLMN_CHR_CLASS_]) {
+										if($classID == $charData['Class']) {
 											echo '<option value="'.$classID.'" selected="selected">'.$thisClass[0].' ('.$thisClass[1].')</option>';
 										} else {
 											echo '<option value="'.$classID.'">'.$thisClass[0].' ('.$thisClass[1].')</option>';
@@ -146,34 +146,34 @@ if(isset($_GET['name'])) {
 						echo '</tr>';
 						echo '<tr>';
 							echo '<th>Level:</th>';
-							echo '<td><input class="form-control" type="number" name="characteredit_level" value="'.$charData[_CLMN_CHR_LVL_].'"/></td>';
+							echo '<td><input class="form-control" type="number" name="characteredit_level" value="'.$charData['cLevel'].'"/></td>';
 						echo '</tr>';
 						
-						if(defined('_CLMN_CHR_RSTS_')) {
+						if(defined('ResetCount')) {
 							echo '<tr>';
 								echo '<th>Resets:</th>';
-								echo '<td><input class="form-control" type="number" name="characteredit_resets" value="'.$charData[_CLMN_CHR_RSTS_].'"/></td>';
+								echo '<td><input class="form-control" type="number" name="characteredit_resets" value="'.$charData['ResetCount'].'"/></td>';
 							echo '</tr>';
 						}
 						
-						if(defined('_CLMN_CHR_GRSTS_')) {
+						if(defined('MasterResetCount')) {
 							echo '<tr>';
 								echo '<th>Grand Resets:</th>';
-								echo '<td><input class="form-control" type="number" name="characteredit_gresets" value="'.$charData[_CLMN_CHR_GRSTS_].'"/></td>';
+								echo '<td><input class="form-control" type="number" name="characteredit_gresets" value="'.$charData['MasterResetCount'].'"/></td>';
 							echo '</tr>';
 						}
 						
 						echo '<tr>';
 							echo '<th>Money:</th>';
-							echo '<td><input class="form-control" type="number" name="characteredit_zen" value="'.$charData[_CLMN_CHR_ZEN_].'"/></td>';
+							echo '<td><input class="form-control" type="number" name="characteredit_zen" value="'.$charData['Money'].'"/></td>';
 						echo '</tr>';
 						echo '<tr>';
 							echo '<th>Level-Up Points:</th>';
-							echo '<td><input class="form-control" type="number" name="characteredit_lvlpoints" value="'.$charData[_CLMN_CHR_LVLUP_POINT_].'"/></td>';
+							echo '<td><input class="form-control" type="number" name="characteredit_lvlpoints" value="'.$charData['LevelUpPoint'].'"/></td>';
 						echo '</tr>';
 						echo '<tr>';
 							echo '<th>PK Level:</th>';
-							echo '<td><input class="form-control" type="number" name="characteredit_pklevel" value="'.$charData[_CLMN_CHR_PK_LEVEL_].'"/></td>';
+							echo '<td><input class="form-control" type="number" name="characteredit_pklevel" value="'.$charData['PkLevel'].'"/></td>';
 						echo '</tr>';
 					echo '</table>';
 				echo '</div>';
@@ -189,31 +189,31 @@ if(isset($_GET['name'])) {
 					echo '<table class="table table-no-border table-hover">';
 						echo '<tr>';
 							echo '<th>Strength:</th>';
-							echo '<td><input class="form-control" type="number" name="characteredit_str" value="'.$charData[_CLMN_CHR_STAT_STR_].'"/></td>';
+							echo '<td><input class="form-control" type="number" name="characteredit_str" value="'.$charData['Strength'].'"/></td>';
 						echo '</tr>';
 						echo '<tr>';
 							echo '<th>Dexterity:</th>';
-							echo '<td><input class="form-control" type="number" name="characteredit_agi" value="'.$charData[_CLMN_CHR_STAT_AGI_].'"/></td>';
+							echo '<td><input class="form-control" type="number" name="characteredit_agi" value="'.$charData['Dexterity'].'"/></td>';
 						echo '</tr>';
 						echo '<tr>';
 							echo '<th>Vitality:</th>';
-							echo '<td><input class="form-control" type="number" name="characteredit_vit" value="'.$charData[_CLMN_CHR_STAT_VIT_].'"/></td>';
+							echo '<td><input class="form-control" type="number" name="characteredit_vit" value="'.$charData['Vitality'].'"/></td>';
 						echo '</tr>';
 						echo '<tr>';
 							echo '<th>Energy:</th>';
-							echo '<td><input class="form-control" type="number" name="characteredit_ene" value="'.$charData[_CLMN_CHR_STAT_ENE_].'"/></td>';
+							echo '<td><input class="form-control" type="number" name="characteredit_ene" value="'.$charData['Energy'].'"/></td>';
 						echo '</tr>';
 						echo '<tr>';
 							echo '<th>Command:</th>';
-							echo '<td><input class="form-control" type="number" name="characteredit_cmd" value="'.$charData[_CLMN_CHR_STAT_CMD_].'"/></td>';
+							echo '<td><input class="form-control" type="number" name="characteredit_cmd" value="'.$charData['Leadership'].'"/></td>';
 						echo '</tr>';
 					echo '</table>';
 				echo '</div>';
 				echo '</div>';
 				
 				// MASTER LEVEL
-				if(defined('_TBL_MASTERLVL_')) {
-					$mLinfo = $dB->query_fetch_single("SELECT * FROM "._TBL_MASTERLVL_." WHERE "._CLMN_ML_NAME_." = ?", array($charData[_CLMN_CHR_NAME_]));
+				if(defined('"MasterSkillTree"')) {
+					$mLinfo = $dB->query_fetch_single("SELECT * FROM MasterSkillTree WHERE Name = ?", array($charData['Name']));
 					echo '<div class="panel panel-default">';
 					echo '<div class="panel-heading">Master Level</div>';
 					echo '<div class="panel-body">';
@@ -221,21 +221,21 @@ if(isset($_GET['name'])) {
 							echo '<table class="table table-no-border table-hover">';
 								echo '<tr>';
 									echo '<th>Master Level:</th>';
-									echo '<td><input class="form-control" type="number" name="characteredit_mlevel" value="'.$mLinfo[_CLMN_ML_LVL_].'"/></td>';
+									echo '<td><input class="form-control" type="number" name="characteredit_mlevel" value="'.$mLinfo['MasterLevel'].'"/></td>';
 								echo '</tr>';
 								echo '<tr>';
 									echo '<th>Experience:</th>';
-									echo '<td><input class="form-control" type="number" name="characteredit_mlexp" value="'.$mLinfo[_CLMN_ML_EXP_].'"/></td>';
+									echo '<td><input class="form-control" type="number" name="characteredit_mlexp" value="'.$mLinfo['MasterExperience'].'"/></td>';
 								echo '</tr>';
-								if(defined('_CLMN_ML_NEXP_')) {
+								if(defined('NextExperience')) {
 									echo '<tr>';
 										echo '<th>Next Experience:</th>';
-										echo '<td><input class="form-control" type="number" name="characteredit_mlnextexp" value="'.$mLinfo[_CLMN_ML_NEXP_].'"/></td>';
+										echo '<td><input class="form-control" type="number" name="characteredit_mlnextexp" value="'.$mLinfo['NextExperience'].'"/></td>';
 									echo '</tr>';
 								}
 								echo '<tr>';
 									echo '<th>Points:</th>';
-									echo '<td><input class="form-control" type="number" name="characteredit_mlpoint" value="'.$mLinfo[_CLMN_ML_POINT_].'"/></td>';
+									echo '<td><input class="form-control" type="number" name="characteredit_mlpoint" value="'.$mLinfo['MasterPoint'].'"/></td>';
 								echo '</tr>';
 							echo '</table>';
 						} else {

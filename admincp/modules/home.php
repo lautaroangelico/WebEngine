@@ -77,7 +77,7 @@ echo '<div class="row">';
 				echo '</div>';
 				
 				// Scheduled Tasks
-				$scheduledTasks = $database->query_fetch_single("SELECT COUNT(*) as result FROM ".WEBENGINE_CRON."");
+				$scheduledTasks = $database->query_fetch_single("SELECT COUNT(*) as result FROM WEBENGINE_CRON");
 				echo '<div class="list-group-item">';
 					echo 'Scheduled Tasks (cron)';
 					echo '<span class="pull-right text-muted small">'.number_format($scheduledTasks['result']).'</span>';

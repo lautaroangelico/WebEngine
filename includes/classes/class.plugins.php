@@ -16,10 +16,7 @@ class Plugins {
 	protected $db;
 	
 	function __construct() {
-		
-		// load database
 		$this->db = Connection::Database('Me_MuOnline');
-		
 	}
 	
 	public function importPlugin($_FILE) {
@@ -167,7 +164,7 @@ class Plugins {
 			time(),
 			$_SESSION['username']
 		);
-		$query = $this->db->query("INSERT INTO ".WEBENGINE_PLUGINS." (name, author, version, compatibility, folder, files, status, install_date, installed_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", $data);
+		$query = $this->db->query("INSERT INTO WEBENGINE_PLUGINS (name, author, version, compatibility, folder, files, status, install_date, installed_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", $data);
 		if($query) {
 			@$this->_getPluginLatestVersion($pluginDATA['folder'], $pluginDATA['version']);
 			return true;
@@ -177,12 +174,12 @@ class Plugins {
 	}
 	
 	public function retrieveInstalledPlugins() {
-		$plugins = $this->db->query_fetch("SELECT * FROM ".WEBENGINE_PLUGINS." ORDER BY id ASC");
+		$plugins = $this->db->query_fetch("SELECT * FROM WEBENGINE_PLUGINS ORDER BY id ASC");
 		return $plugins;
 	}
 	
 	public function updatePluginStatus($plugin_id,$new_status) {
-		$update = $this->db->query("UPDATE ".WEBENGINE_PLUGINS." SET status = ? WHERE id = ?", array($new_status, $plugin_id));
+		$update = $this->db->query("UPDATE WEBENGINE_PLUGINS SET status = ? WHERE id = ?", array($new_status, $plugin_id));
 		$update_cache = $this->rebuildPluginsCache();
 		if(!$update_cache) {
 			message('error','Could not update plugins cache data, make sure the file exists and it\'s writable!');
@@ -190,7 +187,7 @@ class Plugins {
 	}
 	
 	public function uninstallPlugin($plugin_id) {
-		$uninstall = $this->db->query("DELETE FROM ".WEBENGINE_PLUGINS." WHERE id = ?", array($plugin_id));
+		$uninstall = $this->db->query("DELETE FROM WEBENGINE_PLUGINS WHERE id = ?", array($plugin_id));
 		if($uninstall) {
 			return true;
 		} else {
@@ -199,7 +196,7 @@ class Plugins {
 	}
 	
 	public function rebuildPluginsCache() {
-		$plugins = $this->db->query_fetch("SELECT * FROM ".WEBENGINE_PLUGINS." WHERE status = 1 ORDER BY id ASC");
+		$plugins = $this->db->query_fetch("SELECT * FROM WEBENGINE_PLUGINS WHERE status = 1 ORDER BY id ASC");
 		if(!is_array($plugins)) {
 			$update = updateCacheFile('plugins.cache', "");
 			if(!$update) return;

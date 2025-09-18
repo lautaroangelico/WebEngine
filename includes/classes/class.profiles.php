@@ -135,25 +135,25 @@ class weProfiles {
 	
 	private function cacheGuildData() {
 		// General Data
-		$guildData = $this->dB->query_fetch_single("SELECT *, CONVERT(varchar(max), "._CLMN_GUILD_LOGO_.", 2) as "._CLMN_GUILD_LOGO_." FROM "._TBL_GUILD_." WHERE "._CLMN_GUILD_NAME_." = ?", array($this->_request));
+		$guildData = $this->dB->query_fetch_single("SELECT *, CONVERT(varchar(max), G_Mark, 2) as G_Mark FROM Guild WHERE G_Name = ?", array($this->_request));
 		if(!$guildData) throw new Exception(lang('error_25',true));
-		
+			
 		// Members
-		$guildMembers = $this->dB->query_fetch("SELECT * FROM "._TBL_GUILDMEMB_." WHERE "._CLMN_GUILDMEMB_NAME_." = ?", array($this->_request));
+		$guildMembers = $this->dB->query_fetch("SELECT * FROM GuildMember WHERE G_Name = ?", array($this->_request));
 		if(!$guildMembers) throw new Exception(lang('error_25',true));
 		$members = array();
 		foreach($guildMembers as $gmember) {
-			$members[] = $gmember[_CLMN_GUILDMEMB_CHAR_];
+			$members[] = $gmember['Name'];
 		}
 		$gmembers_str = implode(",", $members);
 		
 		// Cache
 		$data = array(
 			time(),
-			$guildData[_CLMN_GUILD_NAME_],
-			$guildData[_CLMN_GUILD_LOGO_],
-			$guildData[_CLMN_GUILD_SCORE_],
-			$guildData[_CLMN_GUILD_MASTER_],
+			$guildData['G_Name'],
+			$guildData['G_Mark'],
+			$guildData['G_Score'],
+			$guildData['G_Master'],
 			$gmembers_str
 		);
 		
@@ -175,34 +175,34 @@ class weProfiles {
 		if(!$playerData) throw new Exception(lang('error_25',true));
 		
 		// master level data
-		if(_TBL_MASTERLVL_ == _TBL_CHR_) {
-			$playerMasterLevel = $playerData[_CLMN_ML_LVL_];
+		if('MasterSkillTree' == 'Character') {
+			$playerMasterLevel = $playerData["MasterLevel"];
 		} else {
 			$masterLevelInfo = $Character->getMasterLevelInfo($this->_request);
 			if(is_array($masterLevelInfo)) {
-				$playerMasterLevel = $masterLevelInfo[_CLMN_ML_LVL_];
+				$playerMasterLevel = $masterLevelInfo["MasterLevel"];
 			}
 		}
 		
 		// guild data
 		$guild = "";
-		$guildData = $this->dB->query_fetch_single("SELECT * FROM "._TBL_GUILDMEMB_." WHERE "._CLMN_GUILDMEMB_CHAR_." = ?", array($this->_request));
-		if($guildData) $guild = $guildData[_CLMN_GUILDMEMB_NAME_];
+		$guildData = $this->dB->query_fetch_single("SELECT * FROM GuildMember WHERE Name = ?", array($this->_request));
+		if($guildData) $guild = $guildData['G_Name'];
 		
 		// Cache
 		$data = array(
 			time(),
-			$playerData[_CLMN_CHR_NAME_],
-			$playerData[_CLMN_CHR_CLASS_],
-			$playerData[_CLMN_CHR_LVL_],
-			$playerData[_CLMN_CHR_RSTS_],
-			$playerData[_CLMN_CHR_STAT_STR_],
-			$playerData[_CLMN_CHR_STAT_AGI_],
-			$playerData[_CLMN_CHR_STAT_VIT_],
-			$playerData[_CLMN_CHR_STAT_ENE_],
-			$playerData[_CLMN_CHR_STAT_CMD_],
-			$playerData[_CLMN_CHR_PK_KILLS_],
-			(check_value($playerData[_CLMN_CHR_GRSTS_]) ? $playerData[_CLMN_CHR_GRSTS_] : 0),
+			$playerData['Name'],
+			$playerData['Class'],
+			$playerData['LVL'],
+			$playerData['RSTS'],
+			$playerData['STR'],
+			$playerData['AGI'],
+			$playerData['VIT'],
+			$playerData['ENE'],
+			$playerData['CMD'],
+			$playerData['PK_KILLS'],
+			(check_value($playerData['GRSTS']) ? $playerData['GRSTS'] : 0),
 			$guild,
 			0,
 			check_value($playerMasterLevel) ? $playerMasterLevel : 0,

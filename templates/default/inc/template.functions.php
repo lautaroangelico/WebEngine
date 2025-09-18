@@ -84,7 +84,7 @@ function templateCastleSiegeWidget() {
 	if(!is_array($siegeData['castle_data'])) return;
 	
 	if($siegeData['castle_data'][_CLMN_MCD_OCCUPY_] == 1) {
-		$guildOwner = guildProfile($siegeData['castle_data'][_CLMN_MCD_GUILD_OWNER_]);
+		$guildOwner = guildProfile($siegeData['castle_data']['_CLMN_MCD_GUILD_OWNER_']);
 		$guildOwnerMark = $siegeData['castle_owner_alliance'][0][_CLMN_GUILD_LOGO_];
 		$guildMaster = playerProfile($siegeData['castle_owner_alliance'][0][_CLMN_GUILD_MASTER_]);
 	} else {

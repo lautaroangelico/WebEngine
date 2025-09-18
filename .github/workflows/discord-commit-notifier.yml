@@ -1,0 +1,390 @@
+name: Relatório Completo de Mudanças
+
+on:
+  push:
+    branches: [ '*' ]
+  pull_request:
+    branches: [ '*' ]
+
+jobs:
+  changes-report:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
+
+    - name: Obter informações do commit
+      id: commit-info
+      run: |
+        echo "commit-message=$(git log -1 --pretty=format:'%s')" >> $GITHUB_OUTPUT
+        echo "branch-name=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
+        echo "commit-hash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+        echo "commit-author=$(git log -1 --pretty=format:'%an')" >> $GITHUB_OUTPUT
+        echo "commit-date=$(git log -1 --pretty=format:'%ci')" >> $GITHUB_OUTPUT
+
+    - name: Analisar TODAS as mudanças
+      id: analyze
+      run: |
+        echo "## 📋 Relatório Completo de Mudanças" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**📝 Commit:** ${{ steps.commit-info.outputs.commit-message }}" >> $GITHUB_STEP_SUMMARY
+        echo "**👤 Autor:** ${{ steps.commit-info.outputs.commit-author }}" >> $GITHUB_STEP_SUMMARY
+        echo "**🌿 Branch:** ${{ steps.commit-info.outputs.branch-name }}" >> $GITHUB_STEP_SUMMARY
+        echo "**🔗 Hash:** \`${{ steps.commit-info.outputs.commit-hash }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "**📅 Data:** ${{ steps.commit-info.outputs.commit-date }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+        # Criar arquivos temporários para listas de arquivos
+        ADDED_FILE=$(mktemp)
+        MODIFIED_FILE=$(mktemp)
+        DELETED_FILE=$(mktemp)
+        RENAMED_FILE=$(mktemp)
+
+        # Limpar arquivos temporários
+        > "$ADDED_FILE"
+        > "$MODIFIED_FILE"
+        > "$DELETED_FILE"
+        > "$RENAMED_FILE"
+
+        # Obter TODOS os arquivos por status
+        git diff --name-status HEAD~1 HEAD | while IFS=$'\t' read -r status file1 file2; do
+          # Verificar se o arquivo deve ser ignorado
+          check_file="${file2:-$file1}"
+          if [ -n "$check_file" ] && git check-ignore -q "$check_file" 2>/dev/null; then
+            continue
+          fi
+
+          case "$status" in
+            A) echo "$file1" >> "$ADDED_FILE" ;;
+            M) echo "$file1" >> "$MODIFIED_FILE" ;;
+            D) echo "$file1" >> "$DELETED_FILE" ;;
+            R*) echo "$file1 → $file2" >> "$RENAMED_FILE" ;;
+            C*) echo "$file1 → $file2 (copy)" >> "$RENAMED_FILE" ;;
+          esac
+        done
+
+        # Contar arquivos (garantindo que sempre retorne um número único)
+        ADDED_COUNT=$(cat "$ADDED_FILE" | grep -c . 2>/dev/null || echo "0")
+        MODIFIED_COUNT=$(cat "$MODIFIED_FILE" | grep -c . 2>/dev/null || echo "0")
+        DELETED_COUNT=$(cat "$DELETED_FILE" | grep -c . 2>/dev/null || echo "0")
+        RENAMED_COUNT=$(cat "$RENAMED_FILE" | grep -c . 2>/dev/null || echo "0")
+        
+        # Garantir que os valores são números únicos (remove espaços e caracteres extras)
+        ADDED_COUNT=$(echo "$ADDED_COUNT" | tr -d ' \n\r' | grep -o '^[0-9]*' || echo "0")
+        MODIFIED_COUNT=$(echo "$MODIFIED_COUNT" | tr -d ' \n\r' | grep -o '^[0-9]*' || echo "0")
+        DELETED_COUNT=$(echo "$DELETED_COUNT" | tr -d ' \n\r' | grep -o '^[0-9]*' || echo "0")
+        RENAMED_COUNT=$(echo "$RENAMED_COUNT" | tr -d ' \n\r' | grep -o '^[0-9]*' || echo "0")
+        
+        # Garantir valores padrão se estiverem vazios
+        ADDED_COUNT=${ADDED_COUNT:-0}
+        MODIFIED_COUNT=${MODIFIED_COUNT:-0}
+        DELETED_COUNT=${DELETED_COUNT:-0}
+        RENAMED_COUNT=${RENAMED_COUNT:-0}
+        
+        TOTAL_COUNT=$((ADDED_COUNT + MODIFIED_COUNT + DELETED_COUNT + RENAMED_COUNT))
+
+        # Estatísticas para o Job Summary
+        echo "### 📊 Estatísticas Gerais" >> $GITHUB_STEP_SUMMARY
+        echo "| Status | Quantidade |" >> $GITHUB_STEP_SUMMARY
+        echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+        echo "| 🟢 **Adicionados** | **$ADDED_COUNT** |" >> $GITHUB_STEP_SUMMARY
+        echo "| 🟡 **Modificados** | **$MODIFIED_COUNT** |" >> $GITHUB_STEP_SUMMARY
+        echo "| 🔴 **Removidos** | **$DELETED_COUNT** |" >> $GITHUB_STEP_SUMMARY
+        echo "| 🔵 **Renomeados/Copiados** | **$RENAMED_COUNT** |" >> $GITHUB_STEP_SUMMARY
+        echo "| 📋 **TOTAL** | **$TOTAL_COUNT** |" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+        # Função para adicionar seções de arquivos ao Job Summary
+        add_summary_section() {
+          local title="$1"
+          local emoji="$2"
+          local count="$3"
+          local file_path="$4"
+          
+          if [ "$count" -gt 0 ]; then
+            echo "## $emoji $title ($count)" >> $GITHUB_STEP_SUMMARY
+            echo "<details><summary>🔍 Clique para ver os $count arquivos</summary>" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo '```diff' >> $GITHUB_STEP_SUMMARY
+            while IFS= read -r file; do
+              [ -n "$file" ] && echo "$emoji $file" >> $GITHUB_STEP_SUMMARY
+            done < "$file_path"
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "</details>" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+        }
+
+        add_summary_section "ARQUIVOS ADICIONADOS" "+" "$ADDED_COUNT" "$ADDED_FILE"
+        add_summary_section "ARQUIVOS MODIFICADOS" "~" "$MODIFIED_COUNT" "$MODIFIED_FILE"
+        add_summary_section "ARQUIVOS REMOVIDOS" "-" "$DELETED_COUNT" "$DELETED_FILE"
+        add_summary_section "ARQUIVOS RENOMEADOS/COPIADOS" ">" "$RENAMED_COUNT" "$RENAMED_FILE"
+        
+        # Salvar contagens para os próximos steps
+        echo "total-files=$TOTAL_COUNT" >> $GITHUB_OUTPUT
+        echo "added-count=$ADDED_COUNT" >> $GITHUB_OUTPUT
+        echo "modified-count=$MODIFIED_COUNT" >> $GITHUB_OUTPUT
+        echo "deleted-count=$DELETED_COUNT" >> $GITHUB_OUTPUT
+        echo "renamed-count=$RENAMED_COUNT" >> $GITHUB_OUTPUT
+        
+        # Salvar listas de arquivos usando delimitador EOF
+        echo "added-files<<EOF" >> $GITHUB_OUTPUT
+        cat "$ADDED_FILE" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
+        echo "modified-files<<EOF" >> $GITHUB_OUTPUT
+        cat "$MODIFIED_FILE" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
+        echo "deleted-files<<EOF" >> $GITHUB_OUTPUT
+        cat "$DELETED_FILE" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
+        echo "renamed-files<<EOF" >> $GITHUB_OUTPUT
+        cat "$RENAMED_FILE" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
+        # Limpar arquivos temporários
+        rm -f "$ADDED_FILE" "$MODIFIED_FILE" "$DELETED_FILE" "$RENAMED_FILE"
+
+    - name: Gerar patch completo
+      if: steps.analyze.outputs.total-files > 0 && steps.analyze.outputs.total-files != ''
+      run: |
+        mkdir -p patches
+        PATCH_FILE="patches/complete_changes_${{ steps.commit-info.outputs.commit-hash }}.patch"
+        git diff HEAD~1 HEAD > "$PATCH_FILE"
+        
+        if [ -s "$PATCH_FILE" ]; then
+          echo "### 📦 Patch Completo Gerado" >> $GITHUB_STEP_SUMMARY
+          echo "**📄 Arquivo:** \`$PATCH_FILE\`" >> $GITHUB_STEP_SUMMARY
+          echo "**📏 Tamanho:** $(du -h "$PATCH_FILE" | cut -f1)" >> $GITHUB_STEP_SUMMARY
+        fi
+
+    - name: Upload do patch
+      if: steps.analyze.outputs.total-files > 0 && steps.analyze.outputs.total-files != ''
+      uses: actions/upload-artifact@v4
+      with:
+        name: complete-patch-${{ steps.commit-info.outputs.commit-hash }}
+        path: patches/
+        retention-days: 30
+
+    - name: Notificar Discord
+      if: steps.analyze.outputs.total-files > 0 && steps.analyze.outputs.total-files != '' && env.DISCORD_WEBHOOK_URL != ''
+      env:
+        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      run: |
+        # Variáveis do commit
+        COMMIT_MESSAGE="${{ steps.commit-info.outputs.commit-message }}"
+        BRANCH_NAME="${{ steps.commit-info.outputs.branch-name }}"
+        COMMIT_HASH="${{ steps.commit-info.outputs.commit-hash }}"
+        COMMIT_AUTHOR="${{ steps.commit-info.outputs.commit-author }}"
+        REPO_NAME="${{ github.repository }}"
+        COMMIT_URL="https://github.com/${REPO_NAME}/commit/${COMMIT_HASH}"
+        
+        # Contadores - garantir que são números válidos
+        TOTAL_FILES="${{ steps.analyze.outputs.total-files }}"
+        ADDED="${{ steps.analyze.outputs.added-count }}"
+        MODIFIED="${{ steps.analyze.outputs.modified-count }}"
+        DELETED="${{ steps.analyze.outputs.deleted-count }}"
+        RENAMED="${{ steps.analyze.outputs.renamed-count }}"
+        
+        # Sanitizar contadores (remover espaços e garantir que são números)
+        TOTAL_FILES=$(echo "$TOTAL_FILES" | tr -d ' \n\r' | grep -o '^[0-9]*' || echo "0")
+        ADDED=$(echo "$ADDED" | tr -d ' \n\r' | grep -o '^[0-9]*' || echo "0")
+        MODIFIED=$(echo "$MODIFIED" | tr -d ' \n\r' | grep -o '^[0-9]*' || echo "0")
+        DELETED=$(echo "$DELETED" | tr -d ' \n\r' | grep -o '^[0-9]*' || echo "0")
+        RENAMED=$(echo "$RENAMED" | tr -d ' \n\r' | grep -o '^[0-9]*' || echo "0")
+        
+        # Garantir valores padrão
+        TOTAL_FILES=${TOTAL_FILES:-0}
+        ADDED=${ADDED:-0}
+        MODIFIED=${MODIFIED:-0}
+        DELETED=${DELETED:-0}
+        RENAMED=${RENAMED:-0}
+        
+        # Listas de arquivos
+        ADDED_FILES="${{ steps.analyze.outputs.added-files }}"
+        MODIFIED_FILES="${{ steps.analyze.outputs.modified-files }}"
+        DELETED_FILES="${{ steps.analyze.outputs.deleted-files }}"
+        RENAMED_FILES="${{ steps.analyze.outputs.renamed-files }}"
+        
+        # Determinar cor do embed baseada no impacto
+        if [ "$TOTAL_FILES" -le 5 ]; then
+          COLOR=3066993  # Verde
+        elif [ "$TOTAL_FILES" -le 15 ]; then
+          COLOR=15844367 # Amarelo
+        else
+          COLOR=15158332 # Vermelho
+        fi
+
+        # Criar preview de arquivos
+        FILE_PREVIEW=""
+        
+        # Adicionar arquivos modificados (máximo 10)
+        if [ "$MODIFIED" -gt 0 ]; then
+          COUNTER=0
+          echo "$MODIFIED_FILES" | while IFS= read -r file && [ $COUNTER -lt 10 ]; do
+            if [ -n "$file" ]; then
+              FILE_PREVIEW="${FILE_PREVIEW}🟡 \`${file}\`\\n"
+              COUNTER=$((COUNTER + 1))
+            fi
+          done
+        fi
+        
+        # Adicionar arquivos adicionados (máximo 10)
+        if [ "$ADDED" -gt 0 ]; then
+          COUNTER=0
+          echo "$ADDED_FILES" | while IFS= read -r file && [ $COUNTER -lt 10 ]; do
+            if [ -n "$file" ]; then
+              FILE_PREVIEW="${FILE_PREVIEW}🟢 \`${file}\`\\n"
+              COUNTER=$((COUNTER + 1))
+            fi
+          done
+        fi
+        
+        # Adicionar arquivos removidos (máximo 5)
+        if [ "$DELETED" -gt 0 ]; then
+          COUNTER=0
+          echo "$DELETED_FILES" | while IFS= read -r file && [ $COUNTER -lt 5 ]; do
+            if [ -n "$file" ]; then
+              FILE_PREVIEW="${FILE_PREVIEW}🔴 \`${file}\`\\n"
+              COUNTER=$((COUNTER + 1))
+            fi
+          done
+        fi
+        
+        # Adicionar arquivos renomeados (máximo 5)
+        if [ "$RENAMED" -gt 0 ]; then
+          COUNTER=0
+          echo "$RENAMED_FILES" | while IFS= read -r file && [ $COUNTER -lt 5 ]; do
+            if [ -n "$file" ]; then
+              FILE_PREVIEW="${FILE_PREVIEW}🔵 \`${file}\`\\n"
+              COUNTER=$((COUNTER + 1))
+            fi
+          done
+        fi
+        
+        # Verificar se há mais arquivos
+        TOTAL_SHOWN=$(($([ "$MODIFIED" -gt 10 ] && echo 10 || echo "$MODIFIED") + \
+                       $([ "$ADDED" -gt 10 ] && echo 10 || echo "$ADDED") + \
+                       $([ "$DELETED" -gt 5 ] && echo 5 || echo "$DELETED") + \
+                       $([ "$RENAMED" -gt 5 ] && echo 5 || echo "$RENAMED")))
+        
+        if [ "$TOTAL_FILES" -gt "$TOTAL_SHOWN" ]; then
+          FILE_PREVIEW="${FILE_PREVIEW}\\n*... e mais $((TOTAL_FILES - TOTAL_SHOWN)) arquivos*"
+        fi
+
+        # Limitar preview a 1000 caracteres
+        if [ ${#FILE_PREVIEW} -gt 1000 ]; then
+          FILE_PREVIEW="${FILE_PREVIEW:0:950}...\\n*Lista truncada*"
+        fi
+
+        # Criar descrição das estatísticas
+        STATS_DESC=""
+        [ "$ADDED" -gt 0 ] && STATS_DESC="${STATS_DESC}🟢 ${ADDED} adicionados • "
+        [ "$MODIFIED" -gt 0 ] && STATS_DESC="${STATS_DESC}🟡 ${MODIFIED} modificados • "
+        [ "$DELETED" -gt 0 ] && STATS_DESC="${STATS_DESC}🔴 ${DELETED} removidos • "
+        [ "$RENAMED" -gt 0 ] && STATS_DESC="${STATS_DESC}🔵 ${RENAMED} renomeados"
+        STATS_DESC="${STATS_DESC% • }"
+
+        # Truncar mensagem do commit se necessário
+        if [ ${#COMMIT_MESSAGE} -gt 80 ]; then
+          COMMIT_MSG_DISPLAY="${COMMIT_MESSAGE:0:77}..."
+        else
+          COMMIT_MSG_DISPLAY="$COMMIT_MESSAGE"
+        fi
+
+        # Criar payload do Discord usando printf para melhor controle
+        PAYLOAD=$(printf '{
+          "embeds": [{
+            "title": "📋 Mudanças no Código",
+            "description": "📂 `%s` • 🌿 `%s`\\n%s\\n\\n📋 **Total: %s arquivos alterados**",
+            "color": %s,
+            "fields": [
+              {
+                "name": "📝 Commit",
+                "value": "```%s```",
+                "inline": false
+              },
+              {
+                "name": "📄 Arquivos Alterados",
+                "value": "%s",
+                "inline": false
+              },
+              {
+                "name": "👤 Autor",
+                "value": "%s",
+                "inline": true
+              },
+              {
+                "name": "🔗 Hash",
+                "value": "[`%s`](%s)",
+                "inline": true
+              }
+            ],
+            "footer": {
+              "text": "💾 Patch completo nos artifacts • 📊 Relatório detalhado na Action"
+            },
+            "timestamp": "%s",
+            "url": "%s"
+          }]
+        }' "$REPO_NAME" "$BRANCH_NAME" "$STATS_DESC" "$TOTAL_FILES" \
+           "$COLOR" "$COMMIT_MSG_DISPLAY" "$FILE_PREVIEW" "$COMMIT_AUTHOR" \
+           "${COMMIT_HASH:0:7}" "$COMMIT_URL" "$(date -u +%Y-%m-%dT%H:%M:%S.000Z)" "$COMMIT_URL")
+
+        # Enviar para o Discord
+        curl -H "Content-Type: application/json" \
+             -X POST \
+             -d "$PAYLOAD" \
+             "$DISCORD_WEBHOOK_URL" \
+             || echo "Falha ao enviar notificação para o Discord"
+
+    - name: Comentar no PR
+      if: github.event_name == 'pull_request' && steps.analyze.outputs.total-files > 0 && steps.analyze.outputs.total-files != ''
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const { owner, repo } = context.repo;
+          const issue_number = context.issue.number;
+
+          const totalFiles = '${{ steps.analyze.outputs.total-files }}';
+          const added = '${{ steps.analyze.outputs.added-count }}';
+          const modified = '${{ steps.analyze.outputs.modified-count }}';
+          const deleted = '${{ steps.analyze.outputs.deleted-count }}';
+          const renamed = '${{ steps.analyze.outputs.renamed-count }}';
+          
+          const addedFiles = `${{ steps.analyze.outputs.added-files }}`;
+          const modifiedFiles = `${{ steps.analyze.outputs.modified-files }}`;
+          const deletedFiles = `${{ steps.analyze.outputs.deleted-files }}`;
+          const renamedFiles = `${{ steps.analyze.outputs.renamed-files }}`;
+          
+          const commitHash = '${{ steps.commit-info.outputs.commit-hash }}';
+          const commitMessage = `${{ steps.commit-info.outputs.commit-message }}`;
+          const author = '${{ steps.commit-info.outputs.commit-author }}';
+
+          function createFileSection(title, emoji, files, maxFiles = 50) {
+            const fileList = files.trim().split('\n').filter(Boolean);
+            if (fileList.length === 0) return '';
+            
+            let section = `<details><summary><strong>${emoji} ${title} (${fileList.length})</strong></summary>\n\n\`\`\`diff\n`;
+            
+            fileList.slice(0, maxFiles).forEach(file => {
+              section += `${emoji} ${file}\n`;
+            });
+            
+            if (fileList.length > maxFiles) {
+              section += `\n... e mais ${fileList.length - maxFiles} arquivos\n`;
+            }
+            
+            section += `\`\`\`\n</details>\n\n`;
+            return section;
+          }
+
+          const comment = `## 📋 Relatório de Mudanças do Commit
+
+          

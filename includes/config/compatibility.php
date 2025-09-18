@@ -17,18 +17,6 @@
  */
 
 $webengine['file_compatibility'] = array(
-	'igcn' => array(
-		'name' => 'IGCN',
-		'file' => 'igcn.tables.php',
-	),
-	'xteam' => array(
-		'name' => 'X-Team, MuEmu, Louis',
-		'file' => 'xteam.tables.php',
-	),
-	'custom' => array(
-		'name' => 'Custom (IGCN Based)',
-		'file' => 'custom.tables.php',
-	),
 	'ggcode' => array(
 		'name' => 'GGCode',
 		'file' => 'ggcode.tables.php',

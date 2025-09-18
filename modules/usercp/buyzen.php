@@ -64,7 +64,7 @@ try {
 			if(!is_array($characterData)) throw new Exception(lang('error_25',true));
 			
 			# check zen
-			$charZen = $characterData[_CLMN_CHR_ZEN_];
+			$charZen = $characterData["Money"];
 			if($charZen+$zen > $maxZen) throw new Exception(lang('error_55',true));
 			
 			# subtract credits
@@ -87,7 +87,7 @@ try {
 			$creditSystem->subtractCredits($_POST['credits']);
 
 			# send zen
-			if(!$db->query("UPDATE "._TBL_CHR_." SET "._CLMN_CHR_ZEN_." = "._CLMN_CHR_ZEN_." + ? WHERE "._CLMN_CHR_NAME_." = ?", array($zen, $characterData[_CLMN_CHR_NAME_])));
+			if(!$db->query("UPDATE Character SET Money = Money + ? WHERE Name = ?", array($zen, $characterData["Name"])));
 
 			message('success', lang('success_21',true));
 			message('info', number_format($zen) . lang('buyzen_txt_2',true) . $char);

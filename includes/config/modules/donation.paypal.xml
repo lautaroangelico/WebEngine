@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <settings>
-	<active>0</active>
+	<active>1</active>
 	<paypal_enable_sandbox>0</paypal_enable_sandbox>
 	<paypal_email>seller@gmail.com</paypal_email>
 	<paypal_title>Donation for WCoinC</paypal_title>

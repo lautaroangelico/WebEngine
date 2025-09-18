@@ -57,7 +57,7 @@ class Vote {
 		
 		$this->_accountInfo = $accountInfo;
 		$this->_userid = $userid;
-		$this->_username = $this->_accountInfo[_CLMN_USERNM_];
+		$this->_username = $this->_accountInfo['memb___id'];
 	}
 	
 	public function setVotesiteId($votesiteid) {
@@ -131,7 +131,7 @@ class Vote {
 		if(!check_value($this->_userid)) throw new Exception(lang('error_23', true));
 		if(!check_value($this->_votesideId)) throw new Exception(lang('error_23', true));
 		
-		$query = "SELECT * FROM ".WEBENGINE_VOTES." WHERE user_id = ? AND vote_site_id = ?";
+		$query = "SELECT * FROM WEBENGINE_VOTES WHERE user_id = ? AND vote_site_id = ?";
 		$check = $this->memuonline->query_fetch_single($query, array($this->_userid, $this->_votesideId));
 		
 		if(!is_array($check)) return true;
@@ -144,7 +144,7 @@ class Vote {
 		if(!check_value($this->_ip)) throw new Exception(lang('error_23', true));
 		if(!check_value($this->_votesideId)) throw new Exception(lang('error_23', true));
 		
-		$query = "SELECT * FROM ".WEBENGINE_VOTES." WHERE user_ip = ? AND vote_site_id = ?";
+		$query = "SELECT * FROM WEBENGINE_VOTES WHERE user_ip = ? AND vote_site_id = ?";
 		$check = $this->memuonline->query_fetch_single($query, array($this->_ip, $this->_votesideId));
 		
 		if(!is_array($check)) return true;
@@ -152,7 +152,6 @@ class Vote {
 			if($this->_removeRecord($check['id'])) return true;
 		}
 	}
-	
 	
 	private function _addRecord() {
 		if(!check_value($this->_userid)) throw new Exception(lang('error_23', true));
@@ -170,12 +169,12 @@ class Vote {
 			$timestamp
 		);
 		
-		$add = $this->memuonline->query("INSERT INTO ".WEBENGINE_VOTES." (user_id, user_ip, vote_site_id, timestamp) VALUES (?, ?, ?, ?)", $data);
+		$add = $this->memuonline->query("INSERT INTO WEBENGINE_VOTES (user_id, user_ip, vote_site_id, timestamp) VALUES (?, ?, ?, ?)", $data);
 		if(!$add) throw new Exception(lang('error_23', true));
 	}
 	
 	private function _removeRecord($id) {
-		$remove = $this->memuonline->query("DELETE FROM ".WEBENGINE_VOTES." WHERE id = ?", array($id));
+		$remove = $this->memuonline->query("DELETE FROM WEBENGINE_VOTES WHERE id = ?", array($id));
 		if($remove) return true;
 		return false;
 	}
@@ -187,7 +186,7 @@ class Vote {
 	
 	private function _siteExists($id) {
 		if(!check_value($id)) return;
-		$check = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_VOTE_SITES." WHERE votesite_id = ?", array($id));
+		$check = $this->memuonline->query_fetch_single("SELECT * FROM WEBENGINE_VOTE_SITES WHERE votesite_id = ?", array($id));
 		if(is_array($check)) return true;
 		return false;
 	}
@@ -202,25 +201,25 @@ class Vote {
 			time()
 		);
 		
-		$add_log = $this->memuonline->query("INSERT INTO ".WEBENGINE_VOTE_LOGS." (user_id,votesite_id,timestamp) VALUES (?,?,?)", $add_data);
+		$add_log = $this->memuonline->query("INSERT INTO WEBENGINE_VOTE_LOGS (user_id,votesite_id,timestamp) VALUES (?,?,?)", $add_data);
 		if(!$add_log) return false;
 		return true;
 	}
 	
 	public function addVotesite($title, $link, $reward, $time) {
-		$result = $this->memuonline->query("INSERT INTO ".WEBENGINE_VOTE_SITES." (votesite_title,votesite_link,votesite_reward,votesite_time) VALUES (?,?,?,?)", array($title,$link,$reward,$time));
+		$result = $this->memuonline->query("INSERT INTO WEBENGINE_VOTE_SITES (votesite_title,votesite_link,votesite_reward,votesite_time) VALUES (?,?,?,?)", array($title,$link,$reward,$time));
 		if($result) return true;
 	}
 	
 	public function deleteVotesite($id) {
 		if(!$this->_siteExists($id)) return;
-		$result = $this->memuonline->query("DELETE FROM ".WEBENGINE_VOTE_SITES." WHERE votesite_id = ?", array($id));
+		$result = $this->memuonline->query("DELETE FROM WEBENGINE_VOTE_SITES WHERE votesite_id = ?", array($id));
 		if($result) return $result;
 	}
 	
 	public function retrieveVotesites($id=null) {
-		if(check_value($id)) return $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_VOTE_SITES." WHERE votesite_id = ?", array($id));
-		return $this->memuonline->query_fetch("SELECT * FROM ".WEBENGINE_VOTE_SITES." ORDER BY votesite_id ASC");
+		if(check_value($id)) return $this->memuonline->query_fetch_single("SELECT * FROM WEBENGINE_VOTE_SITES WHERE votesite_id = ?", array($id));
+		return $this->memuonline->query_fetch("SELECT * FROM WEBENGINE_VOTE_SITES ORDER BY votesite_id ASC");
 	}
 
 }

@@ -49,19 +49,19 @@ try {
 		
 		foreach($AccountCharacters as $thisCharacter) {
 			$characterData = $Character->CharacterData($thisCharacter);
-			$characterIMG = $Character->GenerateCharacterClassAvatar($characterData[_CLMN_CHR_CLASS_]);
+			$characterIMG = $Character->GenerateCharacterClassAvatar($characterData["Class"]);
 			
 			echo '<form action="" method="post">';
-				echo '<input type="hidden" name="character" value="'.$characterData[_CLMN_CHR_NAME_].'"/>';
+				echo '<input type="hidden" name="character" value="'.$characterData["Name"].'"/>';
 				echo '<tr>';
-					echo '<td>'.$characterIMG.'</td>';
-					echo '<td>'.$characterData[_CLMN_CHR_NAME_].'</td>';
-					echo '<td>'.$characterData[_CLMN_CHR_LVL_].'</td>';
-					echo '<td>'.number_format($characterData[_CLMN_CHR_STAT_STR_]).'</td>';
-					echo '<td>'.number_format($characterData[_CLMN_CHR_STAT_AGI_]).'</td>';
-					echo '<td>'.number_format($characterData[_CLMN_CHR_STAT_VIT_]).'</td>';
-					echo '<td>'.number_format($characterData[_CLMN_CHR_STAT_ENE_]).'</td>';
-					echo '<td>'.number_format($characterData[_CLMN_CHR_STAT_CMD_]).'</td>';
+					echo '<td>'.$characterIMG.'</td>';		
+					echo '<td>'.$characterData["Name"].'</td>';
+					echo '<td>'.$characterData["cLevel"].'</td>';
+					echo '<td>'.number_format($characterData["Strength"]).'</td>';
+					echo '<td>'.number_format($characterData["Dexterity"]).'</td>';
+					echo '<td>'.number_format($characterData["Vitality"]).'</td>';
+					echo '<td>'.number_format($characterData["Energy"]).'</td>';
+					echo '<td>'.number_format($characterData["Leadership"]).'</td>';
 					echo '<td><button name="submit" value="submit" class="btn btn-primary">'.lang('resetstats_txt_8',true).'</button></td>';
 				echo '</tr>';
 			echo '</form>';

@@ -26,7 +26,7 @@
 			$searchdb = (config('SQL_USE_2_DB', true) == true ? $dB2 : $dB);
 			
 			$searchRequest = '%'.$_POST['search_request'].'%';
-			$searchResults = $searchdb->query_fetch("SELECT "._CLMN_MEMBID_.", "._CLMN_USERNM_." FROM "._TBL_MI_." WHERE "._CLMN_USERNM_." LIKE ?", array($searchRequest));
+			$searchResults = $searchdb->query_fetch("SELECT memb_guid, memb___id FROM MEMB_INFO WHERE memb___id LIKE ?", array($searchRequest));
 			if(!$searchResults) throw new Exception("No results found.");
 			
 			if(is_array($searchResults)) {
@@ -41,9 +41,9 @@
 					echo '<tbody>';
 				foreach($searchResults as $account) {
 					echo '<tr>';
-						echo '<td>'.$account[_CLMN_USERNM_].'</td>';
+						echo '<td>'.$account['memb___id'].'</td>';
 						echo '<td style="text-align:right;">';
-							echo '<a href="'.admincp_base("accountinfo&id=".$account[_CLMN_MEMBID_]).'" class="btn btn-xs btn-default">Account Information</a>';
+							echo '<a href="'.admincp_base("accountinfo&id=".$account['memb_guid']).'" class="btn btn-xs btn-default">Account Information</a>';
 						echo '</td>';
 					echo '</tr>';
 				}

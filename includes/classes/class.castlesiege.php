@@ -339,18 +339,18 @@ class CastleSiege {
 	}
 	
 	protected function _returnCastleData() {
-		$result = $this->db->query_fetch_single("SELECT * FROM "._TBL_MUCASTLE_DATA_."");
+		$result = $this->db->query_fetch_single("SELECT * FROM MuCastle_DATA");
 		if(!is_array($result)) return;
 		return $result;
 	}
 	
 	protected function _returnCastleOwnerAlliance() {
-		$castleData = $this->getCastleData();
-		$castleOwnerData = $this->_getGuildData($castleData[_CLMN_MCD_GUILD_OWNER_]);
+		$castleData = $this->getCastleData();	
+		$castleOwnerData = $this->_getGuildData($castleData['GUILD_OWNER']);
 		if(!is_array($castleOwnerData)) return;
-		$castleOwnerData['member_count'] = $this->_getGuildMemberCount($castleData[_CLMN_MCD_GUILD_OWNER_]);
+		$castleOwnerData['member_count'] = $this->_getGuildMemberCount($castleData['GUILD_OWNER']);
 		$result[] = $castleOwnerData;
-		$alliedGuilds = $this->_getAlliedGuilds($castleData[_CLMN_MCD_GUILD_OWNER_]);
+		$alliedGuilds = $this->_getAlliedGuilds($castleData['GUILD_OWNER']);
 		if(is_array($alliedGuilds)) {
 			foreach($alliedGuilds as $alliedGuild) {
 				$result[] = $alliedGuild;
@@ -360,18 +360,18 @@ class CastleSiege {
 	}
 	
 	protected function _getGuildMemberCount($guild) {
-		$guildMembers = $this->db->query_fetch_single("SELECT COUNT(*) AS result FROM "._TBL_GUILDMEMB_." WHERE "._CLMN_GUILDMEMB_NAME_." = ?", array($guild));
+		$guildMembers = $this->db->query_fetch_single("SELECT COUNT(*) AS result FROM GuildMember WHERE Name = ?", array($guild));
 		if(!is_array($guildMembers)) return 1;
 		return $guildMembers['result'];
 	}
 	
 	protected function _getAlliedGuilds($guild) {
-		$alliedGuilds = $this->db->query_fetch("SELECT * FROM "._TBL_MUCASTLE_SGL_." WHERE "._CLMN_MCSGL_GID_." = (SELECT "._CLMN_MCSGL_GID_." FROM "._TBL_MUCASTLE_SGL_." WHERE "._CLMN_MCSGL_GNAME_." = :guild) AND "._CLMN_MCSGL_GNAME_." != :guild", array('guild' => $guild));
+		$alliedGuilds = $this->db->query_fetch("SELECT * FROM MuCastle_SIEGE_GUILDLIST WHERE GUILD_ID = (SELECT GUILD_ID FROM MuCastle_SIEGE_GUILDLIST WHERE GUILD_NAME = :guild) AND GUILD_NAME != :guild", array('guild' => $guild));
 		if(!is_array($alliedGuilds)) return;
 		foreach($alliedGuilds as $alliedGuild) {
-			$alliedGuildData = $this->_getGuildData($alliedGuild[_CLMN_MCSGL_GNAME_]);
+			$alliedGuildData = $this->_getGuildData($alliedGuild['GUILD_NAME']);
 			if(!is_array($alliedGuildData)) continue;
-			$alliedGuildData['member_count'] = $this->_getGuildMemberCount($alliedGuild[_CLMN_MCSGL_GNAME_]);
+			$alliedGuildData['member_count'] = $this->_getGuildMemberCount($alliedGuild['GUILD_NAME']);
 			$result[] = $alliedGuildData;
 		}
 		if(!is_array($result)) return;
@@ -379,19 +379,19 @@ class CastleSiege {
 	}
 	
 	protected function _getGuildData($guild) {
-		$result = $this->db->query_fetch_single("SELECT *, CONVERT(varchar(max), "._CLMN_GUILD_LOGO_.", 2) as "._CLMN_GUILD_LOGO_." FROM "._TBL_GUILD_." WHERE "._CLMN_GUILD_NAME_." = ?", array($guild));
+		$result = $this->db->query_fetch_single("SELECT *, CONVERT(varchar(max), G_Mark, 2) as G_Mark FROM Guild WHERE G_Name = ?", array($guild));
 		if(!is_array($result)) return;
 		return $result;
 	}
 	
 	protected function _returnRegisteredGuildsAndAlliances() {
-		$registeredGuilds = $this->db->query_fetch("SELECT * FROM "._TBL_MUCASTLE_RS_." ORDER BY "._CLMN_MCRS_SEQNUM_." ASC");
+		$registeredGuilds = $this->db->query_fetch("SELECT * FROM MuCastle_REG_SIEGE ORDER BY SEQ_NUM ASC");
 		if(!is_array($registeredGuilds)) return;
 		foreach($registeredGuilds as $registeredGuild) {
-			$guildData = $this->_getGuildData($registeredGuild[_CLMN_MCRS_GUILD_]);
-			$guildData['member_count'] = $this->_getGuildMemberCount($registeredGuild[_CLMN_MCRS_GUILD_]);
+			$guildData = $this->_getGuildData($registeredGuild['REG_SIEGE_GUILD']);
+			$guildData['member_count'] = $this->_getGuildMemberCount($registeredGuild['REG_SIEGE_GUILD']);
 			$result[] = $guildData;
-			$alliedGuilds = $this->_getAlliedGuilds($registeredGuild[_CLMN_MCRS_GUILD_]);
+			$alliedGuilds = $this->_getAlliedGuilds($registeredGuild['REG_SIEGE_GUILD']);
 			if(is_array($alliedGuilds)) {
 				foreach($alliedGuilds as $alliedGuild) {
 					$result[] = $alliedGuild;

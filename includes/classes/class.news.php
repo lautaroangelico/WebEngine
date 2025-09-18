@@ -75,7 +75,7 @@ class News {
 					);
 					
 					// add news
-					$add_news = $this->db->query("INSERT INTO ".WEBENGINE_NEWS." (news_title,news_author,news_date,news_content,allow_comments) VALUES (?,?,?,?,?)", $news_data);
+					$add_news = $this->db->query("INSERT INTO WEBENGINE_NEWS (news_title,news_author,news_date,news_content,allow_comments) VALUES (?,?,?,?,?)", $news_data);
 					
 					if($add_news) {
 						// success message
@@ -99,7 +99,7 @@ class News {
 		$this->db = Connection::Database('Me_MuOnline');
 		if(Validator::Number($id)) {
 			if($this->newsIdExists($id)) {
-				$remove = $this->db->query("DELETE FROM ".WEBENGINE_NEWS." WHERE news_id = ?", array($id));
+				$remove = $this->db->query("DELETE FROM WEBENGINE_NEWS WHERE news_id = ?", array($id));
 				if($remove) {
 					
 					$this->setId($id);
@@ -130,7 +130,7 @@ class News {
 					$comments,
 					$id
 				);
-				$query = $this->db->query("UPDATE ".WEBENGINE_NEWS." SET news_title = ?, news_content = ?, news_author = ?, news_date = ?, allow_comments = ? WHERE news_id = ?", $editData);
+				$query = $this->db->query("UPDATE WEBENGINE_NEWS SET news_title = ?, news_content = ?, news_author = ?, news_date = ?, allow_comments = ? WHERE news_id = ?", $editData);
 				if($query) {
 					message('success', 'News successfully edited.');
 				} else {
@@ -166,7 +166,7 @@ class News {
 	
 	function retrieveNews() {
 		$this->db = Connection::Database('Me_MuOnline');
-		$news = $this->db->query_fetch("SELECT * FROM ".WEBENGINE_NEWS." ORDER BY news_id DESC");
+		$news = $this->db->query_fetch("SELECT * FROM WEBENGINE_NEWS ORDER BY news_id DESC");
 		if(is_array($news)) {
 			
 			foreach($news as $id => $data) {
@@ -234,7 +234,7 @@ class News {
 	
 	function retrieveNewsDataForCache() {
 		$this->db = Connection::Database('Me_MuOnline');
-		$news = $this->db->query_fetch("SELECT news_id,news_title,news_author,news_date,allow_comments,news_content FROM ".WEBENGINE_NEWS." ORDER BY news_id DESC");
+		$news = $this->db->query_fetch("SELECT news_id,news_title,news_author,news_date,allow_comments,news_content FROM WEBENGINE_NEWS ORDER BY news_id DESC");
 		if(is_array($news)) {
 			return $news;
 		} else {
@@ -313,7 +313,7 @@ class News {
 	function loadNewsData($id) {
 		$this->db = Connection::Database('Me_MuOnline');
 		if(check_value($id) && $this->newsIdExists($id)) {
-			$query = $this->db->query_fetch_single("SELECT * FROM ".WEBENGINE_NEWS." WHERE news_id = ?", array($id));
+			$query = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_NEWS WHERE news_id = ?", array($id));
 			if($query && is_array($query)) {
 				
 				$query['news_title'] = base64_decode($query['news_title']);
@@ -327,7 +327,7 @@ class News {
 	public function getNewsTranslations() {
 		$this->db = Connection::Database('Me_MuOnline');
 		if(!check_value($this->_id)) return;
-		$newsTranslations = $this->db->query_fetch("SELECT * FROM ".WEBENGINE_NEWS_TRANSLATIONS." WHERE news_id = ?", array($this->_id));
+		$newsTranslations = $this->db->query_fetch("SELECT * FROM WEBENGINE_NEWS_TRANSLATIONS WHERE news_id = ?", array($this->_id));
 		if(!is_array($newsTranslations)) return;
 		foreach($newsTranslations as $translation) {
 			$result[] = $translation['news_language'];
@@ -349,7 +349,7 @@ class News {
 			if(in_array($this->_language, $newsTranslations)) throw new Exception('A translation for this language already exists, please use the edit news translation module.');
 		}
 		
-		$result = $this->db->query("INSERT INTO ".WEBENGINE_NEWS_TRANSLATIONS." (news_id, news_language, news_title, news_content) VALUES (?, ?, ?, ?)", array($this->_id, $this->_language, base64_encode($this->_title), base64_encode($this->_content)));
+		$result = $this->db->query("INSERT INTO WEBENGINE_NEWS_TRANSLATIONS (news_id, news_language, news_title, news_content) VALUES (?, ?, ?, ?)", array($this->_id, $this->_language, base64_encode($this->_title), base64_encode($this->_content)));
 		if(!$result) throw new Exception('Could not add the news translation.');
 		
 		$newsTranslationFile = __PATH_NEWS_TRANSLATIONS_CACHE__.'news_'.$this->_id.'_'.$this->_language.'.cache';
@@ -374,7 +374,7 @@ class News {
 		if(!check_value($this->_title)) throw new Exception('The provided news title is not valid.');
 		if(!check_value($this->_content)) throw new Exception('The provided news content is not valid.');
 		
-		$result = $this->db->query("UPDATE ".WEBENGINE_NEWS_TRANSLATIONS." SET news_title = ?, news_content = ? WHERE news_id = ? AND news_language = ?", array(base64_encode($this->_title), base64_encode($this->_content), $this->_id, $this->_language));
+		$result = $this->db->query("UPDATE WEBENGINE_NEWS_TRANSLATIONS SET news_title = ?, news_content = ? WHERE news_id = ? AND news_language = ?", array(base64_encode($this->_title), base64_encode($this->_content), $this->_id, $this->_language));
 		if(!$result) throw new Exception('Could not update the news translation.');
 		
 		$newsTranslationFile = __PATH_NEWS_TRANSLATIONS_CACHE__.'news_'.$this->_id.'_'.$this->_language.'.cache';
@@ -396,7 +396,7 @@ class News {
 		if(!check_value($this->_id)) throw new Exception('The provided news id is not valid.');
 		if(!check_value($this->_language)) throw new Exception('The provided news language is not valid.');
 		
-		$result = $this->db->query("DELETE FROM ".WEBENGINE_NEWS_TRANSLATIONS." WHERE news_id = ? AND news_language = ?", array($this->_id, $this->_language));
+		$result = $this->db->query("DELETE FROM WEBENGINE_NEWS_TRANSLATIONS WHERE news_id = ? AND news_language = ?", array($this->_id, $this->_language));
 		if(!$result) throw new Exception('Could not delete news translation.');
 		
 		$newsTranslationFile = __PATH_NEWS_TRANSLATIONS_CACHE__.'news_'.$this->_id.'_'.$this->_language.'.cache';
@@ -415,7 +415,7 @@ class News {
 		$this->db = Connection::Database('Me_MuOnline');
 		if(!check_value($this->_id)) return;
 		if(!check_value($this->_language)) return;
-		$result = $this->db->query_fetch_single("SELECT * FROM ".WEBENGINE_NEWS_TRANSLATIONS." WHERE news_id = ? AND news_language = ?", array($this->_id, $this->_language));
+		$result = $this->db->query_fetch_single("SELECT * FROM WEBENGINE_NEWS_TRANSLATIONS WHERE news_id = ? AND news_language = ?", array($this->_id, $this->_language));
 		if(!is_array($result)) return;
 		return $result;
 	}
@@ -436,7 +436,7 @@ class News {
 	public function getNewsTranslationsDataList() {
 		$this->db = Connection::Database('Me_MuOnline');
 		if(!check_value($this->_id)) return;
-		$result = $this->db->query_fetch("SELECT * FROM ".WEBENGINE_NEWS_TRANSLATIONS." WHERE news_id = ?", array($this->_id));
+		$result = $this->db->query_fetch("SELECT * FROM WEBENGINE_NEWS_TRANSLATIONS WHERE news_id = ?", array($this->_id));
 		if(!is_array($result)) return;
 		return $result;
 	}

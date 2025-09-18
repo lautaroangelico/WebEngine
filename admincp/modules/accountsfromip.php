@@ -32,7 +32,7 @@ if(isset($_POST['ip_address'])) {
 				echo '<div class="panel-body">';
 					
 					$searchdb = (config('SQL_USE_2_DB', true) == true ? $dB2 : $dB);
-					$membStatData = $searchdb->query_fetch("SELECT "._CLMN_MS_MEMBID_." FROM "._TBL_MS_." WHERE "._CLMN_MS_IP_." = ? GROUP BY "._CLMN_MS_MEMBID_."", array($_POST['ip_address']));
+					$membStatData = $searchdb->query_fetch("SELECT "._CLMN_MS_MEMBID_." FROM ".'MEMB_STAT'." WHERE "._CLMN_MS_IP_." = ? GROUP BY "._CLMN_MS_MEMBID_."", array($_POST['ip_address']));
 					if(is_array($membStatData)) {
 						echo '<table class="table table-no-border table-hover">';
 							foreach($membStatData as $membStatUser) {

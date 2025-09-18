@@ -26,7 +26,7 @@
 			$searchdb = $dB;
 			
 			$searchRequest = '%'.$_POST['search_request'].'%';
-			$searchResults = $searchdb->query_fetch("SELECT TOP 10 "._CLMN_CHR_NAME_.", "._CLMN_CHR_ACCID_." FROM "._TBL_CHR_." WHERE Name LIKE ?", array($searchRequest));
+			$searchResults = $searchdb->query_fetch("SELECT TOP 10 Name, AccountID FROM Character WHERE Name LIKE ?", array($searchRequest));
 			if(!$searchResults) throw new Exception("No results found.");
 			
 			if(is_array($searchResults)) {
@@ -41,10 +41,10 @@
 					echo '<tbody>';
 				foreach($searchResults as $character) {
 					echo '<tr>';
-						echo '<td>'.$character[_CLMN_CHR_NAME_].'</td>';
+						echo '<td>'.$character["Name"].'</td>';
 						echo '<td style="text-align:right;">';
-							echo '<a href="'.admincp_base("accountinfo&id=".$common->retrieveUserID($character[_CLMN_CHR_ACCID_])).'" class="btn btn-xs btn-default">Account Information</a> ';
-							echo '<a href="'.admincp_base("editcharacter&name=".$character[_CLMN_CHR_NAME_]).'" class="btn btn-xs btn-warning">Edit Character</a>';
+							echo '<a href="'.admincp_base("accountinfo&id=".$common->retrieveUserID($character["AccountID"])).'" class="btn btn-xs btn-default">Account Information</a> ';
+							echo '<a href="'.admincp_base("editcharacter&name=".$character["Name"]).'" class="btn btn-xs btn-warning">Edit Character</a>';
 						echo '</td>';
 					echo '</tr>';
 				}

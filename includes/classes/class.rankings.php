@@ -147,7 +147,7 @@ class Rankings {
 	private function _grandresetsRanking() {
 		$this->mu = Connection::Database('MuOnline');
 		
-		$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.", "._CLMN_CHR_GRSTS_.", "._CLMN_CHR_RSTS_.", "._CLMN_CHR_CLASS_.", "._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_GRSTS_." >= 1 AND "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_GRSTS_." DESC, "._CLMN_CHR_RSTS_." DESC");
+		$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." Name, MasterResetCount, ResetCount, Class, MapNumber FROM Character WHERE MasterResetCount >= 1 AND Name NOT IN(".$this->_rankingsExcludeChars().") ORDER BY MasterResetCount DESC, ResetCount DESC");
 		if(!is_array($result)) return;
 
 		$cache = BuildCacheData($result);
@@ -159,13 +159,20 @@ class Rankings {
 		
 		switch(mconfig('guild_score_formula')) {
 			case 2:
-				$result = $this->mu->query_fetch("SELECT "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_.", (SELECT "._CLMN_GUILD_MASTER_." FROM "._TBL_GUILD_." WHERE "._CLMN_GUILD_NAME_." = "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_.") as "._CLMN_GUILD_MASTER_.", SUM("._TBL_CHR_."."._CLMN_CHR_STAT_STR_."+"._TBL_CHR_."."._CLMN_CHR_STAT_AGI_."+"._TBL_CHR_."."._CLMN_CHR_STAT_VIT_."+"._TBL_CHR_."."._CLMN_CHR_STAT_ENE_."+"._TBL_CHR_."."._CLMN_CHR_STAT_CMD_.") as "._CLMN_GUILD_SCORE_.", (SELECT CONVERT(varchar(max), "._CLMN_GUILD_LOGO_.", 2) FROM "._TBL_GUILD_." WHERE "._CLMN_GUILD_NAME_." = "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_.") as "._CLMN_GUILD_LOGO_." FROM "._TBL_GUILDMEMB_." INNER JOIN "._TBL_CHR_." ON "._TBL_CHR_."."._CLMN_CHR_NAME_." = "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_CHAR_." INNER JOIN "._TBL_GUILD_." ON "._TBL_GUILD_."."._CLMN_GUILD_NAME_." = "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_." WHERE "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_." NOT IN(".$this->_rankingsExcludeGuilds().") GROUP BY "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_." ORDER BY "._CLMN_GUILD_SCORE_." DESC");
+				$result = $this->mu->query_fetch("SELECT GuildMember.G_Name, (SELECT G_Master FROM Guild WHERE G_Name = GuildMember.G_Name) as G_Master, SUM(Character.STR+Character.AGI+Character.VIT+Character.ENE+Character.CMD) as G_Score, (SELECT CONVERT(varchar(max), G_Mark, 2) FROM Guild WHERE G_Name = GuildMember.G_Name) as G_Mark FROM GuildMember INNER JOIN Character ON Character.Name = GuildMember.Name INNER JOIN Guild ON Guild.G_Name = GuildMember.G_Name WHERE GuildMember.G_Name NOT IN(".$this->_rankingsExcludeGuilds().") GROUP BY GuildMember.G_Name ORDER BY G_Score DESC");
 				break;
 			case 3:
-				$result = $this->mu->query_fetch("SELECT "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_.", (SELECT "._CLMN_GUILD_MASTER_." FROM "._TBL_GUILD_." WHERE "._CLMN_GUILD_NAME_." = "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_.") as "._CLMN_GUILD_MASTER_.", SUM("._TBL_CHR_."."._CLMN_CHR_STAT_STR_."+"._TBL_CHR_."."._CLMN_CHR_STAT_AGI_."+"._TBL_CHR_."."._CLMN_CHR_STAT_VIT_."+"._TBL_CHR_."."._CLMN_CHR_STAT_ENE_.") as "._CLMN_GUILD_SCORE_.", (SELECT CONVERT(varchar(max), "._CLMN_GUILD_LOGO_.", 2) FROM "._TBL_GUILD_." WHERE "._CLMN_GUILD_NAME_." = "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_.") as "._CLMN_GUILD_LOGO_." FROM "._TBL_GUILDMEMB_." INNER JOIN "._TBL_CHR_." ON "._TBL_CHR_."."._CLMN_CHR_NAME_." = "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_CHAR_." INNER JOIN "._TBL_GUILD_." ON "._TBL_GUILD_."."._CLMN_GUILD_NAME_." = "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_." WHERE "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_." NOT IN(".$this->_rankingsExcludeGuilds().") GROUP BY "._TBL_GUILDMEMB_."."._CLMN_GUILDMEMB_NAME_." ORDER BY "._CLMN_GUILD_SCORE_." DESC");
+				$result = $this->mu->query_fetch("SELECT GuildMember.G_Name, (SELECT G_Master FROM Guild WHERE G_Name = GuildMember.G_Name) as G_Master, SUM(Character.STR+Character.AGI+Character.VIT+Character.ENE+Character.CMD) as G_Score, (SELECT CONVERT(varchar(max), G_Mark, 2) FROM Guild WHERE G_Name = GuildMember.G_Name) as G_Mark FROM GuildMember INNER JOIN Character ON Character.Name = GuildMember.Name INNER JOIN Guild ON Guild.G_Name = GuildMember.G_Name WHERE GuildMember.G_Name NOT IN(".$this->_rankingsExcludeGuilds().") GROUP BY GuildMember.G_Name ORDER BY G_Score DESC");
 				break;
 			default:
-				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_GUILD_NAME_.","._CLMN_GUILD_MASTER_.","._CLMN_GUILD_SCORE_.",CONVERT(varchar(max), "._CLMN_GUILD_LOGO_.", 2) as "._CLMN_GUILD_LOGO_." FROM "._TBL_GUILD_." WHERE G_Name NOT IN(".$this->_rankingsExcludeGuilds().") ORDER BY "._CLMN_GUILD_SCORE_." DESC");
+				$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." 
+				G_Name,
+				G_Master,
+				G_Master, 
+				G_Score,
+				CONVERT(varchar(max), G_Mark, 2) as G_Mark
+				FROM ".'Guild'." 
+				WHERE G_Name NOT IN(".$this->_rankingsExcludeGuilds().") ORDER BY G_Score DESC");
 		}
 		
 		if(!is_array($result)) return;
@@ -177,12 +184,12 @@ class Rankings {
 	private function _masterlevelRanking() {
 		$this->mu = Connection::Database('MuOnline');
 		
-		if(_TBL_CHR_ == _TBL_MASTERLVL_) {
+		if('Character' == 'MasterSkillTree') {
 			// Master Level and Character in same table
-			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.", "._CLMN_ML_LVL_.", "._CLMN_CHR_CLASS_.", "._CLMN_CHR_LVL_.", "._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND "._CLMN_ML_LVL_." > 0 ORDER BY "._CLMN_ML_LVL_." DESC");
+			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." Name, MasterLevel, Class, cLevel, MapNumber FROM Character WHERE Name NOT IN(".$this->_rankingsExcludeChars().") AND "."MasterLevel"." > 0 ORDER BY "."MasterLevel"." DESC");
 		} else {
 			// Master Level in separate table
-			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." t1."._CLMN_ML_NAME_.", t1."._CLMN_ML_LVL_.", t2."._CLMN_CHR_CLASS_.", t2."._CLMN_CHR_LVL_.", t2."._CLMN_CHR_MAP_." FROM "._TBL_MASTERLVL_." AS t1 INNER JOIN "._TBL_CHR_." AS t2 ON t1."._CLMN_ML_NAME_." = t2."._CLMN_CHR_NAME_." WHERE t1."._CLMN_ML_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND t1."._CLMN_ML_LVL_." > 0 ORDER BY t1."._CLMN_ML_LVL_." DESC, t2."._CLMN_CHR_LVL_." DESC");
+			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." t1.Name,t1.MasterLevel, t2.Class, t2.cLevel, t2.MapNumber FROM MasterSkillTree AS t1 INNER JOIN Character AS t2 ON t1.Name = t2.Name WHERE t1.Name NOT IN(".$this->_rankingsExcludeChars().") AND t1.MasterLevel > 0 ORDER BY t1.MasterLevel DESC, t2.cLevel DESC");
 		}
 		if(!is_array($result)) return;
 
@@ -214,7 +221,7 @@ class Rankings {
 		
 		$voteMonth = date("m/01/Y 00:00");
 		$voteMonthTimestamp = strtotime($voteMonth);
-		$accounts = $this->me->query_fetch("SELECT TOP ".$this->_results." user_id,COUNT(*) as count FROM ".WEBENGINE_VOTE_LOGS." WHERE timestamp >= ? GROUP BY user_id ORDER BY count DESC", array($voteMonthTimestamp));
+		$accounts = $this->me->query_fetch("SELECT TOP ".$this->_results." user_id,COUNT(*) as count FROM WEBENGINE_VOTE_LOGS WHERE timestamp >= ? GROUP BY user_id ORDER BY count DESC", array($voteMonthTimestamp));
 		if(!is_array($accounts)) return;
 		
 		foreach($accounts as $data) {
@@ -224,7 +231,7 @@ class Rankings {
 			if(!is_array($accountInfo)) continue;
 			
 			$Character = new Character();
-			$characterName = $Character->AccountCharacterIDC($accountInfo[_CLMN_USERNM_]);
+			$characterName = $Character->AccountCharacterIDC($accountInfo['memb___id']);
 			if(!check_value($characterName)) continue;
 			
 			$characterData = $Character->CharacterData($characterName);
@@ -232,7 +239,7 @@ class Rankings {
 			
 			if(in_array($characterName, $this->_excludedCharacters)) continue;
 			
-			$result[] = array($characterName, $data['count'], $characterData[_CLMN_CHR_CLASS_], $characterData[_CLMN_CHR_MAP_]);
+			$result[] = array($characterName, $data['count'], $characterData['Class'], $characterData['MapNumber']);
 		}
 		if(!is_array($result)) return;
 		$cache = BuildCacheData($result);
@@ -296,23 +303,23 @@ class Rankings {
 	private function _generateGensRankingData($influence=1) {
 		$this->mu = Connection::Database('MuOnline');
 		
-		$result = $this->mu->query_fetch("SELECT t1."._CLMN_GENS_NAME_.", t1."._CLMN_GENS_TYPE_.", t1."._CLMN_GENS_POINT_.", t2."._CLMN_CHR_LVL_.", t2."._CLMN_CHR_CLASS_.", t2."._CLMN_CHR_MAP_." FROM "._TBL_GENS_." as t1 INNER JOIN "._TBL_CHR_." as t2 ON t1."._CLMN_GENS_NAME_." = t2."._CLMN_CHR_NAME_." WHERE t1."._CLMN_GENS_TYPE_." = ? AND t1."._CLMN_GENS_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY t1."._CLMN_GENS_POINT_." DESC", array($influence));
+		$result = $this->mu->query_fetch("SELECT t1.Name, t1.Family, t1.Contribution, t2.cLevel, t2.Class, t2.MapNumber FROM Gens_Rank as t1 INNER JOIN Character as t2 ON t1.Name = t2.Name WHERE t1.Family = ? AND t1.Name NOT IN(".$this->_rankingsExcludeChars().") ORDER BY t1.Contribution DESC", array($influence));
 		if(!is_array($result)) return;
 		
 		foreach($result as $rankPos => $row) {
-			$gensRank = getGensRank($row[_CLMN_GENS_POINT_]);
-			if($row[_CLMN_GENS_POINT_] >= 10000) {
+			$gensRank = getGensRank($row['Contribution']);
+			if($row['Contribution'] >= 10000) {
 				$gensRank = getGensLeadershipRank($rankPos);
 			}
 			
 			$rankingData[] = array(
-				'name' => $row[_CLMN_GENS_NAME_],
-				'influence' => $row[_CLMN_GENS_TYPE_],
-				'contribution' => $row[_CLMN_GENS_POINT_],
+				'name' => $row['Name'],
+				'influence' => $row['Family'],
+				'contribution' => $row['Contribution'],
 				'rank' => $gensRank,
-				'level' => $row[_CLMN_CHR_LVL_],
-				'class' => $row[_CLMN_CHR_CLASS_],
-				'map' => $row[_CLMN_CHR_MAP_]
+				'level' => $row['cLevel'],
+				'class' => $row['Class'],
+				'map' => $row['MapNumber']
 			);
 		}
 		
@@ -325,35 +332,35 @@ class Rankings {
 		
 		// level only (no master level)
 		if(!$combineMasterLevel) {
-			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_LVL_.","._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_LVL_." DESC");
+			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." Name, Class, cLevel, MapNumber FROM Character WHERE Name NOT IN(".$this->_rankingsExcludeChars().") ORDER BY cLevel DESC");
 			if(!is_array($result)) return;
 			return $result;
 		}
 		
-		if(_TBL_CHR_ == _TBL_MASTERLVL_) {
+		if('Character' == 'MasterSkillTree') {
 			
 			// level + master level (in same table)
-			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.",("._CLMN_CHR_LVL_."+"._CLMN_ML_LVL_.") as "._CLMN_CHR_LVL_.","._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_LVL_." DESC");
+			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." Name, Class, (cLevel+MasterLevel) as cLevel, MapNumber FROM Character WHERE Name NOT IN(".$this->_rankingsExcludeChars().") ORDER BY cLevel DESC");
 			if(!is_array($result)) return;
 			return $result;
 		} else {
 		
 			// level + master level (different tables)
 			$Character = new Character();
-			$characters = $this->mu->query_fetch("SELECT "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_LVL_.","._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") ORDER BY "._CLMN_CHR_LVL_." DESC");
+			$characters = $this->mu->query_fetch("SELECT Name, Class, cLevel, MapNumber FROM Character WHERE Name NOT IN(".$this->_rankingsExcludeChars().") ORDER BY cLevel DESC");
 			if(!is_array($characters)) return;
 			foreach($characters as $row) {
-				$masterLevelInfo = $Character->getMasterLevelInfo($row[_CLMN_CHR_NAME_]);
+				$masterLevelInfo = $Character->getMasterLevelInfo($row['Name']);
 				$rankingData[] = array(
-					_CLMN_CHR_NAME_ => $row[_CLMN_CHR_NAME_],
-					_CLMN_CHR_CLASS_ => $row[_CLMN_CHR_CLASS_],
-					_CLMN_CHR_LVL_ => $row[_CLMN_CHR_LVL_]+$masterLevelInfo[_CLMN_ML_LVL_],
-					_CLMN_CHR_MAP_ => $row[_CLMN_CHR_MAP_],
+					'Name' => $row['Name'],
+					'Class' => $row['Class'],
+					'cLevel' => $row['cLevel']+$masterLevelInfo["MasterLevel"],
+					'MapNumber' => $row['MapNumber'],
 				);
 			}
 			
 			usort($rankingData, function($a, $b) {
-				return $b[_CLMN_CHR_LVL_] - $a[_CLMN_CHR_LVL_];
+				return $b['cLevel'] - $a['cLevel'];
 			});
 			
 			$result = array_slice($rankingData, 0, $this->_results);
@@ -367,20 +374,20 @@ class Rankings {
 		
 		// level only (no master level)
 		if(!$combineMasterLevel) {
-			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_RSTS_.","._CLMN_CHR_LVL_.","._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND "._CLMN_CHR_RSTS_." > 0 ORDER BY "._CLMN_CHR_RSTS_." DESC, "._CLMN_CHR_LVL_." DESC");
+			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." Name, Class, ResetCount, cLevel, MapNumber FROM Character WHERE Name NOT IN(".$this->_rankingsExcludeChars().") AND ResetCount > 0 ORDER BY ResetCount DESC, cLevel DESC");
 			if(!is_array($result)) return;
 			return $result;
 		}
 		
-		if(_TBL_CHR_ == _TBL_MASTERLVL_) {
+		if('Character' == 'MasterSkillTree') {
 			// level + master level (in same table)
-			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_RSTS_.",("._CLMN_CHR_LVL_."+"._CLMN_ML_LVL_.") as "._CLMN_CHR_LVL_.","._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND "._CLMN_CHR_RSTS_." > 0 ORDER BY "._CLMN_CHR_RSTS_." DESC, "._CLMN_CHR_LVL_." DESC");
+			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." Name, Class, ResetCount, (cLevel+MasterLevel) as cLevel, MapNumber FROM Character WHERE Name NOT IN(".$this->_rankingsExcludeChars().") AND ResetCount > 0 ORDER BY ResetCount DESC, cLevel DESC");
 			if(!is_array($result)) return;
 			return $result;
 		} else {
 			// level + master level (different tables)
 			$Character = new Character();
-			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._TBL_CHR_."."._CLMN_CHR_NAME_.", "._TBL_CHR_."."._CLMN_CHR_CLASS_.", "._TBL_CHR_."."._CLMN_CHR_RSTS_.", ("._TBL_CHR_."."._CLMN_CHR_LVL_." + "._TBL_MASTERLVL_."."._CLMN_ML_LVL_.") as "._CLMN_CHR_LVL_.", "._TBL_CHR_."."._CLMN_CHR_MAP_." FROM "._TBL_CHR_." INNER JOIN "._TBL_MASTERLVL_." ON "._TBL_CHR_."."._CLMN_CHR_NAME_." = "._TBL_MASTERLVL_."."._CLMN_ML_NAME_." WHERE "._TBL_CHR_."."._CLMN_CHR_NAME_." NOT IN (".$this->_rankingsExcludeChars().") AND "._TBL_CHR_."."._CLMN_CHR_RSTS_." > 0 ORDER BY "._TBL_CHR_."."._CLMN_CHR_RSTS_." DESC, "._CLMN_CHR_LVL_." DESC");
+			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." Name, Class, ResetCount, (cLevel+MasterLevel) as cLevel, MapNumber FROM Character INNER JOIN MasterSkillTree ON Character.Name = MasterSkillTree.Name WHERE Name NOT IN(".$this->_rankingsExcludeChars().") AND ResetCount > 0 ORDER BY ResetCount DESC, cLevel DESC");
 			if(!is_array($result)) return;
 			return $result;
 		}
@@ -391,25 +398,25 @@ class Rankings {
 		
 		// level only (no master level)
 		if(!$combineMasterLevel) {
-			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_PK_KILLS_.","._CLMN_CHR_LVL_.","._CLMN_CHR_MAP_.","._CLMN_CHR_PK_LEVEL_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND "._CLMN_CHR_PK_KILLS_." > 0 ORDER BY "._CLMN_CHR_PK_KILLS_." DESC");
+			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." Name, Class, PkCount, cLevel, MapNumber, PkLevel FROM Character WHERE Name NOT IN(".$this->_rankingsExcludeChars().") AND PkCount > 0 ORDER BY PkCount DESC");
 			if(!is_array($result)) return;
 			return $result;
 		}
 		
-		if(_TBL_CHR_ == _TBL_MASTERLVL_) {
+		if('Character' == 'MasterSkillTree') {
 			// level + master level (in same table)
-			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_PK_KILLS_.",("._CLMN_CHR_LVL_."+"._CLMN_ML_LVL_.") as "._CLMN_CHR_LVL_.","._CLMN_CHR_MAP_.","._CLMN_CHR_PK_LEVEL_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND "._CLMN_CHR_PK_KILLS_." > 0 ORDER BY "._CLMN_CHR_PK_KILLS_." DESC");
+			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." Name, Class, PkCount, (cLevel+MasterLevel) as cLevel, MapNumber, PkLevel FROM Character WHERE Name NOT IN(".$this->_rankingsExcludeChars().") AND PkCount > 0 ORDER BY PkCount DESC");
 			if(!is_array($result)) return;
 			return $result;
 		} else {
 			// level + master level (different tables)
 			$Character = new Character();
-			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.","._CLMN_CHR_CLASS_.","._CLMN_CHR_PK_KILLS_.","._CLMN_CHR_LVL_.","._CLMN_CHR_MAP_.","._CLMN_CHR_PK_LEVEL_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND "._CLMN_CHR_PK_KILLS_." > 0 ORDER BY "._CLMN_CHR_PK_KILLS_." DESC");
+			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." Name, Class, PkCount, (cLevel+MasterLevel) as cLevel, MapNumber, PkLevel FROM Character INNER JOIN MasterSkillTree ON Character.Name = MasterSkillTree.Name WHERE Name NOT IN(".$this->_rankingsExcludeChars().") AND PkCount > 0 ORDER BY PkCount DESC");
 			if(!is_array($result)) return;
 			foreach($result as $key => $row) {
-				$masterLevelInfo = $Character->getMasterLevelInfo($row[_CLMN_CHR_NAME_]);
+				$masterLevelInfo = $Character->getMasterLevelInfo($row['Name']);
 				if(!is_array($masterLevelInfo)) continue;
-				$result[$key][_CLMN_CHR_LVL_] = $row[_CLMN_CHR_LVL_]+$masterLevelInfo[_CLMN_ML_LVL_];
+				$result[$key]['cLevel'] = $row['cLevel']+$masterLevelInfo["MasterLevel"];
 			}
 			return $result;
 		}
@@ -418,19 +425,19 @@ class Rankings {
 	private function _getOnlineRankingDataMembStatHours() {
 		$this->mu = Connection::Database('MuOnline');
 		
-		$accounts = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_MS_MEMBID_.", "._CLMN_MS_ONLINEHRS_." FROM "._TBL_MS_." WHERE "._CLMN_MS_ONLINEHRS_." > 0 ORDER BY "._CLMN_MS_ONLINEHRS_." DESC");
+		$accounts = $this->mu->query_fetch("SELECT TOP ".$this->_results." memb___id, OnlineHours FROM MEMB_STAT WHERE OnlineHours > 0 ORDER BY OnlineHours DESC");
 		if(!is_array($accounts)) return;
 		$Character = new Character();
 		foreach($accounts as $row) {
-			$playerIDC = $Character->AccountCharacterIDC($row[_CLMN_MS_MEMBID_]);
+			$playerIDC = $Character->AccountCharacterIDC($row['memb___id']);
 			if(!check_value($playerIDC)) continue;
 			$platerData = $Character->CharacterData($playerIDC);
 			if(!is_array($platerData)) continue;
 			$result[] = array(
 				$playerIDC,
-				$row[_CLMN_MS_ONLINEHRS_]*3600,
-				$platerData[_CLMN_CHR_CLASS_],
-				$platerData[_CLMN_CHR_MAP_]
+				$row['OnlineHours']*3600,
+				$platerData['Class'],
+				$platerData['MapNumber']
 			);
 		}
 		if(!is_array($result)) return;

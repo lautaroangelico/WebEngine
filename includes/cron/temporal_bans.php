@@ -23,7 +23,7 @@ if(is_array($temporalBans)) {
 		$banTimestamp = $tempBan['ban_days']*86400+$tempBan['ban_date'];
 		if(time() > $banTimestamp) {
 			// lift ban
-			$unban = $database->query("UPDATE "._TBL_MI_." SET "._CLMN_BLOCCODE_." = 0 WHERE "._CLMN_USERNM_." = ?", array($tempBan['account_id']));
+			$unban = $database->query("UPDATE MEMB_INFO SET bloc_code = 0 WHERE memb___id = ?", array($tempBan['account_id']));
 			if($unban) {
 				$database->query("DELETE FROM ".WEBENGINE_BAN_LOG." WHERE account_id = ?", array($tempBan['account_id']));
 				$database->query("DELETE FROM ".WEBENGINE_BANS." WHERE account_id = ?", array($tempBan['account_id']));

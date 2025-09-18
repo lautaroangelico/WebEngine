@@ -37,7 +37,7 @@ try {
 		
 		echo '<tr>';
 			echo '<td>'.$data['transaction_id'].'</td>';
-			echo '<td><a href="'.admincp_base("accountinfo&id=".$data['user_id']).'">'.$userData[_CLMN_USERNM_].'</a></td>';
+			echo '<td><a href="'.admincp_base("accountinfo&id=".$data['user_id']).'">'.$userData['memb___id'].'</a></td>';
 			echo '<td>$'.$data['payment_amount'].'</td>';
 			echo '<td>'.$data['paypal_email'].'</td>';
 			echo '<td>'.date("m/d/Y h:i A",$data['transaction_date']).'</td>';

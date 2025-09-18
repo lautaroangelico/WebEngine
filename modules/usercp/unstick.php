@@ -44,14 +44,14 @@ try {
 		
 		foreach($AccountCharacters as $thisCharacter) {
 			$characterData = $Character->CharacterData($thisCharacter);
-			$characterIMG = $Character->GenerateCharacterClassAvatar($characterData[_CLMN_CHR_CLASS_]);
+			$characterIMG = $Character->GenerateCharacterClassAvatar($characterData["Class"]);
 			
 			echo '<form action="" method="post">';
-				echo '<input type="hidden" name="character" value="'.$characterData[_CLMN_CHR_NAME_].'"/>';
+				echo '<input type="hidden" name="character" value="'.$characterData["Name"].'"/>';
 				echo '<tr>';
 					echo '<td>'.$characterIMG.'</td>';
-					echo '<td>'.$characterData[_CLMN_CHR_NAME_].'</td>';
-					echo '<td>'.number_format($characterData[_CLMN_CHR_ZEN_]).'</td>';
+					echo '<td>'.$characterData["Name"].'</td>';
+					echo '<td>'.number_format($characterData["Money"]).'</td>';
 					echo '<td><button name="submit" value="submit" class="btn btn-primary">'.lang('unstickcharacter_txt_3',true).'</button></td>';
 				echo '</tr>';
 			echo '</form>';

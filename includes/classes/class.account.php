@@ -76,21 +76,21 @@ class Account extends common {
 		# query
 		switch($this->_passwordEncryption) {
 			case 'wzmd5':
-				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, [dbo].[fn_md5](:password, :username), :name, :serial, :email, 0, 0)";
+				$query = "INSERT INTO MEMB_INFO ('memb___id', 'memb__pwd', 'memb_name', 'sno__numb', 'mail_addr', 'bloc_code', 'ctl1_code') VALUES (:username, [dbo].[fn_md5](:password, :username), :name, :serial, :email, 0, 0)";
 				break;
 			case 'phpmd5':
 				$data['password'] = md5($password);
-				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, :password, :name, :serial, :email, 0, 0)";
+				$query = "INSERT INTO MEMB_INFO ('memb___id', 'memb__pwd', 'memb_name', 'sno__numb', 'mail_addr', 'bloc_code', 'ctl1_code') VALUES (:username, :password, :name, :serial, :email, 0, 0)";
 				break;
 			case 'sha256':
 				$data['password'] = '0x' . hash('sha256', $password . $username . $this->_sha256salt);
-				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, CONVERT(binary(32),:password,1), :name, :serial, :email, 0, 0)";
+				$query = "INSERT INTO MEMB_INFO ('memb___id', 'memb__pwd', 'memb_name', 'sno__numb', 'mail_addr', 'bloc_code', 'ctl1_code') VALUES (:username, CONVERT(binary(32),:password,1), :name, :serial, :email, 0, 0)";
 				break;
 			default:
-				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, :password, :name, :serial, :email, 0, 0)";
+				$query = "INSERT INTO MEMB_INFO (memb___id, memb__pwd, memb_name, sno__numb, mail_addr, bloc_code, ctl1_code) VALUES (:username, :password, :name, :serial, :email, 0, 0)";
 		}
 		
-		# register account
+		# register account	
 		$result = $this->memuonline->query($query, $data);
 		if(!$result) throw new Exception(lang('error_22',true));
 		
@@ -106,7 +106,6 @@ class Account extends common {
 		
 		# success message
 		message('success', lang('success_1',true));
-		
 		
 		if($regCfg['automatic_login']) {
 			// automatic log-in
@@ -148,7 +147,7 @@ class Account extends common {
 			$email->setTemplate('CHANGE_PASSWORD');
 			$email->addVariable('{USERNAME}', $username);
 			$email->addVariable('{NEW_PASSWORD}', $new_password);
-			$email->addAddress($accountData[_CLMN_EMAIL_]);
+			$email->addAddress($accountData['mail_addr']);
 			$email->send();
 		} catch (Exception $ex) {}
 		
@@ -198,7 +197,7 @@ class Account extends common {
 			$email->addVariable('{IP_ADDRESS}', $ip_address);
 			$email->addVariable('{LINK}', $link);
 			$email->addVariable('{EXPIRATION_TIME}', $mypassCfg['change_password_request_timeout']);
-			$email->addAddress($accountData[_CLMN_EMAIL_]);
+			$email->addAddress($accountData['mail_addr']);
 			$email->send();
 			
 			message('success', lang('success_3',true));
@@ -222,7 +221,7 @@ class Account extends common {
 		if(!Validator::UnsignedNumber($userid)) throw new Exception(lang('error_25',true));
 		if(!Validator::UnsignedNumber($authcode)) throw new Exception(lang('error_25',true));
 		
-		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_PASSCHANGE_REQUEST." WHERE user_id = ?", array($userid));
+		$result = $this->memuonline->query_fetch_single("SELECT * FROM WEBENGINE_PASSCHANGE_REQUEST WHERE user_id = ?", array($userid));
 		if(!is_array($result)) throw new Exception(lang('error_25',true));
 		
 		# load changepw configs
@@ -236,7 +235,7 @@ class Account extends common {
 		
 		# account data
 		$accountData = $this->accountInformation($userid);
-		$username = $accountData[_CLMN_USERNM_];
+		$username = $accountData['memb___id'];
 		$new_password = $result['new_password'];
 		
 		# check online status
@@ -251,7 +250,7 @@ class Account extends common {
 			$email->setTemplate('CHANGE_PASSWORD');
 			$email->addVariable('{USERNAME}', $username);
 			$email->addVariable('{NEW_PASSWORD}', $new_password);
-			$email->addAddress($accountData[_CLMN_EMAIL_]);
+			$email->addAddress($accountData['mail_addr']);
 			$email->send();
 		} catch (Exception $ex) {
 			if($this->_debug) {
@@ -282,20 +281,20 @@ class Account extends common {
 		if(!is_array($accountData)) throw new Exception(lang('error_23',true));
 		
 		# Account Recovery Code
-		$arc = $this->generateAccountRecoveryCode($accountData[_CLMN_MEMBID_], $accountData[_CLMN_USERNM_]);
+		$arc = $this->generateAccountRecoveryCode($accountData['memb_guid'], $accountData['memb___id']);
 
 		# Account Recovery URL
-		$aru = $this->generateAccountRecoveryLink($accountData[_CLMN_MEMBID_], $accountData[_CLMN_EMAIL_], $arc);
+		$aru = $this->generateAccountRecoveryLink($accountData['memb_guid'], $accountData['mail_addr'], $arc);
 		
 		# send email
 		try {
 			$email = new Email();
 			$email->setTemplate('PASSWORD_RECOVERY_REQUEST');
-			$email->addVariable('{USERNAME}', $accountData[_CLMN_USERNM_]);
+			$email->addVariable('{USERNAME}', $accountData['memb___id']);
 			$email->addVariable('{DATE}', date("Y-m-d @ h:i a"));
 			$email->addVariable('{IP_ADDRESS}', $ip_address);
 			$email->addVariable('{LINK}', $aru);
-			$email->addAddress($accountData[_CLMN_EMAIL_]);
+			$email->addAddress($accountData['mail_addr']);
 			$email->send();
 			
 			message('success', lang('success_6',true));
@@ -322,7 +321,7 @@ class Account extends common {
 		$accountData = $this->accountInformation($user_id);
 		if(!is_array($accountData)) throw new Exception(lang('error_31',true));
 		
-		$username = $accountData[_CLMN_USERNM_];
+		$username = $accountData['memb___id'];
 		$gen_key = $this->generateAccountRecoveryCode($user_id, $username);
 		
 		# compare keys
@@ -338,7 +337,7 @@ class Account extends common {
 			$email->setTemplate('PASSWORD_RECOVERY_COMPLETED');
 			$email->addVariable('{USERNAME}', $username);
 			$email->addVariable('{NEW_PASSWORD}', $new_password);
-			$email->addAddress($accountData[_CLMN_EMAIL_]);
+			$email->addAddress($accountData['mail_addr']);
 			$email->send();
 			
 			message('success', lang('success_7',true));
@@ -368,8 +367,8 @@ class Account extends common {
 		$myemailCfg = loadConfigurations('usercp.myemail');
 		if($myemailCfg['require_verification']) {
 			# requires verification
-			$userName = $accountInfo[_CLMN_USERNM_];
-			$userEmail = $accountInfo[_CLMN_EMAIL_];
+			$userName = $accountInfo['memb___id'];
+			$userEmail = $accountInfo['mail_addr'];
 			$requestDate = strtotime(date("m/d/Y 23:59"));
 			$key = md5(md5($userName).md5($userEmail).md5($requestDate).md5($newEmail));
 			$verificationLink = __BASE_URL__.'verifyemail/?op=3&uid='.$accountId.'&email='.$newEmail.'&key='.$key;
@@ -397,7 +396,7 @@ class Account extends common {
 		
 		# check key
 		$requestDate = strtotime(date("m/d/Y 23:59"));
-		$key = md5(md5($accountInfo[_CLMN_USERNM_]).md5($accountInfo[_CLMN_EMAIL_]).md5($requestDate).md5($newEmail));
+		$key = md5(md5($accountInfo['memb___id']).md5($accountInfo['mail_addr']).md5($requestDate).md5($newEmail));
 		if($key != $encryptedKey) throw new Exception(lang('error_21',true));
 		
 		# change email
@@ -405,7 +404,7 @@ class Account extends common {
 	}
 	
 	public function verifyRegistrationProcess($username, $key) {
-		$verifyKey = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_account = ? AND registration_key = ?", array($username,$key));
+		$verifyKey = $this->memuonline->query_fetch_single("SELECT * FROM WEBENGINE_REGISTER_ACCOUNT WHERE registration_account = ? AND registration_key = ?", array($username,$key));
 		if(!is_array($verifyKey)) throw new Exception(lang('error_25',true));
 		
 		# load registration configs
@@ -423,18 +422,18 @@ class Account extends common {
 		# query
 		switch($this->_passwordEncryption) {
 			case 'wzmd5':
-				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, [dbo].[fn_md5](:password, :username), :name, :serial, :email, 0, 0)";
+				$query = "INSERT INTO MEMB_INFO ('memb___id', 'memb__pwd', 'memb_name', 'sno__numb', 'mail_addr', 'bloc_code', 'ctl1_code') VALUES (:username, [dbo].[fn_md5](:password, :username), :name, :serial, :email, 0, 0)";
 				break;
 			case 'phpmd5':
 				$data['password'] = md5($verifyKey['registration_password']);
-				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, :password, :name, :serial, :email, 0, 0)";
+				$query = "INSERT INTO MEMB_INFO ('memb___id', 'memb__pwd', 'memb_name', 'sno__numb', 'mail_addr', 'bloc_code', 'ctl1_code') VALUES (:username, :password, :name, :serial, :email, 0, 0)";
 				break;
 			case 'sha256':
 				$data['password'] = '0x' . hash('sha256', $verifyKey['registration_password'] . $verifyKey['registration_account'] . $this->_sha256salt);
-				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, CONVERT(binary(32),:password,1), :name, :serial, :email, 0, 0)";
+				$query = "INSERT INTO MEMB_INFO ('memb___id', 'memb__pwd', 'memb_name', 'sno__numb', 'mail_addr', 'bloc_code', 'ctl1_code') VALUES (:username, CONVERT(binary(32),:password,1), :name, :serial, :email, 0, 0)";
 				break;
 			default:
-				$query = "INSERT INTO "._TBL_MI_." ("._CLMN_USERNM_.", "._CLMN_PASSWD_.", "._CLMN_MEMBNAME_.", "._CLMN_SNONUMBER_.", "._CLMN_EMAIL_.", "._CLMN_BLOCCODE_.", "._CLMN_CTLCODE_.") VALUES (:username, :password, :name, :serial, :email, 0, 0)";
+				$query = "INSERT INTO MEMB_INFO ('memb___id', 'memb__pwd', 'memb_name', 'sno__numb', 'mail_addr', 'bloc_code', 'ctl1_code') VALUES (:username, :password, :name, :serial, :email, 0, 0)";
 		}
 		
 		# create account
@@ -463,7 +462,7 @@ class Account extends common {
 	
 	public function getAccountCountry() {
 		if(!check_value($this->_account)) return;
-		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_ACCOUNT_COUNTRY." WHERE account = ?", array($this->_account));
+		$result = $this->memuonline->query_fetch_single("SELECT * FROM WEBENGINE_ACCOUNT_COUNTRY WHERE account = ?", array($this->_account));
 		if(!is_array($result)) return;
 		return $result;
 	}
@@ -476,7 +475,7 @@ class Account extends common {
 		if(!is_array($data)) return;
 		if(time() < strtotime($data['lastchange'])+$this->_countryChangeCooldown) return;
 		
-		$result = $this->memuonline->query("UPDATE ".WEBENGINE_ACCOUNT_COUNTRY." SET country = ? WHERE account = ?", array($this->_country, $this->_account));
+		$result = $this->memuonline->query("UPDATE WEBENGINE_ACCOUNT_COUNTRY SET country = ? WHERE account = ?", array($this->_country, $this->_account));
 		if(!$result) return;
 		return true;
 	}
@@ -484,38 +483,38 @@ class Account extends common {
 	public function insertAccountCountry() {
 		if(!check_value($this->_account)) return;
 		if(!check_value($this->_country)) return;
-		$result = $this->memuonline->query("INSERT INTO ".WEBENGINE_ACCOUNT_COUNTRY." (account, country) VALUES (?, ?)", array($this->_account, $this->_country));
+		$result = $this->memuonline->query("INSERT INTO WEBENGINE_ACCOUNT_COUNTRY (account, country) VALUES (?, ?)", array($this->_account, $this->_country));
 		if(!$result) return;
 		return true;
 	}
 	
 	public function getServerList() {
-		$result = $this->memuonline->query_fetch("SELECT DISTINCT("._CLMN_MS_GS_.") FROM "._TBL_MS_."");
+		$result = $this->memuonline->query_fetch("SELECT DISTINCT(ServerName) FROM MEMB_STAT");
 		if(!is_array($result)) return;
 		foreach($result as $row) {
-			$servers[] = $row[_CLMN_MS_GS_];
+			$servers[] = $row['ServerName'];
 		}
 		return $servers;
 	}
 	
 	public function getOnlineAccountCount($server=null) {
 		if(check_value($server)) {
-			$result = $this->memuonline->query_fetch_single("SELECT COUNT(*) as online FROM "._TBL_MS_." WHERE "._CLMN_CONNSTAT_." = 1 AND "._CLMN_MS_GS_." = ?", array($server));
+			$result = $this->memuonline->query_fetch_single("SELECT COUNT(*) as online FROM MEMB_STAT WHERE ConnectStat = 1 AND ServerName = ?", array($server));
 			if(!is_array($result)) return 0;
 			return $result['online'];
 		}
-		$result = $this->memuonline->query_fetch_single("SELECT COUNT(*) as online FROM "._TBL_MS_." WHERE "._CLMN_CONNSTAT_." = 1");
+		$result = $this->memuonline->query_fetch_single("SELECT COUNT(*) as online FROM MEMB_STAT WHERE ConnectStat = 1");
 		if(!is_array($result)) return 0;
 		return $result['online'];
 	}
 	
 	public function getOnlineAccountList($server=null) {
 		if(check_value($server)) {
-			$result = $this->memuonline->query_fetch("SELECT "._CLMN_MS_MEMBID_.", "._CLMN_MS_GS_.", "._CLMN_MS_IP_." FROM "._TBL_MS_." WHERE "._CLMN_CONNSTAT_." = 1 AND "._CLMN_MS_GS_." = ?", array($server));
+			$result = $this->memuonline->query_fetch("SELECT memb___id, ServerName, IP FROM MEMB_STAT WHERE ConnectStat = 1 AND ServerName = ?", array($server));
 			if(!is_array($result)) return;
 			return $result;
 		}
-		$result = $this->memuonline->query_fetch("SELECT "._CLMN_MS_MEMBID_.", "._CLMN_MS_GS_.", "._CLMN_MS_IP_." FROM "._TBL_MS_." WHERE "._CLMN_CONNSTAT_." = 1");
+		$result = $this->memuonline->query_fetch("SELECT memb___id, ServerName, IP FROM MEMB_STAT WHERE ConnectStat = 1");
 		if(!is_array($result)) return;
 		return $result;
 	}
@@ -565,7 +564,7 @@ class Account extends common {
 			$key
 		);
 		
-		$query = "INSERT INTO ".WEBENGINE_REGISTER_ACCOUNT." (registration_account,registration_password,registration_email,registration_date,registration_ip,registration_key) VALUES (?,?,?,?,?,?)";
+		$query = "INSERT INTO WEBENGINE_REGISTER_ACCOUNT (registration_account,registration_password,registration_email,registration_date,registration_ip,registration_key) VALUES (?,?,?,?,?,?)";
 		
 		$result = $this->memuonline->query($query, $data);
 		if(!$result) return;
@@ -574,14 +573,14 @@ class Account extends common {
 	
 	private function deleteRegistrationVerification($username) {
 		if(!check_value($username)) return;
-		$delete = $this->memuonline->query("DELETE FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_account = ?", array($username));
+		$delete = $this->memuonline->query("DELETE FROM WEBENGINE_REGISTER_ACCOUNT WHERE registration_account = ?", array($username));
 		if($delete) return true;
 		return;
 	}
 
 	private function checkUsernameEVS($username) {
 		if(!check_value($username)) return;
-		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_account = ?", array($username));
+		$result = $this->memuonline->query_fetch_single("SELECT * FROM WEBENGINE_REGISTER_ACCOUNT WHERE registration_account = ?", array($username));
 		if(!is_array($result)) return;
 		
 		$configs = loadConfigurations('register');
@@ -596,7 +595,7 @@ class Account extends common {
 
 	private function checkEmailEVS($email) {
 		if(!check_value($email)) return;
-		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_REGISTER_ACCOUNT." WHERE registration_email = ?", array($email));
+		$result = $this->memuonline->query_fetch_single("SELECT * FROM WEBENGINE_REGISTER_ACCOUNT WHERE registration_email = ?", array($email));
 		if(!is_array($result)) return;
 		
 		$configs = loadConfigurations('register');

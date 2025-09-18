@@ -21,13 +21,13 @@ $accountsDB = config('SQL_USE_2_DB', true) == true ? config('SQL_DB_2_NAME', tru
 
 $result = array();
 
-$query = "SELECT t2."._CLMN_GAMEIDC_." FROM ".$accountsDB.".[dbo]."._TBL_MS_." t1 INNER JOIN ".$charactersDB.".[dbo]."._TBL_AC_." t2 ON t1."._CLMN_MS_MEMBID_." = t2."._CLMN_AC_ID_." WHERE t1."._CLMN_CONNSTAT_." = 1";
+$query = "SELECT t2.GameIDC FROM ".$accountsDB.".[dbo].".'MEMB_STAT'." t1 INNER JOIN ".$charactersDB.".[dbo].AccountCharacter t2 ON t1.memb___id = t2.Id WHERE t1.ConnectStat = 1";
 
 $onlineCharactersList = $me->query_fetch($query);
 if(is_array($onlineCharactersList)) {
 	foreach($onlineCharactersList as $onlineCharacterData) {
-		if(in_array($onlineCharacterData[_CLMN_GAMEIDC_], $result)) continue;
-		$result[] = $onlineCharacterData[_CLMN_GAMEIDC_];
+		if(in_array($onlineCharacterData['GameIDC'], $result)) continue;
+		$result[] = $onlineCharacterData['GameIDC'];
 	}
 }
 

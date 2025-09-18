@@ -117,25 +117,25 @@ class CronManager {
 			0,
 			$this->_cronFileMd5($this->_file)
 		);
-		$result = $this->memuonline->query("INSERT INTO ".WEBENGINE_CRON." (cron_name, cron_file_run, cron_run_time, cron_status, cron_protected, cron_file_md5) VALUES (?, ?, ?, ?, ?, ?)", $data);
+		$result = $this->memuonline->query("INSERT INTO WEBENGINE_CRON (cron_name, cron_file_run, cron_run_time, cron_status, cron_protected, cron_file_md5) VALUES (?, ?, ?, ?, ?, ?)", $data);
 		if(!$result) throw new Exception($this->memuonline->error);
 		return true;
 	}
 	
 	public function enableAll() {
-		$result = $this->memuonline->query("UPDATE ".WEBENGINE_CRON." SET cron_status = 1");
+		$result = $this->memuonline->query("UPDATE WEBENGINE_CRON SET cron_status = 1");
 		if(!$result) throw new Exception($this->memuonline->error);
 		return true;
 	}
 	
 	public function disableAll() {
-		$result = $this->memuonline->query("UPDATE ".WEBENGINE_CRON." SET cron_status = 0");
+		$result = $this->memuonline->query("UPDATE WEBENGINE_CRON SET cron_status = 0");
 		if(!$result) throw new Exception($this->memuonline->error);
 		return true;
 	}
 	
 	public function resetAllLastRun() {
-		$result = $this->memuonline->query("UPDATE ".WEBENGINE_CRON." SET cron_last_run = NULL");
+		$result = $this->memuonline->query("UPDATE WEBENGINE_CRON SET cron_last_run = NULL");
 		if(!$result) throw new Exception($this->memuonline->error);
 		return true;
 	}
@@ -167,13 +167,13 @@ class CronManager {
 	
 	protected function _setCronStatus($status=1) {
 		if(!check_value($this->_id)) return;
-		$result = $this->memuonline->query("UPDATE ".WEBENGINE_CRON." SET cron_status = ? WHERE cron_id = ?", array($status, $this->_id));
+		$result = $this->memuonline->query("UPDATE WEBENGINE_CRON SET cron_status = ? WHERE cron_id = ?", array($status, $this->_id));
 		if(!$result) throw new Exception($this->memuonline->error);
 		return true;
 	}
 	
 	protected function _cronAlreadyExists($file) {
-		$result = $this->memuonline->query_fetch_single("SELECT * FROM ".WEBENGINE_CRON." WHERE cron_file_run = ?", array($this->_file));
+		$result = $this->memuonline->query_fetch_single("SELECT * FROM WEBENGINE_CRON WHERE cron_file_run = ?", array($this->_file));
 		if(!is_array($result)) return;
 		return true;
 	}

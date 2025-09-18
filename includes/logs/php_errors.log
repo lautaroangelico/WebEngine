@@ -1,0 +1,20 @@
+[16-Sep-2025 13:08:41 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function dump() in F:\GGCODE\WebEngine-GGCODE\WebEngine\includes\classes\class.character.php:753
+Stack trace:
+#0 F:\GGCODE\WebEngine-GGCODE\WebEngine\modules\usercp\clearskilltree.php(50): Character->getMasterLevelInfo('OriginMU')
+#1 F:\GGCODE\WebEngine-GGCODE\WebEngine\includes\classes\class.handler.php(118): include('F:\\GGCODE\\WebEn...')
+#2 F:\GGCODE\WebEngine-GGCODE\WebEngine\templates\default\index.php(137): Handler->loadModule('usercp', 'clearskilltree')
+#3 F:\GGCODE\WebEngine-GGCODE\WebEngine\includes\classes\class.handler.php(46): include('F:\\GGCODE\\WebEn...')
+#4 F:\GGCODE\WebEngine-GGCODE\WebEngine\includes\webengine.php(203): Handler->loadPage()
+#5 F:\GGCODE\WebEngine-GGCODE\WebEngine\index.php(20): include_once('F:\\GGCODE\\WebEn...')
+#6 {main}
+  thrown in F:\GGCODE\WebEngine-GGCODE\WebEngine\includes\classes\class.character.php on line 753
+[16-Sep-2025 13:29:26 UTC] PHP Fatal error:  Uncaught TypeError: number_format(): Argument #1 ($num) must be of type float, string given in F:\GGCODE\WebEngine-GGCODE\WebEngine\modules\profile\player.php:66
+Stack trace:
+#0 F:\GGCODE\WebEngine-GGCODE\WebEngine\modules\profile\player.php(66): number_format('')
+#1 F:\GGCODE\WebEngine-GGCODE\WebEngine\includes\classes\class.handler.php(118): include('F:\\GGCODE\\WebEn...')
+#2 F:\GGCODE\WebEngine-GGCODE\WebEngine\templates\default\index.php(144): Handler->loadModule('profile', 'player')
+#3 F:\GGCODE\WebEngine-GGCODE\WebEngine\includes\classes\class.handler.php(46): include('F:\\GGCODE\\WebEn...')
+#4 F:\GGCODE\WebEngine-GGCODE\WebEngine\includes\webengine.php(203): Handler->loadPage()
+#5 F:\GGCODE\WebEngine-GGCODE\WebEngine\index.php(20): include_once('F:\\GGCODE\\WebEn...')
+#6 {main}
+  thrown in F:\GGCODE\WebEngine-GGCODE\WebEngine\modules\profile\player.php on line 66

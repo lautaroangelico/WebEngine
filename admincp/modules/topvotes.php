@@ -36,7 +36,7 @@ if($voteLogs && is_array($voteLogs)) {
 			$keyx = $key+1;
 			echo '<tr>';
 				echo '<td>'.$keyx.'</td>';
-				echo '<td>'.$accountInfo[_CLMN_USERNM_].'</td>';
+				echo '<td>'.$accountInfo['memb___id'].'</td>';
 				echo '<td>'.$thisVote['totalvotes'].'</td>';
 			echo '</tr>';
 		}

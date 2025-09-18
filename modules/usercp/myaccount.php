@@ -26,14 +26,14 @@ $accountInfo = $common->accountInformation($_SESSION['userid']);
 if(!is_array($accountInfo)) throw new Exception(lang('error_12'));
 
 # account online status
-$onlineStatus = ($common->accountOnline($_SESSION['username']) ? '<span class="label label-success">'.lang('myaccount_txt_9').'</span>' : '<span class="label label-danger">'.lang('myaccount_txt_10').'</span>');
+$onlineStatus = ($common->accountOnline($_SESSION['memb___id']) ? '<span class="label label-success">'.lang('myaccount_txt_9').'</span>' : '<span class="label label-danger">'.lang('myaccount_txt_10').'</span>');
 
 # account status
-$accountStatus = ($accountInfo[_CLMN_BLOCCODE_] == 1 ? '<span class="label label-danger">'.lang('myaccount_txt_8').'</span>' : '<span class="label label-default">'.lang('myaccount_txt_7').'</span>');
+$accountStatus = ($accountInfo['bloc_code'] == 1 ? '<span class="label label-danger">'.lang('myaccount_txt_8').'</span>' : '<span class="label label-default">'.lang('myaccount_txt_7').'</span>');
 
 # characters info
 $Character = new Character();
-$AccountCharacters = $Character->AccountCharacter($_SESSION['username']);
+$AccountCharacters = $Character->AccountCharacter($_SESSION['memb___id']);
 
 // Account Information
 echo '<table class="table myaccount-table">';
@@ -44,12 +44,12 @@ echo '<table class="table myaccount-table">';
 	
 	echo '<tr>';
 		echo '<td>'.lang('myaccount_txt_2').'</td>';
-		echo '<td>'.$accountInfo[_CLMN_USERNM_].'</td>';
+		echo '<td>'.$accountInfo['memb___id'].'</td>';
 	echo '</tr>';
 	
 	echo '<tr>';
 		echo '<td>'.lang('myaccount_txt_3').'</td>';
-		echo '<td>'.$accountInfo[_CLMN_EMAIL_].' <a href="'.__BASE_URL__.'usercp/myemail/" class="btn btn-xs btn-primary pull-right">'.lang('myaccount_txt_6').'</a></td>';
+		echo '<td>'.$accountInfo['mail_addr'].' <a href="'.__BASE_URL__.'usercp/myemail/" class="btn btn-xs btn-primary pull-right">'.lang('myaccount_txt_6').'</a></td>';
 	echo '</tr>';
 	
 	echo '<tr>';
@@ -72,13 +72,13 @@ echo '<table class="table myaccount-table">';
 				$creditSystem->setConfigId($myCredits['config_id']);
 				switch($myCredits['config_user_col_id']) {
 					case 'userid':
-						$creditSystem->setIdentifier($accountInfo[_CLMN_MEMBID_]);
+						$creditSystem->setIdentifier($accountInfo["ID"]);
 						break;
 					case 'username':
-						$creditSystem->setIdentifier($accountInfo[_CLMN_USERNM_]);
+						$creditSystem->setIdentifier($accountInfo["Username"]);
 						break;
 					case 'email':
-						$creditSystem->setIdentifier($accountInfo[_CLMN_EMAIL_]);
+						$creditSystem->setIdentifier($accountInfo["Email"]);
 						break;
 					default:
 						continue 2;
@@ -104,18 +104,18 @@ if(is_array($AccountCharacters)) {
 			$characterData = $Character->CharacterData($characterName);
 			if(!is_array($characterData)) continue;
 			
-			if(defined('_TBL_MASTERLVL_')) {
-				if(_TBL_MASTERLVL_ != _TBL_CHR_) {
+			if(defined('"MasterSkillTree"')) {
+				if('MasterSkillTree' != 'Character') {
 					$characterMLData = $Character->getMasterLevelInfo($characterName);
 					if(is_array($characterMLData)) {
-						$characterData[_CLMN_CHR_LVL_] += $characterMLData[_CLMN_ML_LVL_];
+						$characterData["cLevel"] += $characterMLData["MasterLevel"];
 					}
 				} else {
-					$characterData[_CLMN_CHR_LVL_] += $characterData[_CLMN_ML_LVL_];
+					$characterData["cLevel"] += $characterData["MasterLevel"];
 				}
 			}
 			
-			$characterClassAvatar = getPlayerClassAvatar($characterData[_CLMN_CHR_CLASS_], false);
+			$characterClassAvatar = getPlayerClassAvatar($characterData["Class"], false);
 			$characterOnlineStatus = in_array($characterName, $onlineCharacters) ? '<img src="'.__PATH_ONLINE_STATUS__.'" class="online-status-indicator"/>' : '<img src="'.__PATH_OFFLINE_STATUS__.'" class="online-status-indicator"/>';
 			echo '<div class="col-xs-3">';
 				echo '<div class="myaccount-character-name">'.playerProfile($characterName).$characterOnlineStatus.'</div>';
@@ -124,8 +124,8 @@ if(is_array($AccountCharacters)) {
 						echo '<img src="'.$characterClassAvatar.'" />';
 					echo '</a>';
 				echo '</div>';
-				echo '<div class="myaccount-character-block-location">'.returnMapName($characterData[_CLMN_CHR_MAP_]).'<br />'.$characterData[_CLMN_CHR_MAP_X_].', '.$characterData[_CLMN_CHR_MAP_Y_].'</div>';
-				echo '<span class="myaccount-character-block-level">'.$characterData[_CLMN_CHR_LVL_].'</span>';
+				echo '<div class="myaccount-character-block-location">'.returnMapName($characterData["MapNumber"]).'<br />'.$characterData["MapPosX"].', '.$characterData["MapPosY"].'</div>';
+				echo '<span class="myaccount-character-block-level">'.$characterData['cLevel'].'</span>';
 			echo '</div>';
 		}
 	echo '</div>';
@@ -134,6 +134,7 @@ if(is_array($AccountCharacters)) {
 }
 
 // Connection History (IGCN)
+/*
 if(defined('_TBL_CH_')) {
 	echo '<div class="page-title"><span>'.lang('myaccount_txt_16').'</span></div>';
 	$me = Connection::Database('Me_MuOnline');
@@ -157,3 +158,4 @@ if(defined('_TBL_CH_')) {
 		echo '</table>';
 	}
 }
+*/
